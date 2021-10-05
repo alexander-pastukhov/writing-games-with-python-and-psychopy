@@ -1,0 +1,74 @@
+--- 
+title: "Writing games using Python and PsychoPy"
+author: "Alexander (Sasha) Pastukhov"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+url: https://alexander-pastukhov.github.io/python-for-experimental-psychology
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  Material and exercises for 'Python for social and experimental psychology' seminar.
+biblio-style: apalike
+csl: chicago-fullnote-bibliography.csl
+---
+
+# Introduction {#intro}
+
+This book will teach you programming. Hopefully, it will do so in a fun way because if there is something more satisfying than playing a video game then it is creating one. Although it is written for the course called *"Python for social and experimental psychology"*, my main aim is not to teach you Python per se. Python is a fantastic tool (more on this later) but it is just one of many programming languages that exist. My ultimate goal is to help you to develop general programming skills, which do not depend on a specific-programming language, and make sure that you form good habits that will make your code clear, easy to read, and easy to maintain. That last part is crucial. Programming is not about writing code that works. That, obviously, must be true but it is only the minimal requirement. Programming is about writing a clear and easy-to-read code that others and, even more importantly, you-two-weeks later can understand.
+
+## Prerequisites
+The material assumes no foreknowledge of Python or programming from the reader. Its purpose is to gradually build up your knowledge and allow you to create more and more complex games.
+
+## Seminar-specific information
+This is a material for _Python for social and experimental psychology_ seminar as taught by me at the University of Bamberg. Each chapter covers a single game, introducing necessary ideas and is accompanied by exercises that you need to complete and submit. To pass the seminar, you will need to complete all assignments, i.e., write all the games. You do not need to complete or provide correct solutions for _all_ the exercises and information on how the points for exercises will be converted to an actual grade (if you need one) or "pass" will be available during the seminar.
+
+The material is structured, so that each chapter or chapter section correspond to a single meeting. However, we are all different, so work at your own pace. You can read the material and submit assignments independently. I will provide detailed feed for each assignment and you will have an opportunity to address issues and resubmit with no loss of points. However, my feedback will cover not only the actual problems with the code but the way you implemented the solution and how nice-looking your code is. Remember, our task is not just to learn how to program a working game but how to write a nice clear easy-to-read-and-maintain code^[Good habits! Form good habits! Thank you for reading this subliminal message.]. 
+
+Very important: Do not hesitate to ask questions. If I feel that you missed the information in the material, I will point you to the exact location. If you are confused, I'll gently prod you with questions so that you will solve your own problem. If you need more information, I'll supply it. If you simply want to know more, ask and I'll explain why things are the way they are or suggest what to read. If I feel that you should be able to solve the issue without my help, I'll tell you so (although, I would still probably ask a few hinting questions).
+
+## Why games?
+The actual purpose of this course is to teach psychology and social studies students in how to program _experiments_. That is what the real research is about. However, there is little practical difference between the two. The basic ingredients are the same and, arguably, experiments are just boring games. And, be assured, if you can program a game, you certainly can program an experiment.
+
+
+
+# Programming tips and tricks {#programming-tips}
+
+Here are some tips about writing and reading the code. Some may sound cryptic when you read them for the first time (they will become clear once we cover the necessary material). Some will feel like an overkill for simple projects that we will be implementing. I suggest that you return to this section frequently and try to use it. Because, unfortunately, these tricks won't work it you do not use them! So you should _always_ use them and they should become your _good habits_, like using a seat belt. The seat belt does nothing useful on most (hopefully, all) days but you wear it because it might suddenly and very urgently become extremely useful and you can never be sure when this will happen. Same with coding. Quite often you will be tempted to write "quick-n-dirty" code because this is just a "simple test", temporary solution, a prototype, a pilot experiment, etc. But, as they say in Russia "There is nothing more permanent than a temporary solution". More often than not, you will find that your toy code grew into a full blown experiment and it is a mess. Or you want to come back to that pilot experiment you did a few months ago but realize that it is easier to start from scratch than to understand how that monster works^[Happened to me more often than I dare to admit.]. Thus, resist the temptation! Form the good habits and you future-you will be very grateful!
+
+## Writing the code {#writing-tips}
+
+### Use a linter
+Linter is a program that analyses your code _style_ and highlights any issues it finds: spaces where should be none, no spaces where should be some, wrong names, overly long lines, etc. These do not affect how the code runs but following linter's advice results in a consistent standard if boring-looking^["Boring is Good!", see "The Hitman's Bodyguard" movie.] Python code. Try to address all the problems that the linter raised. However, use your better judgment because sometimes lines that are longer than linter would prefer are more readable than two shorter ones. Similarly, a "bad" variable name by linter standards can be a meaningful name for a psychologist. Remember, your code is for people, not for the linter.
+
+### Document your code
+Every time you create a new file: document it and update the documentation whenever you add/change/delete new functions or classes. Every time your create a new function: document it. New class: document it. New constant: unless it is super clear from the name alone, document it. You will learn a [NumPy](https://numpydoc.readthedocs.io/en/latest/format.html) way of doing this in the book.
+
+I cannot stress how important documenting your code is. VS Code (an editor that we will use) is smart enough to parse NumPy docstring, so it will show this help to you whenever you use your own functions (helps you to help you!). More importantly, writing documentation forces you to think and formulate (in human language!) what the function or class is doing,  what type the arguments / attributes / methods are, what is the range of valid values, what are the defaults, what should a function return, etc. More often than not, you will realize that you have overlooked some important detail that may not be apparent from the code itself.
+
+### Add some air
+Separate chunks of code with some empty lines. Think paragraphs in the normal text. You wouldn't want your book to be a single paragraph nightmare? Put a comment before each chunk that explains _what_ it does but not _how_ it does it. E.g., in our typical PsychoPy-based game there will be a point when we draw all stimuli and redraw the window. That is a nice self-contained chunk that can be described as `# drawing all stimuli`. The code provides details on what exactly is drawn, what is the drawing order, etc. But that single comment will help you to understand what this chunk is about and whether it is relevant for you at the moment. Same goes for `# processing key presses` or `# checking gameover conditions`, etc. But be careful and make sure that the comment describes the code correctly. E.g., if the comment says `# drawing all stimuli` where should be no stimuli-drawing code anywhere else and no code that does something else!
+
+### Write your code one teeny-tiny step a time
+Your motto should be "slow but steady". This is the way I will guide you through the games. Always start with a something extremely simple like a static rectangle or image. Make sure it works. Add a minor functionality: Change in color, position, another rectangle, storing it as an attribute, etc. Make sure it works. Never go to the next step unless you fully understand what your current code is doing and you are 100% certain^[Seriously, 100%! If you have even a shadow of a doubt, check again. That shadow will grow and make you progressively uncertain about your code.] that it behaves as it should. This tortoise-speed approach may feel silly and overly slow but it is still faster than writing a large chunk of code and then trying to make it work. It is much easier to solve simple problems one at a time than a lot of them simultaneously.
+
+## Reading the code {#reading-tips}
+Reading code is easy because computers are dumb and you are smart. This means that instructions you give the computer must necessarily be very simple and, therefore, are very easy to understand for a human. Unfortunately, reading code is also hard because computers are dumb and you are smart. Your are so smart that you don't even need to read the entire code to understand what it is doing, you just read the key bits and fill in the gaps. Unfortunately, this means that you will tend to read over mistakes. This is not unique to programming, if you ever proofraed a text, you now how hard it is to find tipos. Your brain corrects them on the fly using the context and you read the word as it should be, not as it is actually written^[Tip: Read your text one sentence at a time starting from the back or read one random sentence at a time. This breaks the flow of the text and helps you concentrate on words rather than on the meaning and the story.].
+
+My experience with programming in general and on this seminar in particular is that most problems you get stuck with are simple to be point of being dumb and obvious in retrospect^[Hindsight is always 20/20!]. Do not despair! It is not you, but just a consequence of how wonderfully your brain is wired for pattern-recognition. Below are several suggestions that could help you to make reading code more robust.
+
+### Think like a computer
+Read the code line-by-line and "execute" it the way the compute would. Use pen-and-paper to keep the track of variables. Trace which chunks of code can be reached and when. Slow yourself down and make sure you understand each line and are able to keep track of the variables. Once you do that it will be easy to spot a mistake.
+
+### Pretend that you've never seen this code in your life
+Assume that you have no idea what the code is doing. As I wrote, quite often you _literally_ do not see a mistake because your brain fills-in details and bends the reality to match your expectations. You _know_ what this chunk of code should be doing, so instead of reading it you skim through it and, unless it looks obviously terribly wrong, assume that it does what it should. Turning your expectations off is hard but is immensely helpful.
+
+### Do not search only under the street lamp
+Whenever you are using some new code or need to implement something that feels complicated and your code does not work as it should, you will tend to assume that a problem is with the new fancy code. Simply because it is new, fancy, and complicated. But, in my experience, the error will typically hide in plain sight in the simpler "trivial" code nearby which you never properly look at, because it is simple and trivial. Check everything, not just the places where you would expect to have made a mistake.
+
+### Use the debugger
+In the book, you will learn how to pause an execution of your game, so you can investigate its state. Use this knowledge!
+Put breakpoints and execute the code step-by-step. Check values of variables using "Watch" tab. Use debug console to check whether functions return results that they should. For complex conditions or mathematical formulas, split them into small bits, copy and execute these bits in the debug console and check whether numbers add up. Make sure that a code chunk checks out and then proceed to analyze the next one. Debugging is particularly helpful to identify the code that is not reached or reached at the wrong moment.
+
+## Zen of Python
+I found [Zen of Python](https://www.python.org/dev/peps/pep-0020/) to be good inspiration on how to approach programming.
