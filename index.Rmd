@@ -86,3 +86,42 @@ In the book, you will learn how to pause an execution of your game, so you can i
 
 ## Zen of Python
 I found [Zen of Python](https://www.python.org/dev/peps/pep-0020/) to be good inspiration on how to approach programming.
+
+# Software {#software}
+For this seminar, we will need to install
+
+* PsychoPy that comes bundeled with Python but you might want to install Python separately via Anaconda distribution.
+* IDE of your choice. My instructions will be for Visual Studio Code, which has a very good Python support.
+* Jupyter notebook for trying out small snippets of code. The simplest way is to use Anaconda distribution but you can also install it into PsychoPy Python distribution to minimize the number of Python installations that you have.
+
+## PsychoPy {#install-psychopy}
+Download and install [Standalone PsychoPy](https://www.psychopy.org/download.html) version. Use whatever the latest (and greatest) PsychoPy version is suggested to you (PsychoPy 2021.2.3 using Python3.6 as of time of writing.) You can install PsychoPy as a conda package or via pip. However, using it as a standalone would ensure that you have all necessary additional libraries and a builder interface for the future use. We will use prepackaged PsychoPy's Python environment in [VS Code](#install-vs-code).
+
+## VS Code {#install-vs-code}
+[Visual Studio Code](https://code.visualstudio.com/) is a free lightweight open-source editor with strong support for Python. Download the installer for your platform and follow the instructions. 
+
+Start VS Code and create an empty file (Ctrl+N). It will ask about the language for that file, click and select "python". VS Code will suggest to install Python extension, do this. Once the extension is installed, it will be activated and the next step will be to configure which Python distribution is used. You can see the current active Python distribution in the bottom line of the window on the left:
+```{r echo=FALSE, out.width = "100%", fig.align = 'center'}
+knitr::include_graphics("images/vscode-python-active-interpreter.png")
+```
+
+Click on this text and you will get a list of Python distributions installed in your system. In my case, I have four and the one I am interested in is the bottom one for PsychoPy (`C:\Program Files\PsychoPy3\python.exe`).
+```{r echo=FALSE, out.width = "100%", fig.align = 'center'}
+knitr::include_graphics("images/vscode-choose-psychopy.png")
+```
+Select the one that you have. Your path might differ but do make sure that you use PsychoPy. Double-check this whenever get strange errors about psychopy library not found, as this probably means that you are using the wrong distribution without PsychoPy.
+
+
+
+Next, we need to install Python extension. Start VS Code, select extensions pane (Ctr+Shift+X), and type `python` in the search window. Select and install a Python extension from Microsoft.
+
+```{r echo=FALSE, out.width = "100%", fig.align = 'center'}
+knitr::include_graphics("images/vscode-python-extension.png")
+```
+
+### Selecting Python installation
+
+
+Start VS Code and open any Python file, for example [this one](other/empty.py) (use `Alt+click` to download it, ignore warnings, it is has only comments, so cannot harm you). When you open Python file for the first time, VS Code will suggest to install a Python extension. Do that and install a linter when VS Code suggests that ([linting](https://code.visualstudio.com/docs/python/linting) highlights syntactical and stylistic problems in your code, making it easier to write consistent clear code).
+
+Once the Python extension is activated, you will see which Python interpreter is used (you can have more than one or you may have multiple [virtual environments](https://docs.python.org/3/tutorial/venv.html)).
