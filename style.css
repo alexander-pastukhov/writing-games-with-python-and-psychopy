@@ -12,3 +12,15 @@ pre {
 pre code {
   white-space: inherit;
 }
+
+.practice {
+  text-align: center;
+  background: #9BD7DB 5px center/3em no-repeat;
+  background-image: url("images/assignment.svg");
+}
+
+.program {
+  text-align: center;
+  background: #70CDD3 5px center/3em no-repeat;
+  background-image: url("images/laptop.svg");
+}

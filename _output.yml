@@ -1,8 +1,10 @@
 bookdown::bs4_book:
-  css: bs4_style.css
+  css:
+    - bs4_style.css
+    - style.css
   theme:
     primary: "#096B72"
-  repo: https://github.com/rstudio/bookdown-demo
+  repo: https://github.com/alexander-pastukhov/writing-games-with-python-and-psychopy
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex
