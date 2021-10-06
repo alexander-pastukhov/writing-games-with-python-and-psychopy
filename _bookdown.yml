@@ -1,4 +1,4 @@
-book_filename: "games-with-python-and-psychopy"
+book_filename: "writing-games-with-python-and-psychopy"
 output_dir: "docs"
 new_session: true
 before_chapter_script: _common.R
