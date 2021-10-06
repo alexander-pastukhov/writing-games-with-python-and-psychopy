@@ -20,7 +20,7 @@ Next, follow [Getting Started with Python in VS Code](https://code.visualstudio.
 Install and enable a linter, software that highlights syntactical and stylistic problems in your Python source code. Follow the [manual](https://code.visualstudio.com/docs/python/linting) at VS Code website.
 
 
-## Jupyter Notebooks
+## Jupyter Notebooks {#jupyter-notebooks}
 [Jupyter Notebooks](https://jupyter.org/) offer a very convenient way to mix text, figure and code in a single document. They also make it easy to play with various small snippets in parallel without running scripts. We will rely on them for our first chapter and for an occasional exercises or code testing later on. There are two way you can use them: 1) in VS Code using Jupyter extension, 2) in your browser using classical interface.
 
 ### Jupyter Notebooks in VS Code
@@ -31,3 +31,5 @@ The simplest way to use Jupyter Notebooks along with a lot of other useful data 
 
 Otherwise, download and install Anaconda. The website has an excellent [Getting started](https://docs.anaconda.com/anaconda/user-guide/getting-started/) section.
 
+## Keeping things tidy {#files-folder}
+Before we start, I suggest that you create a folder called _games-with-python_ (or something along these lines). If you opted to use Jupyter Notebooks via Anaconda, you should create it in your user folder because this is where Anaconda would expects to find them. Then, create a new subfolder for each chapter / game. For the seminar, you would need to zip and upload a folder with all the files.
