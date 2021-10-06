@@ -11,6 +11,7 @@ install-vs-code
 jupyter-notebooks
 jupyter-notebooks-in-vs-code
 jupyter-notebooks-in-anaconda
+files-folder
 programming-tips
 writing-tips
 use-a-linter
@@ -23,3 +24,11 @@ pretend-that-youve-never-seen-this-code-in-your-life
 do-not-search-only-under-the-street-lamp
 use-the-debugger
 zen-of-python
+python-basics
+variables
+assignments-are-not-equations
+constants
+value-types
+printing-output
+string-formatting
+cover-image-path-to-the-social-sharing-image-like-imagescover.jpg

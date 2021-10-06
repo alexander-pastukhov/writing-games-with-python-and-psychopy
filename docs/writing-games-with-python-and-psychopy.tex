@@ -45,6 +45,46 @@
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
@@ -179,6 +219,11 @@ The simplest way to use Jupyter Notebooks along with a lot of other useful data 
 
 Otherwise, download and install Anaconda. The website has an excellent \href{https://docs.anaconda.com/anaconda/user-guide/getting-started/}{Getting started} section.
 
+\hypertarget{files-folder}{%
+\section{Keeping things tidy}\label{files-folder}}
+
+Before we start, I suggest that you create a folder called \emph{games-with-python} (or something along these lines). If you opted to use Jupyter Notebooks via Anaconda, you should create it in your user folder because this is where Anaconda would expects to find them. Then, create a new subfolder for each chapter / game. For the seminar, you would need to zip and upload a folder with all the files.
+
 \hypertarget{programming-tips}{%
 \chapter{Programming tips and tricks}\label{programming-tips}}
 
@@ -243,6 +288,339 @@ In the book, you will learn how to pause an execution of your game, so you can i
 \section{Zen of Python}\label{zen-of-python}}
 
 I found \href{https://www.python.org/dev/peps/pep-0020/}{Zen of Python} to be good inspiration on how to approach programming.
+
+\hypertarget{python-basics}{%
+\chapter{Python basics}\label{python-basics}}
+
+Hopefully, you already \protect\hyperlink{files-folder}{created a special folder} for this book. Download the \href{notebooks/Seminar\%2001.\%20Basics.ipynb}{exercise notebook}, put it in a chapter's folder, and open it (see \protect\hyperlink{jupyter-notebooks}{relevant instructions}. You will need to switch between explanations here and the exercises in the notebook, so keep them both open.
+
+\hypertarget{variables}{%
+\section{Variables}\label{variables}}
+
+The first fundamental concept that we need to be acquainted with is \textbf{variable}. Variables are used to store information and you can think of it as a box with a name tag, so that you can put something into it. The name tag on that box is the name of the variable and its value what you store in it. For example, we can create a variable that stores the number of legs that a game character has. We begin with a number typical for a human being.
+
+\begin{center}\includegraphics[width=0.5\linewidth]{images/variable-as-box} \end{center}
+
+In Python, you would write
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{number\_of\_legs }\OperatorTok{=} \DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+The \textbf{assignment statement} above has very simple structure:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\OperatorTok{\textless{}}\NormalTok{variable}\OperatorTok{{-}}\NormalTok{name}\OperatorTok{\textgreater{}} \OperatorTok{=} \OperatorTok{\textless{}}\NormalTok{value}\OperatorTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+Variable name (name tag on the box) should be meaningful, it can start with letters or \_ and can contain letters, numbers, and \_ symbol but not spaces, tabs, special characters, etc. Python recommends (well, actually, \href{https://www.python.org/dev/peps/pep-0008/}{insists}) that you use \textbf{snake\_case} (all lower-case, underscore for spaces) to format your variable names. The \texttt{\textless{}value\textgreater{}} on the right side is a more complex story, as it can be hard-coded (as in example above), computed using other variables or the same variable, returned by a function, etc.
+
+Using variables means that you can concentrate what corresponding values \textbf{mean} rather than worrying about what these values are. For example, the next time you need to compute something based on number of character's legs (e.g., how many pairs of shoes does a character need), you can compute it based on current value of \texttt{number\_of\_legs} variable rather than assume that it is \texttt{1}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# BAD: why 1? Is it because the character has two legs or}
+\CommentTok{\# because we issue one pair of shoes per character irrespective of}
+\CommentTok{\# their actual number of legs?}
+\NormalTok{pairs\_of\_shoes }\OperatorTok{=} \DecValTok{1}
+
+\CommentTok{\# BETTER (but what if our character has only one leg?)}
+\NormalTok{pairs\_of\_shoes }\OperatorTok{=}\NormalTok{ number\_of\_legs }\OperatorTok{/} \DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+Variables also give you flexibility. Their values can change during the program run: player's score is increasing, number of lives decreasing, number of spells it can cast grows or falls depending on their use, etc. Yet, you can always use the value in the variable to perform necessary computations. For example, here is a slightly extended \texttt{number\_of\_shoes} example.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{number\_of\_legs }\OperatorTok{=} \DecValTok{2}
+
+\CommentTok{\# ...}
+\CommentTok{\# something happens and our character is turned into an octopus}
+\NormalTok{number\_of\_legs }\OperatorTok{=} \DecValTok{8}
+\CommentTok{\# ...}
+
+\CommentTok{\# the same code still works and we still can compute the correct number of pairs of shoes}
+\NormalTok{pairs\_of\_shoes }\OperatorTok{=}\NormalTok{ number\_of\_legs }\OperatorTok{/} \DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+As noted above, you can think about a variable as a labeled box you can store something in. That means that you can always ``throw away'' the old value and put something new. In case of variables, the ``throwing away'' part happens automatically, as a new value overwrites the old one. Check yourself, what will be final value of the variable in the code below?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{number\_of\_legs }\OperatorTok{=} \DecValTok{2}
+\NormalTok{number\_of\_legs }\OperatorTok{=} \DecValTok{5}
+\NormalTok{number\_of\_legs }\OperatorTok{=} \DecValTok{1}
+\NormalTok{number\_of\_legs}
+\end{Highlighting}
+\end{Shaded}
+
+Do exercise \#1.
+
+As you have already seen, you can \emph{compute} a value instead of specifying it. What would be the answer here?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{number\_of\_legs }\OperatorTok{=} \DecValTok{2} \OperatorTok{*} \DecValTok{2}
+\NormalTok{number\_of\_legs }\OperatorTok{=} \DecValTok{7} \OperatorTok{{-}} \DecValTok{2}
+\NormalTok{number\_of\_legs}
+\end{Highlighting}
+\end{Shaded}
+
+Do exercise \#2.
+
+\hypertarget{assignments-are-not-equations}{%
+\section{Assignments are not equations!}\label{assignments-are-not-equations}}
+
+\textbf{Very important}: although assignments \emph{look} like mathematical equations, they are \textbf{not equations!} They follow a \textbf{very important} rule that you must keep in mind when understanding assignments: the right side of an expression is evaluated \emph{first} until the final value is computed, then and only then that final value is assigned to the variable specified on the left side (put in the box). What this means is that you can use the same variable on \emph{both} sides! Let's take a look at this code:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{=} \DecValTok{2}
+\NormalTok{y }\OperatorTok{=} \DecValTok{5}
+\NormalTok{x }\OperatorTok{=}\NormalTok{ x }\OperatorTok{+}\NormalTok{ y }\OperatorTok{{-}} \DecValTok{4}
+\end{Highlighting}
+\end{Shaded}
+
+What happens when computer evaluates the last line? First, it takes \emph{current} values of all variables (\texttt{2} for \texttt{x} and \texttt{5} for \texttt{y}) and puts them into the expression. After that internal step, the expression looks like
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{=} \DecValTok{2} \OperatorTok{+} \DecValTok{5} \OperatorTok{{-}} \DecValTok{4}
+\end{Highlighting}
+\end{Shaded}
+
+Then, it computes the expression on the right side and, \textbf{once the computation is completed}, stores that new value in \texttt{x}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{=} \DecValTok{3}
+\end{Highlighting}
+\end{Shaded}
+
+Do exercise \#3 to make sure you understand this.
+
+\hypertarget{constants}{%
+\section{Constants}\label{constants}}
+
+Although the real power of variables is that you can change their value, you should use them even if the value remains constant throughout the program. There are no true constants in Python, rather an agreement that their names should be all \texttt{UPPER\_CASE}. Accordingly, when you see \texttt{SUCH\_A\_VARIABLE} you know that you should not change its value. Technically, this is just a recommendation, as no one can stop you from modifying value of a \texttt{CONSTANT}. However, much of Python's ease-of-use comes from such agreements (such as a \texttt{snake\_case} convention above). We will encounter more of such agreements later, for example, when learning about objects.
+
+Taking all this into account, if number of legs stays constant throughout the game, you should highlight that constancy and write
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{NUMBER\_OF\_LEGS }\OperatorTok{=} \DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+I strongly recommend using constants and avoid hardcoding values. First, if you have several identical values that mean different things (2 legs, 2 eyes, 2 ears, 2 vehicles per character, etc.), seeing a \texttt{2} in the code will not tell you what does this \texttt{2} mean (the legs? the ears? the score multiplier?). You can, of course, figure it out based on the code that uses this number but you could spare yourself that extra effort and use a properly named constant instead. Then, you just read its name and the meaning of the value becomes apparent and it is the meaning not the actual value that you are mostly interested in. Second, if you decide to \emph{change} that value (say, our main character is now a tripod), when using a constant means you have only one place to worry about, the rest of the code stays as is. If you hard-coded that number, you are in for an exciting\footnote{not really} and definitely long search-and-replace throughout the entire code.
+
+Do exercise \#4.
+
+\hypertarget{value-types}{%
+\section{Value types}\label{value-types}}
+
+So far, we only used integer numeric values (1, 2, 5, 1000\ldots). Although, Python supports \href{https://docs.python.org/3/library/stdtypes.html}{many different value types}, at first we will concentrate on a small subset of them:
+
+\begin{itemize}
+\tightlist
+\item
+  integer numbers, we already used, e.g.~\texttt{-1}, \texttt{100000}, \texttt{42}.
+\item
+  float numbers that can take any real value, e.g.~\texttt{42.0}, \texttt{3.14159265359}, \texttt{2.71828}.
+\item
+  strings that can store text. The text is enclosed between either paired quotes \texttt{"some\ text"} or apostrophes \texttt{\textquotesingle{}some\ text\textquotesingle{}}. This means that you can use quotes or apostrophes inside the string, as long as its is enclosed by the alternative. E.g., \texttt{"students\textquotesingle{}\ homework"} (enclosed in \texttt{"}, apostrophe \texttt{\textquotesingle{}} inside) or \texttt{\textquotesingle{}"All\ generalizations\ are\ false,\ including\ this\ one."\ Mark\ Twain\textquotesingle{}} (quotation enclosed by apostrophes). There is much much more to strings and we will cover that material throughout the course.
+\item
+  logical / Boolean values that are either \texttt{True} or \texttt{False}.
+\end{itemize}
+
+When using a variable it is important that you know what type of value it stores and this is mostly on you. Python will raise an error, if you try doing a computation using incompatible. In some cases, Python will automatically convert values between certain types, e.g.~any integer value is also a real value, so conversion from \texttt{1} to \texttt{1.0} is mostly trivial and automatic. However, in other cases you may need to use explicit conversion. Go to exercise \#5 and try guessing which code will run and which will throw an error due to incompatible types?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{5} \OperatorTok{+} \FloatTok{2.0}
+\CommentTok{\textquotesingle{}5\textquotesingle{}} \OperatorTok{+} \DecValTok{2}
+\CommentTok{\textquotesingle{}5\textquotesingle{}} \OperatorTok{+} \StringTok{\textquotesingle{}2\textquotesingle{}}
+\CommentTok{\textquotesingle{}5\textquotesingle{}} \OperatorTok{+} \VariableTok{True}
+\DecValTok{5} \OperatorTok{+} \VariableTok{True}
+\end{Highlighting}
+\end{Shaded}
+
+Do exercise \#5.
+
+Surprised by the last one? This is because internally, \texttt{True} is also \texttt{1} and \texttt{False} is \texttt{0}!
+
+You can explicitly convert from one type to another using special functions. For example, to turn a number or a logical value into a string, you simply write \texttt{str(\textless{}value\textgreater{})}. In examples below, what would be the result?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{str}\NormalTok{(}\DecValTok{10} \OperatorTok{/} \DecValTok{2}\NormalTok{)}
+\BuiltInTok{str}\NormalTok{(}\FloatTok{2.5} \OperatorTok{+} \VariableTok{True}\NormalTok{)}
+\BuiltInTok{str}\NormalTok{(}\VariableTok{True}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Do exercise \#6.
+
+Similarly, you can convert to a logical/Boolean variable using \texttt{bool(\textless{}value\textgreater{})} function. The rules are simple, for numeric values \texttt{0} is \texttt{False}, any other non-zero value is converted to \texttt{True}. For string, an empty string \texttt{\textquotesingle{}\textquotesingle{}} is evaluated to \texttt{False} and non-empty string is converted to \texttt{True}. What would be the output in the examples below?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{bool}\NormalTok{(}\OperatorTok{{-}}\DecValTok{10}\NormalTok{)}
+\BuiltInTok{bool}\NormalTok{(}\FloatTok{0.0}\NormalTok{)}
+
+\NormalTok{secret\_message }\OperatorTok{=} \StringTok{\textquotesingle{}\textquotesingle{}}
+\BuiltInTok{bool}\NormalTok{(secret\_message)}
+
+\BuiltInTok{bool}\NormalTok{(}\StringTok{\textquotesingle{}False\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Do exercise \#7.
+
+Converting to integer or float numbers is trickier. The simplest case is from logical to integer/float, as \texttt{True} gives you \texttt{int(True)} is \texttt{1} and \texttt{float(True)} is \texttt{1.0} and \texttt{False} gives you \texttt{0}/\texttt{0.0}. When converting from float to integer, Python simply drops the fractional part (not rounding!). When converting a string, it must be a valid number of the corresponding type or the error is generated. E.g., you can convert a string like \texttt{"123"} to and integer or a float but this won't work for \texttt{"a123"}. Moreover, you can convert \texttt{"123.4"} to floating-point number but not to an integer, as it has fractional part in it. Given all this, which cells would work and what output would they produce?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{float}\NormalTok{(}\VariableTok{False}\NormalTok{)}
+\BuiltInTok{int}\NormalTok{(}\OperatorTok{{-}}\FloatTok{3.3}\NormalTok{)}
+\BuiltInTok{float}\NormalTok{(}\StringTok{"67.8"}\NormalTok{)}
+\BuiltInTok{int}\NormalTok{(}\StringTok{"123+3"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Do exercise \#8.
+
+\hypertarget{printing-output}{%
+\section{Printing output}\label{printing-output}}
+
+To print the value, you need you use \texttt{print()} function (we will talk about functions in general later). In the simplest case, you pass the value and it will be printed out.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{print}\NormalTok{(}\DecValTok{5}\NormalTok{)}
+\CommentTok{\#\textgreater{} 5}
+\end{Highlighting}
+\end{Shaded}
+
+or
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{print}\NormalTok{(}\StringTok{"five"}\NormalTok{)}
+\CommentTok{\#\textgreater{} five}
+\end{Highlighting}
+\end{Shaded}
+
+Of course, you already know about the variables, so rather than putting a value directly, you can pass a variable instead and its value will be printed out.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{number\_of\_pancakes }\OperatorTok{=} \DecValTok{10}
+\BuiltInTok{print}\NormalTok{(number\_of\_pancakes)}
+\CommentTok{\#\textgreater{} 10}
+\end{Highlighting}
+\end{Shaded}
+
+or
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{breakfast }\OperatorTok{=} \StringTok{"pancakes"}
+\BuiltInTok{print}\NormalTok{(breakfast)}
+\CommentTok{\#\textgreater{} pancakes}
+\end{Highlighting}
+\end{Shaded}
+
+You can also pass more than one value/variable to the print function and all the values will be printed one after another. For example, if we want to tell the user what did I had for breakfast and just how many of those, we can do
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{breakfast }\OperatorTok{=} \StringTok{"pancakes"}
+\NormalTok{number\_of\_items }\OperatorTok{=} \DecValTok{10}
+\BuiltInTok{print}\NormalTok{(breakfast, number\_of\_items)}
+\CommentTok{\#\textgreater{} pancakes 10}
+\end{Highlighting}
+\end{Shaded}
+
+What will be printed by the code below?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dinner }\OperatorTok{=} \StringTok{"stake"}
+\NormalTok{count }\OperatorTok{=} \DecValTok{4}
+\NormalTok{desert }\OperatorTok{=} \StringTok{"cupcakes"}
+
+\BuiltInTok{print}\NormalTok{(count, dinner, count, desert)}
+\end{Highlighting}
+\end{Shaded}
+
+Do exercise \#9.
+
+However, you probably would want to be more explicit, when you print out the information. For example, imagine you have these three variables:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{meal }\OperatorTok{=} \StringTok{"breakfast"}
+\NormalTok{dish }\OperatorTok{=} \StringTok{"pancakes"}
+\NormalTok{count }\OperatorTok{=} \DecValTok{10}
+\end{Highlighting}
+\end{Shaded}
+
+You could, of course do \texttt{print(meal,\ dish,\ count)} but it would be nicer to print ``\emph{I had \textbf{10 pancakes} for \textbf{breakfast}}'', where items in bold would be the inserted variables' values. For this, we need to use string formatting. Please note that the string formatting is not specific to printing, you can create a new string value via formatting and store it in a variable (without printing it out) or print it out (without storing it).
+
+\hypertarget{string-formatting}{%
+\section{String formatting}\label{string-formatting}}
+
+A great resource on string formatting in Python is \href{https://pyformat.info/}{pyformat.info}. As Python constantly evolves, it now has more than one way to format strings. Below, I will introduce the ``old'' format that is based on classic string formatting used in \texttt{sprintf} function is C, Matlab, R, and many other programming languages. It is somewhat less flexible than a newer ones but for simple tasks the difference is negligible. Knowing the old format is useful because of its generality. If you want to learn alternatives, read at the link above.
+
+The general call is \texttt{"a\ string\ with\ formatting"\%(tuple\ of\ values\ to\ be\ used\ during\ formatting)}.
+
+In \texttt{"a\ string\ with\ formatting"}, you specify where you want to put the value via \texttt{\%} symbol that is followed by an \emph{optional} formatting info and the \emph{required} symbol that defines the \textbf{type} of the value. The type symbols are
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{s} for string
+\item
+  \texttt{d} for an integer
+\item
+  \texttt{f} for a float value
+\item
+  \texttt{g} for an ``optimally'' printed float value, so that scientific notation is used for large values (\emph{e.g.}, \texttt{10e5} instead of \texttt{100000}).
+\end{itemize}
+
+Here is an example of formatting a string using an integer:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{print}\NormalTok{(}\StringTok{"I had }\SpecialCharTok{\%d}\StringTok{ pancakes for breakfast"}\OperatorTok{\%}\NormalTok{(}\DecValTok{10}\NormalTok{))}
+\CommentTok{\#\textgreater{} I had 10 pancakes for breakfast}
+\end{Highlighting}
+\end{Shaded}
+
+You are not limited to a single value that you can put into a string. You can specify more locations via \texttt{\%} but you must make sure that you pass the right number of values. Before running it, can you figure out which call will actually work (and what will be the output ) and which will produce an error?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}I had }\SpecialCharTok{\%d}\StringTok{ pancakes and either }\SpecialCharTok{\%d}\StringTok{  or }\SpecialCharTok{\%d}\StringTok{ stakes for dinner\textquotesingle{}}\OperatorTok{\%}\NormalTok{(}\DecValTok{2}\NormalTok{))}
+\BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}I had }\SpecialCharTok{\%d}\StringTok{ pancakes and }\SpecialCharTok{\%d}\StringTok{ stakes for dinner\textquotesingle{}}\OperatorTok{\%}\NormalTok{(}\DecValTok{7}\NormalTok{, }\DecValTok{10}\NormalTok{))}
+\BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}I had }\SpecialCharTok{\%d}\StringTok{ pancakes and }\SpecialCharTok{\%d}\StringTok{ stakes for dinner\textquotesingle{}}\OperatorTok{\%}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{10}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+Do exercise \#10.
+
+In case of real values you have two options: \texttt{\%f} and \texttt{\%g}. The latter uses scientific notation (e.g.~\texttt{1e10} for \texttt{10000000000}) to make a representation more compact.
+
+Do exercise \#11 to get a better feeling for the difference.
+
+These is much more to formatting and you can read about it at \href{https://pyformat.info/}{pyformat.info}. However, these basics are sufficient for us to start programming our first game during the next seminar. Don't forget to submit your exercise notebook and see you next time!
 
   \bibliography{book.bib}
 

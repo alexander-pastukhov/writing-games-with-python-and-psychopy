@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 4 Python basics | Writing games with Python and PsychoPy</title>
+<meta name="author" content="Alexander (Sasha) Pastukhov">
+<meta name="description" content="Hopefully, you already created a special folder for this book. Download the exercise notebook, put it in a chapter’s folder, and open it (see relevant instructions. You will need to switch between...">
+<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta property="og:title" content="Chapter 4 Python basics | Writing games with Python and PsychoPy">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://alexander-pastukhov.github.io/writing-games-with-python-and-psychopy/python-basics.html">
+<meta property="og:description" content="Hopefully, you already created a special folder for this book. Download the exercise notebook, put it in a chapter’s folder, and open it (see relevant instructions. You will need to switch between...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 4 Python basics | Writing games with Python and PsychoPy">
+<meta name="twitter:description" content="Hopefully, you already created a special folder for this book. Download the exercise notebook, put it in a chapter’s folder, and open it (see relevant instructions. You will need to switch between...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Writing games with Python and PsychoPy</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled"><li><a class="" href="index.html"><span class="header-section-number">Chapter 4</span> Python basics</a></li></ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/alexander-pastukhov/writing-games-with-python-and-psychopy">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="python-basics" class="section level1" number="4">
+<h1>
+<span class="header-section-number">4</span> Python basics<a class="anchor" aria-label="anchor" href="#python-basics"><i class="fas fa-link"></i></a>
+</h1>
+<p>Hopefully, you already <a href="software.html#files-folder">created a special folder</a> for this book. Download the <a href="notebooks/Seminar%2001.%20Basics.ipynb">exercise notebook</a>, put it in a chapter’s folder, and open it (see <a href="software.html#jupyter-notebooks">relevant instructions</a>. You will need to switch between explanations here and the exercises in the notebook, so keep them both open.</p>
+<div id="variables" class="section level2" number="4.1">
+<h2>
+<span class="header-section-number">4.1</span> Variables<a class="anchor" aria-label="anchor" href="#variables"><i class="fas fa-link"></i></a>
+</h2>
+<p>The first fundamental concept that we need to be acquainted with is <strong>variable</strong>. Variables are used to store information and you can think of it as a box with a name tag, so that you can put something into it. The name tag on that box is the name of the variable and its value what you store in it. For example, we can create a variable that stores the number of legs that a game character has. We begin with a number typical for a human being.</p>
+<div class="inline-figure"><img src="images/variable-as-box.png" width="50%" style="display: block; margin: auto;"></div>
+<p>In Python, you would write</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="python-basics.html#cb1-1" aria-hidden="true" tabindex="-1"></a>number_of_legs <span class="op">=</span> <span class="dv">2</span></span></code></pre></div>
+<p>The <strong>assignment statement</strong> above has very simple structure:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="python-basics.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>variable<span class="op">-</span>name<span class="op">&gt;</span> <span class="op">=</span> <span class="op">&lt;</span>value<span class="op">&gt;</span></span></code></pre></div>
+<p>Variable name (name tag on the box) should be meaningful, it can start with letters or _ and can contain letters, numbers, and _ symbol but not spaces, tabs, special characters, etc. Python recommends (well, actually, <a href="https://www.python.org/dev/peps/pep-0008/">insists</a>) that you use <strong>snake_case</strong> (all lower-case, underscore for spaces) to format your variable names. The <code>&lt;value&gt;</code> on the right side is a more complex story, as it can be hard-coded (as in example above), computed using other variables or the same variable, returned by a function, etc.</p>
+<p>Using variables means that you can concentrate what corresponding values <strong>mean</strong> rather than worrying about what these values are. For example, the next time you need to compute something based on number of character’s legs (e.g., how many pairs of shoes does a character need), you can compute it based on current value of <code>number_of_legs</code> variable rather than assume that it is <code>1</code>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="python-basics.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># BAD: why 1? Is it because the character has two legs or</span></span>
+<span id="cb3-2"><a href="python-basics.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># because we issue one pair of shoes per character irrespective of</span></span>
+<span id="cb3-3"><a href="python-basics.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># their actual number of legs?</span></span>
+<span id="cb3-4"><a href="python-basics.html#cb3-4" aria-hidden="true" tabindex="-1"></a>pairs_of_shoes <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb3-5"><a href="python-basics.html#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="python-basics.html#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># BETTER (but what if our character has only one leg?)</span></span>
+<span id="cb3-7"><a href="python-basics.html#cb3-7" aria-hidden="true" tabindex="-1"></a>pairs_of_shoes <span class="op">=</span> number_of_legs <span class="op">/</span> <span class="dv">2</span></span></code></pre></div>
+<p>Variables also give you flexibility. Their values can change during the program run: player’s score is increasing, number of lives decreasing, number of spells it can cast grows or falls depending on their use, etc. Yet, you can always use the value in the variable to perform necessary computations. For example, here is a slightly extended <code>number_of_shoes</code> example.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="python-basics.html#cb4-1" aria-hidden="true" tabindex="-1"></a>number_of_legs <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb4-2"><a href="python-basics.html#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="python-basics.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ...</span></span>
+<span id="cb4-4"><a href="python-basics.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># something happens and our character is turned into an octopus</span></span>
+<span id="cb4-5"><a href="python-basics.html#cb4-5" aria-hidden="true" tabindex="-1"></a>number_of_legs <span class="op">=</span> <span class="dv">8</span></span>
+<span id="cb4-6"><a href="python-basics.html#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ...</span></span>
+<span id="cb4-7"><a href="python-basics.html#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="python-basics.html#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># the same code still works and we still can compute the correct number of pairs of shoes</span></span>
+<span id="cb4-9"><a href="python-basics.html#cb4-9" aria-hidden="true" tabindex="-1"></a>pairs_of_shoes <span class="op">=</span> number_of_legs <span class="op">/</span> <span class="dv">2</span></span></code></pre></div>
+<p>As noted above, you can think about a variable as a labeled box you can store something in. That means that you can always “throw away” the old value and put something new. In case of variables, the “throwing away” part happens automatically, as a new value overwrites the old one. Check yourself, what will be final value of the variable in the code below?</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="python-basics.html#cb5-1" aria-hidden="true" tabindex="-1"></a>number_of_legs <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb5-2"><a href="python-basics.html#cb5-2" aria-hidden="true" tabindex="-1"></a>number_of_legs <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb5-3"><a href="python-basics.html#cb5-3" aria-hidden="true" tabindex="-1"></a>number_of_legs <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb5-4"><a href="python-basics.html#cb5-4" aria-hidden="true" tabindex="-1"></a>number_of_legs</span></code></pre></div>
+<div class="rmdnote practice">
+<p>Do exercise #1.</p>
+</div>
+<p>Thank you for noticing this <strong>new notice</strong>! Your noticing it has
+been noted, and <em>will be reported to the authorities</em>!
+::::</p>
+<p>As you have already seen, you can <em>compute</em> a value instead of specifying it. What would be the answer here?</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="python-basics.html#cb6-1" aria-hidden="true" tabindex="-1"></a>number_of_legs <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> <span class="dv">2</span></span>
+<span id="cb6-2"><a href="python-basics.html#cb6-2" aria-hidden="true" tabindex="-1"></a>number_of_legs <span class="op">=</span> <span class="dv">7</span> <span class="op">-</span> <span class="dv">2</span></span>
+<span id="cb6-3"><a href="python-basics.html#cb6-3" aria-hidden="true" tabindex="-1"></a>number_of_legs</span></code></pre></div>
+<div class="rmdnote practice">
+<p>Do exercise #2.</p>
+</div>
+</div>
+<div id="assignments-are-not-equations" class="section level2" number="4.2">
+<h2>
+<span class="header-section-number">4.2</span> Assignments are not equations!<a class="anchor" aria-label="anchor" href="#assignments-are-not-equations"><i class="fas fa-link"></i></a>
+</h2>
+<p><strong>Very important</strong>: although assignments <em>look</em> like mathematical equations, they are <strong>not equations!</strong> They follow a <strong>very important</strong> rule that you must keep in mind when understanding assignments: the right side of an expression is evaluated <em>first</em> until the final value is computed, then and only then that final value is assigned to the variable specified on the left side (put in the box). What this means is that you can use the same variable on <em>both</em> sides! Let’s take a look at this code:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="python-basics.html#cb7-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb7-2"><a href="python-basics.html#cb7-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb7-3"><a href="python-basics.html#cb7-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> x <span class="op">+</span> y <span class="op">-</span> <span class="dv">4</span></span></code></pre></div>
+<p>What happens when computer evaluates the last line? First, it takes <em>current</em> values of all variables (<code>2</code> for <code>x</code> and <code>5</code> for <code>y</code>) and puts them into the expression. After that internal step, the expression looks like</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="python-basics.html#cb8-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">5</span> <span class="op">-</span> <span class="dv">4</span></span></code></pre></div>
+<p>Then, it computes the expression on the right side and, <strong>once the computation is completed</strong>, stores that new value in <code>x</code></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="python-basics.html#cb9-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">3</span></span></code></pre></div>
+<div class="rmdnote practice">
+<p>Do exercise #3 to make sure you understand this.</p>
+</div>
+</div>
+<div id="constants" class="section level2" number="4.3">
+<h2>
+<span class="header-section-number">4.3</span> Constants<a class="anchor" aria-label="anchor" href="#constants"><i class="fas fa-link"></i></a>
+</h2>
+<p>Although the real power of variables is that you can change their value, you should use them even if the value remains constant throughout the program. There are no true constants in Python, rather an agreement that their names should be all <code>UPPER_CASE</code>. Accordingly, when you see <code>SUCH_A_VARIABLE</code> you know that you should not change its value. Technically, this is just a recommendation, as no one can stop you from modifying value of a <code>CONSTANT</code>. However, much of Python’s ease-of-use comes from such agreements (such as a <code>snake_case</code> convention above). We will encounter more of such agreements later, for example, when learning about objects.</p>
+<p>Taking all this into account, if number of legs stays constant throughout the game, you should highlight that constancy and write</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="python-basics.html#cb10-1" aria-hidden="true" tabindex="-1"></a>NUMBER_OF_LEGS <span class="op">=</span> <span class="dv">2</span></span></code></pre></div>
+<p>I strongly recommend using constants and avoid hardcoding values. First, if you have several identical values that mean different things (2 legs, 2 eyes, 2 ears, 2 vehicles per character, etc.), seeing a <code>2</code> in the code will not tell you what does this <code>2</code> mean (the legs? the ears? the score multiplier?). You can, of course, figure it out based on the code that uses this number but you could spare yourself that extra effort and use a properly named constant instead. Then, you just read its name and the meaning of the value becomes apparent and it is the meaning not the actual value that you are mostly interested in. Second, if you decide to permanently <em>change</em> that value (say, our main character is now a tripod), when using a constant means you have only one place to worry about, the rest of the code stays as is. If you hard-coded that number, you are in for an exciting<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;not really&lt;/p&gt;"><sup>1</sup></a> and definitely long search-and-replace throughout the entire code.</p>
+<div class="rmdnote practice">
+<p>Do exercise #4.</p>
+</div>
+</div>
+<div id="value-types" class="section level2" number="4.4">
+<h2>
+<span class="header-section-number">4.4</span> Value types<a class="anchor" aria-label="anchor" href="#value-types"><i class="fas fa-link"></i></a>
+</h2>
+<p>So far, we only used integer numeric values (1, 2, 5, 1000…). Although, Python supports <a href="https://docs.python.org/3/library/stdtypes.html">many different value types</a>, at first we will concentrate on a small subset of them:</p>
+<ul>
+<li>integer numbers, we already used, e.g. <code>-1</code>, <code>100000</code>, <code>42</code>.</li>
+<li>float numbers that can take any real value, e.g. <code>42.0</code>, <code>3.14159265359</code>, <code>2.71828</code>.</li>
+<li>strings that can store text. The text is enclosed between either paired quotes <code>"some text"</code> or apostrophes <code>'some text'</code>. This means that you can use quotes or apostrophes inside the string, as long as its is enclosed by the alternative. E.g., <code>"students' homework"</code> (enclosed in <code>"</code>, apostrophe <code>'</code> inside) or <code>'"All generalizations are false, including this one." Mark Twain'</code> (quotation enclosed by apostrophes). There is much much more to strings and we will cover that material throughout the course.</li>
+<li>logical / Boolean values that are either <code>True</code> or <code>False</code>.</li>
+</ul>
+<p>When using a variable it is important that you know what type of value it stores and this is mostly on you. Python will raise an error, if you try doing a computation using incompatible. In some cases, Python will automatically convert values between certain types, e.g. any integer value is also a real value, so conversion from <code>1</code> to <code>1.0</code> is mostly trivial and automatic. However, in other cases you may need to use explicit conversion. Go to exercise #5 and try guessing which code will run and which will throw an error due to incompatible types?</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="python-basics.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="op">+</span> <span class="fl">2.0</span></span>
+<span id="cb11-2"><a href="python-basics.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">'5'</span> <span class="op">+</span> <span class="dv">2</span></span>
+<span id="cb11-3"><a href="python-basics.html#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">'5'</span> <span class="op">+</span> <span class="st">'2'</span></span>
+<span id="cb11-4"><a href="python-basics.html#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">'5'</span> <span class="op">+</span> <span class="va">True</span></span>
+<span id="cb11-5"><a href="python-basics.html#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="op">+</span> <span class="va">True</span></span></code></pre></div>
+<div class="rmdnote practice">
+<p>Do exercise #5.</p>
+</div>
+<p>Surprised by the last one? This is because internally, <code>True</code> is also <code>1</code> and <code>False</code> is <code>0</code>!</p>
+<p>You can explicitly convert from one type to another using special functions. For example, to turn a number or a logical value into a string, you simply write <code>str(&lt;value&gt;)</code>. In examples below, what would be the result?</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="python-basics.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">str</span>(<span class="dv">10</span> <span class="op">/</span> <span class="dv">2</span>)</span>
+<span id="cb12-2"><a href="python-basics.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">str</span>(<span class="fl">2.5</span> <span class="op">+</span> <span class="va">True</span>)</span>
+<span id="cb12-3"><a href="python-basics.html#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">str</span>(<span class="va">True</span>)</span></code></pre></div>
+<div class="rmdnote practice">
+<p>Do exercise #6.</p>
+</div>
+<p>Similarly, you can convert to a logical/Boolean variable using <code>bool(&lt;value&gt;)</code> function. The rules are simple, for numeric values <code>0</code> is <code>False</code>, any other non-zero value is converted to <code>True</code>. For string, an empty string <code>''</code> is evaluated to <code>False</code> and non-empty string is converted to <code>True</code>. What would be the output in the examples below?</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="python-basics.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">bool</span>(<span class="op">-</span><span class="dv">10</span>)</span>
+<span id="cb13-2"><a href="python-basics.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">bool</span>(<span class="fl">0.0</span>)</span>
+<span id="cb13-3"><a href="python-basics.html#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="python-basics.html#cb13-4" aria-hidden="true" tabindex="-1"></a>secret_message <span class="op">=</span> <span class="st">''</span></span>
+<span id="cb13-5"><a href="python-basics.html#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">bool</span>(secret_message)</span>
+<span id="cb13-6"><a href="python-basics.html#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="python-basics.html#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="bu">bool</span>(<span class="st">'False'</span>)</span></code></pre></div>
+<div class="rmdnote practice">
+<p>Do exercise #7.</p>
+</div>
+<p>Converting to integer or float numbers is trickier. The simplest case is from logical to integer/float, as <code>True</code> gives you <code>int(True)</code> is <code>1</code> and <code>float(True)</code> is <code>1.0</code> and <code>False</code> gives you <code>0</code>/<code>0.0</code>. When converting from float to integer, Python simply drops the fractional part (not rounding!). When converting a string, it must be a valid number of the corresponding type or the error is generated. E.g., you can convert a string like <code>"123"</code> to and integer or a float but this won’t work for <code>"a123"</code>. Moreover, you can convert <code>"123.4"</code> to floating-point number but not to an integer, as it has fractional part in it. Given all this, which cells would work and what output would they produce?</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="python-basics.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">float</span>(<span class="va">False</span>)</span>
+<span id="cb14-2"><a href="python-basics.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">int</span>(<span class="op">-</span><span class="fl">3.3</span>)</span>
+<span id="cb14-3"><a href="python-basics.html#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="bu">float</span>(<span class="st">"67.8"</span>)</span>
+<span id="cb14-4"><a href="python-basics.html#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="bu">int</span>(<span class="st">"123+3"</span>)</span></code></pre></div>
+<div class="rmdnote practice">
+<p>Do exercise #8.</p>
+</div>
+</div>
+<div id="printing-output" class="section level2" number="4.5">
+<h2>
+<span class="header-section-number">4.5</span> Printing output<a class="anchor" aria-label="anchor" href="#printing-output"><i class="fas fa-link"></i></a>
+</h2>
+<p>To print the value, you need you use <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> function (we will talk about functions in general later). In the simplest case, you pass the value and it will be printed out.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="python-basics.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">5</span>)</span>
+<span id="cb15-2"><a href="python-basics.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5</span></span></code></pre></div>
+<p>or</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="python-basics.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"five"</span>)</span>
+<span id="cb16-2"><a href="python-basics.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; five</span></span></code></pre></div>
+<p>Of course, you already know about the variables, so rather than putting a value directly, you can pass a variable instead and its value will be printed out.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="python-basics.html#cb17-1" aria-hidden="true" tabindex="-1"></a>number_of_pancakes <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb17-2"><a href="python-basics.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(number_of_pancakes)</span>
+<span id="cb17-3"><a href="python-basics.html#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10</span></span></code></pre></div>
+<p>or</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="python-basics.html#cb18-1" aria-hidden="true" tabindex="-1"></a>breakfast <span class="op">=</span> <span class="st">"pancakes"</span></span>
+<span id="cb18-2"><a href="python-basics.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(breakfast)</span>
+<span id="cb18-3"><a href="python-basics.html#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pancakes</span></span></code></pre></div>
+<p>You can also pass more than one value/variable to the print function and all the values will be printed one after another. For example, if we want to tell the user what did I had for breakfast and just how many of those, we can do</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="python-basics.html#cb19-1" aria-hidden="true" tabindex="-1"></a>breakfast <span class="op">=</span> <span class="st">"pancakes"</span></span>
+<span id="cb19-2"><a href="python-basics.html#cb19-2" aria-hidden="true" tabindex="-1"></a>number_of_items <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb19-3"><a href="python-basics.html#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(breakfast, number_of_items)</span>
+<span id="cb19-4"><a href="python-basics.html#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pancakes 10</span></span></code></pre></div>
+<p>What will be printed by the code below?</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="python-basics.html#cb20-1" aria-hidden="true" tabindex="-1"></a>dinner <span class="op">=</span> <span class="st">"stake"</span></span>
+<span id="cb20-2"><a href="python-basics.html#cb20-2" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb20-3"><a href="python-basics.html#cb20-3" aria-hidden="true" tabindex="-1"></a>desert <span class="op">=</span> <span class="st">"cupcakes"</span></span>
+<span id="cb20-4"><a href="python-basics.html#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="python-basics.html#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(count, dinner, count, desert)</span></code></pre></div>
+<div class="rmdnote practice">
+<p>Do exercise #9.</p>
+</div>
+<p>However, you probably would want to be more explicit, when you print out the information. For example, imagine you have these three variables:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="python-basics.html#cb21-1" aria-hidden="true" tabindex="-1"></a>meal <span class="op">=</span> <span class="st">"breakfast"</span></span>
+<span id="cb21-2"><a href="python-basics.html#cb21-2" aria-hidden="true" tabindex="-1"></a>dish <span class="op">=</span> <span class="st">"pancakes"</span></span>
+<span id="cb21-3"><a href="python-basics.html#cb21-3" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> <span class="dv">10</span></span></code></pre></div>
+<p>You could, of course do <code><a href="https://rdrr.io/r/base/print.html">print(meal, dish, count)</a></code> but it would be nicer to print “<em>I had <strong>10 pancakes</strong> for <strong>breakfast</strong></em>,” where items in bold would be the inserted variables’ values. For this, we need to use string formatting. Please note that the string formatting is not specific to printing, you can create a new string value via formatting and store it in a variable (without printing it out) or print it out (without storing it).</p>
+</div>
+<div id="string-formatting" class="section level2" number="4.6">
+<h2>
+<span class="header-section-number">4.6</span> String formatting<a class="anchor" aria-label="anchor" href="#string-formatting"><i class="fas fa-link"></i></a>
+</h2>
+<p>A great resource on string formatting in Python is <a href="https://pyformat.info/">pyformat.info</a>. As Python constantly evolves, it now has more than one way to format strings. Below, I will introduce the “old” format that is based on classic string formatting used in <code>sprintf</code> function is C, Matlab, R, and many other programming languages. It is somewhat less flexible than a newer ones but for simple tasks the difference is negligible. Knowing the old format is useful because of its generality. If you want to learn alternatives, read at the link above.</p>
+<p>The general call is <code>"a string with formatting"%(tuple of values to be used during formatting)</code>.</p>
+<p>In <code>"a string with formatting"</code>, you specify where you want to put the value via <code>%</code> symbol that is followed by an <em>optional</em> formatting info and the <em>required</em> symbol that defines the <strong>type</strong> of the value. The type symbols are</p>
+<ul>
+<li>
+<code>s</code> for string</li>
+<li>
+<code>d</code> for an integer</li>
+<li>
+<code>f</code> for a float value</li>
+<li>
+<code>g</code> for an “optimally” printed float value, so that scientific notation is used for large values (<em>e.g.</em>, <code>10e5</code> instead of <code>100000</code>).</li>
+</ul>
+<p>Here is an example of formatting a string using an integer:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="python-basics.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"I had </span><span class="sc">%d</span><span class="st"> pancakes for breakfast"</span><span class="op">%</span>(<span class="dv">10</span>))</span>
+<span id="cb22-2"><a href="python-basics.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; I had 10 pancakes for breakfast</span></span></code></pre></div>
+<p>You are not limited to a single value that you can put into a string. You can specify more locations via <code>%</code> but you must make sure that you pass the right number of values. Before running it, can you figure out which call will actually work (and what will be the output ) and which will produce an error?</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="python-basics.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'I had </span><span class="sc">%d</span><span class="st"> pancakes and either </span><span class="sc">%d</span><span class="st">  or </span><span class="sc">%d</span><span class="st"> stakes for dinner'</span><span class="op">%</span>(<span class="dv">2</span>))</span>
+<span id="cb23-2"><a href="python-basics.html#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'I had </span><span class="sc">%d</span><span class="st"> pancakes and </span><span class="sc">%d</span><span class="st"> stakes for dinner'</span><span class="op">%</span>(<span class="dv">7</span>, <span class="dv">10</span>))</span>
+<span id="cb23-3"><a href="python-basics.html#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'I had </span><span class="sc">%d</span><span class="st"> pancakes and </span><span class="sc">%d</span><span class="st"> stakes for dinner'</span><span class="op">%</span>(<span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">10</span>))</span></code></pre></div>
+<div class="rmdnote practice">
+<p>Do exercise #10.</p>
+</div>
+<p>In case of real values you have two options: <code>%f</code> and <code>%g</code>. The latter uses scientific notation (e.g. <code>1e10</code> for <code>10000000000</code>) to make a representation more compact.</p>
+<div class="rmdnote practice">
+<p>Do exercise #11 to get a better feeling for the difference.</p>
+</div>
+<p>These is much more to formatting and you can read about it at <a href="https://pyformat.info/">pyformat.info</a>. However, these basics are sufficient for us to start programming our first game during the next seminar. Don’t forget to submit your exercise notebook and see you next time!</p>
+
+</div>
+</div>
+
+
+
+
+
+
+
+  <div class="chapter-nav">
+<div class="empty"></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <div id="book-on-this-page"></div>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2021-10-06.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>
