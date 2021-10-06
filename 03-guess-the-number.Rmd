@@ -24,31 +24,50 @@ Let us start by implementing just the first two steps of the program. First, cre
 # 2. print out the value
 ```
 
-Try out this two-liner in a Jupyter Notebook (create an empty one for that). Once you are happy with it, copy-paste the code into `code01.py` and read on to learn how to run it.
+Try out this two-liner in a Jupyter Notebook (create an empty notebook just for that). Once you are happy with it, copy-paste the code into `code01.py` and read on to learn how to run it.
 
 ::: {.rmdnote .program}
 Put your code into `code01.py`.
 :::
 
-## Commenting your code
+## Documenting your code
+Now that you have your first file with Python program, you should document it. Documenting a two-lines long and simple program may feel silly but it should be an automatic thing. Later on you will find yourself using several lines of comments to document a single line function. Again, it is not about the code that works, it is about the code you can understand. In a sense, it is better to have a clean well-documented program that currently does not work correctly than an undocumented spaghetti code that does. You can fix and update the former, but updating the latter...
 
+In Python, you have two ways to write comments  multiline and single line
+```python
+'''
+A 
+multiline 
+comment
+'''
+
+#  A single line comment.
+```
+
+Use multiline comments to write documentation for individual files, functions, classes, methods, etc. You will learn how to format this documentation Numpy docstring style, once you learn about functions.  In our case, you should start your `code01.py` file with a multiline comment that briefly describes what program it contains. Minimally, you should write that this is a _Guess a Number_ game. It is probably a good idea to sketch out what the game is about.
+
+Use single line comments to explain what happens in a particular code block. You do not need to comment every line and you should not explain the code in human language. A comment should be about _what_ is going on not _how_. At the moment, we have too little code to need this. 
+
+::: {.rmdnote .program}
+Document `code01.py` file.
+:::
 
 ## Running and debugging your game in VS Code {#debugging}
-Now that we have a two-lines-long program, we can run it and already start learning how to debug it. Yes, our current program is probably to simple to require actual debugging but it is also simple enough to make understanding debugging easier as well. And debugging is a crucial skill that turns a running program from a black box into something transparent and easy^[Or, at least, easier.] to understand. Below I will describes how to debug in VS Code but you might want to consult [an official manual](https://code.visualstudio.com/docs/python/debugging) in case things have changed in the meantime.
+Now that we have a two-lines-long program, we can run it and already start learning how to debug it. Yes, our current program is probably to simple to require actual debugging but it is also simple enough to make understanding debugging easier as well. And debugging is a crucial skill that turns a running program from a black box into something transparent and easy^[Or, at least, easier.] to understand. Below I will describe how to debug in VS Code but you might want to consult [an official manual](https://code.visualstudio.com/docs/python/debugging) in case things have changed in the meantime.
 
 There are two ways to run a Python program in VS Code. First, you can use the "Run Python File in Terminal" play button on the right. This runs your program _without_ a debugger, so you should use it only for the actual runs of the finalized code. Still, you can try running it and see whether it prints out what it should.
 
 ![Running code without a debugger.](images/debug-vs-run.png)
 
-The alternative is the debugging tab, the one with a little bug on top of the run button. If you select it, it will offer to "Run and Debug". Click on the button and it will offer various choices that are applicable different Python-based frameworks. For our intents and purposes, we will only use "Python File: Debug the currently active Python file". Click on that and it will execute your code (should run exactly the same way as with the other button).
+The alternative is the debugging tab, the one with a little bug on top of the run button. If you select it, it will show _"Run and Debug"_. Click on the button and it will offer various choices for different kinds of Python projects and frameworks. For our intents and purposes, we will only need _"Python File: Debug the currently active Python file"_. Click on that and it will execute your code (should run exactly the same way as with the other button).
 
 ![Selecting debugging configuration.](images/debug-select-debug-configuration.png)
 
-You probably do not want to click through Debugging tab → Run and Debug button → Pick configuration all the time. A better way is to configure it once and for all and then use **F5** key to run your code. First, click on "create a launch.json file" and select the "Python File: Debug the currently active Python file" again. You will see a new _launch.json_ file appearing in the editor that should look like this:
+You probably do not want to click through Debugging tab → Run and Debug button → Pick configuration all the time. A better way is to configure it once and for all and then use **F5** key to run your code. First, click on _"create a launch.json file"_ and select the _"Python File: Debug the currently active Python file"_ again. You will see a new _launch.json_ file appearing in the editor that should look like this:
 
 ![Debug configuration in launch.json file.](images/debug-launch-json.png)
 
-That's it! VS Code created a configuration for you. Now you can close it and run your program with a simple press of **F5** button. Try it! Again, it should look just like before, so why did we go through all this trouble? Because debugger will _pause_ an execution of your code whenever it encounters a problem, giving you a chance to examine variables, run snippets of code, etc. In contrast, running python file in terminal will only print an error message and exit the program. Moreover, you can use _breakpoints_ to pause the program at any line, which gives you an opportunity to examine your code at any location that you need.
+That's it! VS Code created a configuration for you. Now you can close it and run your program with a simple press of **F5** button. Try it! Again, it should work just like before, so why did we go through all this trouble? Because debugger will _pause_ an execution of your code whenever it encounters a problem, giving you a chance to examine variables, run snippets of code, etc. In contrast, running python file in terminal (the first option) will only print an error message and exit the program. Moreover, you can use _breakpoints_ to pause the program at any line, which gives you an opportunity to examine your code at any location that you need.
 
 You enable breakpoints by clicking to the left of the line number that you are interested in. Here, I've clicked on line 6 and you can see a red dot that indicates an active breakpoint.
 
@@ -58,31 +77,30 @@ If I now run the code via **F5**, the program will stop at that line _before_ ex
 
 ![Program paused at the breakpoint.](images/debug-pause.png)
 
-This gives me a chance to look what value my `number_picked` variable has. It is already listed in local variables (top left). But I also added it to list of watched variables (_Watch_, lift middle) and I also looked at its value in the Debug Console (bottom tab) that allows me to execute _any_ Python code while my program is paused. Do the same and explore these different ways yourself. For example, see how you can compute `number_picked + 1` in the _Watch_ tab and in _Debug Console_.
+This gives me a chance to see what value my `number_picked` variable has. It is already listed in local variables (top left). But I also added it to list of watched variables (_Watch_, lift middle) and I also looked at its value in the _Debug Console_ (bottom tab) that allows me to execute _any_ Python code while my program is paused. Do the same and explore these different ways yourself. For example, see how you can compute `number_picked + 1` in the _Watch_ tab and in _Debug Console_.
 
-Once you are done examining the current state of the program, you have six buttons at the top (hover over them, to see the hints). They are, from left to right
+Once you are done examining the current state of the program, you have six buttons at the top to decide what to do next (hover over them to see the hints). They are, from left to right
 
-* Continue (**F5**): resuming the program.
-* Step Over (**F10**): executes the code with going inside the functions (this and the two following options will become clearer once you learn about functions).
+* Continue (**F5**): resume the program.
+* Step Over (**F10**): executes the code without going inside of functions (this and two following options will become clearer once you learn about writing functions).
 * Step Into the code (**F11**)
 * Step Out of the code (**Shift + F11**).
 * Restart the program (**Ctrl + Shift + F5**).
 * Stop the program (**Shift + F5**).
 
-To better understand how this works, stop the program (**Shift + F5**) and put an additional breakpoint on the first line of your code (line #5 in my program, the other lines are comments or are empty). Run the program again, it will pause at that very first line. Can you figure out the value of variable `number_picked` now?
+To better understand how this works, stop the program (**Shift + F5**) and put an additional breakpoint on the first line of your code (line #5 in my program, the other lines are comments or are empty). Run the program again via **F5** and it will pause at that very first line. Can you figure out the value of variable `number_picked` now?
+
+The answer is "no" because that variable does not exist yet. Remember, the program pauses _before_ executing the line. Use **F10** to step through the code line by line to see how the variable appears and the information gets printed out.
+
+This debugging exercise may not have been necessary to solve problems with your current code but it showed how to do that in the future. Do not hesitate to put a breakpoint to pause the program and check that reality (i.e., actual values of variables) matches your expectations. Use the stepping through the code to slow things down to watch and ponder.
+
+## Asking a player for a guess {#input-function}
+It takes two to play the _Guess the Number_ game. The computer did its part by picking a number, now we need to ask a player to enter their guess. For this, we will use [input([prompt])](https://docs.python.org/3/library/functions.html#input) _function_. 
+
+A function 
 
 
-
-
-
-
-
-
-
-
-
-## Asking user for a guess (Exercise 2) {#input-function}
-Now we need to ask the player to enter their guess. For this, we will use [input([prompt])](https://docs.python.org/3/library/functions.html#input) function (here and below the links lead to the official documentation). It prints out `prompt` (a string) if you supplied it, reads the input (key presses) until the user presses `Enter`, and returns it **as a string**. For a moment, let us assume that the input is always an valid integer number (so, type only valid integers!), so we can convert it to an integer without extra checks (will add them later) and assign this value to a new variable called `guess`. Thus, you need to write a single line assignment statement with `guess` variable on the left side, whereas on the right should be a call to the `input(...)` function (think of a nice prompt message) wrapped by the type-conversion to `int(...)`. Switch to exercise 2 and, for the moment, only enter valid integers when running the code, so that the conversion works without an error.
+It prints out `prompt` (a string) if you supplied it, reads the input (key presses) until the user presses `Enter`, and returns it **as a string**. For a moment, let us assume that the input is always an valid integer number (so, type only valid integers!), so we can convert it to an integer without extra checks (will add them later) and assign this value to a new variable called `guess`. Thus, you need to write a single line assignment statement with `guess` variable on the left side, whereas on the right should be a call to the `input(...)` function (think of a nice prompt message) wrapped by the type-conversion to `int(...)`. Switch to exercise 2 and, for the moment, only enter valid integers when running the code, so that the conversion works without an error.
 
 ::: {.rmdnote .program}
 Put your code into exercise #2.
