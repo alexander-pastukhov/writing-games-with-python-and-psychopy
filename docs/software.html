@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 2 Software | Writing games with Python and PsychoPy</title>
+<meta name="author" content="Alexander (Sasha) Pastukhov">
+<meta name="description" content="For this book and seminar, we will need to install PsychoPy that comes bundled with Python. IDE of your choice. My instructions will be for Visual Studio Code, which has a very good Python...">
+<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta property="og:title" content="Chapter 2 Software | Writing games with Python and PsychoPy">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://alexander-pastukhov.github.io/writing-games-with-python-and-psychopy/software.html">
+<meta property="og:description" content="For this book and seminar, we will need to install PsychoPy that comes bundled with Python. IDE of your choice. My instructions will be for Visual Studio Code, which has a very good Python...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 2 Software | Writing games with Python and PsychoPy">
+<meta name="twitter:description" content="For this book and seminar, we will need to install PsychoPy that comes bundled with Python. IDE of your choice. My instructions will be for Visual Studio Code, which has a very good Python...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Writing games with Python and PsychoPy</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="active" href="software.html"><span class="header-section-number">2</span> Software</a></li>
+<li><a class="" href="programming-tips.html"><span class="header-section-number">3</span> Programming tips and tricks</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rstudio/bookdown-demo">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="software" class="section level1" number="2">
+<h1>
+<span class="header-section-number">2</span> Software<a class="anchor" aria-label="anchor" href="#software"><i class="fas fa-link"></i></a>
+</h1>
+<p>For this book and seminar, we will need to install</p>
+<ul>
+<li>PsychoPy that comes bundled with Python.</li>
+<li>IDE of your choice. My instructions will be for Visual Studio Code, which has a very good Python support.</li>
+<li>Jupyter Notebook for trying out small snippets of code.</li>
+</ul>
+<p>I will not give detailed instructions on how to install the necessary software but rather point you to official manuals. This makes this text more future-proof as specific details might easily change<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;If you are part of the seminar, ask me whenever you have problems or are unsure about how to proceeed&lt;/p&gt;"><sup>2</sup></a>.</p>
+<div id="install-psychopy" class="section level2" number="2.1">
+<h2>
+<span class="header-section-number">2.1</span> PsychoPy<a class="anchor" aria-label="anchor" href="#install-psychopy"><i class="fas fa-link"></i></a>
+</h2>
+<p>Download and install <a href="https://www.psychopy.org/download.html">Standalone PsychoPy</a> version. Use whatever the latest (and greatest) PsychoPy version is suggested to you (PsychoPy 2021.2.3 using Python3.6 as of time of writing) and follow instructions.</p>
+<p>Note that you can also install PsychoPy as a anaconda package or install an official Python distribution and add PsychoPy via pip. However, I find the standalone easier to use as it has all necessary additional libraries. Plus, it has additional tools for GUI-based experiment programming and integration with <a href="Pavlovia.org">Pavlovia.org</a>.</p>
+</div>
+<div id="install-vs-code" class="section level2" number="2.2">
+<h2>
+<span class="header-section-number">2.2</span> VS Code<a class="anchor" aria-label="anchor" href="#install-vs-code"><i class="fas fa-link"></i></a>
+</h2>
+<p><a href="https://code.visualstudio.com/">Visual Studio Code</a> is a free lightweight open-source editor with strong support for Python. Download the installer for your platform and follow the instructions.</p>
+<p>Next, follow <a href="https://code.visualstudio.com/docs/python/python-tutorial">Getting Started with Python in VS Code</a> tutorial. <strong>Skip</strong> the <em>Install a Python interpreter</em> section, as you already have Python installation bundled with PsychoPy. This is the interpreter that you should use in the <em>Select a Python interpreter</em> section. In my case the path is <code>C:\Program Files\PsychoPy3\python.exe</code>.</p>
+<p>Install and enable a linter, software that highlights syntactical and stylistic problems in your Python source code. Follow the <a href="https://code.visualstudio.com/docs/python/linting">manual</a> at VS Code website.</p>
+</div>
+<div id="jupyter-notebooks" class="section level2" number="2.3">
+<h2>
+<span class="header-section-number">2.3</span> Jupyter Notebooks<a class="anchor" aria-label="anchor" href="#jupyter-notebooks"><i class="fas fa-link"></i></a>
+</h2>
+<p><a href="https://jupyter.org/">Jupyter Notebooks</a> offer a very convenient way to mix text, figure and code in a single document. They also make it easy to play with various small snippets in parallel without running scripts. We will rely on them for our first chapter and for an occasional exercises or code testing later on. There are two way you can use them: 1) in VS Code using Jupyter extension, 2) in your browser using classical interface.</p>
+<div id="jupyter-notebooks-in-vs-code" class="section level3" number="2.3.1">
+<h3>
+<span class="header-section-number">2.3.1</span> Jupyter Notebooks in VS Code<a class="anchor" aria-label="anchor" href="#jupyter-notebooks-in-vs-code"><i class="fas fa-link"></i></a>
+</h3>
+<p>Follow <a href="https://code.visualstudio.com/docs/datascience/jupyter-notebooks">the manual</a> on how to install Jupyter package and use notebooks in VS Code.</p>
+</div>
+<div id="jupyter-notebooks-in-anaconda" class="section level3" number="2.3.2">
+<h3>
+<span class="header-section-number">2.3.2</span> Jupyter Notebooks in Anaconda<a class="anchor" aria-label="anchor" href="#jupyter-notebooks-in-anaconda"><i class="fas fa-link"></i></a>
+</h3>
+<p>The simplest way to use Jupyter Notebooks along with a lot of other useful data science tools is via <a href="https://www.anaconda.com/products/individual">Anaconda</a> toolkit. However, note that this will introduce a <em>second</em> Python distribution to your system. This, in turn, could lead to some confusion when working with scripts in VS Code if you accidentally have Anaconda interpreter active instead of the PsychoPy one. Do not panic, follow <a href="https://code.visualstudio.com/docs/python/python-tutorial#_select-a-python-interpreter">Select a Python interpreter</a> instructions and make sure that you have PsychoPy interpreter as the active one.</p>
+<p>Otherwise, download and install Anaconda. The website has an excellent <a href="https://docs.anaconda.com/anaconda/user-guide/getting-started/">Getting started</a> section.</p>
+
+</div>
+</div>
+</div>
+
+  <div class="chapter-nav">
+<div class="prev"><a href="index.html"><span class="header-section-number">1</span> Introduction</a></div>
+<div class="next"><a href="programming-tips.html"><span class="header-section-number">3</span> Programming tips and tricks</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#software"><span class="header-section-number">2</span> Software</a></li>
+<li><a class="nav-link" href="#install-psychopy"><span class="header-section-number">2.1</span> PsychoPy</a></li>
+<li><a class="nav-link" href="#install-vs-code"><span class="header-section-number">2.2</span> VS Code</a></li>
+<li>
+<a class="nav-link" href="#jupyter-notebooks"><span class="header-section-number">2.3</span> Jupyter Notebooks</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#jupyter-notebooks-in-vs-code"><span class="header-section-number">2.3.1</span> Jupyter Notebooks in VS Code</a></li>
+<li><a class="nav-link" href="#jupyter-notebooks-in-anaconda"><span class="header-section-number">2.3.2</span> Jupyter Notebooks in Anaconda</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rstudio/bookdown-demo/blob/master/00-software.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rstudio/bookdown-demo/edit/master/00-software.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2021-10-06.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

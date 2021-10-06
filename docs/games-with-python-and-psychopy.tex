@@ -1,0 +1,249 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{book}
+\title{Writing games using Python and PsychoPy}
+\author{Alexander (Sasha) Pastukhov}
+\date{2021-10-06}
+
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Writing games using Python and PsychoPy},
+  pdfauthor={Alexander (Sasha) Pastukhov},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{booktabs}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage[]{natbib}
+\bibliographystyle{apalike}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\hypertarget{intro}{%
+\chapter{Introduction}\label{intro}}
+
+This book will teach you programming. Hopefully, it will do so in a fun way because if there is something more satisfying than playing a video game then it is creating one. Although it is written for the course called \emph{``Python for social and experimental psychology''}, my main aim is not to teach you Python per se. Python is a fantastic tool (more on this later) but it is just one of many programming languages that exist. My ultimate goal is to help you to develop general programming skills, which do not depend on a specific-programming language, and make sure that you form good habits that will make your code clear, easy to read, and easy to maintain. That last part is crucial. Programming is not about writing code that works. That, obviously, must be true but it is only the minimal requirement. Programming is about writing a clear and easy-to-read code that others and, even more importantly, you-two-weeks later can understand.
+
+\hypertarget{prerequisites}{%
+\section{Prerequisites}\label{prerequisites}}
+
+The material assumes no foreknowledge of Python or programming from the reader. Its purpose is to gradually build up your knowledge and allow you to create more and more complex games.
+
+\hypertarget{why-games}{%
+\section{Why games?}\label{why-games}}
+
+The actual purpose of this course is to teach psychology and social studies students in how to program \emph{experiments}. That is what the real research is about. However, there is little practical difference between the two. The basic ingredients are the same and, arguably, experiments are just boring games. And, be assured, if you can program a game, you can certainly program an experiment.
+
+\hypertarget{why-should-a-psychologist-learn-programming}{%
+\section{Why should a psychologist learn programming?}\label{why-should-a-psychologist-learn-programming}}
+
+Why should a psychologist, who is interested in people, learn how to program computers? The most obvious questions is that is this a useful skill. Being able to program gives you freedom to create an experiment that answers your research question, not an experiment that can be implemented given constraints of your software.
+
+More importantly, at least from my point of view, is that learning programming changes the way you think in general. People are smart but computers are dumb. When you explain your experiment or travel plans to somebody, you can be fairly vague, make a minor mistake, even skip certain parts. People are smart so they will fill the missing information in with their knowledge, spot and correct a mistake, ask you for more information, and can improvise on their own once they encounter something that you have not covered. Computers are dumb, so you must be precise, you cannot have gray areas, you cannot leave anything to ``it will figure it out once it happens'' (it won't). My personal experience, corroborated by psychologists who learned programming, is that it makes you realize just how vague and imprecise people can be without realizing it. Programming forces you to be precise and thorough, to plan ahead for any eventuality there might be. And this is a very useful skill by itself as it can be applied to any activity that requires planning be that an experimental design or travel arrangements.
+
+\hypertarget{why-python}{%
+\section{Why Python?}\label{why-python}}
+
+There are many ways to create an experiment for psychological research. You can use drag-and-drop systems either commercial like \href{https://www.neurobs.com/}{Presentation}, \href{https://www.sr-research.com/experiment-builder/}{Experiment Builder} or free like \href{https://psychopy.org/builder}{PsychoPy Bulder interface}. They have a much shallower learning curve, so you can start creating and running your experiments faster. However, the simplicity of their use has a price: They are fairly limited in which stimuli you can use and how you can control the presentation schedule, conditions, feedback, etc. Typically, they allow you to extend them by programming the desired behavior but you do need to know how to program to do this (knowing Python supercharges your PsychoPy experiments). Thus, I think that while these systems, in particular \href{https://psychopy.org/}{PsychoPy}, are great tools to quickly bang a simple experiment together, they are most useful if you understand how they create the underlying code and how you would program it yourself. Then, you will not be limited by the software, as you know you can program something the default drag-and-drop won't allow. At the same time, you can always opt in, if drag-and-drop is sufficient but faster. At the end, it is about having options and creative freedom to program an experiment that will answer your research question, not an experiment that your software allows you to program.
+
+We will learn programming in Python, which is a great language that combines simple and clear syntax with power and ability to tackle almost any problem. In this seminar, we will concentrate on desktop experiments but you can use it for online experiments (\href{https://otree.readthedocs.io/en/latest/}{oTree} and \href{https://psychopy.org/}{PsychoPy}), scientific programming (\href{https://numpy.org/}{NumPy} and \href{https://www.scipy.org/}{SciPy}), data analysis (\href{https://pandas.pydata.org/}{pandas}), machine learning (\href{https://keras.io/}{keras}), website programming (\href{https://www.djangoproject.com/}{django}), computer vision (\href{https://opencv.org/}{OpenCV}), etc. Thus, Python is one of the most versatile programming tools that you can use for all stages of your research or work. And, Python is free, so you do not need to worry whether you or your future employer will be able to afford license fees (a very real problem, if you use Matlab).
+
+\hypertarget{seminar-specific-information}{%
+\section{Seminar-specific information}\label{seminar-specific-information}}
+
+This is a material for \emph{Python for social and experimental psychology} seminar as taught by me at the University of Bamberg. Each chapter covers a single game, introducing necessary ideas and is accompanied by exercises that you need to complete and submit. To pass the seminar, you will need to complete all assignments, i.e., write all the games. You do not need to complete or provide correct solutions for \emph{all} the exercises to pass the course and information on how the points for exercises will be converted to an actual grade (if you need one) or ``pass'' will be available during the seminar.
+
+The material is structured, so that each chapter or chapter section correspond to a single meeting. However, we are all different, so work at your own pace. You can read the material and submit assignments independently. I will provide detailed feedback for each assignment and you will have an opportunity to address issues and resubmit again with no loss of points. Note that my feedback will cover not only the actual problems with the code but the way you implemented the solution and how nice-looking your code is. Remember, our task is not just to learn how to program a working game but how to write a nice clear easy-to-read-and-maintain code\footnote{Good habits! Form good habits! Thank you for reading this subliminal message.}.
+
+Very important: Do not hesitate to ask questions. If I feel that you missed the information in the material, I will point you to the exact location. If you are confused, I'll gently prod you with questions so that you will solve your own problem. If you need more information, I'll supply it. If you simply want to know more, ask and I'll explain why things are the way they are or suggest what to read. If I feel that you should be able to solve the issue without my help, I'll tell you so (although, I would still probably ask a few hinting questions).
+
+\hypertarget{about-the-material}{%
+\section{About the material}\label{about-the-material}}
+
+This material is \textbf{free to use} and is licensed under the \href{https://creativecommons.org/licenses/by-nc-nd/4.0/}{Creative Commons Attribution-NonCommercial-NoDerivatives V4.0 International License}.
+
+\hypertarget{software}{%
+\chapter{Software}\label{software}}
+
+For this book and seminar, we will need to install
+
+\begin{itemize}
+\tightlist
+\item
+  PsychoPy that comes bundled with Python.
+\item
+  IDE of your choice. My instructions will be for Visual Studio Code, which has a very good Python support.
+\item
+  Jupyter Notebook for trying out small snippets of code.
+\end{itemize}
+
+I will not give detailed instructions on how to install the necessary software but rather point you to official manuals. This makes this text more future-proof as specific details might easily change\footnote{If you are part of the seminar, ask me whenever you have problems or are unsure about how to proceeed}.
+
+\hypertarget{install-psychopy}{%
+\section{PsychoPy}\label{install-psychopy}}
+
+Download and install \href{https://www.psychopy.org/download.html}{Standalone PsychoPy} version. Use whatever the latest (and greatest) PsychoPy version is suggested to you (PsychoPy 2021.2.3 using Python3.6 as of time of writing) and follow instructions.
+
+Note that you can also install PsychoPy as a anaconda package or install an official Python distribution and add PsychoPy via pip. However, I find the standalone easier to use as it has all necessary additional libraries. Plus, it has additional tools for GUI-based experiment programming and integration with \url{Pavlovia.org}.
+
+\hypertarget{install-vs-code}{%
+\section{VS Code}\label{install-vs-code}}
+
+\href{https://code.visualstudio.com/}{Visual Studio Code} is a free lightweight open-source editor with strong support for Python. Download the installer for your platform and follow the instructions.
+
+Next, follow \href{https://code.visualstudio.com/docs/python/python-tutorial}{Getting Started with Python in VS Code} tutorial. \textbf{Skip} the \emph{Install a Python interpreter} section, as you already have Python installation bundled with PsychoPy. This is the interpreter that you should use in the \emph{Select a Python interpreter} section. In my case the path is \texttt{C:\textbackslash{}Program\ Files\textbackslash{}PsychoPy3\textbackslash{}python.exe}.
+
+Install and enable a linter, software that highlights syntactical and stylistic problems in your Python source code. Follow the \href{https://code.visualstudio.com/docs/python/linting}{manual} at VS Code website.
+
+\hypertarget{jupyter-notebooks}{%
+\section{Jupyter Notebooks}\label{jupyter-notebooks}}
+
+\href{https://jupyter.org/}{Jupyter Notebooks} offer a very convenient way to mix text, figure and code in a single document. They also make it easy to play with various small snippets in parallel without running scripts. We will rely on them for our first chapter and for an occasional exercises or code testing later on. There are two way you can use them: 1) in VS Code using Jupyter extension, 2) in your browser using classical interface.
+
+\hypertarget{jupyter-notebooks-in-vs-code}{%
+\subsection{Jupyter Notebooks in VS Code}\label{jupyter-notebooks-in-vs-code}}
+
+Follow \href{https://code.visualstudio.com/docs/datascience/jupyter-notebooks}{the manual} on how to install Jupyter package and use notebooks in VS Code.
+
+\hypertarget{jupyter-notebooks-in-anaconda}{%
+\subsection{Jupyter Notebooks in Anaconda}\label{jupyter-notebooks-in-anaconda}}
+
+The simplest way to use Jupyter Notebooks along with a lot of other useful data science tools is via \href{https://www.anaconda.com/products/individual}{Anaconda} toolkit. However, note that this will introduce a \emph{second} Python distribution to your system. This, in turn, could lead to some confusion when working with scripts in VS Code if you accidentally have Anaconda interpreter active instead of the PsychoPy one. Do not panic, follow \href{https://code.visualstudio.com/docs/python/python-tutorial\#_select-a-python-interpreter}{Select a Python interpreter} instructions and make sure that you have PsychoPy interpreter as the active one.
+
+Otherwise, download and install Anaconda. The website has an excellent \href{https://docs.anaconda.com/anaconda/user-guide/getting-started/}{Getting started} section.
+
+\hypertarget{programming-tips}{%
+\chapter{Programming tips and tricks}\label{programming-tips}}
+
+Below are some tips about writing and reading the code. Some may sound cryptic when you read them for the first time (they will become clear once we cover the necessary material). Some will feel like an overkill for simple projects that we will be implementing. I suggest that you read this section casually the very first time but return to it frequently once we start to program in earnest. Unfortunately, these tricks won't work it you do not use them! So you should \emph{always} use them and they should become your \emph{good habits}, like using a seat belt. The seat belt does nothing useful on most (hopefully, all) days but you wear it because it might suddenly and very urgently become extremely useful and you can never be sure when this will happen. Same with coding. Quite often you will be tempted to write ``quick-n-dirty'' code because this is just a ``simple test'', temporary solution, a prototype, a pilot experiment, etc. But, as they say in Russia ``There is nothing more permanent than a temporary solution''. More often than not, you will find that your toy code grew into a full blown experiment and it is a mess. Or you want to come back to that pilot experiment you did a few months ago but realize that it is easier to start from scratch than to understand how that monster works\footnote{Happened to me more often than I dare to admit.}. Thus, resist the temptation! Form the good habits and you future-you will be very grateful!
+
+\hypertarget{writing-tips}{%
+\section{Writing the code}\label{writing-tips}}
+
+\hypertarget{use-a-linter}{%
+\subsection{Use a linter}\label{use-a-linter}}
+
+Linter is a program that analyses your code \emph{style} and highlights any issues it finds: spaces where should be none, no spaces where should be some, wrong names, overly long lines, etc. These do not affect how the code runs but following linter's advice results in a consistent standard if boring-looking\footnote{``Boring is Good!'', see ``The Hitman's Bodyguard'' movie.} Python code. Try to address all the problems that the linter raised. However, use your better judgment because sometimes lines that are longer than linter would prefer are more readable than two shorter ones. Similarly, a ``bad'' variable name by linter standards can be a meaningful name for a psychologist. Remember, your code is for people, not for the linter.
+
+\hypertarget{document-your-code}{%
+\subsection{Document your code}\label{document-your-code}}
+
+Every time you create a new file: document it and update the documentation whenever you add/change/delete new functions or classes. Every time your create a new function: document it. New class: document it. New constant: unless it is super clear from the name alone, document it. You will learn a \href{https://numpydoc.readthedocs.io/en/latest/format.html}{NumPy} way of doing this in the book.
+
+I cannot stress how important documenting your code is. VS Code (an editor that we will use) is smart enough to parse NumPy docstring, so it will show this help to you whenever you use your own functions (helps you to help you!). More importantly, writing documentation forces you to think and formulate (in human language!) what the function or class is doing, what type the arguments / attributes / methods are, what is the range of valid values, what are the defaults, what should a function return, etc. More often than not, you will realize that you have overlooked some important detail that may not be apparent from the code itself.
+
+\hypertarget{add-some-air}{%
+\subsection{Add some air}\label{add-some-air}}
+
+Separate chunks of code with some empty lines. Think paragraphs in the normal text. You wouldn't want your book to be a single paragraph nightmare? Put a comment before each chunk that explains \emph{what} it does but not \emph{how} it does it. E.g., in our typical PsychoPy-based game there will be a point when we draw all stimuli and redraw the window. That is a nice self-contained chunk that can be described as \texttt{\#\ drawing\ all\ stimuli}. The code provides details on what exactly is drawn, what is the drawing order, etc. But that single comment will help you to understand what this chunk is about and whether it is relevant for you at the moment. Same goes for \texttt{\#\ processing\ key\ presses} or \texttt{\#\ checking\ gameover\ conditions}, etc. But be careful and make sure that the comment describes the code correctly. E.g., if the comment says \texttt{\#\ drawing\ all\ stimuli} where should be no stimuli-drawing code anywhere else and no code that does something else!
+
+\hypertarget{write-your-code-one-teeny-tiny-step-a-time}{%
+\subsection{Write your code one teeny-tiny step a time}\label{write-your-code-one-teeny-tiny-step-a-time}}
+
+Your motto should be ``slow but steady''. This is the way I will guide you through the games. Always start with a something extremely simple like a static rectangle or image. Make sure it works. Add a minor functionality: Change in color, position, another rectangle, storing it as an attribute, etc. Make sure it works. Never go to the next step unless you fully understand what your current code is doing and you are 100\% certain\footnote{Seriously, 100\%! If you have even a shadow of a doubt, check again. That shadow will grow and make you progressively uncertain about your code.} that it behaves as it should. This tortoise-speed approach may feel silly and overly slow but it is still faster than writing a large chunk of code and then trying to make it work. It is much easier to solve simple problems one at a time than a lot of them simultaneously.
+
+\hypertarget{there-is-nothing-wrong-with-stackoverflow}{%
+\subsection{There is nothing wrong with StackOverflow}\label{there-is-nothing-wrong-with-stackoverflow}}
+
+Yes, you can always try to find a solution to your problem on StackOverflow\footnote{However, if you are doing the seminar, ask me first!}. I do it all the time! However, you should use the provided solution \emph{only if you understand it}! Do not copy-paste the code that \emph{seems} to solve a problem like yours. If you do that and you are lucky, it might work. Or, again if you are lucky, it won't work in an obvious manner. But if you are not so lucky, it will (sometimes) work incorrectly in a subtle way. And, since you did not really know what the code was doing when you pasted it, you will be even more confused. So use StackOverflow as a source of knowledge, not as a source of copy-pastable code!
+
+\#\# Reading the code \{\#reading-tips\}
+Reading code is easy because computers are dumb and you are smart. This means that instructions you give the computer must necessarily be very simple and, therefore, are very easy to understand for a human. Unfortunately, reading code is also hard because computers are dumb and you are smart. Your are so smart that you don't even need to read the entire code to understand what it is doing, you just read the key bits and fill in the gaps. Unfortunately, this means that you will tend to read over mistakes. This is not unique to programming, if you ever proofraed a text, you now how hard it is to find tipos. Your brain corrects them on the fly using the context and you read the word as it should be, not as it is actually written\footnote{Tip: Read your text one sentence at a time starting from the back or read one random sentence at a time. This breaks the flow of the text and helps you concentrate on words rather than on the meaning and the story.}.
+
+My experience with programming in general and on this seminar in particular is that most problems you get stuck with are simple to be point of being dumb and obvious in retrospect\footnote{Hindsight is always 20/20!}. Do not despair! It is not you, but just a consequence of how wonderfully your brain is wired for pattern-recognition. Below are several suggestions that could help you to make reading code more robust.
+
+\hypertarget{think-like-a-computer}{%
+\subsection{Think like a computer}\label{think-like-a-computer}}
+
+Read the code line-by-line and ``execute'' it the way the compute would. Use pen-and-paper to keep the track of variables. Trace which chunks of code can be reached and when. Slow yourself down and make sure you understand each line and are able to keep track of the variables. Once you do that it will be easy to spot a mistake.
+
+\hypertarget{pretend-that-youve-never-seen-this-code-in-your-life}{%
+\subsection{Pretend that you've never seen this code in your life}\label{pretend-that-youve-never-seen-this-code-in-your-life}}
+
+Assume that you have no idea what the code is doing. As I wrote, quite often you \emph{literally} do not see a mistake because your brain fills-in details and bends the reality to match your expectations. You \emph{know} what this chunk of code should be doing, so instead of reading it you skim through it and, unless it looks obviously terribly wrong, assume that it does what it should. Turning your expectations off is hard but is immensely helpful.
+
+\hypertarget{do-not-search-only-under-the-street-lamp}{%
+\subsection{Do not search only under the street lamp}\label{do-not-search-only-under-the-street-lamp}}
+
+Whenever you are using some new code or need to implement something that feels complicated and your code does not work as it should, you will tend to assume that a problem is with the new fancy code. Simply because it is new, fancy, and complicated. But, in my experience, the error will typically hide in plain sight in the simpler ``trivial'' code nearby which you never properly look at, because it is simple and trivial. Check everything, not just the places where you would expect to have made a mistake.
+
+\hypertarget{use-the-debugger}{%
+\subsection{Use the debugger}\label{use-the-debugger}}
+
+In the book, you will learn how to pause an execution of your game, so you can investigate its state. Use this knowledge! Put breakpoints and execute the code step-by-step. Check values of variables using ``Watch'' tab. Use debug console to check whether functions return results that they should. For complex conditions or mathematical formulas, split them into small bits, copy and execute these bits in the debug console and check whether numbers add up. Make sure that a code chunk checks out and then proceed to analyze the next one. Debugging is particularly helpful to identify the code that is not reached or reached at the wrong moment.
+
+\hypertarget{zen-of-python}{%
+\section{Zen of Python}\label{zen-of-python}}
+
+I found \href{https://www.python.org/dev/peps/pep-0020/}{Zen of Python} to be good inspiration on how to approach programming.
+
+  \bibliography{book.bib}
+
+\end{document}
