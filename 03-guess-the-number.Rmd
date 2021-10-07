@@ -1,6 +1,6 @@
 # Guess the Number (a single round edition) {#guess-the-number-single-round}
 
-The previous chapter covered Python basics, so now you are ready to start developing you first game! We will build it step by step as there will be a lot to learn about input, libraries, conditional statements, and indentation. The chapter is designed to require two seminars to complete.
+The previous chapter covered Python basics, so now you are ready to start developing you first game! We will build it step by step as there will be a lot to learn about input, libraries, conditional statements, and indentation.
 
 Before you start, create a new folder (inside your [course folder](#files-folder)) called, for example, "guess-the-number", download [exercise notebook](notebooks/Seminar 02. Guess the number.ipynb), copy it in the newly created folder, and open it in [Jupyter Notebook](#jupyter-notebooks). As in the chapter before, it will contain exercises on reading and understanding the code. 
 
