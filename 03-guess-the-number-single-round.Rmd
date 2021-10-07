@@ -2,7 +2,7 @@
 
 The previous chapter covered Python basics, so now you are ready to start developing you first game! We will build it step by step as there will be a lot to learn about input, libraries, conditional statements, and indentation.
 
-Before you start, create a new folder (inside your [course folder](#files-folder)) called, for example, "guess-the-number", download [exercise notebook](notebooks/Seminar 02. Guess the number.ipynb), copy it in the newly created folder, and open it in [Jupyter Notebook](#jupyter-notebooks). As in the chapter before, it will contain exercises on reading and understanding the code. 
+Before you start, create a new folder (inside your [course folder](#files-folder)) called, for example, "guess-the-number", download [exercise notebook](notebooks/Seminar 02. Guess the number - single round.ipynb), copy it in the newly created folder, and open it in [Jupyter Notebook](#jupyter-notebooks). As in the chapter before, it will contain exercises on reading and understanding the code. 
 
 However, we will be using [VS Code](#install-vs-code) to program scripts with the actual game. You will need to create a separate file for each code practice^[You can "Save as..." the previous code to avoid copy-pasting things by hand.] (e.g., _code01.py_^[I recommend using `01` instead of `1`, as it will ensure consistent file sorting in your file manager], _code02.py_, etc.) This is not the most efficient implementation of a version control and it will certainly clutter the folder. But it would allow me to see your solutions for every step, which will make it easier for me to give feedback. For submitting the assignment, just zip the folder and submit the zip-file.
 
@@ -130,7 +130,7 @@ if some_condition_is_true:
 
 Before we can use conditional statements in our game, you need to understand (1) the conditions themselves and (2) use of indentation as a mean of grouping statements together.
 
-## Conditions and comparisons
+## Conditions and comparisons {#comparisons}
 Condition is any expression that can be evaluated to see whether it is `True` or `False`. A straightforward example of such expression are comparisons expressed in human language as: _Is today Thursday?_ _Is the answer (equal to) 42?_ _Is it raining and I have an umbrella?_. We will concentrate on comparisons like that for a moment but later you will see that in Python _any_ expression is either `True` or `False`, even when it does not look like a comparison^[This is because you can convert any value to a logical one via [bool()](https://docs.python.org/3/library/functions.html#bool) function that you learned about the last time and so any value is (converted to) either `True` or `False`.].
 
 For the comparison, you can use the following operators:
@@ -195,7 +195,7 @@ Do exercise #6.
 
 Final thought on comparisons: Do not hesitate to test them in Jupyter Notebook using various combinations of values or pause the program at the condition via a breakpoint and evaluate a comparison in _Watch_ or _Debug Console_. 
 
-## Grouping statements via indentation
+## Grouping statements via indentation {#indentation}
 Let us go back to a conditional if-statement. Take a look at following code example (and note an `:` at the end of the `if some_condition_is_true:`), in which _statement #1_ is executed only if _some condition_ is true, whereas _statement #2_ is executed after that _irrespective_ of the condition.
 ```{python eval=FALSE}
 if some_condition_is_true:
