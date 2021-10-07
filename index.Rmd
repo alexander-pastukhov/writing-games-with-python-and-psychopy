@@ -21,7 +21,7 @@ This book will teach you programming. Hopefully, it will do so in a fun way beca
 The material assumes no foreknowledge of Python or programming from the reader. Its purpose is to gradually build up your knowledge and allow you to create more and more complex games.
 
 ## Why games?
-The actual purpose of this course is to teach psychology and social studies students in how to program _experiments_. That is what the real research is about. However, there is little practical difference between the two. The basic ingredients are the same and, arguably, experiments are just boring games. And, be assured, if you can program a game, you can certainly program an experiment.
+The actual purpose of this course is to teach psychology and social studies students how to program _experiments_. That is what the real research is about. However, there is little practical difference between the two. The basic ingredients are the same and, arguably, experiments are just boring games. And, be assured, if you can program a game, you can certainly program an experiment.
 
 ## Why should a psychologist learn programming?
 Why should a psychologist, who is interested in people, learn how to program computers? The most obvious answer is that this a useful skill. Being able to program gives you freedom to create an experiment that answers your research question, not an experiment that can be implemented given constraints of your software.
