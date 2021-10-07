@@ -310,3 +310,6 @@ Do not forget to document the new `code03.py` file and feel three to use breakpo
 ::: {.rmdnote .program}
 Put your code into `code03.py`.
 :::
+
+## Submitting for the seminar
+For the seminar, submit a zipped folder with exercise notebook and all three programs.
