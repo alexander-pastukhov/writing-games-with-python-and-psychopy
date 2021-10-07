@@ -132,7 +132,7 @@ Do exercise #5.
 
 Surprised by the last one? This is because internally, `True` is also `1` and `False` is `0`!
 
-You can explicitly convert from one type to another using special functions. For example, to turn a number or a logical value into a string, you simply write `str(<value>)`. In examples below, what would be the result?
+You can explicitly convert from one type to another using special functions. For example, to turn a number or a logical value into a string, you simply write [str(\<value\>)](https://docs.python.org/3/library/functions.html#func-str). In examples below, what would be the result?
 ```{python eval=FALSE}
 str(10 / 2)
 str(2.5 + True)
@@ -143,7 +143,7 @@ str(True)
 Do exercise #6.
 :::
 
-Similarly, you can convert to a logical/Boolean variable using `bool(<value>)` function. The rules are simple, for numeric values `0` is `False`, any other non-zero value is converted to `True`. For string, an empty string `''` is evaluated to `False` and non-empty string is converted to `True`. What would be the output in the examples below?
+Similarly, you can convert to a logical/Boolean variable using [bool(\<value\>)](https://docs.python.org/3/library/functions.html#bool) function. The rules are simple, for numeric values `0` is `False`, any other non-zero value is converted to `True`. For string, an empty string `''` is evaluated to `False` and non-empty string is converted to `True`. What would be the output in the examples below?
 
 ```{python eval=FALSE}
 bool(-10)
@@ -159,7 +159,7 @@ bool('False')
 Do exercise #7.
 :::
 
-Converting to integer or float numbers is trickier. The simplest case is from logical to integer/float, as `True` gives you `int(True)` is `1` and `float(True)` is `1.0` and `False` gives you `0`/`0.0`. When converting from float to integer, Python simply drops the fractional part (it does not do proper rounding!). When converting a string, it must be a valid number of the corresponding type or the error is generated. E.g., you can convert a string like `"123"` to an integer or a float but this won't work for `"a123"`. Moreover, you can convert `"123.4"` to floating-point number but not to an integer, as it has fractional part in it. Given all this, which cells would work and what output would they produce?
+Converting to integer or float numbers using, respectively, [int(\<value\>)](https://docs.python.org/3/library/functions.html#int) and [float(\<value\>)](https://docs.python.org/3/library/functions.html#float) is trickier. The simplest case is from logical to integer/float, as `True` gives you `int(True)` is `1` and `float(True)` is `1.0` and `False` gives you `0`/`0.0`. When converting from float to integer, Python simply drops the fractional part (it does not do proper rounding!). When converting a string, it must be a valid number of the corresponding type or the error is generated. E.g., you can convert a string like `"123"` to an integer or a float but this won't work for `"a123"`. Moreover, you can convert `"123.4"` to floating-point number but not to an integer, as it has fractional part in it. Given all this, which cells would work and what output would they produce?
 
 ```{python eval=FALSE}
 float(False)
@@ -173,7 +173,7 @@ Do exercise #8.
 :::
 
 ## Printing output
-To print the value, you need you use `print()` function (we will talk about functions in general later). In the simplest case, you pass the value and it will be printed out.
+To print the value, you need you use [print()](https://docs.python.org/3/library/functions.html#print) function (we will talk about functions in general later). In the simplest case, you pass the value and it will be printed out.
 ```{python}
 print(5)
 ```
