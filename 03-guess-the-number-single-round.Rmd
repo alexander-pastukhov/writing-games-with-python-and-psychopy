@@ -1,4 +1,4 @@
-# Guess the Number (a single round edition) {#guess-the-number-single-round}
+# Guess the Number: a single round edition {#guess-the-number-single-round}
 
 The previous chapter covered Python basics, so now you are ready to start developing you first game! We will build it step by step as there will be a lot to learn about input, libraries, conditional statements, and indentation.
 

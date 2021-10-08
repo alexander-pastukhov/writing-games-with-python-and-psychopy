@@ -1,4 +1,4 @@
-# Guess the Number (a multi round edition) {#guess-the-number-multi-round}
+# Guess the Number: a multi round edition {#guess-the-number-multi-round}
 
 In previous chapter, you programmed a single-attempt-only "Guess the Number" game. Now, we will expand to allow multiple attempts and will add other bells-and-whistles to make it more fun. Create a new subfolder and download the [exercise notebook](notebooks/Seminar 03. Guess the number - multi round.ipynb) before we start!
 
