@@ -1,5 +1,10 @@
 # Guess the Number: AI takes a turn {#guess-the-number-ai}
-Let us program Guess the Number game again^[This is the last time, I promise!] but _reverse_ the roles. Now _you_ will pick a number and the computer will guess. In the process, we will learn about functions, documenting them like a pro, writing your own libraries, and a for loop.
+Let us program Guess the Number game again^[This is the last time, I promise!] but _reverse_ the roles. Now _you_ will pick a number and the computer will guess. Think about the algorithm that a computer could use for this before reading the next paragraph^[You should imagine Dora the Explorer staring at you while you think.].
+
+The optimal way to do this is to use the middle of the interval for a guess. This way you rule out _half_ the numbers that are either greater or smaller than your guess (or you guess the number correctly, of course). So, if you know that the number is between 1 and 10, you should split things in the middle, that is picking 5 or 6, as you cannot pick 5.5 (we assume that you can use only integers). If your opponent tells that their number is greater than your pick, you know that it must be somewhere between your guess and the original upper limit, e.g., between 5 and 10. Conversely, if the opponent responds "lower", the number is the lower limit and you guess, e.g., between 1 and 5. On your next attempt, you pick split the interval again until you either guess the number correctly or end up with an interval that contains just one number. Then you do not need to guess anymore.
+
+To implement this program, you will need to learn about functions, how to document them like a pro, and how to use your own libraries. 
+
 
 ## Player's response{#guess-the-number-players-response}
 Let us warm up by writing a code that will allow a player to respond to computer's guess. Recall that there are just three options: your number is greater, smaller, or equal to a computer's guess. I would suggest using, respectively, `>`, `<`, and `=` symbols to communicate this. You need to write the code that will prompt a player for their response until they enter one of these symbols. I.e., the prompt should be repeatedly repeated if they enter anything else. Thus, you definitely need to use the [input([prompt])](https://docs.python.org/3/library/functions.html#input) and a [while](#while-loop) loop. Think of a useful and informative prompt message for this. Test that it works. Using breakpoints might be very useful here.
@@ -308,7 +313,44 @@ def generate_initial(full_string):
 ```
 Take the look at the [manual](https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard) and document the `input_response` function. You will not need the `Parameters` section as it currently accepts no inputs.
 
-::: {.infobox .program}
-Updated your code in `code02.py`.
+:::{.rmdnote .program}
+Update your code in `code02.py`.
+:::
+
+## Using prompt
+In the future, we will be asking about a specific number that is a current guess by the computer, thus we cannot use a fixed prompt message. Modify the `input_response` function by adding a `guess` parameter. Then, modify the prompt that you used for the [input()](https://docs.python.org/3/library/functions.html#input) to include that number. Update functions' documentation. Test it by calling with different values for the `guess` parameter.
+
+::: {.rmdnote .program}
+Put your code into `code03.py`.
+:::
+
+## Splitting interval in the middle
+Let us practice writing functions a bit more. Recall that the computer should use the middle of the interval as a guess. Create a function (let us call it `split_interval()` or something like that) that takes two parameters --- `lower_limit` and `upper_limit` --- and returns _an integer_ that is closest to the middle of the interval. The only tricky part is how you convert a potentially float number (e.g, when you are trying to find it for the interval 1..10) to an integer. You can use function [int()](https://docs.python.org/3/library/functions.html#int) for that. However, read the documentation carefully, as it _does not_ perform a proper rounding (what does it do? read the docs!). Thus, you should [round()](https://docs.python.org/3/library/functions.html#round) the number to the closest integer before converting it.
+
+Write a function, document it, and test it by checking that numbers are correct.
+
+:::{.rmdnote .program}
+Put you `split_interval()` function and the testing code into `code04.py`.
+:::
+
+## Single round
+You have both functions that you need, so let us write the code to initialize the game and play a single round. The initialization boils down to creating two variables that correspond to the lower and upper limits of the game range (we used 1 to 10 so far, but you can always change that). Next, the computer should generate a guess (you have your `split_interval()` function for that) and ask the player about the guess (that is the `input_response()` function). Once you have the response (stored in a separate variable, think of the name yourself), you can update your upper or lower limit using an [if..elif..else](#if-statement) statement. Print out a joyous message, if computer's guess was correct.
+
+:::{.rmdnote .program}
+Put both functions and the script code into `code05.py`.
+:::
+
+##  Multiple rounds
+Extend the game, so that the computer keeps guessing until it finally wins. You already  know how to use the [while](#while-loop) loop, just think how you can use participant's response as a loop condition variable. Also, think about the initial value of that variable and how to use it so you call `input_response()` only at one location. 
+
+:::{.rmdnote .program}
+Put the updated code into `code06.py`.
+:::
+
+## Playing again
+Modify the code, so that you can play this game several times. You already know [how to do this](#guess-the-number-repeat-game). The only thing you need to consider is where exactly should you perform initialization before each round.
+
+:::{.rmdnote .program}
+Put the updated code into `code07.py`.
 :::
 

@@ -105,7 +105,7 @@ Similar _input_ → _action_ → _output_ scheme holds for the [input([prompt])]
 Update your `code01.py`.
 :::
 
-## Conditional _if_ statement
+## Conditional _if_ statement {#if-statement}
 Now we have two numbers: One that computer picked (`number_picked`) and one that is player entered (`guess`). We need to compare them to provide correct output message. For this, we will use conditional [if statement](https://docs.python.org/3/tutorial/controlflow.html#if-statements):
 ```{python eval=FALSE}
 if some_condition_is_true:

@@ -108,7 +108,7 @@ It is all about a user interface! Modify the `input` prompt message to include a
 Put your code into `code06.py`.
 :::
 
-## Repeating the game
+## Repeating the game {#guess-the-number-repeat-game}
 Let us give an option for the player to play again. This means putting _all_ the current code inside of another `while` loop (this is called _nested loops_) that is repeated for as long as the player wants to keep playing. The code should look following:
 ```{python eval=FALSE}
 # import random library so you can use randint function
