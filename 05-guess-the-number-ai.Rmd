@@ -348,9 +348,29 @@ Put the updated code into `code06.py`.
 :::
 
 ## Playing again
-Modify the code, so that you can play this game several times. You already know [how to do this](#guess-the-number-repeat-game). The only thing you need to consider is where exactly should you perform initialization before each round.
+Modify the code, so that you can play this game several times. You already know how to do this and the only thing you need to consider is where exactly should you perform initialization before each round. As you already implemented that for the last game, you might be tempted to look how you did it or, even, copy-paste the code. However, I would recommend writing it from scratch. Remember, your aim is not to write a program but to learn how to do this and, therefore, the journey is more important than a destination.
 
 :::{.rmdnote .program}
 Put the updated code into `code07.py`.
 :::
 
+## Best score
+Add the code to count the number of attempts that the computer required in each round and 
+report the best score (fewest number of attempts) after the game is over. You will need one variable to count the number of attempts and one to keep the best score. Again, try writing it without looking at your previous game.
+
+:::{.rmdnote .program}
+Put the updated code into `code08.py`.
+:::
+
+## Using you own libraries
+You already know how to [use existing libraries](#using-libraries) but you can also create and use your own. Take the two functions that you developed and put them into a new file called `utils.py` (do not forget to put a multiline comment at the top of the file to remind you what is inside!) . Copy the remaining code (the global script) into `code09.py`. It will not work in its current state as it won't find the two functions (try it to see the error message), so you need to import from your own `utils` module. Importing works exactly the same way as for other libraries. Note that even though your file is `utils.py`, the module name is `utils` (without the extension).
+
+:::{.rmdnote .program}
+Put function into `utils.py`, the remaining code into `code09.py`.
+:::
+
+## Keeping imports tidy{#keep-imports-tidy}
+So far, you only imported one library at most. However, as Python is highly modular, it is very common to have many imports in a single file. There are couple of rules that make it easier to track the imports. First, put them in the alphabetic order. This way you can check whether a specific module is imported by knowing where in the list should it appear (rather than looking through the entire list or using search). Second, split your imports into libraries from Python distribution^[I also tend to split this into two lists as well: standard libraries that come with Python and third-party libraries that I had to additionally install. This makes it easier to see what libraries I would need on a different computer.] (the first list) and your own modules (a second list). This is one of these good habits that, although, might have only very small effect on their own, together produce a nice clean^[as a whistle] easy to read and maintain code.
+
+## Putting video into videogames
+Submit your files and be ready for more excitement as we are moving onto "proper" videogames with PsychoPy.
