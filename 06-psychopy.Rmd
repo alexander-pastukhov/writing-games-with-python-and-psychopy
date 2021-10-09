@@ -141,18 +141,19 @@ Unlike the three units above, using [degrees of visual angle](https://psychopy.o
 ### Centimeters on screen
 Here, you would need know the physical size of your screen and its resolution. These are fairly exotic units for very specific usage cases^[So specific that I cannot think of one, to be honest.].
 
-## Make your square jump!
+## Make your square jump
 So far, we fixed the location of the square when we created it. However, you can move it at any time by assigning a new `(<x>, <y>)` coordinates to its `pos` property. _E.g._, `white_square.pos = (-0.1, 0.2)`. Let us experiment by moving the square to a random location on every iteration of the loop (this could cause a lot of flashing, so if you have a photosensitive epilepsy that can be triggered by flashing lights, you probably should do it just once before the loop). Use the units of your choice and generate a new position using [random.uniform(a, b)](https://docs.python.org/3/library/random.html#random.uniform) function, that generates a random value within _a..b_ range^[You need to import the random library for this, of course.]. Generate two values (one for x, one for y). If you use `"norm"` units, your range is the same (from -1 to 1) for the two dimensions. However, if you used `"height"` units, you need to take into account the aspect ratio of your window (4:3 if you are using 800×600 pix window).
 
 ::: {.rmdnote .program}
 Put your code into _code09.py_.
 :::
 
-
-## Make the square jump on your command!
+## Make the square jump on your command
 This was very flashy, so let us make the square jump only when you press **space** button. For this, we need to expand the code that processes keyboard input. So far, we restricted it to just **escape** button and checked whether any (hence, **escape**) button was pressed. 
 
 You will learn about lists and indexes in the next chapter, so here is another ready-made. First, add `"space"` to the `keyList` parameter. Next, use conditional [if statement](#{#if-statement) to check whether [event.getKeys()](https://psychopy.org/api/event.html#psychopy.event.getKeys) returned a key press. If it did  (`len(keys) > 0`), you can now check whether `keys[0]` is equal to `"space"` or `"escape"`^[You can use `if..else`, because we only have two options but I would recommend to go for a more general solution `if..elif` ]. If it was the latter, the game is over as before. If it was `"space"` then move the square to a new random position (and do not move it on every frame!)
+
+Hint, if you are debugging
 
 ::: {.rmdnote .program}
 Put your code into _code10.py_.
