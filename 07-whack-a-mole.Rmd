@@ -1,0 +1,46 @@
+# Whack a Mole{#whack-a-mole}
+
+
+## Lists {#lists}
+So far, we were using variables to store single values: computer's pick, player's guess, number of attempts, PsychoPy window object, etc. However, you can store multiple values in a variable using [lists](https://docs.python.org/3/library/stdtypes.html#list). Extending the idea of variable-as-a-box, you can think about 
+is fairly straightforward, a variable is not a simple box but a box with numbered slots for values.
+
+The list is defined via square brackets `<variable> = [<value1>, <value2>, ... <valueN>]` and an individual value is also accessed via square brackets `<variable>[<index>]` where index goes from `0` to `len(<variable>)-1` ([`len(<object>)`](https://docs.python.org/3/library/functions.html#len) function returns number of items in an object, in our case, it would be a list). Thus, if you have five values in the list, the index of the first one is `0` (not `1`) and the index of the last one is `4` (not `5`)!
+
+::: {.infobox .practice}
+Do exercise #1 see how lists are defined and indexed.
+:::
+
+You can also get many values from the list via so called _slicing_ when you specify index of many elements via `<start>:<stop>`. There is a catch though and, as this is a recurrent theme in Python, pay close attention: The index slicing builds goes from `start` up to **but not including** `stop`, in mathematical notation $[start, stop)$. So, if you have a list `my_pretty_numbers` that holds five values and you want to get values from second (index `1`) till fourth (index `3`) you need to write the slice as `1:4` (not `1:3`!). This _including the start but excluding the stop_ is both fairly counterintuitive (I still have to consciously remind myself about this) and widely used in Python.
+
+::: {.infobox .practice}
+Do exercise #2 to build the intuition.
+:::
+
+You can also omit either `start` or `stop`. In this case, Python will assume that a missing `start` means `0` (the index of the first element) and missing `stop` means `len(<list>)`. If you omit _both_, e.g., `my_pretty_numbers[:]` it will return all values, as this is equivalent to `my_pretty_numbers[0:len(my_pretty_numbers)]`.^[Note, that this is almost but not quite the same thing as just writing `my_pretty_numbers`, the difference is subtle but important and we will look into it later when talking about mutable versus immutable types.]
+
+::: {.infobox .practice}
+Do exercise #3.
+:::
+
+You can also use _negative_ indexes that are relative to length of the list. Thus, if you want to get the _last_ element of the list, you can say `my_pretty_numbers[len(my_pretty_numbers)-1]` or just `my_pretty_numbers[-1]`. The last-but-one element would be `my_pretty_numbers[-2]`, etc. You can use negative indexes for slicing but keep in mind _including the start but excluding the stop_: `my_pretty_numbers[:-1]` will return all but last element of the list not the entire list.
+
+::: {.infobox .practice}
+Do exercise #4.
+:::
+
+The slicing can be extended by specifying a `step`, so that `stop:start:step`. This can be combined with omitted and negative indexes. To get every _odd_ element of the list, you write `my_pretty_numbers[::2]`:
+```{python}
+my_pretty_numbers = [1, 2, 3, 4, 5, 6, 7]
+my_pretty_numbers[::2]
+```
+
+::: {.infobox .practice}
+Do exercise #5.
+:::
+
+Finally, for those who are familiar with R, the good news is that Python does not allow you to use indexes outside of the range, so trying to get 6^th^ element (index `5`) of a five-element-long list will generate a simple and straightforward error (a so-called [fail-fast](https://en.wikipedia.org/wiki/Fail-fast) principle). The bad news is that if your _slice_ is larger than the range, it will truncated to the range without an extra warning or an error. So, for a five-element list `my_pretty_numbers[:6]` will return all numbers of to the maximal possible index (thus, effectively, this is equivalent to `my_pretty_numbers[:]`). Moreover, if the slice is empty (`2:2`, cannot include `2`, even though it starts from it) or the entire slice is outside of the range, Python will return an empty list, again, neither warning or error is generated.
+
+::: {.infobox .practice}
+Do exercise #6.
+:::
