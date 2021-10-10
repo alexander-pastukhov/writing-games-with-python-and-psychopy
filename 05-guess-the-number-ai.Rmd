@@ -369,8 +369,14 @@ You already know how to [use existing libraries](#using-libraries) but you can a
 Put function into `utils.py`, the remaining code into `code09.py`.
 :::
 
-## Keeping imports tidy{#keep-imports-tidy}
-So far, you only imported one library at most. However, as Python is highly modular, it is very common to have many imports in a single file. There are couple of rules that make it easier to track the imports. First, put them in the alphabetic order. This way you can check whether a specific module is imported by knowing where in the list should it appear (rather than looking through the entire list or using search). Second, split your imports into libraries from Python distribution^[I also tend to split this into two lists as well: standard libraries that come with Python and third-party libraries that I had to additionally install. This makes it easier to see what libraries I would need on a different computer.] (the first list) and your own modules (a second list). This is one of these good habits that, although, might have only very small effect on their own, together produce a nice clean^[as a whistle] easy to read and maintain code.
+## Ordnung muss sein!{#keep-imports-tidy}
+So far, you only imported one library at most. However, as Python is highly modular, it is very common to have many imports in a single file. There are several rules that make it easier to track the imports. When you import libraries, all import statements should be at the top of your file and you should avoid putting them in random order. The recommended order is 1) system libraries, like `os` or `random`; 2) third-party libraries, like `psychopy`; 3) your project modules . And, within each section you should put the libraries _alphabetically_, so
+```python
+import os
+import random
+```
+
+This may not look particularly useful for our simple code but as your projects will grow, you will need to include more and more libraries. Keeping them in that order makes it easy to understand which libraries you use and which are non-standard. Alphabetic order means that you can quickly check whether a library is included, as you can quickly find the location where its import statement should appear.
 
 ## Putting video into videogames
 Submit your files and be ready for more excitement as we are moving onto "proper" videogames with PsychoPy.
