@@ -48,6 +48,9 @@ Methods, such as `Window.close()` are, essentially, functions that belong to the
 
 Although we barely scratch the surface of object-oriented programming, it will be enough for us to be able to use classes defined for us in PsychoPy library.
 
+## Function parameters by position or by name{#arguments-by-position-or-name}
+There is another curious bit in the code above that we need to discuss. 
+
 ## Adding main loop
 Currently, not much is happening in our program. One thing we need to add is a loop in which we can repeatedly draw in a window (and update it via its [flip()](https://psychopy.org/api/visual/window.html#psychopy.visual.Window.flip) method), check user input, and perform any other necessary actions.
 
