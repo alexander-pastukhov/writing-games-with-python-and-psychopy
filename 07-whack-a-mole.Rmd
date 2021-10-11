@@ -109,10 +109,57 @@ Put your code into _code01.py_.
 :::
 
 ## Three moles
-Let us create three moles that will be represented by [circles](https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle). Create a new list variable `moles` before the loop and put three circles into it. One should go to the left, one dead center, and one to the right (watch a video above to see what I mean, you can also use different colors for them, as I did). You can either create an empty list and then `append()` circles one at a time. Or you can use brackets to put all three of them into the list in one go. Then. [draw()](https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle.draw) circles inside the main loop. Note that you have to draw them one at a time. Therefore, you will need to add three lines for this but the next section will show you an easier way.
+Let us create three moles that will be represented by [circles](https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle). Create a new list variable `moles` before the loop and put three circles into it. One should go to the left, one dead center, and one to the right. Watch a video above to see what I mean. Think of a reasonable size (which [units](#psychopy-units) make keeping circle a circle easier?) and position. You can also use different colors for them, as I did). 
+
+You can either create an empty list and then `append()` circles one at a time. Or you can use square brackets to put all three of them into the list in one go. Then [draw()](https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle.draw) circles inside the main loop. Note that you have to draw them one at a time. Therefore, you will need to add three lines for this but the next section will show you an easier way.
 
 ::: {.rmdnote .program}
 Put your code into _code02.py_.
 :::
 
+## For loop{#for-loop}
+In the code above, we needed to iterate over three moles (circles) that we had in a list. Python has a tool just for that: a
+[for loop](https://docs.python.org/3/tutorial/controlflow.html?highlight=loop#for-statements) that iterates over the items in any sequence (our list is a sequence!). Here is an example:
+```{python}
+numbers = [2, 4, 42]
+for a_number in numbers:
+    print("Value of a_number variable on this iteration is %d"%(a_number))
+    a_number = a_number + 3
+    print("  Now we incremented it by 3: %d"%(a_number))
+    print("  Now we use in a formula a_number / 10: %g"%(a_number / 10))
+```
+
+Here, the code inside the `for` loop is repeated three times because there are three items in the list. On each iteration, next value from the list gets assigned to a temporary variable `a_number` (see the output). Once the value is assigned to a variable, you can use it just like any variable. You can print it out (first `print`), you can modify it, use its value for when calling other functions, etc. To better appreciate this, copy-paste this code into a temporary file (call it `test01.py`), put a [breakpoint](#debugging) onto the first `print` statement and then use **F10** to step through the loop and see how value of `a_number` variable changes on each iteration (and then it gets modified in the second line within the loop).
+
+Note that you can use the same [break](https://docs.python.org/3/tutorial/controlflow.html?highlight=loop#break-and-continue-statements-and-else-clauses-on-loops) statement as for the [while](https://docs.python.org/3/reference/compound_stmts.html#the-while-statement) loop.
+
+::: {.rmdnote .practice}
+Do exercise #8.
+:::
+
+## Drawing in a loop
+Now that you have learned about the [for](#for-loop) loop, it is easy to draw the moles. Just iterate over the list (come up with a good temporary variable name) and `draw()` a current item (which is in your temporary variable).
+
+::: {.rmdnote .program}
+Put your code into _code03.py_.
+:::
+
+## range() function: Repeating code N times{#range}
+Sometimes, you might need to repeat the code several times. For example, imagine that you have 40 trials in an experiment. Thus, you need to repeat a trial-related code 40 times. You can, of course, build a list by hand and iterate over it but Python has a handy [range()](https://docs.python.org/3/tutorial/controlflow.html?highlight=loop#the-range-function) function for that. `range(N)` yields N integers from 0 to N-1 (same up-to-but-not-including rule as for slicing) that you can iterate over in a for loop. 
+```{python}
+for x in range(3):
+    print("Value of x is %d"%(x))
+```
+
+You can modify [range()](https://docs.python.org/3/library/stdtypes.html#range) function behavior by providing a starting value and a step size. But in it simplest form `range(N)` is a handy tool to repeat the code that many times. Note that while you always need to have a temporary variable in a `for` loop, sometimes you may not use it at all. In cases like this, you should use `_` (underscore symbol) as a variable name to indicate this.
+```{python}
+for _ in range(2):
+    print("I will be repeated twice!")
+```
+
+Alternatively, you can use `range()` to loop through indexes of a list (remember, you can always access an individual list item via `var[index]`). Do exactly that^[Note, this is note a better way but an _alternative_ way to do this.]! Modify your code to use [range()]((https://docs.python.org/3/library/stdtypes.html#range)) function in the for loop (how can you compute the number of iterations from the length of the list?), use temporary variable as an index for the list to draw each item^[Style hint: if a variable is an _index_ of something, I tend to call it `isomething`. E.g., if it holds an index to a current mole, I would call it `imole`. This is _my_ way of doing it, for example, others use `_i` as a suffix instead of a prefix. But either way, it is a useful naming convention. Remember, the easier it is to understand the meaning of a variable from its name, the easier it is for you to read and modify the code.]. When in doubt, put a breakpoint inside (or just before) the loop and step through your code to understand what values the temporary loop variable gets and how it is used.
+
+::: {.rmdnote .program}
+Put your modified code into _code04.py_.
+:::
 
