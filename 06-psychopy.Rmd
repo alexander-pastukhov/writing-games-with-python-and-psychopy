@@ -48,8 +48,43 @@ Methods, such as `Window.close()` are, essentially, functions that belong to the
 
 Although we barely scratch the surface of object-oriented programming, it will be enough for us to be able to use classes defined for us in PsychoPy library.
 
-## Function parameters by position or by name{#arguments-by-position-or-name}
-There is another curious bit in the code above that we need to discuss. 
+## Function parameters: default values, passing by position or by name{#arguments-by-position-or-name}
+There are a few more curious bits in the `visual.Window(size=(800, 600))` call above that we need to discuss. These curiosities are related to functions (and, therefore, methods) not classes per se. First, constructor method of the Window class has [a lot of arguments](https://psychopy.org/api/visual/window.html#psychopy.visual.Window) (when we construct an object, we call a constructor _method_ of the class, which is why we are talking about functions). And yet, we only passed one of them. This is because you can specify [default values](https://docs.python.org/3/tutorial/controlflow.html#default-argument-values) for individual parameters. In this case, if a parameter is omitted, a default value is used instead
+```{python}
+def divide(x1, x2=2):
+  """
+  Divides numbers, uses 2 as a second value if a second term is omitted.
+  
+  Parameters:
+  ----------
+  x1 : number
+  x2 : number, defaults to 2
+  
+  Returns:
+  ----------
+  number
+  """
+  return x1 / x2
+print(divide(2))
+print(divide(2, 4))
+```
+If you look at [documentation](https://psychopy.org/api/visual/window.html#psychopy.visual.Window), you will see that for the Window class constructor _all_ parameters have a default value. This is part of PsychoPy's philosophy of combining rich customization (just look at the sheer number of parameters!) with simplicity of use through sensible defaults (specify nothing and the window will still work).
+
+Second, we did not just pass the value but specified which parameter this value is for via `size=(800, 600)`. This notation is called [keyword arguments](https://docs.python.org/3/tutorial/controlflow.html#keyword-arguments). The advantage is in making it more explicit which parameter you are passing a value through. Plus, it allows you to put parameters any order, if that is more relevant given the context^[However, stick to original order for consistency otherwise.]. If you do not use names, the values are assigned to individual parameters based on their _position_ (a.k.a. positional parameters). You can even mix the two, but positional parameters must come first, see [documentation](https://docs.python.org/3/tutorial/controlflow.html#more-on-defining-functions) if you want to know more.
+```{python}
+# using positional parameters
+print(divide(2, 4))
+```
+
+```{python}
+# using keyword arguments
+print(divide(x2=4, x1=2))
+```
+
+```{python}
+# mixing positional and keyword arguments
+print(divide(2, x2=4))
+```
 
 ## Adding main loop
 Currently, not much is happening in our program. One thing we need to add is a loop in which we can repeatedly draw in a window (and update it via its [flip()](https://psychopy.org/api/visual/window.html#psychopy.visual.Window.flip) method), check user input, and perform any other necessary actions.
@@ -73,7 +108,7 @@ Put your code into _code02.py_.
 ## Adding text message
 Although we are now running a nice game loop, we still have only a boring gray window to look at. Let us create a text stimulus, which would say "Press escape to exit" and display it during the loop. For this we will use [visual.TextStim](https://psychopy.org/api/visual/textstim.html) class from PsychoPy library.
 
-First, you need to create the `press_escape_text` object (instance of the [TextStim](https://psychopy.org/api/visual/textstim.html class)) before the main loop. There are quite a few parameters that you can play with but minimally, you need to pass the window the text should be displayed in (our `win` variable) and the actual text you want to display (`text="Press escape to exit"`). For all other settings PsychoPy will use its defaults (default font family, color and size, placed right at the windows' center).
+First, you need to create the `press_escape_text` object (instance of the [TextStim](https://psychopy.org/api/visual/textstim.html class)) before the main loop. There are quite a few parameters that you can play with but minimally, you need to pass the window the text should be displayed in (our `win` variable) and the actual text you want to display (`text="Press escape to exit"`). For all other settings PsychoPy will use its [defaults](#arguments-by-position-or-name) (default font family, color and size, placed right at the windows' center).
 ```python
 press_escape_text = visual.TextStim(win, "Press escape to exit")
 ```
