@@ -6,7 +6,7 @@ Today you will create your first _video_ game Whack-a-Mole. The game itself is v
 **MISSING VIDEO!**
 :::
 
-In this game, we will need to handle many targets and many keys, so you need to learn about lists first.
+In this game, we will need to handle many targets and many keys, so you need to learn about lists.
 
 ## Lists {#lists}
 So far, we were using variables to store single values: computer's pick, player's guess, number of attempts, PsychoPy window object, etc. But sometimes we need to handle more than one value. We already had this problem in the [computer-based Guess-the-Number](#guess-the-number-ai) game when we needed to store the remaining number range. We got away by using two variables, one for the lower and one for the upper limit. However, this approach clearly does not scale well and, sometimes, we might not even know how many values we will need to store. Python's [lists](https://docs.python.org/3/library/stdtypes.html#lists) are the solution to the problem.
@@ -90,15 +90,13 @@ my_pretty_numbers
 Do exercise #7.
 :::
 
-## Basic game loop
-Phew that was _a lot_ about lists (and we barely scratched the surface). However, [all work and no play makes Jack a dull boy](https://en.wikipedia.org/wiki/All_work_and_no_play_makes_Jack_a_dull_boy)! So let us start with a basic PsychoPy game loop that we used the last time
+## Basic game scaffolding
+Phew that was _a lot_ about lists^[and we barely scratched the surface!]. However, [all work and no play makes Jack a dull boy](https://en.wikipedia.org/wiki/All_work_and_no_play_makes_Jack_a_dull_boy)! So let us start with a basic PsychoPy scaffolding. Here the code structure:
 ```python
 import libraries from [psychopy]
-create the PsychoPy window ([visual.Window()]())
-create a variable that indicates that the game is not over yet
-while not gameover:
-  flip the window (.flip())
-  game over, if a player pressed the escape button (event.getKeys())
+create the PsychoPy window (visual.Window())
+flip the window (.flip())
+wait for a player to press the escape key (event.waitKeys())
 close the window (.close())
 ```
 
@@ -109,9 +107,9 @@ Put your code into _code01.py_.
 :::
 
 ## Three moles
-Let us create three moles that will be represented by [circles](https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle). Create a new list variable `moles` before the loop and put three circles into it. One should go to the left, one dead center, and one to the right. Watch a video above to see what I mean. Think of a reasonable size (which [units](#psychopy-units) make keeping circle a circle easier?) and position. You can also use different colors for them, as I did). 
+Let us create three moles that will be represented by [circles](https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle). Create a new list variable `moles` and put three circles into it. One should go to the left, one dead center, and one to the right. Watch a video above to see what I mean. Think of a reasonable size (which [units](#psychopy-units) make keeping circle a circle easier?) and position. You can also use different colors for them, as I did). 
 
-You can either create an empty list and then `append()` circles one at a time. Or you can use square brackets to put all three of them into the list in one go. Then [draw()](https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle.draw) circles inside the main loop. Note that you have to draw them one at a time. Therefore, you will need to add three lines for this but the next section will show you an easier way.
+You can either create an empty list and then `append()` circles one at a time. Or you can use square brackets to put all three of them into the list in one go. Then [draw()](https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle.draw) circles before you flip the window and wait for a key press. Note that you have to draw them one at a time. Therefore, you will need to add three lines for this but the next section will show you an easier way.
 
 ::: {.rmdnote .program}
 Put your code into _code02.py_.
@@ -129,7 +127,7 @@ for a_number in numbers:
     print("  Now we use in a formula a_number / 10: %g"%(a_number / 10))
 ```
 
-Here, the code inside the `for` loop is repeated three times because there are three items in the list. On each iteration, next value from the list gets assigned to a temporary variable `a_number` (see the output). Once the value is assigned to a variable, you can use it just like any variable. You can print it out (first `print`), you can modify it, use its value for when calling other functions, etc. To better appreciate this, copy-paste this code into a temporary file (call it `test01.py`), put a [breakpoint](#debugging) onto the first `print` statement and then use **F10** to step through the loop and see how value of `a_number` variable changes on each iteration (and then it gets modified in the second line within the loop).
+Here, the code inside the `for` loop is repeated three times because there are three items in the list. On each iteration, next value from the list gets assigned to a temporary variable `a_number` (see the output). Once the value is assigned to a variable, you can use it just like any variable. You can print it out (first `print`), you can modify it (second line within  the loop), use its value for when calling other functions, etc. To better appreciate this, copy-paste this code into a temporary file (call it `test01.py`), put a [breakpoint](#debugging) onto the first `print` statement and then use **F10** to step through the loop and see how value of `a_number` variable changes on each iteration and then it gets modified in the second line within the loop.
 
 Note that you can use the same [break](https://docs.python.org/3/tutorial/controlflow.html?highlight=loop#break-and-continue-statements-and-else-clauses-on-loops) statement as for the [while](https://docs.python.org/3/reference/compound_stmts.html#the-while-statement) loop.
 
@@ -145,28 +143,28 @@ Put your code into _code03.py_.
 :::
 
 ## range() function: Repeating code N times{#range}
-Sometimes, you might need to repeat the code several times. For example, imagine that you have 40 trials in an experiment. Thus, you need to repeat a trial-related code 40 times. You can, of course, build a list by hand and iterate over it but Python has a handy [range()](https://docs.python.org/3/tutorial/controlflow.html?highlight=loop#the-range-function) function for that. `range(N)` yields N integers from 0 to N-1 (same up-to-but-not-including rule as for slicing) that you can iterate over in a for loop. 
+Sometimes, you might need to repeat the code several times. For example, imagine that you have 40 trials in an experiment. Thus, you need to repeat a trial-related code 40 times. You can, of course, build a list 40 items long by hand and iterate over it but Python has a handy [range()](https://docs.python.org/3/tutorial/controlflow.html?highlight=loop#the-range-function) function for that. `range(N)` yields N integers from 0 to N-1 (same up-to-but-not-including rule as for slicing) that you can iterate over in a for loop. 
 ```{python}
 for x in range(3):
     print("Value of x is %d"%(x))
 ```
 
-You can modify [range()](https://docs.python.org/3/library/stdtypes.html#range) function behavior by providing a starting value and a step size. But in it simplest form `range(N)` is a handy tool to repeat the code that many times. Note that while you always need to have a temporary variable in a `for` loop, sometimes you may not use it at all. In cases like this, you should use `_` (underscore symbol) as a variable name to indicate this.
+You can modify [range()](https://docs.python.org/3/library/stdtypes.html#range) function behavior by providing a starting value and a step size. But in its simplest form `range(N)` is a handy tool to repeat the code that many times. Note that while you always need to have a temporary variable in a `for` loop, sometimes you may not use it at all. In cases like this, you should use `_` (underscore symbol) as a variable name to indicate the lack of use.
 ```{python}
 for _ in range(2):
     print("I will be repeated twice!")
 ```
 
-Alternatively, you can use `range()` to loop through indexes of a list (remember, you can always access an individual list item via `var[index]`). Do exactly that^[Note, this is note a _better_ way but an _alternative_ way to do this.]! Modify your code to use [range()]((https://docs.python.org/3/library/stdtypes.html#range)) function in the for loop (how can you compute the number of iterations from the length of the list?), use temporary variable as an index for the list to draw each item^[Style hint: if a variable is an _index_ of something, I tend to call it `isomething`. E.g., if it holds an index to a current mole, I would call it `imole`. This is _my_ way of doing it, others use `i_` or `_i` as a suffix instead of a prefix. But either way, it is a useful naming convention. Remember, the easier it is to understand the meaning of a variable from its name, the easier it is for you to read and modify the code.]. When in doubt, put a breakpoint inside (or just before) the loop and step through your code to understand what values the temporary loop variable gets and how it is used.
+Alternatively, you can use `range()` to loop through indexes of a list (remember, you can always access an individual list item via `var[index]`). Do exactly that^[Note, this is note a _better_ way but an _alternative_ way to do this.]! Modify your code to use [range()]((https://docs.python.org/3/library/stdtypes.html#range)) function in the for loop (how can you compute the number of iterations from the length of the list?), use temporary variable as an index for the list to draw each item^[Style hint: if a variable is an _index_ of something, I tend to call it `isomething`. E.g., if it holds an index to a current mole, I would call it `imole`. This is _my_ way of doing it. Others use `i_` prefix or an `_i` suffix. But either way, it is a useful naming convention. Remember, the easier it is to understand the meaning of a variable from its name, the easier it is for you to read and modify the code.]. When in doubt, put a breakpoint inside (or just before) the loop and step through your code to understand what values a temporary loop variable gets and how it is used.
 
 ::: {.rmdnote .program}
 Put your modified code into _code04.py_.
 :::
 
 ## A random mole
-Drawing all three moles served as a practical exercise with loops but in a real game we need to shown only one _random_ target at a time. We could create the three targets as before and draw one of them. However, later on we would like to _change_ the color of target to indicate that the player did hit it, so it is simpler (if a bit wasteful) to create a single mole every time we need one. 
+Drawing all three moles served as a practical exercise with loops but in a real game we need to shown only one random target at a time. We could create the three targets as before and draw one of them. However, later on we would like to change the color of the target to indicate that the player did hit it, so it is simpler (if a bit wasteful) to create a single mole every time we need one. 
 
-For this, define one [constant](#constants) with a list of three colors that you used and another one with three horizontal locations (the vertical is the same, so we do not need to worry about it). Next, randomly pick which target out of three you want to create, i.e., we need to generate an _index_ of the target. You can do it either via [random.randrange()](https://docs.python.org/3/library/random.html#random.randrange) or via [random.choice()](https://docs.python.org/3/library/random.html#random.choice) building the range yourself via [the function with the same name]() you have just learned about (remember to organize your imports alphabetically). Store the index in a variable with a meaningful name^[itarget? imole?] and use it in combination with constants to create the target. Then, you need to draw that single target in the main loop.
+For this, define one [CONSTANT](#constants) with a list of three colors that you used and another one with three horizontal locations (the vertical location is the same, so we do not need to worry about it). Next, randomly pick which target out of three you want to create, i.e., we need to generate an _index_ of the target. You can do it either via [random.randrange()](https://docs.python.org/3/library/random.html#random.randrange) or via [random.choice()](https://docs.python.org/3/library/random.html#random.choice) building the range yourself via [the function with the same name]() you have just learned about (remember to organize your imports alphabetically). Store the index in a variable with a meaningful name^[`itarget`? `imole`?] and use it with constants to create the target of the corresponding color at a corresponding location. Then, you need to draw that single target before waiting for a key press.
 
 Once you have the code, put a breakpoint and check that the value of the index variable matches what is shown on a screen^[I know it feels redundant but these are little checks that cost little time by themselves but help you avoid wasting lots of time on tracing weird mistakes. Here, you check that your expectations (if the middle target is shown, the index should be 1) match the reality. Once you check this, you do not _expect_ it to be true, you _know_ it to be true!].
 
@@ -177,7 +175,7 @@ Put your modified code into _code05.py_.
 ## Random time
 What makes Whack-a-Mole game fun is not only that you do not know _which_ mole will appear but you also do not know _when_ it will appear and _how much time_ you have to whack it. Thus, we need to modify our presentation schedule. We need a blank period of a random duration (I would suggest between 0.75 s to 1.5 s) and limited presentation duration (between 0.5 to 0.75 s). First, you need to define these ranges as [constants](#constants). Now that you know lists you can use a single variable to hold both ends of the range. Then, you need to generate two numbers (one for the blank another for the presentation) coming from [a uniform distrubition](https://docs.python.org/3/library/random.html#random.uniform) within that range. Finally, you need to time your blank and presentation using the [wait()](https://psychopy.org/api/clock.html#psychopy.clock.wait) function from the [clock](https://psychopy.org/api/clock.html) module.
 
-Now is time to update and structure you code. Here is a approximate outline:
+Now is time to update and structure you code. Here is a approximate outline (note that I have dropped the wait for keys):
 ```python
 """Document your file
 """
@@ -217,11 +215,24 @@ Put your code into _code07.py_.
 :::
 
 ## Exit strategy
-I hope that you used a small number of trials because (on my advice, yes!) we removed the possibility to exit the game via the **escape** key. To put it back, we will replace _both_ [wait()](https://psychopy.org/api/clock.html#psychopy.clock.wait)  calls with [waitKeys()](https://psychopy.org/api/event.html#psychopy.event.waitKeys) function from [event](https://psychopy.org/api/event.html#psychopy-event-for-keypresses-and-mouse-clicks) module. It has `maxWait` parameter that by default is set to infinity, which we can replace it with the duration we require. If a player does not press a key, it will work just the way the [wait()](https://psychopy.org/api/clock.html#psychopy.clock.wait) did. If a player presses a key (allow only `"escape"`!), it means that they want to abort the game (the only option at the moment). Thus, assign the returned value to a temporary variable (`keys`?) and check whether it is equal to `None`^[Confusingly, if no key was pressed, [getKeys()](https://psychopy.org/api/event.html#psychopy.event.getKeys) returns an empty list but [waitKeys()](https://psychopy.org/api/event.html#psychopy.event.waitKeys) returns `None`.]. If it is not equal to `None`, [break](#break) out of the loop!
+I hope that you used a small number of trials because (on my advice, yes!) we did not program a possibility to exit the game via the **escape** key. To put it in, we will replace _both_ [wait()](https://psychopy.org/api/clock.html#psychopy.clock.wait)  calls with [waitKeys()](https://psychopy.org/api/event.html#psychopy.event.waitKeys) function. It has `maxWait` parameter that by default is set to infinity, which we can set to the duration we require. If a player does not press a key, it will work just like [wait()](https://psychopy.org/api/clock.html#psychopy.clock.wait) did. If a player presses a key (allow only `"escape"` for now), it means that they want to abort the game (the only option at the moment). Thus, assign the returned value to a temporary variable (`keys`?) and check whether it is equal to `None`^[Confusingly, if no key was pressed, [getKeys()](https://psychopy.org/api/event.html#psychopy.event.getKeys) returns an empty list but [waitKeys()](https://psychopy.org/api/event.html#psychopy.event.waitKeys) returns `None`.]. If it is not equal to `None`, [break](#break) out of the loop!
 
 ::: {.rmdnote .program}
 Put your code into _code08.py_.
 :::
 
 ## Whacking that mole
+We have moles that appear at a random location after a random delay for a random period of time. Now we just need to add an ability to whack 'em! You whack a mole only when it is present. Thus, we only need to modify and handle the [waitKeys()](https://psychopy.org/api/event.html#psychopy.event.waitKeys) call for the presentation interval. 
 
+First, create a new constant with three keys that correspond to three locations. I would suggest using `["left", "down", "right"]`, which are cursor keys. Next, you need to use them for the `keyList` parameter. However, we cannot use this list directly, as we also need the **escape** key. The simplest way is to put "escape" into its own list and concatenate the two lists via `+`: `["escape"] + YOUR_CONSTANT_WITH_KEYS`. Do this concatenation directly when you set a value to the `keyList` in the function call. Before we continue, run the code and test that you can abort the program during the presentation (but not during the blank interval) by pressing any of these three keys. Also check that **escape** still works!
+
+Now that we have keys to press, we need more sophisticated processing (we gonna have quite a few nested conditional statements). We still need to check whether [waitKeys()](https://psychopy.org/api/event.html#psychopy.event.waitKeys) returned `None` first. If it did not, it must have returned a list of pressed keys. Actually, it will be a list with just a single item^[You will get more than one item in that list only if you set `clearEvents=False`. In this case, you will get the list of keys pressed before the call. However, if you opted for a default `clearEvents=True`, you will get only one key press in the list (at least I was never able to get more than one).], so we can work with it directly via `keys[0]`. Use conditional [if-else statement](#if-statement) to break out of the loop if the player pressed **escape**. Otherwise, it was one of the three "whack" keys.
+
+Our next step is to establish which index the key corresponds to. Python makes it extremely easy as lists have `.index(value)` method that returns the index of the value within the list. You have the (CONSTANT) list with the keys, you have the pressed key: Figure out the index and check whether it matches the index of the target (`imole` variable in my code). If it does, let us provide a visual feedback of success: change mole (circle) `fillColor` to white, draw it, and [wait](https://psychopy.org/api/clock.html#psychopy.clock.wait) for 300 ms (setup a constant for feedback duration). This way, the mole will turn white and remain briefly on the screen when hit but will disappear immediately, if you missed.
+
+::: {.rmdnote .program}
+Put your code into _code09.py_.
+:::
+
+## You did it!
+Congratulations on your first video game! It could use some bells-and-whistles like having a score, combos would be cool, proper mole images instead circle, etc. but it works and it is fun (if you do not feel challenged, reduce the presentation time)! Next time, we ditch the keyboard and learn how to handle the mouse for the Memory game. 
