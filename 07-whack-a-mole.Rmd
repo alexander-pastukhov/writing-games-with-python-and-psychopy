@@ -210,7 +210,7 @@ Put your code into _code06.py_.
 :::
 
 ## Repeating trials
-You already know how to [repeat](#range) the same code many times. Decide on number of trials / rounds (define this as a constant) and repeat the single round that many times. Think about what code goes inside the loop and what should stay outside.
+You already know how to [repeat](#range) the same code many times. Decide on number of trials / rounds (define this as a constant) and repeat the single round that many times. Think about what code goes inside the loop and what should stay outside for the randomization to work properly.
 
 ::: {.rmdnote .program}
 Put your code into _code07.py_.
