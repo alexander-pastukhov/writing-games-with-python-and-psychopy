@@ -175,9 +175,7 @@ Put your modified code into _code05.py_.
 :::
 
 ## Random time
-What makes Whack-a-Mole game fun is not only that you do not know _which_ mole will appear but you also do not know _when_ it will appear and _how much time_ you have to whack it. Thus, we need to modify our presentation schedule. We need a blank period of a random duration (I would suggest between 0.75 s to 1.5 s) and limited presentation duration (between 0.5 to 0.75 s). First, you need to define these ranges as [constants](#constants). Now that you know lists you can use a single variable to hold both ends of the range. Then, you need to generate two numbers (one for the blank another for the presentation) coming from [a uniform distrubition](https://docs.python.org/3/library/random.html#random.uniform) within that range. Finally, you need to time your presentation using the [clock](https://psychopy.org/api/clock.html) module.
-
-The two classes you are primarily interested in are [Clock](https://psychopy.org/api/clock.html#psychopy.clock.Clock) and [CountdownTimer](https://psychopy.org/api/clock.html#psychopy.clock.CountdownTimer). The only difference between the two is that [Clock](https://psychopy.org/api/clock.html#psychopy.clock.Clock) starts at (and [resets](https://psychopy.org/api/clock.html#psychopy.clock.Clock.reset) to) 0 and start counting _elapsed_ time, so its [getTime()](https://psychopy.org/api/clock.html#psychopy.clock.MonotonicClock.getTime) method will return only _positive_ values. In contrast, the [CountdownTimer](https://psychopy.org/api/clock.html#psychopy.clock.CountdownTimer) start with (and resets to) a value you initialized it with and starts counting _remaining_ time down. Importantly, it will not stop once it reaches 0, so you will eventually end up with _negative_ remaning time. Thus, for [Clock](https://psychopy.org/api/clock.html#psychopy.clock.Clock) you check whether the _elapsed_ time is longer than some predefined value (blank and presentation durations that you generated), whereas for  [CountdownTimer](https://psychopy.org/api/clock.html#psychopy.clock.CountdownTimer) you start at these values and check that the _remaining_ time is above zero. Note it is not guaranteed that the remaining time will be exactly zero. If anything, it is extremely unlikely that this will ever happen, so never test for an exact equality with zero^[More generally, never compare float values to exact numbers. They are [tricky](http://www.lahey.com/float.htm), as the underlying representation [does not guarantee](https://docs.python.org/3/tutorial/floatingpoint.html) that the computation will produce _exactly_ the number that it should: `.1 + .1 + .1 == .3` is suprisingly `False`, try it yourself]!
+What makes Whack-a-Mole game fun is not only that you do not know _which_ mole will appear but you also do not know _when_ it will appear and _how much time_ you have to whack it. Thus, we need to modify our presentation schedule. We need a blank period of a random duration (I would suggest between 0.75 s to 1.5 s) and limited presentation duration (between 0.5 to 0.75 s). First, you need to define these ranges as [constants](#constants). Now that you know lists you can use a single variable to hold both ends of the range. Then, you need to generate two numbers (one for the blank another for the presentation) coming from [a uniform distrubition](https://docs.python.org/3/library/random.html#random.uniform) within that range. Finally, you need to time your blank and presentation using the [wait()](https://psychopy.org/api/clock.html#psychopy.clock.wait) function from the [clock](https://psychopy.org/api/clock.html) module.
 
 Now is time to update and structure you code. Here is a approximate outline:
 ```python
@@ -195,10 +193,12 @@ create the mole
 generate random durations for blank and presentation interval
 
 # blank
-use while loop to present blank (win.flip() alone) "blank duration" long
+clear window (win.flip() alone)
+wait for "blank duration" seconds
 
 # presentation
-use while loop to present the target mole "presentation duration" long
+draw the mole
+wait for "presentation duration" seconds
 
 close the window
 ```
@@ -217,4 +217,11 @@ Put your code into _code07.py_.
 :::
 
 ## Exit strategy
-I hope that you used a small number of trials because (on my advice, yes!) there was no possibility to exit the game via the **escape** key. We need to put it back but we have nested loops, which makes things awkward^[You will know how to solve this problem in an easy and elegant way, once we you learn about exceptions and context managers.]. We need to continuously check fo
+I hope that you used a small number of trials because (on my advice, yes!) we removed the possibility to exit the game via the **escape** key. To put it back, we will replace _both_ [wait()](https://psychopy.org/api/clock.html#psychopy.clock.wait)  calls with [waitKeys()](https://psychopy.org/api/event.html#psychopy.event.waitKeys) function from [event](https://psychopy.org/api/event.html#psychopy-event-for-keypresses-and-mouse-clicks) module. It has `maxWait` parameter that by default is set to infinity, which we can replace it with the duration we require. If a player does not press a key, it will work just the way the [wait()](https://psychopy.org/api/clock.html#psychopy.clock.wait) did. If a player presses a key (allow only `"escape"`!), it means that they want to abort the game (the only option at the moment). Thus, assign the returned value to a temporary variable (`keys`?) and check whether it is equal to `None`^[Confusingly, if no key was pressed, [getKeys()](https://psychopy.org/api/event.html#psychopy.event.getKeys) returns an empty list but [waitKeys()](https://psychopy.org/api/event.html#psychopy.event.waitKeys) returns `None`.]. If it is not equal to `None`, [break](#break) out of the loop!
+
+::: {.rmdnote .program}
+Put your code into _code08.py_.
+:::
+
+## Whacking that mole
+
