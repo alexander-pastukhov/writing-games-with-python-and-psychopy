@@ -346,7 +346,7 @@ Put your code into `code08.py`.
 :::
 
 # Shuffling cards {#shuffle}
-When you draw cards faces, you will notice that duplicating filenames list produces a very orderly sequence that makes the game easy. We need to [shuffle()](https://docs.python.org/3/library/random.html#random.shuffle) the filename list _before_ we creates `cards`. Note that [shuffle()](https://docs.python.org/3/library/random.html#random.shuffle) shuffles list item _in place_. That means you simply call the function and pass the list as an argument. The list gets modified, nothing is returned and nothing need to be assigned back of `filenames` variable.
+When you draw cards faces, you will notice that duplicating filenames list produces a very orderly sequence that makes the game easy. We need to [shuffle()](https://docs.python.org/3/library/random.html#random.shuffle) the filename list _before_ we creates `cards`. Note that [shuffle()](https://docs.python.org/3/library/random.html#random.shuffle) shuffles list item _in place_ using the fact that the list is [mutable](#mutable-objects). That means you simply call the function and pass the list as an argument. The list gets modified, nothing is returned and nothing need to be assigned back of `filenames` variable.
 
 ::: {.rmdnote .program}
 Put your code into `code09.py`.
