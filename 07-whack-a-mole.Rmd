@@ -1,12 +1,24 @@
 # Whack-a-Mole{#whack-a-mole}
 
-Today you will create your first _video_ game Whack-a-Mole. The game itself is very much a reaction time experiment: moles/targets appear after a random delay at one of the predefined locations, the player's task is to whack (press a corresponding button) the mole/target before it disappears. Your final game should look approximately like this:
 
-::: {.rmdnote .practice}
-**MISSING VIDEO!**
-:::
 
-In this game, we will need to handle many targets and many keys, so you need to learn about lists.
+Today you will create your first _video_ game Whack-a-Mole. The game itself is very much a reaction time experiment: moles/targets appear after a random delay at one of the predefined locations, the player's task is to whack (press a corresponding button) the mole/target before it disappears. Your final game should look approximately like the one in the video: Circles (moles) turn white, if I hit the correct button in time.
+
+
+```{r, eval=knitr::is_html_output(excludes = "epub"), results = 'asis', echo = F}
+cat(
+'<div style="text-align:center;"><video controls>
+    <source src="videos/whack-a-mole.m4v" type="video/mp4"> 
+  </video></div>'
+)
+```
+
+## Chapter concepts
+
+* Storing many items in [lists](#lists).
+* Iterating over items use [for](#for-loop) loop.
+* Generating a list of number using [range()](#range).
+* Making [a pause](#clock-wait) and limiting time you [wait for a key](#waitKeys-maxwait).
 
 ## Lists {#lists}
 So far, we were using variables to store single values: computer's pick, player's guess, number of attempts, PsychoPy window object, etc. But sometimes we need to handle more than one value. We already had this problem in the [computer-based Guess-the-Number](#guess-the-number-ai) game when we needed to store the remaining number range. We got away by using two variables, one for the lower and one for the upper limit. However, this approach clearly does not scale well and, sometimes, we might not even know how many values we will need to store. Python's [lists](https://docs.python.org/3/library/stdtypes.html#lists) are the solution to the problem.
@@ -172,7 +184,7 @@ Once you have the code, put a breakpoint and check that the value of the index v
 Put your modified code into _code05.py_.
 :::
 
-## Random time
+## Random time{#clock-wait}
 What makes Whack-a-Mole game fun is not only that you do not know _which_ mole will appear but you also do not know _when_ it will appear and _how much time_ you have to whack it. Thus, we need to modify our presentation schedule. We need a blank period of a random duration (I would suggest between 0.75 s to 1.5 s) and limited presentation duration (between 0.5 to 0.75 s). First, you need to define these ranges as [constants](#constants). Now that you know lists you can use a single variable to hold both ends of the range. Then, you need to generate two numbers (one for the blank another for the presentation) coming from [a uniform distrubition](https://docs.python.org/3/library/random.html#random.uniform) within that range. Finally, you need to time your blank and presentation using the [wait()](https://psychopy.org/api/clock.html#psychopy.clock.wait) function from the [clock](https://psychopy.org/api/clock.html) module.
 
 Now is time to update and structure you code. Here is a approximate outline (note that I have dropped the wait for keys):
@@ -214,7 +226,7 @@ You already know how to [repeat](#range) the same code many times. Decide on num
 Put your code into _code07.py_.
 :::
 
-## Exit strategy
+## Exit strategy{#waitKeys-maxwait}
 I hope that you used a small number of trials because (on my advice, yes!) we did not program a possibility to exit the game via the **escape** key. To put it in, we will replace _both_ [wait()](https://psychopy.org/api/clock.html#psychopy.clock.wait)  calls with [waitKeys()](https://psychopy.org/api/event.html#psychopy.event.waitKeys) function. It has `maxWait` parameter that by default is set to infinity but can be set to the duration we require. If a player does not press a key, it will work just like [wait()](https://psychopy.org/api/clock.html#psychopy.clock.wait) did. If a player presses a key (allow only `"escape"` for now), it means that they want to abort the game (the only possible action at the moment). Thus, assign the returned value to a temporary variable (`keys`?) and check whether it is equal to `None`^[Confusingly, if no key was pressed, [getKeys()](https://psychopy.org/api/event.html#psychopy.event.getKeys) returns an empty list but [waitKeys()](https://psychopy.org/api/event.html#psychopy.event.waitKeys) returns `None` and `None` has no length.]. If it is not equal to `None`, [break](#break) out of the loop!
 
 ::: {.rmdnote .program}
