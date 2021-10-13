@@ -12,13 +12,121 @@ from [OpenClipart](https://openclipart.org/). They are [public domain](https://c
 
 ## Chapter concepts
 
+* Mutable vs. immutable objects
 * Showing [images](#imagestim).
 * Working with files via [os](#os-library) library.
 * Using [dictionaries](##dictionaries).
+* [List operations](#list-operations).
+* Looping over both index and item via list [enumeration](#enumerate).
+
+## Variables as Boxes (immutable objects)
+When you work on this game, you will eventually need to use a function that contradicts what I told you about [variable scopes](#scopes-for-immutable-values): It will _modify_ a variable (global scope) that you passed as a parameter (local function scope). This is because Python has two kinds of objects (values) and which behave very differently under some circumstances.
+
+You may remember the _variable-as-a-box_ metaphor  I used to [introduce variables](#variables). Just to remind you, a variable can be thought of as a "box" with a variable name written on it and a value being stored "inside". When you use this value or assign it to a different variable, you can assume that Python _makes a copy_ of it^[not really, but this makes it easier to understand] and puts that _copy_ into a different variable "box". When you _replace_ value of a variable, what happens is that you take out the old value, destroy it (by throwing it into a nearest black hole, I assume), create a new one, and put it into the variable "box". When you _change_ the value of a variable based on its current state, the same thing happens. You take out the value, create a new value (by adding to the original one or doing some other operation), destroy the old one, and put it back into the variable "box".
+
+This metaphor works nicely and explains why the [scopes](#scopes-for-immutable-values) work the way they do. Each scope has its own set of boxes and whenever you pass information between the scopes, e.g., from a global script to a function, a copy of value (from a variable) is created and put into a new box (i.e., parameter) inside the function. When the function returns the value, that is copied and put in one of the boxes in the global script, etc.
+
+However, this is true only for _immutable_ objects (values) such as numbers, strings, logical values, etc. but also [tuples](https://docs.python.org/3/library/stdtypes.html?highlight=tuple#tuple) (see below for what these are). As you could have guessed from the name, this means that there are other _mutable_ objects and they behave very differently.
+
+## Variables as post-it stickers (mutable objects){#mutable-objects}
+Mutable objects are lists, dictionaries^[Coming up shortly!], and classes. The difference is that _immutable_ objects can be thought as fixed in their size. A number takes up that many bytes to store, same goes for a given string (although a different string would require more or fewer bytes). Still, they do not change, they are created and destroyed when unneeded but never truly updated. 
+
+_Mutable_ objects can be changed. For example, you can add elements to your list, or remove them, or shuffle them. Same goes for [dictionaries](https://docs.python.org/3/tutorial/datastructures.html?highlight=dictionary#dictionaries). Making such object **immutable** would be computationally inefficient: Every time you add a value a long list is destroyed and recreated with just that one additional value. Which is why Python simply _updates_ the original object. For further computation efficiency, these objects are not copied but _passed by reference_. This means that the variable is no longer a "box" but a "sticker" you put on an object (a list, a dictionary). And you can put as many stickers on an object as you want **and it still will be the same object!**
+
+What on Earth do I mean? Keeping in mind that a variable is just (one of many) stickers for a mutable object, try figuring out what will be the output below:
+
+```python
+x = [1, 2, 3]
+y = x
+y.append(4)
+print(x)
+```
+
+::: {.infobox .practice}
+Do exercise #1.
+:::
+
+What? Why? That is precisely what I have meant with "stickers on the same object". First, we create a list and put `x` sticker on it. Then, we assign `y` _to the same list_, in other words, we put a `y` sticker on the same list. Since both `x` and `y` are stickers on the _same_ object, they are, effectively, synonyms. In that specific situation, once you set `x = y`, it does not matter which variable name you use to change _the_ object, they are just two stickers hanging side-by-side on the _same_ list. Again, just a reminder, this is **not** what would happen for **immutable** values, like numbers, where things would behaved the way you expect them to behave.
+
+This variable-as-a-sticker, a.k.a. "passing value by reference", has very important implications for the function calls, as it breaks your scope without ever giving you a warning. Look at the code below and try figuring out what the output will be.
+
+```python 
+def change_it(y):
+    y.append(4)
+
+x = [1, 2, 3]
+change_it(x)
+print(x)
+```
+::: {.infobox .practice}
+Do exercise #2.
+:::
+
+How did we manage to modify a _global_ variable from inside the function? Didn't we change the _local_ parameter of the function? Yep, that is exactly the problem with passing by reference. Your function parameter is yet another sticker on the _same_ object, so even though it _looks_ like you do not need to worry about global variables (that's why you wrote the function and learned about scopes!), you still do. If you are perplexed by this, you are in a good company. This is one of the most unexpected and confusing bits in Python that routinely catches people by surprise. Let us do a few more exercises, before I show you how to solve the scope problem for the mutable objects.
+
+::: {.infobox .practice}
+Do exercise #3.
+:::
+
+## Tuple: a frozen list (#tuple)
+The wise people who created Python were acutely aware of the problem that the _variable-as-a-sticker_ creates. Which is why, they added an **immutable** version of a list, called a [tuple](https://docs.python.org/3/library/stdtypes.html?highlight=tuple#tuple). It is a "frozen" list of values, which you can loop over, access its items by index, or figure out how many items it has, but you _cannot modify it_. No appending, removing, replacing values, etc. For you this means that a frozen list is a box rather than a sticker and that it behaves just like any other "normal" **immutable** object. You can create a `tuple` by using round brackets.
+```python
+i_am_a_tuple = (1, 2, 3)
+```
+You can loop over it, _e.g._
+```{python}
+i_am_a_tuple = (1, 2, 3)
+for number in i_am_a_tuple:
+    print(number)
+```
+
+but, as I said, appending will throw a mistake (try this code in a cell)
+```python
+i_am_a_tuple = (1, 2, 3)
+
+# throws AttributeError: 'tuple' object has no attribute 'append'
+i_am_a_tuple.append(4)
+```
+
+Same goes for trying to change it
+```python
+i_am_a_tuple = (1, 2, 3)
+
+# throws TypeError: 'tuple' object does not support item assignment
+i_am_a_tuple[1] = 1 
+```
+
+This means that when you need to pass a list of values to a function, you should instead pass _a tuple of values_ to the function. The function still has a list of values but the link to the original list object is now broken. You can turn a list into a tuple using `tuple()`. Keeping in mind that `tuple()` creates a frozen copy of the list, what will happen below?
+```python
+x = [1, 2, 3]
+y = tuple(x)
+x.append(4)
+print(y)
+```
+::: {.infobox .practice}
+Do exercise #4.
+:::
+
+As you probably figured out, when `y = tuple(x)`, Python creates **a copy** of the list values, freezes them (they are immutable now), and puts them into the "y" box. Hence, whatever you do to the original list, has no effect on the immutable "y".
+
+Conversely, you "unfreeze" a tuple by turning it into a list via `list()`. Please note that it creates **a new list**, which has no relation to any other existing list, even if values  were originally taken from any of them!
+
+::: {.infobox .practice}
+Do exercise #5.
+:::
+
+Remember I just said that `list()` creates a new list? This means that you can use it to create a copy of a list directly, without an intermediate tuple step. You can also achieve the same results by slicing an entire list, e.g. `list(x)`, is the same as `x[:]`.
+
+::: {.infobox .practice}
+Do exercise #6.
+:::
+
+Here, `y = list(x)` created a new list (which was a carbon copy of the one with the "x" sticker on it) and the "y" sticker was put on that new list, while the "x" remained hanging on the original.
+
+Confusing? You bet! If you feel overwhelmed by this whole mutable/immutable, tuple/list, copy/reference confusion, you are just being a normal human being. I understand the (computational) reasons for doing things this way and I am aware of this difference but it still catches me by surprise from time to time!
 
 ## Minimal code
-
-As usual, let us start with a minimal code (try doing it from scratch instead of copy-pasting from the last game):
+Let us get busy writing the game. As usual, let us start with a minimal code (try doing it from scratch instead of copy-pasting from the last game):
 ```python
 importing psychopy modules that we need
  
@@ -195,63 +303,54 @@ Do exercise #3 in Jupyter notebook.
 ## Getting list of relevant files
 Use list comprehensions to create a list of files of chicken looking left, _i.e._ with filenames that start with "l". Use [<your-string>.startswith()](https://docs.python.org/3/library/stdtypes.html#str.startswith) to check whether it starts with "l", store the list in `filenames` variable. Test you code in a Jupyter Notebook. You should get a list of four files.
 
-### List operations
-Our list consists of four unique filenames but in the game each card should appear twice. There are several ways of duplicating lists. We will use list operations for this. Python lists implement two operations:
+### List operations {#list-operations}
+Our list consists of four unique filenames but in the game each card should appear twice. There are several ways of duplicating lists. Here, We will use this as a opportunity to learn about list operations. Python lists implement two operations:
 
 * Adding two lists together: `<list1> + <list2>`.
-```python
+```{python}
 a = [1, 2, 3]
 b = [4, 5, 6]
 a + b
 ```
 
-gives a _new_ list with items `[1, 2, 3, 4, 5, 4, 5, 6]`. Note that this is not equivalent to [extend](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists) method `a.extend(b)`! The `+` creates a _new_ list, `.extend()` extends the original list `a`.
+Note that this produces a _new_ list and, therefore, that this is not equivalent to [extend](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists) method `a.extend(b)`! The `+` creates a _new_ list, `.extend()` extends the original list `a`.^[You will learn about practical implications of this later. For now, keep in mind that seemingly identical output might be fundamentally different underneath.]
 
-* List multiplication/replication: `<list> * <integer-value>` creates a _new_ list by replicating the original one `<integer-value>` times. For example: 
-```python
+* List replication:: `<list> * <integer-value>` creates a _new_ list by replicating the original one `<integer-value>` times. For example: 
+```{python}
 a = [1, 2, 3]
 b = 4
 a * b
 ```
-will give you `[1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3]`.
 
-Use either operations or `.extend()` method to create the new list where each filename is repeated twice. Hint, you can apply list multiplication directly to the filenames list you created via list comprehension.
+Use either operation or `.extend()` method to create the list where each filename is repeated twice. Hint, you can apply list multiplication directly to the filenames list you created via list comprehension (so, replicate it in that same line). Try this code out in a Jupyter Notebook.
 
-::: {.infobox .practice}
-Do exercise #6 in Jupyter notebook.
-:::
-
-## Lots of cards, using list enumeration
-Now that we have a list of filenames, we can create a list of cards out of it. This list will replace your single `card` variable.  Name the new list `cards` and create it either using an empty list + for loop or using list comprehensions. Inside the loop you creating each card using its filename and index (see below) and append it to the `cards` list (or it is added automatically, if you use comprehensions).
-
-You can get the index of each filename (and, therefore, it position on the screen) via [enumerate()](https://docs.python.org/3/library/functions.html#enumerate), which is a generator that returns a tuple of `(index, item)`. For example, test the example below that prints one letter at a time with its index:
-```python
+## Looping over both index and item via  list enumeration  {#enumerate}
+Now that we have a list of filenames, we can create a list of cards out of it. Our dictionary function requires both index and filename. The latter is the _item_ of the list, the former is the _index_ of that item. You could for a for loop by build the index using [range()](#range) function but Python has a better solution for this: a [enumerate()](https://docs.python.org/3/library/functions.html#enumerate) function! If, instead of iterating over a list, you iterate over [enumerate(<list>)](https://docs.python.org/3/library/functions.html#enumerate), you get a tuple^[A list you cannot change, more on this later.] with both `(index, value)`. Here is an example:
+```{python}
 letters = ['a', 'b', 'c']
 for index, letter in enumerate(letters):
     print('%d: %s'%(index, letter))
 ```
 
-Once you created the list of cards, you should draw _all_ of them inside the main loop. You already have a line that draws a single `single_card`. You should wrap this call with a for loop that loops over all `cards` and uses `single_card` as an iterator variable. Your code should look roughly as this
+And here is how you can use [enumerate()](https://docs.python.org/3/library/functions.html#enumerate) for list comprehension.
+```{python}
+letters = ['a', 'b', 'c']
+["%d: %s"%(index, letter) for index, letter in enumerate(letters)]
 ```
-# import libraries
-# open window and create the mouse
-# get filenames for chicken looking left 
-# create all cards
-
-gameover = False
-while not gameover:
-    # draw all cards
-    
-    # check keys
-    
-    # mouse processing - COMMENT IT OUT FOR A MOMENT
-```
-
-::: {.infobox .program}
-Put your code into _exercise01.py_.
-:::
 
 ## A deck of cards
+Copy the code for building a duplicated list of filenames that you tested in Jupyter notebook to your main script (that'll be `code08.py`). Then, use enumerate and list comprehension over enumerated duplicate filenames ()  to create `cards` (plural, replacing your singular `card` variable) via `create_card` function you wrote earlier. Update your to loop over and draw all cards. If your default is `"side"` is `"back"`, things will look pretty boring. Change that to '"front"` to see the cards' faces.
+
+::: {.rmdnote .program}
+Put your code into `code08.py`.
+:::
+
+# Shuffling cards {#shuffle}
+When you draw cards faces, you will notice that duplicating filenames list produces a very orderly sequence that makes the game easy. We need to [shuffle()](https://docs.python.org/3/library/random.html#random.shuffle) the filename list _before_ we creates `cards`. Note that [shuffle()](https://docs.python.org/3/library/random.html#random.shuffle) shuffles list item _in place_. That means you simply call the function and pass the list as an argument. The list gets modified, nothing is returned and nothing need to be assigned back of `filenames` variable.
+
+::: {.rmdnote .program}
+Put your code into `code09.py`.
+:::
 
 
 
