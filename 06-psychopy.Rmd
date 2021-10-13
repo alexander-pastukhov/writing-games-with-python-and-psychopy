@@ -2,7 +2,14 @@
 
 Before we program our first game using [PsychoPy](https://psychopy.org/), we need to spend some time figuring out its basics. It is not the most suitable library for writing games, for that you might want to use [Python Arcade](https://arcade.academy/) or [PyGame](https://www.pygame.org/). However, it is currently the best Python library for developing psychophysical experiments (and this is what we are after).
 
-## Minimal PsychoPy code
+## Chapter concepts
+
+* Understanding how to use [classes and objects](#classes-and-objects).
+* Using [named parameters](#arguments-by-position-or-name) in functions.
+* Understanding PsychoPy [units system](#psychopy-units).
+* Using basic Psycho [visual stimuli](#adding-text-message) and handling [user inputs](#make-the-square-jump-on-your-command).
+
+## Minimal PsychoPy code {#minimal-psychopy}
 Copy-paste the following code into `code01.py` file (you did remember to create a new folder for the chapter?):
 ```python
 """
@@ -138,7 +145,7 @@ What? Your square is not really a square? Well, I've warned you: [**Five** units
 
 ## Five units systems {#psychopy-units}
 
-### Height units
+### Height units {#psychopy-units-height}
 With [height units](https://psychopy.org/general/units.html#height-units) everything is specified in the units of window height. The center of the window is at `(0,0)` and the window goes vertically from `-0.5` to `0.5`. However, horizontal limits depend on the aspect ratio. For our 800×600 window (4:3 aspect ratio), it will go from -0.666 to 0.666 (the window is 1.3333 window heights wide). For a 600×800 window (3:4 aspect ratio) from -0.375 to 0.375 (the window is 0.75 window heights wide), for a square window 600×600 (aspect ratio 1:1) from -0.5 to 0.5 (again, in all these cases it goes from -0.5 to 0.5 vertically). This means that the actual on-screen distance for the units is the same for both axes. So that a square of `size=(0.5, 0.5)` is actually a square (it spans the same distance vertically and horizontally). Thus, height units make _sizing_ objects easier but _placing them on horizontal axis correctly_ harder (as you need to know the aspect ratio).
 
 Modify your code by specifying the unit system when you create the window: `win = visual.Window(..., units="height")`. Play with your code by specifying position of the square when you create it. You just need to pass an extra parameter `pos=(<x>, <y>)`.
@@ -155,7 +162,7 @@ Now, modify the size of the square (and turn it into a non-square rectangle) by 
 Put your code into _code06.py_.
 :::
 
-### Normalized units
+### Normalized units {#psychopy-units-norm}
 [Normalized units](https://psychopy.org/general/units.html#normalised-units) are default units and assume that the window goes from -1 to 1 both along x- and x-axis. Again, (0,0) is the center of the screen but the bottom-left corner is (-1, -1) whereas the top-right is (1, 1). This makes _placing_ your objects easier but _sizing_ them harder (you need to know the aspect ratio to ensure that a square is a square).
 
 Modify your code, so that it uses `"norm"` units when you create the window and size your white square stimulus, so it does look like a square.

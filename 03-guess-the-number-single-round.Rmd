@@ -6,6 +6,16 @@ Before you start, create a new folder (inside your [course folder](#files-folder
 
 However, we will be using [VS Code](#install-vs-code) to program scripts with the actual game. You will need to create a separate file for each code practice^[You can "Save as..." the previous code to avoid copy-pasting things by hand.] (e.g., _code01.py_^[I recommend using `01` instead of `1`, as it will ensure consistent file sorting in your file manager], _code02.py_, etc.) This is not the most efficient implementation of a version control and it will certainly clutter the folder. But it would allow me to see your solutions for every step, which will make it easier for me to give feedback. For submitting the assignment, just zip the folder and submit the zip-file.
 
+## Chapter concepts
+
+* [Documenting code](#documenting-your-code).
+* [Debuggin code](#debugging).
+* Getting [input](#input-function) from a user.
+* Using [comparison](#comparisons) in [conditional statements](#if-statement).
+* Using [indentation](#indentation) to group statements together.
+* Using Python [libraries](l#using-libraries).
+* Generating [random numbers](#picking-a-number-randomly).
+
 ## The Game
 We will program a game in which one participant (computer) picks a number within a certain range (say, between 1 and 10) and the other participant (human player) is trying to guess it. After every guess of the human, the computer responds whether the actual number is lower than a guess, higher than a guess, or matches it. The game is over when the player correctly guesses the number or (in the later version of the game) runs out of attempts.
 

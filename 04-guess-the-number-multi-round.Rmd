@@ -2,6 +2,11 @@
 
 In previous chapter, you programmed a single-attempt-only "Guess the Number" game. Now, we will expand to allow multiple attempts and will add other bells-and-whistles to make it more fun. Create a new subfolder and download the [exercise notebook](notebooks/Seminar 03. Guess the number - multi round.ipynb) before we start!
 
+## Chapter concepts
+
+* Repeating code using [while](#while-loop) loop.
+* Making in [emergency exit](#break) from a loop.
+
 ## While loop {#while-loop}
 If you want to repeat something, you need to use loops. There are two types of loops: [while](https://docs.python.org/3/reference/compound_stmts.html#the-while-statement) loop, which is repeated _while_ a condition is true, and [for](https://docs.python.org/3/reference/compound_stmts.html#the-for-statement) loop that iterates over items (we will use it later).
 

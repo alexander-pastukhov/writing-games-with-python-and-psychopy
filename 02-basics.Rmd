@@ -1,6 +1,14 @@
 # Python basics {#python-basics}
 Hopefully, you already [created a special folder](#files-folder) for this book. Download the [exercise notebook](notebooks/Seminar 01. Basics.ipynb) (Alt+Click should download rather than open it), put it in a chapter's folder, and open it (see [relevant instructions](#jupyter-notebooks). You will need to switch between explanations here and the exercises in the notebook, so keep them both open.
 
+## Chapter concepts
+
+* [Variables](#variables).
+* [Constants](#constants).
+* Basic [value types](#value-types).
+* [Printing](#print) things out.
+* Putting values [into strings](#string-formatting).
+
 ## Variables {#variables}
 The first fundamental concept that we need to be acquainted with is **variable**. Variables are used to store information and you can think of it as a box with a name tag, so that you can put something into it. The name tag on that box is the name of the variable and its value what you store in it. For example, we can create a variable that stores the number of legs that a game character has. We begin with a number typical for a human being.
 
@@ -177,7 +185,7 @@ int("123+3")
 Do exercise #8.
 :::
 
-## Printing output
+## Printing output{#print}
 To print the value, you need you use [print()](https://docs.python.org/3/library/functions.html#print) function (we will talk about functions in general later). In the simplest case, you pass the value and it will be printed out.
 ```{python}
 print(5)

@@ -5,6 +5,12 @@ The optimal way to do this is to use the middle of the interval for a guess. Thi
 
 To implement this program, you will need to learn about functions, how to document them like a pro, and how to use your own libraries. 
 
+## Chapter concepts.
+
+* Writing you own [functions](#function).
+* Understanding variable [scopes](#scopes-for-immutable-values).
+* Adopting [standard ways](#numpy-docstring) to document your code.
+* Using your [own libraries](#using-you-own-libraries).
 
 ## Player's response{#guess-the-number-players-response}
 Let us warm up by writing a code that will allow a player to respond to computer's guess. Recall that there are just three options: your number is greater, smaller, or equal to a computer's guess. I would suggest using, respectively, `>`, `<`, and `=` symbols to communicate this. You need to write the code that will prompt a player for their response until they enter one of these symbols. I.e., the prompt should be repeatedly repeated if they enter anything else. Thus, you definitely need to use the [input([prompt])](https://docs.python.org/3/library/functions.html#input) and a [while](#while-loop) loop. Think of a useful and informative prompt message for this. Test that it works. Using breakpoints might be very useful here.
@@ -294,7 +300,7 @@ Now, put the breakpoint inside of `f1()` function and run the code via **F5**. T
 
 The calls are stacked from bottom to top, so this means that a function was called in the main module in line 9, you ended up in function `f2` in line 7, and then in function `f1` and in line 2. Experiment with stepping in and out of functions while keeping an eye on this. You might not need this information frequently but could be useful in out later projects with multiple nested function calls.
 
-## Documenting your function
+## Documenting your function{#numpy-docstring}
 Writing a function is only half the job. You need to document it! [Remember](#programming-tips), this is a good habit that makes your code easy to use and reuse. There are different ways to document the code but we will use [NumPy docstring convention](https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard). Here is an example of such documented function
 
 ```python
