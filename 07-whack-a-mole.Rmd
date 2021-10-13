@@ -235,4 +235,4 @@ Put your code into _code09.py_.
 :::
 
 ## You did it!
-Congratulations on your first video game! It could use some bells-and-whistles like having a score, combos would be cool, proper mole images instead circle, etc. but it works and it is fun (if you do not feel challenged, reduce the presentation time)! Next time, we ditch the keyboard and learn how to handle the mouse for the Memory game. 
+Congratulations on your first video game! It could use some bells-and-whistles like having a score, combos would be cool, proper mole images instead circle, etc. but it works and it is fun (if you do not feel challenged, reduce the presentation time)! Submit your files and next time we will ditch the keyboard and learn how to handle the mouse for the Memory game.
