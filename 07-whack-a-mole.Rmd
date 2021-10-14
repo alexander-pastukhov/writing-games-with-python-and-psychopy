@@ -173,7 +173,7 @@ Alternatively, you can use `range()` to loop through indexes of a list (remember
 Put your modified code into _code04.py_.
 :::
 
-## A random mole
+## A random mole {#random-mole}
 Drawing all three moles served as a practical exercise with loops but in a real game we need to shown only one random target at a time. We could create the three targets as before and draw one of them. However, later on we would like to change the color of the target to indicate that the player did hit it, so it is simpler (if a bit wasteful) to create a single mole every time we need one. 
 
 For this, define one [CONSTANT](#constants) with a list of three colors that you used and another one with three horizontal locations (the vertical location is the same, so we do not need to worry about it). Next, randomly pick which target out of three you want to create, i.e., we need to generate an _index_ of the target. You can do it either via [random.randrange()](https://docs.python.org/3/library/random.html#random.randrange) or via [random.choice()](https://docs.python.org/3/library/random.html#random.choice) building the range yourself via [the function with the same name]() you have just learned about (remember to organize your imports alphabetically). Store the index in a variable with a meaningful name^[`itarget`? `imole`?] and use it with constants to create the target of the corresponding color at a corresponding location. Then, you need to draw that single target before waiting for a key press.
