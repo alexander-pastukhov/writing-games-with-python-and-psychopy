@@ -1,0 +1,388 @@
+# Guess the Number: AI takes a turn {#guess-the-number-ai}
+Let us program Guess the Number game again^[This is the last time, I promise!] but _reverse_ the roles. Now _you_ will pick a number and the computer will guess. Think about the algorithm that a computer could use for this before reading the next paragraph^[You should imagine Dora the Explorer staring at you while you think.].
+
+The optimal way to do this is to use the middle of the interval for a guess. This way you rule out _half_ the numbers that are either greater or smaller than your guess (or you guess the number correctly, of course). So, if you know that the number is between 1 and 10, you should split things in the middle, that is picking 5 or 6, as you cannot pick 5.5 (we assume that you can use only integers). If your opponent tells that their number is greater than your pick, you know that it must be somewhere between your guess and the original upper limit, e.g., between 5 and 10. Conversely, if the opponent responds "lower", the number is the lower limit and you guess, e.g., between 1 and 5. On your next attempt, you pick split the interval again until you either guess the number correctly or end up with an interval that contains just one number. Then you do not need to guess anymore.
+
+To implement this program, you will need to learn about functions, how to document them like a pro, and how to use your own libraries. 
+
+## Chapter concepts.
+
+* Writing you own [functions](#function).
+* Understanding variable [scopes](#scopes-for-immutable-values).
+* Adopting [standard ways](#numpy-docstring) to document your code.
+* Using your [own libraries](#using-you-own-libraries).
+
+## Player's response{#guess-the-number-players-response}
+Let us warm up by writing a code that will allow a player to respond to computer's guess. Recall that there are just three options: your number is greater, smaller, or equal to a computer's guess. I would suggest using, respectively, `>`, `<`, and `=` symbols to communicate this. You need to write the code that will prompt a player for their response until they enter one of these symbols. I.e., the prompt should be repeatedly repeated if they enter anything else. Thus, you definitely need to use the [input([prompt])](https://docs.python.org/3/library/functions.html#input) and a [while](#while-loop) loop. Think of a useful and informative prompt message for this. Test that it works. Using breakpoints might be very useful here.
+
+::: {.rmdnote .program}
+Put your code into `code01.py`.
+:::
+
+## Functions {#function}
+You already now how to use function, now it is turn for you to learn more about why you should care. The purpose of a function is to isolate certain code that performs a single computation making it testable and reusable. Let us go through the first sentence bit by bit using examples.
+
+### Function performs a single computation
+I already [told you](#programming-tips) that reading code is easy because every action has to be spelled-out for computers in a simple and clear way. However, _a lot_ of simple things can be very overwhelming and confusing. Think about the final code for the previous seminar: we had two loops with conditional statements nested inside. Add a few more of those and you have so many branches to trace, you never be quite sure what will happen. This is because our cognition and working memory, which you use to trace all branches, are limited to just about four items^[The official magic number is [7±2](https://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two) but reading the original paper tells you that this is more like four for most of us].
+
+Thus, a function should perform _one_ computation / action that is conceptually clear and those purpose should be understood directly from its name or, at most, from a single sentence that describes it^[This is similar to scientific writing, where a single paragraph conveys a single idea. For me, it helps to first write the idea of the paragraph in a single sentence before writing the paragraph itself. If one sentence is not enough, I need to split the text into more paragraphs.]. The name of a function should typically be a _verb_ because function is about doing an action. If you need more than once sentence to explain what function does, you should consider splitting the code further. This does not mean that entire description / documentation must fit into a single sentence. The full description can be lengthy, particularly if underlying computation is complex and there are many parameters to consider. However, these are optional details that tell the reader _how_ the function is doing its job or how the its behavior can be modified. Still, they should be able to understand _what_ the job is just from the name or from a single sentence. I am repeating myself and stressing this so much because conceptually simple single-job functions are a foundation of a clear robust reusable code. And future-you will be very grateful that it has to work with easy-to-understand isolated reliable code you wrote.
+
+### Function isolates code from the rest of the program
+Isolation means that your code runs in a separate scope where the only things that exist are function arguments (limited number of values you pass to it from outside with fixed meaning) and local variables that you define inside the function. You have no access to variables defined in the outside script^[This is not strictly true but that will concern us only once we get to so-called "mutable" objects like lists or dictionaries.] or to variables defined inside of other functions. Conversely, neither global script nor other functions have access to variables and values that you use inside. This means that you only need to study the code _inside_ the function to understand how it works. Accordingly, when you write the code it should be _independent_ of any global context the function can be used in. The isolation is both practical (no run-time access to variables from outside means fewer chance that things go terribly wrong) and conceptual (no further context is required to understand the code).
+
+### Function makes code easier to test
+You can build even moderately complex programs only if you can be certain what individual chunks of code are doing under every possible condition. Do they produce the correct results? Do the fail clearly and raise a correct error, if the inputs are wrong? Do they use defaults when required? However, testing all chunks together means running extreme number of runs as you need to test all possible combinations of conditions for one chunk given all possible conditions for other chunk, etc. Functions make your life much easier. Because they have a single point of entry, fixed number of parameters, a single return value, and are isolated (see above), you can test them one at a time independent of other functions of the rest of the code. This is called _unit testing_ and it is heavy use of [automatic unit testing](https://docs.python.org/3/library/unittest.html)^[it is normal to have more code devoted to testing than to the actual program] that ensures reliable code for absolute majority of programs and apps that you use^[You still need tests for the integrated system but testing individual functions is a clear prerequisite.].
+
+### Function makes code reusable
+Sometimes, this is given as a primary reason to use functions. Turning code into a function means that you can call the function instead of copy-pasting the code. The latter approach is a terrible idea as it means that you have to maintain the same code at many places and you might not be even sure in just how many. This is a problem even if a code is extremely simple. Here, we define a _standard_ way to compute an initial by taking the first symbol from a string (you will learn about indexing and slicing in details later). The code is as simple as it gets.
+```python
+...
+initial = "test"[0]
+...
+initial_for_file = filename[0]
+...
+initial_for_website = first_name[0]
+...
+```
+Imagine that you decided to change it and use first _two_ symbols. Again, the computation is not complicated, use just replace `[0]` with `[:2]`. But you have to do it for _all_ the code that does this computation. And you cannot use _Replace All_ option because sometimes you might use the first element for some other purposes. And when you edit the code, you are bound to forget about some locations (I do it all the time) making things even less consistent and more confusing. Turning code into a function means you need to modify and test at just _one_ location. Here is the original code implemented via a function.
+```python
+def generate_initial(full_string):
+    """Generates an initial using first symbol.
+    
+    Parameters
+    ----------
+    full_string : str
+    
+    Returns
+    ----------
+    str : single symbol
+    """
+    return full_string[0]
+
+...
+initial = generate_initial("test")
+...
+initial_for_file = generate_initial(filename)
+...
+initial_for_website = generate_initial(first_name)
+...
+```
+
+and here is the "alternative" initial computation. Note that the code that uses the function _stays the same_
+```python
+def generate_initial(full_string):
+    """Generates an initial using first TWO symbols.
+    
+    Parameters
+    ----------
+    full_string : str
+    
+    Returns
+    ----------
+    str : two symbols long
+    """
+    return full_string[:2]
+
+...
+initial = generate_initial("test")
+...
+initial_for_file = generate_initial(filename)
+...
+initial_for_website = generate_initial(first_name)
+...
+```
+
+Thus, turning the code into function is particularly useful when the reused code is complex but it pays off even if computation is as simple and trivial as in example above. With a function you have a single code chunk to worry about and you can be sure that the same computation is performed whenever you call the function (and that these are not several copies of the code that might or might not be identical).
+
+Note that I put reusable code as the last and the least reason to use functions. This is because the other three reasons are far more important. Having a conceptually clear isolated and testable code is advantageous even if you call this function only once. It still makes code easier to understand and to test and helps you to reduce its complexity by replacing chunks of code with its meaning. Take a look at the example below. The first code takes the first symbol but this action (taking the first symbol) does not _mean_ anything by itself, it is just a mechanical computation. It is only the original context `initial_for_file = filename[0]` or additional comments that give it its meaning. In contrast, calling a function called _compute_initial_ tells you what is happening, as it disambiguates the purpose. I suspect that future-you is very pro-disambiguation and anti-confusion.
+```python
+if filename[0] == "A":
+    ...
+    
+if compute_initial(filename) == "A":
+    ...
+```
+
+## Functions in Python
+### Defining a function in Python
+A function in Python looks like this (note the indentation and `:` at the end of the first line)
+```python
+def <function name>(param1, param2, ...):
+    some internal computation
+    if somecondition:
+        return some value
+    return some other value
+```
+
+The parameters are optional, so is the return value. Thus the minimal function would be
+```python
+def minimal_function():
+    pass # pass means "do nothing"
+```
+
+You must define your function (once!) before calling it (one or more times). Thus, you should create functions _before_ the code that uses it.
+
+```python
+def do_something():
+    """
+    This is a function called "do_something". It actually does nothing.
+    It requires no input and returns no value.
+    """
+    return
+    
+def another_function():
+    ...
+    # We call it in another function.
+    do_something()
+    ...
+
+# This is a function call (we use this function)
+do_something()
+
+# And we use it again!
+do_something()
+
+# And again but via another_function call
+another_function()
+```
+::: {.rmdnote .practice}
+Do exercise #1.
+:::
+
+You must also keep in mind that redefining a function (or defining a technically different function that has the same name) overwrites the original definition, so that only the _latest_ version of it is retained and can be used.
+
+::: {.rmdnote .practice}
+Do exercise #2.
+:::
+
+Although example in the exercise makes the problem easy to spot, in a large code that spans multiple files and uses various libraries, solving the same problem may not be so straightforward!
+
+### Function arguments
+Some function may not need arguments (also called parameters), as they perform a fixed action:
+```python
+def ping():
+    """
+    Machine that goes "ping!"
+    """
+    print("ping!")
+```
+
+However, you may need to pass information to the function via arguments in order to influence how the function performs its action. In Python, you simply list arguments within the round brackets after the function name (there are more bells and whistles but we will keep it simple for now). For example, we could write a function that computes and prints person's age given two parameters 1) their birth year, 2) current year:
+```python
+def print_age(birth_year, current_year):
+    """
+    Prints age given birth year and current year.
+    
+    Parameters
+    ----------
+    birth_year : int
+    current_year : int
+    """
+    print(current_year - birth_year)
+```
+
+It is a **very good idea** to give meaningful names to functions, parameters, and variables. The following code will produce exactly the same result but understanding _why_ and _what for_ it is doing what it is doing would be much harder (so **always** use meaningful names!):
+```python
+def x(a, b):
+    print(b - a)
+```
+
+When calling a function, you must pass the correct number of parameters and pass them in a _correct order_, another reason for a function arguments to have meaningful names^[Again, this not strictly true but you will have to wait until you learn about named parameters and default values].
+
+::: {.rmdnote .practice}
+Do exercise #3.
+:::
+
+When you call a function, values you _pass_ to the function are assigned to the parameters and they are used as _local_ variables (more on _local_ bit later). However, it does not matter _how_ you came up with this values, whether they were in a variable, hard-coded, or returned by another function. If you are using numeric, logical, or string values (_immutable_ types), you can assume that any link to the original variable or function that produced it is gone (we'll deal with _mutable_ types, like lists, later). Thus, when writing a function or reading its code, you just assume that it has been set to some value during the call and you can ignore the context in which this call was made
+```python
+# hardcoded
+print_age(1976, 2020)
+
+# using values from variables
+i_was_born = 1976
+today_is = 2020
+print_age(i_was_born, today_is)
+
+# using value from a function
+def get_current_year():
+    return 2020
+
+print_age(1976, get_current_year())
+```
+
+### Functions' returned value (output)
+Your function may perform an action without returning any value to the caller (this is what out `print_age` function was doing). However, you may need to return the value instead. For example, to make things more general, we might want write a new function called `compute_age` that returns the age instead of printing it (we can always print it ourselves).
+```python
+def compute_age(birth_year, current_year):
+    """
+    Computes age given birth year and current year.
+
+    Parameters
+    ----------
+    birth_year : int
+    current_year : int
+    
+    Returns
+    ----------
+    int : age
+    """
+    return current_year - birth_year
+```
+
+Note that even if a function returns the value, it is retained only if it is actually used (stored in a variable, used as a value, etc.). Thus, just calling it will not by itself store the returned value anywhere!
+
+::: {.rmdnote .practice}
+Do exercise #4.
+:::
+
+### Scopes (for immutable values)
+
+As we have discussed above, turning code into a function _isolates_ it, so makes it run in it own _scope_. In Python, each variable exists in the _scope_ it has been defined in. If it was defined in the _global_ script, it exists in that _global_ scope as a _global_ variable. However, it is not accessible (at least not without special effort via a `global` operator) from within a function. Conversely, function's parameters and any variables defined _inside a function_, exists and are accessible only **inside that function**. It is fully invisible for the outside world and cannot be accessed from a global script or from another function. Conversely, any changes you make to the function parameter or local variable have no effect on the outside world^[Again, almost, as _mutable_ objects like lists are more complicated, more on that later].
+
+The purpose of scopes is to isolate individual code segments from each other, so that modifying variables within one scope has no effect on all other scopes. This means that when writing or debugging the code, you do not need to worry about code in other scopes and concentrate only on the code you working on. Because scopes are isolated, they may have _identically named variables_ that, however, have no relationship to each other as they  exists in their own parallel universes. Thus, if you want to know which value a variable has, you must look only within the scope and ignore all other scopes (even if the names match!).
+
+```python
+# this is variable `x` in the global scope
+x  = 5 
+
+def f1():
+  # This is variable `x` in the scope of function f1
+  # It has the same name as the global variable but
+  # has no relation to it: many people are called Sasha 
+  # but they are still different people. Whatever you
+  # happens to `x` in f1, stays in f1's scope.
+  x = 3
+  
+  
+def f2(x):
+  # This is parameter `x` in the scope of function f2.
+  # Again, no relation to other global or local variables.
+  # It is a completely separate object, it just happens to 
+  # have the same name (again, just namesakes)
+  print(x)
+```
+
+::: {.rmdnote .practice}
+Do exercise #5.
+:::
+
+## Player's response as a function
+Let us put all that theory about functions into practice. Use the code that you created to acquire [player's response](#guess-the-number-players-response) and turn it into function. I suggest that you call it `input_response` (or something along these lines). Test that the code works by calling this function for the main script. 
+
+::: {.rmdnote .program}
+Put your code into `code02.py`.
+:::
+
+## Debugging a function
+Now that we have your first function, you can make sense of three step over/in/out buttons that the debugger offers you. Copy-paste the following code in a separate file (call it `test01.py`, for example).
+
+```python
+def f1(x, y):
+  return x / y
+  
+def f2(x, y):
+  x = x + 5
+  y = y * 2
+  return f1(x, y)
+  
+z = f2(4, 2)
+print(z)
+```
+First, put a break point on the line in the main script that calls function `f2()`. Run the debugger via **F5** and the program will pause at that line. If you now press **F10** (step over), the program will go to the next line `print(z)`. However, if you are to press **F11** (step into) instead, the program will _step into_ the function and go to `x = x + 5` line. When inside the function, you have the same two choices we just looked at but also, you can press **Shift+F11** to step out of the function. Here, the program will run all the code until you reach the next line _outside_ of the function (you should end up at `print(z)` again). Experiment with putting breakpoints at various lines and stepping over/in/out to get a hang of these useful debugging tools.
+
+Now, put the breakpoint inside of `f1()` function and run the code via **F5**. Take a look at the left pane, you will see a _Call Stack_ tab. While yellow highlighted line in the editor shows you where you currently are (should be inside the `f1()` function), the _Call Stack_ shows you how did you get where. In this case it should show:
+
+|    |  |
+|:----------|:-------------|---|
+| f1 | test01.py | 2:1 |
+| f2 | test01.py | 7:1 |
+| \<module\> | test01.py | 9:1 |
+
+The calls are stacked from bottom to top, so this means that a function was called in the main module in line 9, you ended up in function `f2` in line 7, and then in function `f1` and in line 2. Experiment with stepping in and out of functions while keeping an eye on this. You might not need this information frequently but could be useful in out later projects with multiple nested function calls.
+
+## Documenting your function{#numpy-docstring}
+Writing a function is only half the job. You need to document it! [Remember](#programming-tips), this is a good habit that makes your code easy to use and reuse. There are different ways to document the code but we will use [NumPy docstring convention](https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard). Here is an example of such documented function
+
+```python
+def generate_initial(full_string):
+    """Generates an initial using first symbol.
+    
+    Parameters
+    ----------
+    full_string : str
+    
+    Returns
+    ----------
+    str : single symbol
+    """
+    return full_string[0]
+```
+Take the look at the [manual](https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard) and document the `input_response` function. You will not need the `Parameters` section as it currently accepts no inputs.
+
+:::{.rmdnote .program}
+Update your code in `code02.py`.
+:::
+
+## Using prompt
+In the future, we will be asking about a specific number that is a current guess by the computer, thus we cannot use a fixed prompt message. Modify the `input_response` function by adding a `guess` parameter. Then, modify the prompt that you used for the [input()](https://docs.python.org/3/library/functions.html#input) to include that number. Update functions' documentation. Test it by calling with different values for the `guess` parameter.
+
+::: {.rmdnote .program}
+Put your code into `code03.py`.
+:::
+
+## Splitting interval in the middle
+Let us practice writing functions a bit more. Recall that the computer should use the middle of the interval as a guess. Create a function (let us call it `split_interval()` or something like that) that takes two parameters --- `lower_limit` and `upper_limit` --- and returns _an integer_ that is closest to the middle of the interval. The only tricky part is how you convert a potentially float number (e.g, when you are trying to find it for the interval 1..10) to an integer. You can use function [int()](https://docs.python.org/3/library/functions.html#int) for that. However, read the documentation carefully, as it _does not_ perform a proper rounding (what does it do? read the docs!). Thus, you should [round()](https://docs.python.org/3/library/functions.html#round) the number to the closest integer before converting it.
+
+Write a function, document it, and test it by checking that numbers are correct.
+
+:::{.rmdnote .program}
+Put you `split_interval()` function and the testing code into `code04.py`.
+:::
+
+## Single round
+You have both functions that you need, so let us write the code to initialize the game and play a single round. The initialization boils down to creating two variables that correspond to the lower and upper limits of the game range (we used 1 to 10 so far, but you can always change that). Next, the computer should generate a guess (you have your `split_interval()` function for that) and ask the player about the guess (that is the `input_response()` function). Once you have the response (stored in a separate variable, think of the name yourself), you can update your upper or lower limit using an [if..elif..else](#if-statement) statement. Print out a joyous message, if computer's guess was correct.
+
+:::{.rmdnote .program}
+Put both functions and the script code into `code05.py`.
+:::
+
+##  Multiple rounds
+Extend the game, so that the computer keeps guessing until it finally wins. You already  know how to use the [while](#while-loop) loop, just think how you can use participant's response as a loop condition variable. Also, think about the initial value of that variable and how to use it so you call `input_response()` only at one location. 
+
+:::{.rmdnote .program}
+Put the updated code into `code06.py`.
+:::
+
+## Playing again
+Modify the code, so that you can play this game several times. You already know how to do this and the only thing you need to consider is where exactly should you perform initialization before each round. As you already implemented that for the last game, you might be tempted to look how you did it or, even, copy-paste the code. However, I would recommend writing it from scratch. Remember, your aim is not to write a program but to learn how to do this and, therefore, the journey is more important than a destination.
+
+:::{.rmdnote .program}
+Put the updated code into `code07.py`.
+:::
+
+## Best score
+Add the code to count the number of attempts that the computer required in each round and 
+report the best score (fewest number of attempts) after the game is over. You will need one variable to count the number of attempts and one to keep the best score. Again, try writing it without looking at your previous game.
+
+:::{.rmdnote .program}
+Put the updated code into `code08.py`.
+:::
+
+## Using you own libraries
+You already know how to [use existing libraries](#using-libraries) but you can also create and use your own. Take the two functions that you developed and put them into a new file called `utils.py` (do not forget to put a multiline comment at the top of the file to remind you what is inside!) . Copy the remaining code (the global script) into `code09.py`. It will not work in its current state as it won't find the two functions (try it to see the error message), so you need to import from your own `utils` module. Importing works exactly the same way as for other libraries. Note that even though your file is `utils.py`, the module name is `utils` (without the extension).
+
+:::{.rmdnote .program}
+Put function into `utils.py`, the remaining code into `code09.py`.
+:::
+
+## Ordnung muss sein!{#keep-imports-tidy}
+So far, you only imported one library at most. However, as Python is highly modular, it is very common to have many imports in a single file. There are several rules that make it easier to track the imports. When you import libraries, all import statements should be at the top of your file and you should avoid putting them in random order. The recommended order is 1) system libraries, like `os` or `random`; 2) third-party libraries, like `psychopy`; 3) your project modules . And, within each section you should put the libraries _alphabetically_, so
+```python
+import os
+import random
+```
+
+This may not look particularly useful for our simple code but as your projects will grow, you will need to include more and more libraries. Keeping them in that order makes it easy to understand which libraries you use and which are non-standard. Alphabetic order means that you can quickly check whether a library is included, as you can quickly find the location where its import statement should appear.
+
+## Putting video into videogames
+Submit your files and be ready for more excitement as we are moving onto "proper" videogames with PsychoPy.

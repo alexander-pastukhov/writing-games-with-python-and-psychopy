@@ -19,6 +19,7 @@
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
+<link rel="stylesheet" href="style.css">
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -44,10 +45,17 @@
 <li><a class="" href="software.html"><span class="header-section-number">2</span> Software</a></li>
 <li><a class="" href="programming-tips.html"><span class="header-section-number">3</span> Programming tips and tricks</a></li>
 <li><a class="" href="python-basics.html"><span class="header-section-number">4</span> Python basics</a></li>
+<li><a class="" href="guess-the-number-single-round.html"><span class="header-section-number">5</span> Guess the Number: a single round edition</a></li>
+<li><a class="" href="guess-the-number-multi-round.html"><span class="header-section-number">6</span> Guess the Number: a multi round edition</a></li>
+<li><a class="" href="guess-the-number-ai.html"><span class="header-section-number">7</span> Guess the Number: AI takes a turn</a></li>
+<li><a class="" href="psychopy-basics.html"><span class="header-section-number">8</span> Gettings started with PsychoPy</a></li>
+<li><a class="" href="whack-a-mole.html"><span class="header-section-number">9</span> Whack-a-Mole</a></li>
+<li><a class="" href="memory-game.html"><span class="header-section-number">10</span> Memory game</a></li>
+<li><a class="" href="currently-unused-bits.html"><span class="header-section-number">11</span> Currently unused bits</a></li>
 </ul>
 
         <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/rstudio/bookdown-demo">View book source <i class="fab fa-github"></i></a></p>
+          <p><a id="book-repo" href="https://github.com/alexander-pastukhov/writing-games-with-python-and-psychopy">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
@@ -66,20 +74,21 @@
 <h2>
 <span class="header-section-number">1.2</span> Why games?<a class="anchor" aria-label="anchor" href="#why-games"><i class="fas fa-link"></i></a>
 </h2>
-<p>The actual purpose of this course is to teach psychology and social studies students in how to program <em>experiments</em>. That is what the real research is about. However, there is little practical difference between the two. The basic ingredients are the same and, arguably, experiments are just boring games. And, be assured, if you can program a game, you can certainly program an experiment.</p>
+<p>The actual purpose of this course is to teach psychology and social studies students how to program <em>experiments</em>. That is what the real research is about. However, there is little practical difference between the two. The basic ingredients are the same and, arguably, experiments are just boring games. And, be assured, if you can program a game, you can certainly program an experiment.</p>
 </div>
 <div id="why-should-a-psychologist-learn-programming" class="section level2" number="1.3">
 <h2>
 <span class="header-section-number">1.3</span> Why should a psychologist learn programming?<a class="anchor" aria-label="anchor" href="#why-should-a-psychologist-learn-programming"><i class="fas fa-link"></i></a>
 </h2>
-<p>Why should a psychologist, who is interested in people, learn how to program computers? The most obvious questions is that is this a useful skill. Being able to program gives you freedom to create an experiment that answers your research question, not an experiment that can be implemented given constraints of your software.</p>
-<p>More importantly, at least from my point of view, is that learning programming changes the way you think in general. People are smart but computers are dumb. When you explain your experiment or travel plans to somebody, you can be fairly vague, make a minor mistake, even skip certain parts. People are smart so they will fill the missing information in with their knowledge, spot and correct a mistake, ask you for more information, and can improvise on their own once they encounter something that you have not covered. Computers are dumb, so you must be precise, you cannot have gray areas, you cannot leave anything to “it will figure it out once it happens” (it won’t). My personal experience, corroborated by psychologists who learned programming, is that it makes you realize just how vague and imprecise people can be without realizing it. Programming forces you to be precise and thorough, to plan ahead for any eventuality there might be. And this is a very useful skill by itself as it can be applied to any activity that requires planning be that an experimental design or travel arrangements.</p>
+<p>Why should a psychologist, who is interested in people, learn how to program computers? The most obvious answer is that this is a useful skill. Being able to program gives you freedom to create an experiment that answers your research question, not an experiment that can be implemented given constraints of your software.</p>
+<p>More importantly, at least from my point of view, learning how to program changes the way you think in general. People are smart but computers are dumb. When you explain your experiment or travel plans to somebody, you can be fairly vague, make a minor mistake, even skip certain parts. People are smart so they will fill the missing information in with their knowledge, spot and correct a mistake, ask you for more information, and can improvise on their own once they encounter something that you have not covered. Computers are dumb, so you must be precise, you cannot have gray areas, you cannot leave anything to “it will figure it out once it happens” (it won’t). My personal experience, corroborated by psychologists who learned programming, is that it makes you realize just how vague and imprecise people can be without realizing it. Programming forces you to be precise and thorough, to plan ahead for any eventuality there might be. And this is a very useful skill by itself as it can be applied to any activity that requires planning be that an experimental design or travel arrangements.</p>
 </div>
 <div id="why-python" class="section level2" number="1.4">
 <h2>
 <span class="header-section-number">1.4</span> Why Python?<a class="anchor" aria-label="anchor" href="#why-python"><i class="fas fa-link"></i></a>
 </h2>
-<p>There are many ways to create an experiment for psychological research. You can use drag-and-drop systems either commercial like <a href="https://www.neurobs.com/">Presentation</a>, <a href="https://www.sr-research.com/experiment-builder/">Experiment Builder</a> or free like <a href="https://psychopy.org/builder">PsychoPy Bulder interface</a>. They have a much shallower learning curve, so you can start creating and running your experiments faster. However, the simplicity of their use has a price: They are fairly limited in which stimuli you can use and how you can control the presentation schedule, conditions, feedback, etc. Typically, they allow you to extend them by programming the desired behavior but you do need to know how to program to do this (knowing Python supercharges your PsychoPy experiments). Thus, I think that while these systems, in particular <a href="https://psychopy.org/">PsychoPy</a>, are great tools to quickly bang a simple experiment together, they are most useful if you understand how they create the underlying code and how you would program it yourself. Then, you will not be limited by the software, as you know you can program something the default drag-and-drop won’t allow. At the same time, you can always opt in, if drag-and-drop is sufficient but faster. At the end, it is about having options and creative freedom to program an experiment that will answer your research question, not an experiment that your software allows you to program.</p>
+<p>There are many ways to create an experiment for psychological research. You can use drag-and-drop systems either commercial like <a href="https://www.neurobs.com/">Presentation</a>, <a href="https://www.sr-research.com/experiment-builder/">Experiment Builder</a> or free like <a href="https://psychopy.org/builder">PsychoPy Bulder interface</a>. They have a much shallower learning curve, so you can start creating and running your experiments faster. However, the simplicity of their use has a price: They are fairly limited in which stimuli you can use and how you can control the presentation schedule, conditions, feedback, etc. Typically, they allow you to extend them by programming the desired behavior but you do need to know how to program to do this (knowing Python supercharges your PsychoPy experiments). Thus, I think that while these systems, in particular <a href="https://psychopy.org/">PsychoPy</a>, are great tools to quickly bang a simple experiment together, they are most useful if you understand
+<em>how</em> they create the underlying code and how you would program it yourself. Then, you will not be limited by the software, as you know you can program something the default drag-and-drop won’t allow. At the same time, you can always opt in, if drag-and-drop is sufficient but faster. Or use a mix of the two approaches. At the end, it is about having options and creative freedom to program an experiment that will answer your research question, not an experiment that your software allows you to program.</p>
 <p>We will learn programming in Python, which is a great language that combines simple and clear syntax with power and ability to tackle almost any problem. In this seminar, we will concentrate on desktop experiments but you can use it for online experiments (<a href="https://otree.readthedocs.io/en/latest/">oTree</a> and <a href="https://psychopy.org/">PsychoPy</a>), scientific programming (<a href="https://numpy.org/">NumPy</a> and <a href="https://www.scipy.org/">SciPy</a>), data analysis (<a href="https://pandas.pydata.org/">pandas</a>), machine learning (<a href="https://keras.io/">keras</a>), website programming (<a href="https://www.djangoproject.com/">django</a>), computer vision (<a href="https://opencv.org/">OpenCV</a>), etc. Thus, Python is one of the most versatile programming tools that you can use for all stages of your research or work. And, Python is free, so you do not need to worry whether you or your future employer will be able to afford license fees (a very real problem, if you use Matlab).</p>
 </div>
 <div id="seminar-specific-information" class="section level2" number="1.5">
@@ -87,7 +96,7 @@
 <span class="header-section-number">1.5</span> Seminar-specific information<a class="anchor" aria-label="anchor" href="#seminar-specific-information"><i class="fas fa-link"></i></a>
 </h2>
 <p>This is a material for <em>Python for social and experimental psychology</em> seminar as taught by me at the University of Bamberg. Each chapter covers a single game, introducing necessary ideas and is accompanied by exercises that you need to complete and submit. To pass the seminar, you will need to complete all assignments, i.e., write all the games. You do not need to complete or provide correct solutions for <em>all</em> the exercises to pass the course and information on how the points for exercises will be converted to an actual grade (if you need one) or “pass” will be available during the seminar.</p>
-<p>The material is structured, so that each chapter or chapter section correspond to a single meeting. However, we are all different, so work at your own pace. You can read the material and submit assignments independently. I will provide detailed feedback for each assignment and you will have an opportunity to address issues and resubmit again with no loss of points. Note that my feedback will cover not only the actual problems with the code but the way you implemented the solution and how nice-looking your code is. Remember, our task is not just to learn how to program a working game but how to write a nice clear easy-to-read-and-maintain code<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Good habits! Form good habits! Thank you for reading this subliminal message.&lt;/p&gt;"><sup>1</sup></a>.</p>
+<p>The material is structured, so that each chapter or chapter section correspond to a single meeting. However, we are all different, so work at your own pace, read the material and submit assignments independently. I will provide detailed feedback for each assignment and you will have an opportunity to address issues and resubmit again with no loss of points. Note that my feedback will cover not only the actual problems with the code but the way you implemented the solution and how clean and well-documented your code is. Remember, our task is not just to learn how to program a working game but how to write a nice clear easy-to-read-and-maintain code<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Good habits! Form good habits! Thank you for reading this subliminal message.&lt;/p&gt;"><sup>1</sup></a>.</p>
 <p>Very important: Do not hesitate to ask questions. If I feel that you missed the information in the material, I will point you to the exact location. If you are confused, I’ll gently prod you with questions so that you will solve your own problem. If you need more information, I’ll supply it. If you simply want to know more, ask and I’ll explain why things are the way they are or suggest what to read. If I feel that you should be able to solve the issue without my help, I’ll tell you so (although, I would still probably ask a few hinting questions).</p>
 </div>
 <div id="about-the-material" class="section level2" number="1.6">
@@ -116,8 +125,8 @@
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/rstudio/bookdown-demo/blob/master/index.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/rstudio/bookdown-demo/edit/master/index.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+<li><a id="book-source" href="https://github.com/alexander-pastukhov/writing-games-with-python-and-psychopy/blob/master/index.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/alexander-pastukhov/writing-games-with-python-and-psychopy/edit/master/index.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -129,7 +138,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2021-10-06.</p>
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2021-10-18.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -137,6 +146,34 @@
   </div>
 
 </div></div>
-</footer>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
 </body>
 </html>

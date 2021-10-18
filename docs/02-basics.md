@@ -1,5 +1,13 @@
 # Python basics {#python-basics}
-Hopefully, you already [created a special folder](#files-folder) for this book. Download the [exercise notebook](notebooks/Seminar 01. Basics.ipynb), put it in a chapter's folder, and open it (see [relevant instructions](#jupyter-notebooks). You will need to switch between explanations here and the exercises in the notebook, so keep them both open.
+Hopefully, you already [created a special folder](#files-folder) for this book. Download the [exercise notebook](notebooks/Seminar 01. Basics.ipynb) (Alt+Click should download rather than open it), put it in a chapter's folder, and open it (see [relevant instructions](#jupyter-notebooks). You will need to switch between explanations here and the exercises in the notebook, so keep them both open.
+
+## Chapter concepts
+
+* [Variables](#variables).
+* [Constants](#constants).
+* Basic [value types](#value-types).
+* [Printing](#print) things out.
+* Putting values [into strings](#string-formatting).
 
 ## Variables {#variables}
 The first fundamental concept that we need to be acquainted with is **variable**. Variables are used to store information and you can think of it as a box with a name tag, so that you can put something into it. The name tag on that box is the name of the variable and its value what you store in it. For example, we can create a variable that stores the number of legs that a game character has. We begin with a number typical for a human being.
@@ -58,11 +66,18 @@ number_of_legs
 Do exercise #1.
 :::
 
+Note that a variable ("a box with a name tag") exists only after you assign something to it. So, you the following code will generate a `NameError`, a Python's way to tell that you it never heard of variable `number_of_hands`.
 
+```python
+number_of_legs = 2
+number_of_gloves = number_of_hands / 2
+```
 
-Thank you for noticing this **new notice**! Your noticing it has
-been noted, and _will be reported to the authorities_!
-::::
+However, you can create a variable the does not hold any _specific_ value by assigning `None` to it. `None` was added to the language specifically to mean _no value_ or _nothing_.
+
+```python
+number_of_hands = None # variable exists now, but holds no particular value.
+```
 
 As you have already seen, you can _compute_ a value instead of specifying it. What would be the answer here? 
 
@@ -125,7 +140,7 @@ So far, we only used integer numeric values (1, 2, 5, 1000...). Although, Python
 * strings that can store text. The text is enclosed between either paired quotes `"some text"` or apostrophes `'some text'`. This means that you can use quotes or apostrophes inside the string, as long as its is enclosed by the alternative. E.g., `"students' homework"` (enclosed in `"`, apostrophe `'` inside) or `'"All generalizations are false, including this one." Mark Twain'` (quotation enclosed by apostrophes). There is much much more to strings and we will cover that material throughout the course.
 * logical / Boolean values that are either `True` or `False`.
 
-When using a variable it is important that you know what type of value it stores and this is mostly on you. Python will raise an error, if you try doing a computation using incompatible. In some cases, Python will automatically convert values between certain types, e.g. any integer value is also a real value, so conversion from `1` to `1.0` is mostly trivial and automatic. However, in other cases you may need to use explicit conversion. Go to exercise #5 and try guessing which code will run and which will throw an error due to incompatible types? 
+When using a variable it is important that you know what type of value it stores and this is mostly on you. In some cases, Python will raise an error, if you try doing a computation using incompatible value types. In other cases, Python will automatically convert values between certain types, e.g. any integer value is also a real value, so conversion from `1` to `1.0` is mostly trivial and automatic. However, in other cases you may need to use explicit conversion. Go to exercise #5 and try guessing which code will run and which will throw an error due to incompatible types? 
 
 ```python
 5 + 2.0
@@ -141,7 +156,7 @@ Do exercise #5.
 
 Surprised by the last one? This is because internally, `True` is also `1` and `False` is `0`!
 
-You can explicitly convert from one type to another using special functions. For example, to turn a number or a logical value into a string, you simply write `str(<value>)`. In examples below, what would be the result?
+You can explicitly convert from one type to another using special functions. For example, to turn a number or a logical value into a string, you simply write [str(\<value\>)](https://docs.python.org/3/library/functions.html#func-str). In examples below, what would be the result?
 
 ```python
 str(10 / 2)
@@ -153,7 +168,7 @@ str(True)
 Do exercise #6.
 :::
 
-Similarly, you can convert to a logical/Boolean variable using `bool(<value>)` function. The rules are simple, for numeric values `0` is `False`, any other non-zero value is converted to `True`. For string, an empty string `''` is evaluated to `False` and non-empty string is converted to `True`. What would be the output in the examples below?
+Similarly, you can convert to a logical/Boolean variable using [bool(\<value\>)](https://docs.python.org/3/library/functions.html#bool) function. The rules are simple, for numeric values `0` is `False`, any other non-zero value is converted to `True`. For string, an empty string `''` is evaluated to `False` and non-empty string is converted to `True`. What would be the output in the examples below?
 
 
 ```python
@@ -170,7 +185,7 @@ bool('False')
 Do exercise #7.
 :::
 
-Converting to integer or float numbers is trickier. The simplest case is from logical to integer/float, as `True` gives you `int(True)` is `1` and `float(True)` is `1.0` and `False` gives you `0`/`0.0`. When converting from float to integer, Python simply drops the fractional part (not rounding!). When converting a string, it must be a valid number of the corresponding type or the error is generated. E.g., you can convert a string like `"123"` to and integer or a float but this won't work for `"a123"`. Moreover, you can convert `"123.4"` to floating-point number but not to an integer, as it has fractional part in it. Given all this, which cells would work and what output would they produce?
+Converting to integer or float numbers using, respectively, [int(\<value\>)](https://docs.python.org/3/library/functions.html#int) and [float(\<value\>)](https://docs.python.org/3/library/functions.html#float) is trickier. The simplest case is from logical to integer/float, as `True` gives you `int(True)` is `1` and `float(True)` is `1.0` and `False` gives you `0`/`0.0`. When converting from float to integer, Python simply drops the fractional part (it does not do proper rounding!). When converting a string, it must be a valid number of the corresponding type or the error is generated. E.g., you can convert a string like `"123"` to an integer or a float but this won't work for `"a123"`. Moreover, you can convert `"123.4"` to floating-point number but not to an integer, as it has fractional part in it. Given all this, which cells would work and what output would they produce?
 
 
 ```python
@@ -184,8 +199,8 @@ int("123+3")
 Do exercise #8.
 :::
 
-## Printing output
-To print the value, you need you use `print()` function (we will talk about functions in general later). In the simplest case, you pass the value and it will be printed out.
+## Printing output{#print}
+To print the value, you need you use [print()](https://docs.python.org/3/library/functions.html#print) function (we will talk about functions in general later). In the simplest case, you pass the value and it will be printed out.
 
 ```python
 print(5)
@@ -199,7 +214,7 @@ print("five")
 #> five
 ```
 
-Of course, you already know about the variables, so rather than putting a value directly, you can pass a variable instead and its value will be printed out.
+Of course, you already know about the variables, so rather than putting a value directly, you can pass a variable instead and its _value_ will be printed out.
 
 ```python
 number_of_pancakes = 10
@@ -215,7 +230,7 @@ print(breakfast)
 #> pancakes
 ```
 
-You can also pass more than one value/variable to the print function and all the values will be printed one after another. For example, if we want to tell the user what did I had for breakfast and just how many of those, we can do
+You can also pass more than one value/variable to the print function and all values will be printed one after another. For example, if we want to tell the user what did I had for breakfast, we can do
 
 ```python
 breakfast = "pancakes"
@@ -238,7 +253,6 @@ print(count, dinner, count, desert)
 Do exercise #9.
 :::
 
-
 However, you probably would want to be more explicit, when you print out the information. For example, imagine you have these three variables:
 
 ```python
@@ -246,12 +260,12 @@ meal = "breakfast"
 dish = "pancakes"
 count = 10
 ```
-You could, of course do `print(meal, dish, count)` but it would be nicer to print "_I had **10 pancakes** for **breakfast**_", where items in bold would be the inserted variables' values. For this, we need to use string formatting. Please note that the string formatting is not specific to printing, you can create a new string value via formatting and store it in a variable (without printing it out) or print it out (without storing it).
+You could, of course do `print(meal, dish, count)` but it would be nicer to print "_I had **10 pancakes** for **breakfast**_", where items in bold would be the inserted variables' values. For this, we need to use string formatting. Please note that the string formatting is not specific to printing, you can create a new string value via formatting and store it in a variable without printing it out or print it out without storing it.
 
 ## String formatting {#string-formatting}
-A great resource on string formatting in Python is [pyformat.info](https://pyformat.info/). As Python constantly evolves, it now has more than one way to format strings. Below, I will introduce the "old" format that is based on classic string formatting used in `sprintf` function is C, Matlab, R, and many other programming languages. It is somewhat less flexible than a newer ones but for simple tasks the difference is negligible. Knowing the old format is useful because of its generality. If you want to learn alternatives, read at the link above.
+A great resource on string formatting in Python is [pyformat.info](https://pyformat.info/). As Python constantly evolves, it now has more than one way to format strings. Below, I will introduce the "old" format that is based on classic string formatting used in `sprintf` function is C, Matlab, R, and many other programming languages. It is somewhat less flexible than newer ones but for simple tasks the difference is negligible. Knowing the old format is useful because of its generality. If you want to learn alternatives, read at the link above.
 
-The general call is `"a string with formatting"%(tuple of values to be used during formatting)`.
+The general call is `"a string with formatting"%(tuple of values to be used during formatting)`. You will learn about tuples later. For now, assume that it is just a comma-separated list of values enclosed in round brackets: `(1, 2, 3)`.
 
 In `"a string with formatting"`, you specify where you want to put the value via `%` symbol that is followed by an _optional_ formatting info and the _required_ symbol that defines the **type** of the value. The type symbols are
 
@@ -267,7 +281,7 @@ print("I had %d pancakes for breakfast"%(10))
 #> I had 10 pancakes for breakfast
 ```
 
-You are not limited to a single value that you can put into a string. You can specify more locations via `%` but you must make sure that you pass the right number of values. Before running it, can you figure out which call will actually work (and what will be the output ) and which will produce an error?
+You are not limited to a single value that you can put into a string. You can specify more locations via `%` but you must make sure that you pass the right number of values in the right order. Before running it, can you figure out which call will actually work (and what will be the output) and which will produce an error?
 
 
 ```python
@@ -280,11 +294,10 @@ print('I had %d pancakes and %d stakes for dinner'%(1, 7, 10))
 Do exercise #10.
 :::
 
-In case of real values you have two options: `%f` and `%g`. The latter uses scientific notation (e.g. `1e10` for `10000000000`) to make a representation more compact. 
+As noted above, in case of real values you have two options: `%f` and `%g`. The latter uses scientific notation (e.g. `1e10` for `10000000000`) to make a representation more compact.
 
 ::: {.rmdnote .practice}
 Do exercise #11 to get a better feeling for the difference.
 :::
 
-These is much more to formatting and you can read about it at [pyformat.info](https://pyformat.info/). However, these basics are sufficient for us to start programming our first game during the next seminar. Don't forget to submit your exercise notebook and see you next time!
-
+These is much more to formatting and you can read about it at [pyformat.info](https://pyformat.info/). However, these basics are sufficient for us to start programming our first game during in the next chapter.

@@ -40,7 +40,19 @@
 </form>
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled"><li><a class="" href="index.html"><span class="header-section-number">Chapter 2</span> Software</a></li></ul>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="active" href="software.html"><span class="header-section-number">2</span> Software</a></li>
+<li><a class="" href="programming-tips.html"><span class="header-section-number">3</span> Programming tips and tricks</a></li>
+<li><a class="" href="python-basics.html"><span class="header-section-number">4</span> Python basics</a></li>
+<li><a class="" href="guess-the-number-single-round.html"><span class="header-section-number">5</span> Guess the Number: a single round edition</a></li>
+<li><a class="" href="guess-the-number-multi-round.html"><span class="header-section-number">6</span> Guess the Number: a multi round edition</a></li>
+<li><a class="" href="guess-the-number-ai.html"><span class="header-section-number">7</span> Guess the Number: AI takes a turn</a></li>
+<li><a class="" href="psychopy-basics.html"><span class="header-section-number">8</span> Gettings started with PsychoPy</a></li>
+<li><a class="" href="whack-a-mole.html"><span class="header-section-number">9</span> Whack-a-Mole</a></li>
+<li><a class="" href="memory-game.html"><span class="header-section-number">10</span> Memory game</a></li>
+<li><a class="" href="currently-unused-bits.html"><span class="header-section-number">11</span> Currently unused bits</a></li>
+</ul>
 
         <div class="book-extra">
           <p><a id="book-repo" href="https://github.com/alexander-pastukhov/writing-games-with-python-and-psychopy">View book source <i class="fab fa-github"></i></a></p>
@@ -57,7 +69,7 @@
 <li>IDE of your choice. My instructions will be for Visual Studio Code, which has a very good Python support.</li>
 <li>Jupyter Notebook for trying out small snippets of code.</li>
 </ul>
-<p>I will not give detailed instructions on how to install the necessary software but rather point you to official manuals. This makes this text more future-proof as specific details might easily change<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;If you are part of the seminar, ask me whenever you have problems or are unsure about how to proceeed&lt;/p&gt;"><sup>1</sup></a>.</p>
+<p>I will not give detailed instructions on how to install the necessary software but rather point you to official manuals. This makes this text more future-proof as specific details might easily change<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;If you are part of the seminar, ask me whenever you have problems or are unsure about how to proceeed&lt;/p&gt;"><sup>2</sup></a>.</p>
 <div id="install-psychopy" class="section level2" number="2.1">
 <h2>
 <span class="header-section-number">2.1</span> PsychoPy<a class="anchor" aria-label="anchor" href="#install-psychopy"><i class="fas fa-link"></i></a>
@@ -102,15 +114,27 @@
 </div>
 
   <div class="chapter-nav">
-<div class="empty"></div>
-<div class="empty"></div>
+<div class="prev"><a href="index.html"><span class="header-section-number">1</span> Introduction</a></div>
+<div class="next"><a href="programming-tips.html"><span class="header-section-number">3</span> Programming tips and tricks</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <div id="book-on-this-page"></div>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#software"><span class="header-section-number">2</span> Software</a></li>
+<li><a class="nav-link" href="#install-psychopy"><span class="header-section-number">2.1</span> PsychoPy</a></li>
+<li><a class="nav-link" href="#install-vs-code"><span class="header-section-number">2.2</span> VS Code</a></li>
+<li>
+<a class="nav-link" href="#jupyter-notebooks"><span class="header-section-number">2.3</span> Jupyter Notebooks</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#jupyter-notebooks-in-vs-code"><span class="header-section-number">2.3.1</span> Jupyter Notebooks in VS Code</a></li>
+<li><a class="nav-link" href="#jupyter-notebooks-in-anaconda"><span class="header-section-number">2.3.2</span> Jupyter Notebooks in Anaconda</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#files-folder"><span class="header-section-number">2.4</span> Keeping things tidy</a></li>
+</ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          
+<li><a id="book-source" href="https://github.com/alexander-pastukhov/writing-games-with-python-and-psychopy/blob/master/00-software.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/alexander-pastukhov/writing-games-with-python-and-psychopy/edit/master/00-software.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -122,7 +146,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2021-10-06.</p>
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2021-10-18.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -130,6 +154,34 @@
   </div>
 
 </div></div>
-</footer>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
 </body>
 </html>

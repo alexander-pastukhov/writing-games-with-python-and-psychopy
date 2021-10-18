@@ -1,0 +1,275 @@
+# Whack-a-Mole{#whack-a-mole}
+
+
+
+Today you will create your first _video_ game Whack-a-Mole. The game itself is very much a reaction time experiment: moles/targets appear after a random delay at one of the predefined locations, the player's task is to whack (press a corresponding button) the mole/target before it disappears. Your final game should look approximately like the one in the video: Circles (moles) turn white, if I hit the correct button in time.
+
+
+
+
+## Chapter concepts
+
+* Storing many items in [lists](#lists).
+* Iterating over items use [for](#for-loop) loop.
+* Generating a list of number using [range()](#range).
+* Making [a pause](#clock-wait) and limiting time you [wait for a key](#waitKeys-maxwait).
+
+## Lists {#lists}
+So far, we were using variables to store single values: computer's pick, player's guess, number of attempts, PsychoPy window object, etc. But sometimes we need to handle more than one value. We already had this problem in the [computer-based Guess-the-Number](#guess-the-number-ai) game when we needed to store the remaining number range. We got away by using two variables, one for the lower and one for the upper limit. However, this approach clearly does not scale well and, sometimes, we might not even know how many values we will need to store. Python's [lists](https://docs.python.org/3/library/stdtypes.html#lists) are the solution to the problem.
+
+A list is a mutable^[More on that and tuples (list's immutable cousins) later.] sequence of items where individual elements can be accessed via their zero-based index. Extending the idea of [variable-as-a-box](#variables), you can think about lists as a box with numbered slots. To store and retrieve a particular piece you will need to know both the _variable name_ and the _index of the item_ you are interested in within that box. Then, you work with a variable-plus-index in exactly the same way you work with a normal variable, accessing or changing its value via the same syntax as before.
+
+A list is defined via square brackets `<variable> = [<value1>, <value2>, ... <valueN>]`. An individual slot within a list is also accessed via square brackets `<variable>[<index>]` where index is, again, **zero-based**^[This is typical for "classic" programming languages but less so for ones that are linear algebra / data science oriented. Both Matlab and R use one-based indexing, so you need to be careful and double-check whether you are using correct indexes.]. This means that the _first_ items is `variable[0]` and, if there are _N_ items in the list, the last one is `variable[N-1]`. You can figure out the total number of items in a list by getting its length via a special [len()](https://docs.python.org/3/library/functions.html#len) function. Thus, you can access the last item via `variable[len(variable)-1]`^[There is a simpler way to do this, which you will learn in a little while.]. Note the `-1`: If you list has 3 items, the index of the last one is 2, if it has 100, then 99, etc. I am spending so much time on this because it is a fairly common source of confusion.
+
+::: {.rmdnote .practice}
+Do exercise #1 see how lists are defined and indexed.
+:::
+
+Lists also allow you access more than one slot/index at a time via _slicing_. You can specify index of elements via `<start>:<stop>` notation. For example, `x[1:3]` will give you access to two items with indexes 1 and 2. Yes, _two_ items: Slicing index goes from the `start` up to **but not including** the `stop`. Thus, if you want to get _all_ the items of a list, you will need to write `x[0:length(x)]` and, yet, to get the last item alone you still write `x[len(x)-1]`. Confusing? I think so. I understand the logic but I find this stop-is-not-included to be counterintuitive and I still have to consciously remind myself about this. Unfortunately, this is a standard way to define sequences of numbers in Python, so you need to memorize this.
+
+::: {.rmdnote .practice}
+Do exercise #2 to build the intuition.
+:::
+
+When slicing, you can omit either `start` or `stop`. In this case, Python will assume that a missing `start` means `0` (the index of the first element) and missing `stop` means `len(<list>)` (so, last item is included). If you omit _both_, e.g., `my_pretty_numbers[:]` it will return all values, as this is equivalent to `my_pretty_numbers[0:len(my_pretty_numbers)]`.^[Note, that this is almost but not quite the same thing as just writing `my_pretty_numbers`, the difference is subtle but important. We will return to it later when talking about mutable versus immutable types.]
+
+::: {.rmdnote .practice}
+Do exercise #3.
+:::
+
+You can also use _negative_ indexes that are computed relative to length of the list. For example, if you want to get the _last_ element of the list, you can say `my_pretty_numbers[len(my_pretty_numbers)-1]` or just `my_pretty_numbers[-1]`. The last-but-one element would be `my_pretty_numbers[-2]`, etc. You can use negative indexes for slicing but keep in mind the _including the start but excluding the stop_ catch: `my_pretty_numbers[:-1]` will return all but last element of the list not the entire list!
+
+::: {.rmdnote .practice}
+Do exercise #4.
+:::
+
+Slicing can be extended by specifying a `step` via `stop:start:step` notation. `step` can be negative, allowing you to build indexes in the reverse order:
+
+```python
+my_pretty_numbers = [1, 2, 3, 4, 5, 6, 7]
+my_pretty_numbers[4:0:-1]
+#> [5, 4, 3, 2]
+```
+
+However, you must pay attention to the sign of the step. If it goes in the wrong direction then  `stop` cannot be reached, Python will return an empty list.
+
+```python
+my_pretty_numbers = [1, 2, 3, 4, 5, 6, 7]
+my_pretty_numbers[4:0:1]
+#> []
+```
+Steps can be combined with omitted and negative indexes. To get every _odd_ element of the list, you write `my_pretty_numbers[::2]`:  
+
+```python
+my_pretty_numbers = [1, 2, 3, 4, 5, 6, 7]
+my_pretty_numbers[::2]
+#> [1, 3, 5, 7]
+```
+
+::: {.rmdnote .practice}
+Do exercise #5.
+:::
+
+If you try to to access indexes _outside_ of a valid range, Python will raise an [IndexError](https://docs.python.org/3/library/exceptions.html#IndexError)^[If you are familiar with R and its liberal attitude towards indexes, you will find this very satisfying.]. Thus, trying to get 6^th^ element (index 5) of a five-element-long list will generate a simple and straightforward error. However, if your _slice_ is larger than the range, it will be truncated without an extra warning or an error. So, for a five-element list `my_pretty_numbers[:6]` or `my_pretty_numbers[:600]` will both return all numbers (effectively, this is equivalent to `my_pretty_numbers[:]`). Moreover, if the slice is empty (`2:2`, cannot include 2 because it is a stop value, even though it starts from 2 as well) or the entire slice is outside of the range, Python will return an empty list, again, neither warning or error is generated.
+
+::: {.rmdnote .practice}
+Do exercise #6.
+:::
+
+In Python lists are dynamic, so you can always add or remove elements to it, see [the list of methods ]](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists). You can add a new item to the of the end of the list via `append(<new_value>)` method
+
+```python
+my_pretty_numbers = [1, 2, 3, 4, 5, 6, 7]
+my_pretty_numbers.append(10)
+my_pretty_numbers
+#> [1, 2, 3, 4, 5, 6, 7, 10]
+```
+
+Or, you can `insert(<index>, <new_value>)` _before_ an element with that index. Unfortunately, this means that you can use an arbitrary large index and it will insert a new value as a _last_ element without generating an error.
+
+```python
+my_pretty_numbers = [1, 2, 3, 4, 5, 6, 7]
+my_pretty_numbers.insert(2, 10)
+my_pretty_numbers.insert(500, 20)
+my_pretty_numbers
+#> [1, 2, 10, 3, 4, 5, 6, 7, 20]
+```
+You can remove an item using its index via `pop(<index>)`, note that the item is _returned_ as well. If you omit the index, `pop()` removes the _last_ element of the list. Here, you can only use valid indexes.
+
+```python
+my_pretty_numbers = [1, 2, 3, 4, 5, 6, 7]
+my_pretty_numbers.pop(-1)
+#> 7
+my_pretty_numbers.pop(3)
+#> 4
+my_pretty_numbers
+#> [1, 2, 3, 5, 6]
+```
+
+::: {.rmdnote .practice}
+Do exercise #7.
+:::
+
+## Basic game scaffolding
+Phew that was _a lot_ about lists^[and we barely scratched the surface!]. However, [all work and no play makes Jack a dull boy](https://en.wikipedia.org/wiki/All_work_and_no_play_makes_Jack_a_dull_boy)! So let us start with a basic PsychoPy scaffolding. Here the code structure:
+```python
+import libraries from [psychopy]
+create the PsychoPy window (visual.Window())
+flip the window (.flip())
+wait for a player to press the escape key (event.waitKeys())
+close the window (.close())
+```
+
+Try doing it from scratch. I have left hints to help you with this and you can always consult the [online documentation](https://psychopy.org/api/index.html). Do not forget to document the file and to split your code into meaningful chunks with comments (if needed).
+
+::: {.rmdnote .program}
+Put your code into _code01.py_.
+:::
+
+## Three moles
+Let us create three moles that will be represented by [circles](https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle). Create a new list variable `moles` and put three circles into it. One should go to the left, one dead center, and one to the right. Watch a video above to see what I mean. Think of a reasonable size (which [units](#psychopy-units) make keeping circle a circle easier?) and position. You can also use different colors for them, as I did). 
+
+You can either create an empty list and then `append()` circles one at a time. Or you can use square brackets to put all three of them into the list in one go. Then [draw()](https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle.draw) circles before you flip the window and wait for a key press. Note that you have to draw them one at a time. Therefore, you will need to add three lines for this but the next section will show you an easier way.
+
+::: {.rmdnote .program}
+Put your code into _code02.py_.
+:::
+
+## For loop{#for-loop}
+In the code above, we needed to iterate over three moles (circles) that we had in a list. Python has a tool just for that: a
+[for loop](https://docs.python.org/3/tutorial/controlflow.html?highlight=loop#for-statements) that iterates over the items in any sequence (our list is a sequence!). Here is an example:
+
+```python
+numbers = [2, 4, 42]
+for a_number in numbers:
+    print("Value of a_number variable on this iteration is %d"%(a_number))
+    a_number = a_number + 3
+    print("  Now we incremented it by 3: %d"%(a_number))
+    print("  Now we use in a formula a_number / 10: %g"%(a_number / 10))
+#> Value of a_number variable on this iteration is 2
+#>   Now we incremented it by 3: 5
+#>   Now we use in a formula a_number / 10: 0.5
+#> Value of a_number variable on this iteration is 4
+#>   Now we incremented it by 3: 7
+#>   Now we use in a formula a_number / 10: 0.7
+#> Value of a_number variable on this iteration is 42
+#>   Now we incremented it by 3: 45
+#>   Now we use in a formula a_number / 10: 4.5
+```
+
+Here, the code inside the `for` loop is repeated three times because there are three items in the list. On each iteration, next value from the list gets assigned to a temporary variable `a_number` (see the output). Once the value is assigned to a variable, you can use it just like any variable. You can print it out (first `print`), you can modify it (second line within  the loop), use its value for when calling other functions, etc. To better appreciate this, copy-paste this code into a temporary file (call it `test01.py`), put a [breakpoint](#debugging) onto the first `print` statement and then use **F10** to step through the loop and see how value of `a_number` variable changes on each iteration and then it gets modified in the second line within the loop.
+
+Note that you can use the same [break](https://docs.python.org/3/tutorial/controlflow.html?highlight=loop#break-and-continue-statements-and-else-clauses-on-loops) statement as for the [while](https://docs.python.org/3/reference/compound_stmts.html#the-while-statement) loop.
+
+::: {.rmdnote .practice}
+Do exercise #8.
+:::
+
+## Drawing in a loop
+Now that you have learned about the [for](#for-loop) loop, it is easy to draw the moles. Just iterate over the list (come up with a good temporary variable name) and `draw()` a current item (which is in your temporary variable).
+
+::: {.rmdnote .program}
+Put your code into _code03.py_.
+:::
+
+## range() function: Repeating code N times{#range}
+Sometimes, you might need to repeat the code several times. For example, imagine that you have 40 trials in an experiment. Thus, you need to repeat a trial-related code 40 times. You can, of course, build a list 40 items long by hand and iterate over it but Python has a handy [range()](https://docs.python.org/3/tutorial/controlflow.html?highlight=loop#the-range-function) function for that. `range(N)` yields N integers from 0 to N-1 (same up-to-but-not-including rule as for slicing) that you can iterate over in a for loop. 
+
+```python
+for x in range(3):
+    print("Value of x is %d"%(x))
+#> Value of x is 0
+#> Value of x is 1
+#> Value of x is 2
+```
+
+You can modify [range()](https://docs.python.org/3/library/stdtypes.html#range) function behavior by providing a starting value and a step size. But in its simplest form `range(N)` is a handy tool to repeat the code that many times. Note that while you always need to have a temporary variable in a `for` loop, sometimes you may not use it at all. In cases like this, you should use `_` (underscore symbol) as a variable name to indicate the lack of use.
+
+```python
+for _ in range(2):
+    print("I will be repeated twice!")
+#> I will be repeated twice!
+#> I will be repeated twice!
+```
+
+Alternatively, you can use `range()` to loop through indexes of a list (remember, you can always access an individual list item via `var[index]`). Do exactly that^[Note, this is note a _better_ way but an _alternative_ way to do this.]! Modify your code to use [range()]((https://docs.python.org/3/library/stdtypes.html#range)) function in the for loop (how can you compute the number of iterations from the length of the list?), use temporary variable as an index for the list to draw each item^[Style hint: if a variable is an _index_ of something, I tend to call it `isomething`. E.g., if it holds an index to a current mole, I would call it `imole`. This is _my_ way of doing it. Others use `i_` prefix or an `_i` suffix. But either way, it is a useful naming convention. Remember, the easier it is to understand the meaning of a variable from its name, the easier it is for you to read and modify the code.]. When in doubt, put a breakpoint inside (or just before) the loop and step through your code to understand what values a temporary loop variable gets and how it is used.
+
+::: {.rmdnote .program}
+Put your modified code into _code04.py_.
+:::
+
+## A random mole {#random-mole}
+Drawing all three moles served as a practical exercise with loops but in a real game we need to shown only one random target at a time. We could create the three targets as before and draw one of them. However, later on we would like to change the color of the target to indicate that the player did hit it, so it is simpler (if a bit wasteful) to create a single mole every time we need one. 
+
+For this, define one [CONSTANT](#constants) with a list of three colors that you used and another one with three horizontal locations (the vertical location is the same, so we do not need to worry about it). Next, randomly pick which target out of three you want to create, i.e., we need to generate an _index_ of the target. You can do it either via [random.randrange()](https://docs.python.org/3/library/random.html#random.randrange) or via [random.choice()](https://docs.python.org/3/library/random.html#random.choice) building the range yourself via [the function with the same name]() you have just learned about (remember to organize your imports alphabetically). Store the index in a variable with a meaningful name^[`itarget`? `imole`?] and use it with constants to create the target of the corresponding color at a corresponding location. Then, you need to draw that single target before waiting for a key press.
+
+Once you have the code, put a breakpoint and check that the value of the index variable matches what is shown on a screen^[I know it feels redundant but these are little checks that cost little time by themselves but help you avoid wasting lots of time on tracing weird mistakes. Here, you check that your expectations (if the middle target is shown, the index should be 1) match the reality. Once you check this, you do not _expect_ it to be true, you _know_ it to be true!].
+
+::: {.rmdnote .program}
+Put your modified code into _code05.py_.
+:::
+
+## Random time{#clock-wait}
+What makes Whack-a-Mole game fun is not only that you do not know _which_ mole will appear but you also do not know _when_ it will appear and _how much time_ you have to whack it. Thus, we need to modify our presentation schedule. We need a blank period of a random duration (I would suggest between 0.75 s to 1.5 s) and limited presentation duration (between 0.5 to 0.75 s). First, you need to define these ranges as [constants](#constants). Now that you know lists you can use a single variable to hold both ends of the range. Then, you need to generate two numbers (one for the blank another for the presentation) coming from [a uniform distrubition](https://docs.python.org/3/library/random.html#random.uniform) within that range. Finally, you need to time your blank and presentation using the [wait()](https://psychopy.org/api/clock.html#psychopy.clock.wait) function from the [clock](https://psychopy.org/api/clock.html) module.
+
+Now is time to update and structure you code. Here is a approximate outline (note that I have dropped the wait for keys):
+```python
+"""Document your file
+"""
+import all libaries you need in an alphabetical order
+
+define CONSTANTS
+
+create window
+
+# generating random parameters for the trial
+pick random index for the mole
+create the mole
+generate random durations for blank and presentation interval
+
+# blank
+clear window (win.flip() alone)
+wait for "blank duration" seconds
+
+# presentation
+draw the mole
+wait for "presentation duration" seconds
+
+close the window
+```
+
+Note that it has no response processing at the moment and that window should close right after the stimulus is presented.
+
+::: {.rmdnote .program}
+Put your code into _code06.py_.
+:::
+
+## Repeating trials
+You already know how to [repeat](#range) the same code many times. Decide on number of trials / rounds (define this as a constant) and repeat the single round that many times. Think about what code goes inside the loop and what should stay outside for the randomization to work properly.
+
+::: {.rmdnote .program}
+Put your code into _code07.py_.
+:::
+
+## Exit strategy{#waitKeys-maxwait}
+I hope that you used a small number of trials because (on my advice, yes!) we did not program a possibility to exit the game via the **escape** key. To put it in, we will replace _both_ [wait()](https://psychopy.org/api/clock.html#psychopy.clock.wait)  calls with [waitKeys()](https://psychopy.org/api/event.html#psychopy.event.waitKeys) function. It has `maxWait` parameter that by default is set to infinity but can be set to the duration we require. If a player does not press a key, it will work just like [wait()](https://psychopy.org/api/clock.html#psychopy.clock.wait) did. If a player presses a key (allow only `"escape"` for now), it means that they want to abort the game (the only possible action at the moment). Thus, assign the returned value to a temporary variable (`keys`?) and check whether it is equal to `None`^[Confusingly, if no key was pressed, [getKeys()](https://psychopy.org/api/event.html#psychopy.event.getKeys) returns an empty list but [waitKeys()](https://psychopy.org/api/event.html#psychopy.event.waitKeys) returns `None` and `None` has no length.]. If it is not equal to `None`, [break](#break) out of the loop!
+
+::: {.rmdnote .program}
+Put your code into _code08.py_.
+:::
+
+## Whacking that mole
+We have moles that appear at a random location after a random delay for a random period of time. Now we just need to add an ability to whack 'em! You whack a mole only when it is present. Thus, we only need to modify and handle the [waitKeys()](https://psychopy.org/api/event.html#psychopy.event.waitKeys) call for the presentation interval. 
+
+First, create a new constant with three keys that correspond to three locations. I would suggest using `["left", "down", "right"]`, which are cursor keys^[Want to know key codes for sure? Write a small program that open a window and then repeatedly waits for any key press and prints out into console.]. Next, you need to use them for the `keyList` parameter. However, we cannot use this list directly, as we also need the **escape** key. The simplest way is to put "escape" into its own list and concatenate the two lists via `+`: `["escape"] + YOUR_CONSTANT_WITH_KEYS`. Do this concatenation directly when you set a value to the `keyList` in the function call. Before we continue, run the code and test that you can abort the program during the presentation (but not during the blank interval) by pressing any of these three keys. Also check that **escape** still works!
+
+Now that we have keys to press, we need more sophisticated processing (we gonna have quite a few nested conditional statements). We still need to check whether [waitKeys()](https://psychopy.org/api/event.html#psychopy.event.waitKeys) returned `None` first. If it did not, it must have returned a list of pressed keys. Actually, it will be a list with just a single item^[You will get more than one item in that list only if you set `clearEvents=False`. In this case, you will get the list of keys pressed before the call. However, if you opted for a default `clearEvents=True`, you will get only one key press in the list (at least I was never able to get more than one).], so we can work with it directly via `keys[0]`. Use conditional [if-else statement](#if-statement) to break out of the loop if the player pressed **escape**. Otherwise, it was one of the three "whack" keys.
+
+Our next step is to establish which index the key corresponds to. Python makes it extremely easy as lists have `.index(value)` method that returns the index of the value within the list. You have the (CONSTANT) list with the keys, you have the pressed key: Figure out the index and check whether it matches the index of the target (`imole` variable in my code). If it does, let us provide a visual feedback of success: change mole (circle) `fillColor` to white, draw it, and [wait](https://psychopy.org/api/clock.html#psychopy.clock.wait) for 300 ms (setup a constant for feedback duration). This way, the mole will turn white and remain briefly on the screen when hit but will disappear immediately, if you missed.
+
+::: {.rmdnote .program}
+Put your code into _code09.py_.
+:::
+
+## You did it!
+Congratulations on your first video game! It could use some bells-and-whistles like having a score, combos would be cool, proper mole images instead circle, etc. but it works and it is fun (if you do not feel challenged, reduce the presentation time)! Submit your files and next time we will ditch the keyboard and learn how to handle the mouse for the Memory game.
