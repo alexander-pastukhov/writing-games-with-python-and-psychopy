@@ -2864,14 +2864,6 @@ Here, we are interested in the \emph{elapsed} time, so \href{https://psychopy.or
 
 Put your code into \texttt{code17.py}.
 
-\hypertarget{currently-unused-bits}{%
-\chapter{Currently unused bits}\label{currently-unused-bits}}
-
-\hypertarget{clock-module}{%
-\section{Clock Module}\label{clock-module}}
-
-The two classes you are primarily interested in are \href{https://psychopy.org/api/clock.html\#psychopy.clock.Clock}{Clock} and \href{https://psychopy.org/api/clock.html\#psychopy.clock.CountdownTimer}{CountdownTimer}. The only difference between the two is that \href{https://psychopy.org/api/clock.html\#psychopy.clock.Clock}{Clock} starts at (and \href{https://psychopy.org/api/clock.html\#psychopy.clock.Clock.reset}{resets} to) 0 and start counting \emph{elapsed} time, so its \href{https://psychopy.org/api/clock.html\#psychopy.clock.MonotonicClock.getTime}{getTime()} method will return only \emph{positive} values. In contrast, the \href{https://psychopy.org/api/clock.html\#psychopy.clock.CountdownTimer}{CountdownTimer} start with (and resets to) a value you initialized it with and starts counting \emph{remaining} time down. Importantly, it will not stop once it reaches 0, so you will eventually end up with \emph{negative} remaning time. Thus, for \href{https://psychopy.org/api/clock.html\#psychopy.clock.Clock}{Clock} you check whether the \emph{elapsed} time is longer than some predefined value (blank and presentation durations that you generated), whereas for \href{https://psychopy.org/api/clock.html\#psychopy.clock.CountdownTimer}{CountdownTimer} you start at these values and check that the \emph{remaining} time is above zero. Note it is not guaranteed that the remaining time will be exactly zero. If anything, it is extremely unlikely that this will ever happen, so never test for an exact equality with zero\footnote{More generally, never compare float values to exact numbers. They are \href{http://www.lahey.com/float.htm}{tricky}, as the underlying representation \href{https://docs.python.org/3/tutorial/floatingpoint.html}{does not guarantee} that the computation will produce \emph{exactly} the number that it should: \texttt{.1\ +\ .1\ +\ .1\ ==\ .3} is suprisingly \texttt{False}, try it yourself}!
-
   \bibliography{book.bib}
 
 \end{document}
