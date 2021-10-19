@@ -10,7 +10,7 @@ I will not give detailed instructions on how to install the necessary software b
 ## PsychoPy {#install-psychopy}
 Download and install [Standalone PsychoPy](https://www.psychopy.org/download.html) version. Use whatever the latest (and greatest) PsychoPy version is suggested to you (PsychoPy 2021.2.3 using Python3.6 as of time of writing) and follow instructions.
 
-Note that you can also install PsychoPy as a anaconda package or install an official Python distribution and add PsychoPy via pip. However, I find the standalone easier to use as it has all necessary additional libraries. Plus, it has additional tools for GUI-based experiment programming and integration with [Pavlovia.org](Pavlovia.org).
+Note that you can also install PsychoPy as a anaconda package or install an official Python distribution and add PsychoPy via pip. However, I find the standalone easier to use as it has all necessary additional libraries. Plus, it has additional tools for GUI-based experiment programming and integration with [Pavlovia.org](https://pavlovia.org/).
 
 ## VS Code {#install-vs-code}
 [Visual Studio Code](https://code.visualstudio.com/) is a free lightweight open-source editor with strong support for Python. Download the installer for your platform and follow the instructions.
