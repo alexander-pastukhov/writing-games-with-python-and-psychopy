@@ -52,7 +52,7 @@ Put your code into `code01.py`.
 Do not forget to document the file and use breakpoints and step overs to explore the program flow.
 
 ## Counting attempts
-Now let us add a variable that will count a total number of attempts by the player. For this, create a new variable (call it `attempts` or something similar) _before the loop_ and initialize it `0`. Add `1` to it every time the player enters a guess. After the loop, expand the `"Spot on!"` message by adding information about the number of attempts. Use [string formatting](##string-formatting) to make things look nice, e.g., `"Spot on, and you needed just 5 attempts!"`. Check that the number of attempts your required _matches_ the number of attempts reported by the program!
+Now let us add a variable that will count a total number of attempts by the player. For this, create a new variable (call it `attempts` or something similar) _before the loop_ and initialize it `1`. Add `1` to it every time the player enters a guess. After the loop, expand the `"Spot on!"` message by adding information about the number of attempts. Use [string formatting](##string-formatting) to make things look nice, e.g., `"Spot on, and you needed just 5 attempts!"`. Check that the number of attempts your required _matches_ the number of attempts reported by the program!
 
 ::: {.rmdnote .program}
 Put your code into `code02.py`.

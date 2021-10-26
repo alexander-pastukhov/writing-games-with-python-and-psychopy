@@ -6,7 +6,7 @@
 ]{book}
 \title{Writing games with Python and PsychoPy}
 \author{Alexander (Sasha) Pastukhov}
-\date{2021-10-19}
+\date{2021-10-26}
 
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
@@ -380,7 +380,7 @@ As noted above, you can think about a variable as a labeled box you can store so
 
 Do exercise \#1.
 
-Note that a variable (``a box with a name tag'') exists only after you assign something to it. So, you the following code will generate a \texttt{NameError}, a Python's way to tell that you it never heard of variable \texttt{number\_of\_hands}.
+Note that a variable (``a box with a name tag'') exists only after you assign something to it. So, the following code will generate a \texttt{NameError}, a Python's way to tell that you it never heard of variable \texttt{number\_of\_hands}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -534,7 +534,7 @@ Do exercise \#8.
 \hypertarget{print}{%
 \section{Printing output}\label{print}}
 
-To print the value, you need you use \href{https://docs.python.org/3/library/functions.html\#print}{print()} function (we will talk about functions in general later). In the simplest case, you pass the value and it will be printed out.
+To print the value, you need to use \href{https://docs.python.org/3/library/functions.html\#print}{print()} function (we will talk about functions in general later). In the simplest case, you pass the value and it will be printed out.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -587,7 +587,7 @@ What will be printed by the code below?
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{dinner }\OperatorTok{=} \StringTok{"stake"}
+\NormalTok{dinner }\OperatorTok{=} \StringTok{"steak"}
 \NormalTok{count }\OperatorTok{=} \DecValTok{4}
 \NormalTok{desert }\OperatorTok{=} \StringTok{"cupcakes"}
 
@@ -612,7 +612,7 @@ You could, of course do \texttt{print(meal,\ dish,\ count)} but it would be nice
 \hypertarget{string-formatting}{%
 \section{String formatting}\label{string-formatting}}
 
-A great resource on string formatting in Python is \href{https://pyformat.info/}{pyformat.info}. As Python constantly evolves, it now has more than one way to format strings. Below, I will introduce the ``old'' format that is based on classic string formatting used in \texttt{sprintf} function is C, Matlab, R, and many other programming languages. It is somewhat less flexible than newer ones but for simple tasks the difference is negligible. Knowing the old format is useful because of its generality. If you want to learn alternatives, read at the link above.
+A great resource on string formatting in Python is \href{https://pyformat.info/}{pyformat.info}. As Python constantly evolves, it now has more than one way to format strings. Below, I will introduce the ``old'' format that is based on classic string formatting used in \texttt{sprintf} function in C, Matlab, R, and many other programming languages. It is somewhat less flexible than newer ones but for simple tasks the difference is negligible. Knowing the old format is useful because of its generality. If you want to learn alternatives, read at the link above.
 
 The general call is \texttt{"a\ string\ with\ formatting"\%(tuple\ of\ values\ to\ be\ used\ during\ formatting)}. You will learn about tuples later. For now, assume that it is just a comma-separated list of values enclosed in round brackets: \texttt{(1,\ 2,\ 3)}.
 
@@ -643,9 +643,9 @@ You are not limited to a single value that you can put into a string. You can sp
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}I had }\SpecialCharTok{\%d}\StringTok{ pancakes and either }\SpecialCharTok{\%d}\StringTok{  or }\SpecialCharTok{\%d}\StringTok{ stakes for dinner\textquotesingle{}}\OperatorTok{\%}\NormalTok{(}\DecValTok{2}\NormalTok{))}
-\BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}I had }\SpecialCharTok{\%d}\StringTok{ pancakes and }\SpecialCharTok{\%d}\StringTok{ stakes for dinner\textquotesingle{}}\OperatorTok{\%}\NormalTok{(}\DecValTok{7}\NormalTok{, }\DecValTok{10}\NormalTok{))}
-\BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}I had }\SpecialCharTok{\%d}\StringTok{ pancakes and }\SpecialCharTok{\%d}\StringTok{ stakes for dinner\textquotesingle{}}\OperatorTok{\%}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{10}\NormalTok{))}
+\BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}I had }\SpecialCharTok{\%d}\StringTok{ pancakes and either }\SpecialCharTok{\%d}\StringTok{  or }\SpecialCharTok{\%d}\StringTok{ steaks for dinner\textquotesingle{}}\OperatorTok{\%}\NormalTok{(}\DecValTok{2}\NormalTok{))}
+\BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}I had }\SpecialCharTok{\%d}\StringTok{ pancakes and }\SpecialCharTok{\%d}\StringTok{ steaks for dinner\textquotesingle{}}\OperatorTok{\%}\NormalTok{(}\DecValTok{7}\NormalTok{, }\DecValTok{10}\NormalTok{))}
+\BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}I had }\SpecialCharTok{\%d}\StringTok{ pancakes and }\SpecialCharTok{\%d}\StringTok{ steaks for dinner\textquotesingle{}}\OperatorTok{\%}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{10}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -655,7 +655,7 @@ As noted above, in case of real values you have two options: \texttt{\%f} and \t
 
 Do exercise \#11 to get a better feeling for the difference.
 
-These is much more to formatting and you can read about it at \href{https://pyformat.info/}{pyformat.info}. However, these basics are sufficient for us to start programming our first game during in the next chapter.
+These is much more to formatting and you can read about it at \href{https://pyformat.info/}{pyformat.info}. However, these basics are sufficient for us to start programming our first game in the next chapter.
 
 \hypertarget{guess-the-number-single-round}{%
 \chapter{Guess the Number: a single round edition}\label{guess-the-number-single-round}}
@@ -1168,7 +1168,7 @@ Do not forget to document the file and use breakpoints and step overs to explore
 \hypertarget{counting-attempts}{%
 \section{Counting attempts}\label{counting-attempts}}
 
-Now let us add a variable that will count a total number of attempts by the player. For this, create a new variable (call it \texttt{attempts} or something similar) \emph{before the loop} and initialize it \texttt{0}. Add \texttt{1} to it every time the player enters a guess. After the loop, expand the \texttt{"Spot\ on!"} message by adding information about the number of attempts. Use \protect\hyperlink{ux5cux23string-formatting}{string formatting} to make things look nice, e.g., \texttt{"Spot\ on,\ and\ you\ needed\ just\ 5\ attempts!"}. Check that the number of attempts your required \emph{matches} the number of attempts reported by the program!
+Now let us add a variable that will count a total number of attempts by the player. For this, create a new variable (call it \texttt{attempts} or something similar) \emph{before the loop} and initialize it \texttt{1}. Add \texttt{1} to it every time the player enters a guess. After the loop, expand the \texttt{"Spot\ on!"} message by adding information about the number of attempts. Use \protect\hyperlink{ux5cux23string-formatting}{string formatting} to make things look nice, e.g., \texttt{"Spot\ on,\ and\ you\ needed\ just\ 5\ attempts!"}. Check that the number of attempts your required \emph{matches} the number of attempts reported by the program!
 
 Put your code into \texttt{code02.py}.
 

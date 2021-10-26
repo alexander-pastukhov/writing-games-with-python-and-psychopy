@@ -66,7 +66,7 @@ number_of_legs
 Do exercise #1.
 :::
 
-Note that a variable ("a box with a name tag") exists only after you assign something to it. So, you the following code will generate a `NameError`, a Python's way to tell that you it never heard of variable `number_of_hands`.
+Note that a variable ("a box with a name tag") exists only after you assign something to it. So, the following code will generate a `NameError`, a Python's way to tell that you it never heard of variable `number_of_hands`.
 
 ```python
 number_of_legs = 2
@@ -200,7 +200,7 @@ Do exercise #8.
 :::
 
 ## Printing output{#print}
-To print the value, you need you use [print()](https://docs.python.org/3/library/functions.html#print) function (we will talk about functions in general later). In the simplest case, you pass the value and it will be printed out.
+To print the value, you need to use [print()](https://docs.python.org/3/library/functions.html#print) function (we will talk about functions in general later). In the simplest case, you pass the value and it will be printed out.
 
 ```python
 print(5)
@@ -242,7 +242,7 @@ print(breakfast, number_of_items)
 What will be printed by the code below?
 
 ```python
-dinner = "stake"
+dinner = "steak"
 count = 4
 desert = "cupcakes"
 
@@ -263,7 +263,7 @@ count = 10
 You could, of course do `print(meal, dish, count)` but it would be nicer to print "_I had **10 pancakes** for **breakfast**_", where items in bold would be the inserted variables' values. For this, we need to use string formatting. Please note that the string formatting is not specific to printing, you can create a new string value via formatting and store it in a variable without printing it out or print it out without storing it.
 
 ## String formatting {#string-formatting}
-A great resource on string formatting in Python is [pyformat.info](https://pyformat.info/). As Python constantly evolves, it now has more than one way to format strings. Below, I will introduce the "old" format that is based on classic string formatting used in `sprintf` function is C, Matlab, R, and many other programming languages. It is somewhat less flexible than newer ones but for simple tasks the difference is negligible. Knowing the old format is useful because of its generality. If you want to learn alternatives, read at the link above.
+A great resource on string formatting in Python is [pyformat.info](https://pyformat.info/). As Python constantly evolves, it now has more than one way to format strings. Below, I will introduce the "old" format that is based on classic string formatting used in `sprintf` function in C, Matlab, R, and many other programming languages. It is somewhat less flexible than newer ones but for simple tasks the difference is negligible. Knowing the old format is useful because of its generality. If you want to learn alternatives, read at the link above.
 
 The general call is `"a string with formatting"%(tuple of values to be used during formatting)`. You will learn about tuples later. For now, assume that it is just a comma-separated list of values enclosed in round brackets: `(1, 2, 3)`.
 
@@ -285,9 +285,9 @@ You are not limited to a single value that you can put into a string. You can sp
 
 
 ```python
-print('I had %d pancakes and either %d  or %d stakes for dinner'%(2))
-print('I had %d pancakes and %d stakes for dinner'%(7, 10))
-print('I had %d pancakes and %d stakes for dinner'%(1, 7, 10))
+print('I had %d pancakes and either %d  or %d steaks for dinner'%(2))
+print('I had %d pancakes and %d steaks for dinner'%(7, 10))
+print('I had %d pancakes and %d steaks for dinner'%(1, 7, 10))
 ```
 
 ::: {.rmdnote .practice}
@@ -300,4 +300,4 @@ As noted above, in case of real values you have two options: `%f` and `%g`. The 
 Do exercise #11 to get a better feeling for the difference.
 :::
 
-These is much more to formatting and you can read about it at [pyformat.info](https://pyformat.info/). However, these basics are sufficient for us to start programming our first game during in the next chapter.
+These is much more to formatting and you can read about it at [pyformat.info](https://pyformat.info/). However, these basics are sufficient for us to start programming our first game in the next chapter.

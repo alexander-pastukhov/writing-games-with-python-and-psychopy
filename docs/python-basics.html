@@ -115,7 +115,7 @@
 <div class="rmdnote practice">
 <p>Do exercise #1.</p>
 </div>
-<p>Note that a variable (“a box with a name tag”) exists only after you assign something to it. So, you the following code will generate a <code>NameError</code>, a Python’s way to tell that you it never heard of variable <code>number_of_hands</code>.</p>
+<p>Note that a variable (“a box with a name tag”) exists only after you assign something to it. So, the following code will generate a <code>NameError</code>, a Python’s way to tell that you it never heard of variable <code>number_of_hands</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="python-basics.html#cb6-1" aria-hidden="true" tabindex="-1"></a>number_of_legs <span class="op">=</span> <span class="dv">2</span></span>
 <span id="cb6-2"><a href="python-basics.html#cb6-2" aria-hidden="true" tabindex="-1"></a>number_of_gloves <span class="op">=</span> number_of_hands <span class="op">/</span> <span class="dv">2</span></span></code></pre></div>
 <p>However, you can create a variable the does not hold any <em>specific</em> value by assigning <code>None</code> to it. <code>None</code> was added to the language specifically to mean <em>no value</em> or <em>nothing</em>.</p>
@@ -208,7 +208,7 @@
 <h2>
 <span class="header-section-number">4.6</span> Printing output<a class="anchor" aria-label="anchor" href="#print"><i class="fas fa-link"></i></a>
 </h2>
-<p>To print the value, you need you use <a href="https://docs.python.org/3/library/functions.html#print">print()</a> function (we will talk about functions in general later). In the simplest case, you pass the value and it will be printed out.</p>
+<p>To print the value, you need to use <a href="https://docs.python.org/3/library/functions.html#print">print()</a> function (we will talk about functions in general later). In the simplest case, you pass the value and it will be printed out.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="python-basics.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">5</span>)</span>
 <span id="cb17-2"><a href="python-basics.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5</span></span></code></pre></div>
 <p>or</p>
@@ -228,7 +228,7 @@
 <span id="cb21-3"><a href="python-basics.html#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(breakfast, number_of_items)</span>
 <span id="cb21-4"><a href="python-basics.html#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pancakes 10</span></span></code></pre></div>
 <p>What will be printed by the code below?</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="python-basics.html#cb22-1" aria-hidden="true" tabindex="-1"></a>dinner <span class="op">=</span> <span class="st">"stake"</span></span>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="python-basics.html#cb22-1" aria-hidden="true" tabindex="-1"></a>dinner <span class="op">=</span> <span class="st">"steak"</span></span>
 <span id="cb22-2"><a href="python-basics.html#cb22-2" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> <span class="dv">4</span></span>
 <span id="cb22-3"><a href="python-basics.html#cb22-3" aria-hidden="true" tabindex="-1"></a>desert <span class="op">=</span> <span class="st">"cupcakes"</span></span>
 <span id="cb22-4"><a href="python-basics.html#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -246,7 +246,7 @@
 <h2>
 <span class="header-section-number">4.7</span> String formatting<a class="anchor" aria-label="anchor" href="#string-formatting"><i class="fas fa-link"></i></a>
 </h2>
-<p>A great resource on string formatting in Python is <a href="https://pyformat.info/">pyformat.info</a>. As Python constantly evolves, it now has more than one way to format strings. Below, I will introduce the “old” format that is based on classic string formatting used in <code>sprintf</code> function is C, Matlab, R, and many other programming languages. It is somewhat less flexible than newer ones but for simple tasks the difference is negligible. Knowing the old format is useful because of its generality. If you want to learn alternatives, read at the link above.</p>
+<p>A great resource on string formatting in Python is <a href="https://pyformat.info/">pyformat.info</a>. As Python constantly evolves, it now has more than one way to format strings. Below, I will introduce the “old” format that is based on classic string formatting used in <code>sprintf</code> function in C, Matlab, R, and many other programming languages. It is somewhat less flexible than newer ones but for simple tasks the difference is negligible. Knowing the old format is useful because of its generality. If you want to learn alternatives, read at the link above.</p>
 <p>The general call is <code>"a string with formatting"%(tuple of values to be used during formatting)</code>. You will learn about tuples later. For now, assume that it is just a comma-separated list of values enclosed in round brackets: <code>(1, 2, 3)</code>.</p>
 <p>In <code>"a string with formatting"</code>, you specify where you want to put the value via <code>%</code> symbol that is followed by an <em>optional</em> formatting info and the <em>required</em> symbol that defines the <strong>type</strong> of the value. The type symbols are</p>
 <ul>
@@ -263,9 +263,9 @@
 <div class="sourceCode" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="python-basics.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"I had </span><span class="sc">%d</span><span class="st"> pancakes for breakfast"</span><span class="op">%</span>(<span class="dv">10</span>))</span>
 <span id="cb24-2"><a href="python-basics.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; I had 10 pancakes for breakfast</span></span></code></pre></div>
 <p>You are not limited to a single value that you can put into a string. You can specify more locations via <code>%</code> but you must make sure that you pass the right number of values in the right order. Before running it, can you figure out which call will actually work (and what will be the output) and which will produce an error?</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="python-basics.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'I had </span><span class="sc">%d</span><span class="st"> pancakes and either </span><span class="sc">%d</span><span class="st">  or </span><span class="sc">%d</span><span class="st"> stakes for dinner'</span><span class="op">%</span>(<span class="dv">2</span>))</span>
-<span id="cb25-2"><a href="python-basics.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'I had </span><span class="sc">%d</span><span class="st"> pancakes and </span><span class="sc">%d</span><span class="st"> stakes for dinner'</span><span class="op">%</span>(<span class="dv">7</span>, <span class="dv">10</span>))</span>
-<span id="cb25-3"><a href="python-basics.html#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'I had </span><span class="sc">%d</span><span class="st"> pancakes and </span><span class="sc">%d</span><span class="st"> stakes for dinner'</span><span class="op">%</span>(<span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">10</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="python-basics.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'I had </span><span class="sc">%d</span><span class="st"> pancakes and either </span><span class="sc">%d</span><span class="st">  or </span><span class="sc">%d</span><span class="st"> steaks for dinner'</span><span class="op">%</span>(<span class="dv">2</span>))</span>
+<span id="cb25-2"><a href="python-basics.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'I had </span><span class="sc">%d</span><span class="st"> pancakes and </span><span class="sc">%d</span><span class="st"> steaks for dinner'</span><span class="op">%</span>(<span class="dv">7</span>, <span class="dv">10</span>))</span>
+<span id="cb25-3"><a href="python-basics.html#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'I had </span><span class="sc">%d</span><span class="st"> pancakes and </span><span class="sc">%d</span><span class="st"> steaks for dinner'</span><span class="op">%</span>(<span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">10</span>))</span></code></pre></div>
 <div class="rmdnote practice">
 <p>Do exercise #10.</p>
 </div>
@@ -273,7 +273,7 @@
 <div class="rmdnote practice">
 <p>Do exercise #11 to get a better feeling for the difference.</p>
 </div>
-<p>These is much more to formatting and you can read about it at <a href="https://pyformat.info/">pyformat.info</a>. However, these basics are sufficient for us to start programming our first game during in the next chapter.</p>
+<p>These is much more to formatting and you can read about it at <a href="https://pyformat.info/">pyformat.info</a>. However, these basics are sufficient for us to start programming our first game in the next chapter.</p>
 
 </div>
 </div>
@@ -309,7 +309,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2021-10-19.</p>
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2021-10-26.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
