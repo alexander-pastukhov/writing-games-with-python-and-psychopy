@@ -3,7 +3,7 @@ Let us program Guess the Number game again^[This is the last time, I promise!] b
 
 The optimal way to do this is to use the middle of the interval for a guess. This way you rule out _half_ the numbers that are either greater or smaller than your guess (or you guess the number correctly, of course). So, if you know that the number is between 1 and 10, you should split things in the middle, that is picking 5 or 6, as you cannot pick 5.5 (we assume that you can use only integers). If your opponent tells that their number is greater than your pick, you know that it must be somewhere between your guess and the original upper limit, e.g., between 5 and 10. Conversely, if the opponent responds "lower", the number is the lower limit and you guess, e.g., between 1 and 5. On your next attempt, you pick split the interval again until you either guess the number correctly or end up with an interval that contains just one number. Then you do not need to guess anymore.
 
-To implement this program, you will need to learn about functions, how to document them like a pro, and how to use your own libraries. 
+To implement this program, you will need to learn about functions, how to document them like a pro, and how to use your own libraries. Grab the [exercise notebook](notebooks/04. Guess the number - multi round.ipynb) before we start!
 
 ## Chapter concepts.
 
