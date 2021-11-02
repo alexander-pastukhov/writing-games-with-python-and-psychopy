@@ -9,11 +9,11 @@ However, we will be using [VS Code](#install-vs-code) to program scripts with th
 ## Chapter concepts
 
 * [Documenting code](#documenting-your-code).
-* [Debuggin code](#debugging).
+* [Debugging code](#debugging).
 * Getting [input](#input-function) from a user.
 * Using [comparison](#comparisons) in [conditional statements](#if-statement).
 * Using [indentation](#indentation) to group statements together.
-* Using Python [libraries](l#using-libraries).
+* Using Python [libraries](#using-libraries).
 * Generating [random numbers](#picking-a-number-randomly).
 
 ## The Game
