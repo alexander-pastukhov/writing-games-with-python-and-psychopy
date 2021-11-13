@@ -1,11 +1,11 @@
 # Whack-a-Mole{#whack-a-mole}
 
-
-
 Today you will create your first _video_ game Whack-a-Mole. The game itself is very much a reaction time experiment: moles/targets appear after a random delay at one of the predefined locations, the player's task is to whack (press a corresponding button) the mole/target before it disappears. Your final game should look approximately like the one in the video: Circles (moles) turn white, if I hit the correct button in time.
 
 
 
+
+Grab the [exercise notebook](notebooks/07. Whack-a-mole.ipynb) before we start!
 
 ## Chapter concepts
 
