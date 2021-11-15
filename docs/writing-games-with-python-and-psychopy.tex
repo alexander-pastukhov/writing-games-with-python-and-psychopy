@@ -6,7 +6,7 @@
 ]{book}
 \title{Writing games with Python and PsychoPy}
 \author{Alexander (Sasha) Pastukhov}
-\date{2021-11-13}
+\date{2021-11-15}
 
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
@@ -1995,7 +1995,7 @@ This was very flashy, so let us make the square jump only when you press \textbf
 
 You will learn about lists and indexes in the next chapter, so here is another ready-made. First, add \texttt{"space"} to the \texttt{keyList} parameter. Next, use conditional \protect\hyperlink{ux5cux257Bux5cux23if-statement}{if statement} to check whether \href{https://psychopy.org/api/event.html\#psychopy.event.getKeys}{event.getKeys()} returned a key press. If it did (\texttt{len(keys)\ \textgreater{}\ 0}), you can now check whether \texttt{keys{[}0{]}} is equal to \texttt{"space"} or \texttt{"escape"}\footnote{You can use \texttt{if..else}, because we only have two options but I would recommend to go for a more general solution \texttt{if..elif}}. If it was the latter, the game is over as before. If it was \texttt{"space"} then move the square to a new random position (and do not move it on every frame!)
 
-Hint, if you are debugging
+Hint, if you are debugging, put you breakpoint inside the \texttt{if} statement, so that the program pauses only once you pressed a key (what happens if you put it on the \texttt{win.flip()} line?)
 
 Put your code into \emph{code10.py}.
 

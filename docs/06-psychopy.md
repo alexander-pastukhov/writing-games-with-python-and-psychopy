@@ -207,7 +207,7 @@ This was very flashy, so let us make the square jump only when you press **space
 
 You will learn about lists and indexes in the next chapter, so here is another ready-made. First, add `"space"` to the `keyList` parameter. Next, use conditional [if statement](#{#if-statement) to check whether [event.getKeys()](https://psychopy.org/api/event.html#psychopy.event.getKeys) returned a key press. If it did  (`len(keys) > 0`), you can now check whether `keys[0]` is equal to `"space"` or `"escape"`^[You can use `if..else`, because we only have two options but I would recommend to go for a more general solution `if..elif` ]. If it was the latter, the game is over as before. If it was `"space"` then move the square to a new random position (and do not move it on every frame!)
 
-Hint, if you are debugging
+Hint, if you are debugging, put you breakpoint inside the `if` statement, so that the program pauses only once you pressed a key (what happens if you put it on the `win.flip()` line?)
 
 ::: {.rmdnote .program}
 Put your code into _code10.py_.

@@ -260,7 +260,7 @@
 </h2>
 <p>This was very flashy, so let us make the square jump only when you press <strong>space</strong> button. For this, we need to expand the code that processes keyboard input. So far, we restricted it to just <strong>escape</strong> button and checked whether any (hence, <strong>escape</strong>) button was pressed.</p>
 <p>You will learn about lists and indexes in the next chapter, so here is another ready-made. First, add <code>"space"</code> to the <code>keyList</code> parameter. Next, use conditional <a href="#%7B#if-statement">if statement</a> to check whether <a href="https://psychopy.org/api/event.html#psychopy.event.getKeys">event.getKeys()</a> returned a key press. If it did (<code>len(keys) &gt; 0</code>), you can now check whether <code>keys[0]</code> is equal to <code>"space"</code> or <code>"escape"</code><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;You can use &lt;code&gt;if..else&lt;/code&gt;, because we only have two options but I would recommend to go for a more general solution &lt;code&gt;if..elif&lt;/code&gt; &lt;/p&gt;"><sup>33</sup></a>. If it was the latter, the game is over as before. If it was <code>"space"</code> then move the square to a new random position (and do not move it on every frame!)</p>
-<p>Hint, if you are debugging</p>
+<p>Hint, if you are debugging, put you breakpoint inside the <code>if</code> statement, so that the program pauses only once you pressed a key (what happens if you put it on the <code>win.flip()</code> line?)</p>
 <div class="rmdnote program">
 <p>Put your code into <em>code10.py</em>.</p>
 </div>
@@ -317,7 +317,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2021-11-13.</p>
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2021-11-15.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
