@@ -5,7 +5,7 @@ Today, you will write a good old _Memory_ game: Eight cards are lying "face down
 
 
 Before we start, create a new folder for the game and create a subfolder _Images_ in it. Then, download [images of chicken](material/chicken.zip)^[The images are courtesy of [Kevin David Pointon](https://openclipart.org/artist/Firkin) and were downloaded
-from [OpenClipart](https://openclipart.org/). They are [public domain](https://creativecommons.org/publicdomain/zero/1.0/) and can be used and distributed freely.] that we will use for the game and unzip them into _Images_ subfolder.
+from [OpenClipart](https://openclipart.org/). They are [public domain](https://creativecommons.org/publicdomain/zero/1.0/) and can be used and distributed freely.] that we will use for the game and unzip them into _Images_ subfolder. Also, grab the [exercise notebook](notebooks/08. Memory game.ipynb)!
 
 ## Chapter concepts
 
@@ -65,7 +65,7 @@ How did we manage to modify a _global_ variable from inside the function? Didn't
 Do exercise #3.
 :::
 
-## Tuple: a frozen list (#tuple)
+## Tuple: a frozen list {#tuple}
 The wise people who created Python were acutely aware of the problem that the _variable-as-a-sticker_ creates. Which is why, they added an **immutable** version of a list, called a [tuple](https://docs.python.org/3/library/stdtypes.html?highlight=tuple#tuple). It is a "frozen" list of values, which you can loop over, access its items by index, or figure out how many items it has, but you _cannot modify it_. No appending, removing, replacing values, etc. For you this means that a variable with a frozen list is a box rather than a sticker and that it behaves just like any other "normal" **immutable** object. You can create a `tuple` by using round brackets.
 ```python
 i_am_a_tuple = (1, 2, 3)

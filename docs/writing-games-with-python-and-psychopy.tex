@@ -6,7 +6,7 @@
 ]{book}
 \title{Writing games with Python and PsychoPy}
 \author{Alexander (Sasha) Pastukhov}
-\date{2021-11-15}
+\date{2021-11-22}
 
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
@@ -2308,7 +2308,7 @@ Congratulations on your first video game! It could use some bells-and-whistles l
 Today, you will write a good old \emph{Memory} game: Eight cards are lying ``face down'', you can turn any two of them and, if they are identical, they are taken off the table. If they are different, the cards turn ``face down'' again.
 
 Before we start, create a new folder for the game and create a subfolder \emph{Images} in it. Then, download \href{material/chicken.zip}{images of chicken}\footnote{The images are courtesy of \href{https://openclipart.org/artist/Firkin}{Kevin David Pointon} and were downloaded
-  from \href{https://openclipart.org/}{OpenClipart}. They are \href{https://creativecommons.org/publicdomain/zero/1.0/}{public domain} and can be used and distributed freely.} that we will use for the game and unzip them into \emph{Images} subfolder.
+  from \href{https://openclipart.org/}{OpenClipart}. They are \href{https://creativecommons.org/publicdomain/zero/1.0/}{public domain} and can be used and distributed freely.} that we will use for the game and unzip them into \emph{Images} subfolder. Also, grab the \href{notebooks/08.\%20Memory\%20game.ipynb}{exercise notebook}!
 
 \hypertarget{chapter-concepts-5}{%
 \section{Chapter concepts}\label{chapter-concepts-5}}
@@ -2381,8 +2381,8 @@ How did we manage to modify a \emph{global} variable from inside the function? D
 
 Do exercise \#3.
 
-\hypertarget{tuple-a-frozen-list-tuple}{%
-\section{Tuple: a frozen list (\#tuple)}\label{tuple-a-frozen-list-tuple}}
+\hypertarget{tuple}{%
+\section{Tuple: a frozen list}\label{tuple}}
 
 The wise people who created Python were acutely aware of the problem that the \emph{variable-as-a-sticker} creates. Which is why, they added an \textbf{immutable} version of a list, called a \href{https://docs.python.org/3/library/stdtypes.html?highlight=tuple\#tuple}{tuple}. It is a ``frozen'' list of values, which you can loop over, access its items by index, or figure out how many items it has, but you \emph{cannot modify it}. No appending, removing, replacing values, etc. For you this means that a variable with a frozen list is a box rather than a sticker and that it behaves just like any other ``normal'' \textbf{immutable} object. You can create a \texttt{tuple} by using round brackets.
 

@@ -121,7 +121,7 @@ memory-game
 chapter-concepts-5
 variables-as-boxes-immutable-objects
 mutable-objects
-tuple-a-frozen-list-tuple
+tuple
 minimal-code
 imagestim
 placing-an-image-index-to-position

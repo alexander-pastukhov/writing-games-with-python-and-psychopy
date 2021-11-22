@@ -67,7 +67,7 @@
 <video controls><source src="videos/memory.m4v" type="video/mp4"></source></video>
 </div>
 <p>Before we start, create a new folder for the game and create a subfolder <em>Images</em> in it. Then, download <a href="material/chicken.zip">images of chicken</a><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;The images are courtesy of &lt;a href="https://openclipart.org/artist/Firkin"&gt;Kevin David Pointon&lt;/a&gt; and were downloaded
-from &lt;a href="https://openclipart.org/"&gt;OpenClipart&lt;/a&gt;. They are &lt;a href="https://creativecommons.org/publicdomain/zero/1.0/"&gt;public domain&lt;/a&gt; and can be used and distributed freely.&lt;/p&gt;'><sup>47</sup></a> that we will use for the game and unzip them into <em>Images</em> subfolder.</p>
+from &lt;a href="https://openclipart.org/"&gt;OpenClipart&lt;/a&gt;. They are &lt;a href="https://creativecommons.org/publicdomain/zero/1.0/"&gt;public domain&lt;/a&gt; and can be used and distributed freely.&lt;/p&gt;'><sup>47</sup></a> that we will use for the game and unzip them into <em>Images</em> subfolder. Also, grab the <a href="notebooks/08.%20Memory%20game.ipynb">exercise notebook</a>!</p>
 <div id="chapter-concepts-5" class="section level2" number="10.1">
 <h2>
 <span class="header-section-number">10.1</span> Chapter concepts<a class="anchor" aria-label="anchor" href="#chapter-concepts-5"><i class="fas fa-link"></i></a>
@@ -122,9 +122,9 @@ from &lt;a href="https://openclipart.org/"&gt;OpenClipart&lt;/a&gt;. They are &l
 <p>Do exercise #3.</p>
 </div>
 </div>
-<div id="tuple-a-frozen-list-tuple" class="section level2" number="10.4">
+<div id="tuple" class="section level2" number="10.4">
 <h2>
-<span class="header-section-number">10.4</span> Tuple: a frozen list (#tuple)<a class="anchor" aria-label="anchor" href="#tuple-a-frozen-list-tuple"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.4</span> Tuple: a frozen list<a class="anchor" aria-label="anchor" href="#tuple"><i class="fas fa-link"></i></a>
 </h2>
 <p>The wise people who created Python were acutely aware of the problem that the <em>variable-as-a-sticker</em> creates. Which is why, they added an <strong>immutable</strong> version of a list, called a <a href="https://docs.python.org/3/library/stdtypes.html?highlight=tuple#tuple">tuple</a>. It is a “frozen” list of values, which you can loop over, access its items by index, or figure out how many items it has, but you <em>cannot modify it</em>. No appending, removing, replacing values, etc. For you this means that a variable with a frozen list is a box rather than a sticker and that it behaves just like any other “normal” <strong>immutable</strong> object. You can create a <code>tuple</code> by using round brackets.</p>
 <div class="sourceCode" id="cb79"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb79-1"><a href="memory-game.html#cb79-1" aria-hidden="true" tabindex="-1"></a>i_am_a_tuple <span class="op">=</span> (<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span></code></pre></div>
@@ -574,7 +574,7 @@ Put updated code into <code>code07.py</code>.</p>
 <li><a class="nav-link" href="#chapter-concepts-5"><span class="header-section-number">10.1</span> Chapter concepts</a></li>
 <li><a class="nav-link" href="#variables-as-boxes-immutable-objects"><span class="header-section-number">10.2</span> Variables as Boxes (immutable objects)</a></li>
 <li><a class="nav-link" href="#mutable-objects"><span class="header-section-number">10.3</span> Variables as post-it stickers (mutable objects)</a></li>
-<li><a class="nav-link" href="#tuple-a-frozen-list-tuple"><span class="header-section-number">10.4</span> Tuple: a frozen list (#tuple)</a></li>
+<li><a class="nav-link" href="#tuple"><span class="header-section-number">10.4</span> Tuple: a frozen list</a></li>
 <li><a class="nav-link" href="#minimal-code"><span class="header-section-number">10.5</span> Minimal code</a></li>
 <li><a class="nav-link" href="#imagestim"><span class="header-section-number">10.6</span> Drawing an image</a></li>
 <li><a class="nav-link" href="#placing-an-image-index-to-position"><span class="header-section-number">10.7</span> Placing an image (index to position)</a></li>
@@ -618,7 +618,7 @@ Put updated code into <code>code07.py</code>.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2021-11-15.</p>
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2021-11-22.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
