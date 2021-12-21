@@ -7,7 +7,7 @@
 <title>Chapter 7 Guess the Number: AI takes a turn | Writing games with Python and PsychoPy</title>
 <meta name="author" content="Alexander (Sasha) Pastukhov">
 <meta name="description" content="Let us program Guess the Number game again17 but reverse the roles. Now you will pick a number and the computer will guess. Think about the algorithm that a computer could use for this before...">
-<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
 <meta property="og:title" content="Chapter 7 Guess the Number: AI takes a turn | Writing games with Python and PsychoPy">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://alexander-pastukhov.github.io/writing-games-with-python-and-psychopy/guess-the-number-ai.html">
@@ -15,9 +15,9 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 7 Guess the Number: AI takes a turn | Writing games with Python and PsychoPy">
 <meta name="twitter:description" content="Let us program Guess the Number game again17 but reverse the roles. Now you will pick a number and the computer will guess. Think about the algorithm that a computer could use for this before...">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -51,6 +51,7 @@
 <li><a class="" href="psychopy-basics.html"><span class="header-section-number">8</span> Gettings started with PsychoPy</a></li>
 <li><a class="" href="whack-a-mole.html"><span class="header-section-number">9</span> Whack-a-Mole</a></li>
 <li><a class="" href="memory-game.html"><span class="header-section-number">10</span> Memory game</a></li>
+<li><a class="" href="christmas-special.html"><span class="header-section-number">11</span> Christmas special</a></li>
 </ul>
 
         <div class="book-extra">
@@ -80,7 +81,7 @@
 <h2>
 <span class="header-section-number">7.2</span> Player’s response<a class="anchor" aria-label="anchor" href="#guess-the-number-players-response"><i class="fas fa-link"></i></a>
 </h2>
-<p>Let us warm up by writing a code that will allow a player to respond to computer’s guess. Recall that there are just three options: your number is greater, smaller, or equal to a computer’s guess. I would suggest using, respectively, <code><a href="https://rdrr.io/r/base/Comparison.html">&gt;</a></code>, <code><a href="https://rdrr.io/r/base/Comparison.html">&lt;</a></code>, and <code><a href="https://rdrr.io/r/base/assignOps.html">=</a></code> symbols to communicate this. You need to write the code that will prompt a player for their response until they enter one of these symbols. I.e., the prompt should be repeatedly repeated if they enter anything else. Thus, you definitely need to use the <a href="https://docs.python.org/3/library/functions.html#input">input([prompt])</a> and a <a href="guess-the-number-multi-round.html#while-loop">while</a> loop. Think of a useful and informative prompt message for this. Test that it works. Using breakpoints might be very useful here.</p>
+<p>Let us warm up by writing a code that will allow a player to respond to computer’s guess. Recall that there are just three options: your number is greater, smaller, or equal to a computer’s guess. I would suggest using, respectively, <code>&gt;</code>, <code>&lt;</code>, and <code>=</code> symbols to communicate this. You need to write the code that will prompt a player for their response until they enter one of these symbols. I.e., the prompt should be repeatedly repeated if they enter anything else. Thus, you definitely need to use the <a href="https://docs.python.org/3/library/functions.html#input">input([prompt])</a> and a <a href="guess-the-number-multi-round.html#while-loop">while</a> loop. Think of a useful and informative prompt message for this. Test that it works. Using breakpoints might be very useful here.</p>
 <div class="rmdnote program">
 <p>Put your code into <code>code01.py</code>.</p>
 </div>
@@ -180,7 +181,7 @@
 <h3>
 <span class="header-section-number">7.4.1</span> Defining a function in Python<a class="anchor" aria-label="anchor" href="#defining-a-function-in-python"><i class="fas fa-link"></i></a>
 </h3>
-<p>A function in Python looks like this (note the indentation and <code><a href="https://rdrr.io/r/base/Colon.html">:</a></code> at the end of the first line)</p>
+<p>A function in Python looks like this (note the indentation and <code>:</code> at the end of the first line)</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb47-1"><a href="guess-the-number-ai.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> <span class="op">&lt;</span>function name<span class="op">&gt;</span>(param1, param2, ...):</span>
 <span id="cb47-2"><a href="guess-the-number-ai.html#cb47-2" aria-hidden="true" tabindex="-1"></a>    some internal computation</span>
 <span id="cb47-3"><a href="guess-the-number-ai.html#cb47-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> somecondition:</span>
@@ -340,7 +341,7 @@
 <span id="cb56-8"><a href="guess-the-number-ai.html#cb56-8" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb56-9"><a href="guess-the-number-ai.html#cb56-9" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> f2(<span class="dv">4</span>, <span class="dv">2</span>)</span>
 <span id="cb56-10"><a href="guess-the-number-ai.html#cb56-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(z)</span></code></pre></div>
-<p>First, put a break point on the line in the main script that calls function <code>f2()</code>. Run the debugger via <strong>F5</strong> and the program will pause at that line. If you now press <strong>F10</strong> (step over), the program will go to the next line <code><a href="https://rdrr.io/r/base/print.html">print(z)</a></code>. However, if you are to press <strong>F11</strong> (step into) instead, the program will <em>step into</em> the function and go to <code>x = x + 5</code> line. When inside the function, you have the same two choices we just looked at but also, you can press <strong>Shift+F11</strong> to step out of the function. Here, the program will run all the code until you reach the next line <em>outside</em> of the function (you should end up at <code><a href="https://rdrr.io/r/base/print.html">print(z)</a></code> again). Experiment with putting breakpoints at various lines and stepping over/in/out to get a hang of these useful debugging tools.</p>
+<p>First, put a break point on the line in the main script that calls function <code>f2()</code>. Run the debugger via <strong>F5</strong> and the program will pause at that line. If you now press <strong>F10</strong> (step over), the program will go to the next line <code>print(z)</code>. However, if you are to press <strong>F11</strong> (step into) instead, the program will <em>step into</em> the function and go to <code>x = x + 5</code> line. When inside the function, you have the same two choices we just looked at but also, you can press <strong>Shift+F11</strong> to step out of the function. Here, the program will run all the code until you reach the next line <em>outside</em> of the function (you should end up at <code>print(z)</code> again). Experiment with putting breakpoints at various lines and stepping over/in/out to get a hang of these useful debugging tools.</p>
 <p>Now, put the breakpoint inside of <code>f1()</code> function and run the code via <strong>F5</strong>. Take a look at the left pane, you will see a <em>Call Stack</em> tab. While yellow highlighted line in the editor shows you where you currently are (should be inside the <code>f1()</code> function), the <em>Call Stack</em> shows you how did you get where. In this case it should show:</p>
 <div class="inline-table"><table class="table table-sm"><tbody>
 <tr class="odd">
@@ -520,7 +521,7 @@ report the best score (fewest number of attempts) after the game is over. You wi
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2021-11-22.</p>
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2021-12-21.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

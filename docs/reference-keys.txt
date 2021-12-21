@@ -147,3 +147,16 @@ opening-only-two-cards
 taking-a-matching-pair-off-the-table
 game-over-once-all-the-cards-are-off-the-table
 do-it-fast
+christmas-special
+chapter-concepts-6
+christmas-tree
+christmas-tree-decoration
+twinkle-twinkle-little-star
+lets-make-some-noise
+settings-files
+xml
+ini
+json
+yaml
+using-settings
+merry-christmas-and-a-happy-new-year

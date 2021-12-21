@@ -6,7 +6,7 @@
 ]{book}
 \title{Writing games with Python and PsychoPy}
 \author{Alexander (Sasha) Pastukhov}
-\date{2021-11-22}
+\date{2021-12-21}
 
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
@@ -332,12 +332,12 @@ The \textbf{assignment statement} above has very simple structure:
 \begin{Shaded}
 \begin{Highlighting}[]
 \OperatorTok{\textless{}}\NormalTok{variable}\OperatorTok{{-}}\NormalTok{name}\OperatorTok{\textgreater{}} \OperatorTok{=} \OperatorTok{\textless{}}\NormalTok{value}\OperatorTok{\textgreater{}}
+\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\NormalTok{Variable name (name tag on the box) should be meaningful, it can start }\ControlFlowTok{with}\NormalTok{ letters }\KeywordTok{or}\NormalTok{ \_ }\KeywordTok{and}\NormalTok{ can contain letters, numbers, }\KeywordTok{and}\NormalTok{ \_ symbol but }\KeywordTok{not}\NormalTok{ spaces, tabs, special characters, etc. Python recommends (well, actually, [insists](https:}\OperatorTok{//}\NormalTok{www.python.org}\OperatorTok{/}\NormalTok{dev}\OperatorTok{/}\NormalTok{peps}\OperatorTok{/}\NormalTok{pep}\OperatorTok{{-}}\DecValTok{0008}\OperatorTok{/}\NormalTok{)) that you use }\OperatorTok{**}\NormalTok{snake\_case}\OperatorTok{**}\NormalTok{ (}\BuiltInTok{all}\NormalTok{ lower}\OperatorTok{{-}}\NormalTok{case, underscore }\ControlFlowTok{for}\NormalTok{ spaces) to }\BuiltInTok{format}\NormalTok{ your variable names. The \textasciigrave{}}\OperatorTok{\textless{}}\NormalTok{value}\OperatorTok{\textgreater{}}\NormalTok{\textasciigrave{} on the right side }\KeywordTok{is}\NormalTok{ a more }\BuiltInTok{complex}\NormalTok{ story, }\ImportTok{as}\NormalTok{ it can be hard}\OperatorTok{{-}}\NormalTok{coded (}\ImportTok{as} \KeywordTok{in}\NormalTok{ example above), computed using other variables }\KeywordTok{or}\NormalTok{ the same variable, returned by a function, etc.}
+
+\NormalTok{Using variables means that you can concentrate what corresponding values }\OperatorTok{**}\NormalTok{mean}\OperatorTok{**}\NormalTok{ rather than worrying about what these values are. For example, the }\BuiltInTok{next}\NormalTok{ time you need to compute something based on number of character}\StringTok{\textquotesingle{}s legs (e.g., how many pairs of shoes does a character need), you can compute it based on current value of \textasciigrave{}number\_of\_legs\textasciigrave{} variable rather than assume that it is \textasciigrave{}1\textasciigrave{}. }
 \end{Highlighting}
 \end{Shaded}
-
-Variable name (name tag on the box) should be meaningful, it can start with letters or \_ and can contain letters, numbers, and \_ symbol but not spaces, tabs, special characters, etc. Python recommends (well, actually, \href{https://www.python.org/dev/peps/pep-0008/}{insists}) that you use \textbf{snake\_case} (all lower-case, underscore for spaces) to format your variable names. The \texttt{\textless{}value\textgreater{}} on the right side is a more complex story, as it can be hard-coded (as in example above), computed using other variables or the same variable, returned by a function, etc.
-
-Using variables means that you can concentrate what corresponding values \textbf{mean} rather than worrying about what these values are. For example, the next time you need to compute something based on number of character's legs (e.g., how many pairs of shoes does a character need), you can compute it based on current value of \texttt{number\_of\_legs} variable rather than assume that it is \texttt{1}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2865,6 +2865,239 @@ The two classes you will be primarily interested in are \href{https://psychopy.o
 Here, we are interested in the \emph{elapsed} time, so \href{https://psychopy.org/api/clock.html\#psychopy.clock.Clock}{Clock} is the obvious choice. Create a clock before the game loop and use the elapsed time in the congratulatory message.
 
 Put your code into \texttt{code17.py}.
+
+\hypertarget{christmas-special}{%
+\chapter{Christmas special}\label{christmas-special}}
+
+Today we are going to program a Christmas-special. However, this is still an opportunity to learn something new. You will learn about zipping lists and we will start offloading settings into a separate file. Here is how the Christmas tree looks for me:
+
+\hypertarget{chapter-concepts-6}{%
+\section{Chapter concepts}\label{chapter-concepts-6}}
+
+\begin{itemize}
+\tightlist
+\item
+  Building Christmas spirit
+\item
+  Zipping over lists
+\item
+  Loading setting from JSON or YAML file.
+\end{itemize}
+
+\hypertarget{christmas-tree}{%
+\section{Christmas tree}\label{christmas-tree}}
+
+Let us start our Christmas decoration with a Christmas tree. You can download \href{material/pine-tree.png}{the one I've found} (created by \href{https://openclipart.org/artist/isaiah658}{isaiah658}) or find an image that you like. Create your basic PsychoPy code to create a window (we will be using \href{https://psychopy.org/api/visual/circle.html\#psychopy.visual.circle.Circle}{Circle} later, so think about suitable units), an \href{https://psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim}{ImageStim} with a tree, draw it and wait for any key press.
+
+Put your code into \texttt{code01.py}.
+
+\hypertarget{christmas-tree-decoration}{%
+\section{Christmas tree decoration}\label{christmas-tree-decoration}}
+
+For the decoration, let us use \href{https://psychopy.org/api/visual/circle.html\#psychopy.visual.circle.Circle}{Circle} objects of various sizes and color. We could create each one separately with its own custom hard-coded values, but let us instead create three constants that are lists of equal length that describe, respectively position of each ball (\texttt{BALL\_POS} would be a good name, each entry should be a tuple of \texttt{(x,\ y)}), size (\texttt{BALL\_SIZE}), and color (\texttt{BALL\_COLOR}, stick to \texttt{"red"}, \texttt{"blue"}, and \texttt{"yellow"}, this limited selection of specific colors will be important later when we animate them).
+
+Create a list of balls by iterating over these three lists. You have two choices, you can either use an index variable, building an index via \href{https://docs.python.org/3/library/functions.html\#func-range}{range()} using \href{https://docs.python.org/3/library/functions.html\#len}{len()} of one of the lists (they should all be of the same length). But let use a cool trick of iterating over a \href{https://docs.python.org/3/library/functions.html\#zip}{zip()} of lists. \href{https://docs.python.org/3/library/functions.html\#zip}{zip()} gives you a tuple combining one element from each list that you can unpack on the fly as in the example below (note that loop variables will receive values in the order that you used for lists).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{numbers }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{]}
+\NormalTok{letters }\OperatorTok{=}\NormalTok{ [}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{, }\StringTok{"C"}\NormalTok{]}
+\ControlFlowTok{for}\NormalTok{  a\_number, a\_letter }\KeywordTok{in}  \BuiltInTok{zip}\NormalTok{(numbers, letters):}
+  \BuiltInTok{print}\NormalTok{(}\StringTok{"}\SpecialCharTok{\%d}\StringTok{: }\SpecialCharTok{\%s}\StringTok{"}\OperatorTok{\%}\NormalTok{(a\_number, a\_letter))}
+\CommentTok{\#\textgreater{} 1: A}
+\CommentTok{\#\textgreater{} 2: B}
+\CommentTok{\#\textgreater{} 3: C}
+\end{Highlighting}
+\end{Shaded}
+
+You can zip as many lists as you want. We, obviously, want three. Decide on whether you want to create \texttt{balls} as an empty list and then append each newly created \href{https://psychopy.org/api/visual/circle.html\#psychopy.visual.circle.Circle}{Circle} to it in the loop or use list comprehension. Do not forget to draw the balls and think about what you should draw first: the tree or the balls. Experiment with position and sizes to makes it look just perfect.
+
+Put your code into \texttt{code02.py}.
+
+\hypertarget{twinkle-twinkle-little-star}{%
+\section{Twinkle, twinkle, little star}\label{twinkle-twinkle-little-star}}
+
+Now let us make our Christmas balls twinkle, as in the video. The idea is that only one color is ``active'' at a time. The balls of that color are ``on'' and balls of other color are ``off'' (white or gray, or some other color of your liking).
+
+For this, we need to define a list of colors (``red'', ``blue'', ``yellow'') that we can cycle through and an variable that hold the index of the currently active color (I've called it \texttt{icolor}). Every X seconds (I do it every 0.5 seconds, define this as a constant, e.g., \texttt{TWINKLE\_DURATION}), increment this index, so that the next color in the list becomes active. Note that you have an out-of-range problem: When you initialize \texttt{icolor} to 0 and increment it by 1 three times, your index is already too large (3, the length of our \texttt{colors} list is 3, so the maximal index is 2). You can either use an \texttt{if} to check for that or you can use a remainder operator \texttt{\%} (think about the remainder if you divide \emph{any} positive value by the length of the \texttt{colors} list).
+
+Once you need to update whether balls are ``on'' or ``off'', you need to loop both through the balls and their colors in the original \texttt{BALLS\_COLOR} list (when you use a string with color name, it gets translated into an RGB value, so we cannot compare it directly). Again, you can use \href{https://docs.python.org/3/library/functions.html\#zip}{zip()} to loop simultaneously through Christmas balls and their color. If their color matches the active one, their \texttt{fillColor} should be that color. If not, their \texttt{fillColor} should be some ``neutral'' / ``off'' color (white? gray?).
+
+To keep track of time, you will need a timer variable, use either \href{https://psychopy.org/api/clock.html\#psychopy.clock.Clock}{Clock} or \href{https://psychopy.org/api/clock.html\#psychopy.clock.CountdownTimer}{CountdownTimer}. Once the \texttt{TWINKLE\_DURATION} elapsed, update the active color, all the balls, and do not forget to reset the timer.
+
+Put your code into \texttt{code03.py}.
+
+\hypertarget{lets-make-some-noise}{%
+\section{Let's make some noise!}\label{lets-make-some-noise}}
+
+Let add some Christmas music! Download \href{material/Deck\%20the\%20Halls\%20B.ogg}{Deck the Halls version by Kevin MacLeod}\footnote{Deck the Halls B by Kevin MacLeod \url{http://incompetech.com}
+  Creative Commons --- Attribution 4.0 International --- CC BY 4.0
+  Free Download / Stream: \url{https://bit.ly/deck-the-halls-b}
+  Music promoted by Audio Library \url{https://youtu.be/RzjZ-WdVeyk}}. For this, we will use \href{https://psychopy.org/api/sound.html}{sound} module of PsychoPy library that generate sounds on the fly and also play audio files in various format such as wav or ogg (but not mp3!). Unfortunately, sound it surprisingly tricky, there are many libraries that might be used by PsychoPy (as of end of 2021 PsychoPy lists four backends that it might use), and things sometimes break. Thus, if the music does not play for you, ask me and we will try to set your sound libraries up.
+
+Using sound is very simple. First, you need to import the \texttt{Sound} class as suggested in the manual:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ psychopy.sound }\ImportTok{import}\NormalTok{ Sound}
+\end{Highlighting}
+\end{Shaded}
+
+Then, you need a new object of \texttt{Sound} class supplying the file name as the first parameter (I called the variable \texttt{song}). Right before start the loop, you \texttt{.play()} the sound. Note, if you want to play the same sound again, you need to ``rewind'' it by explicitly calling its \texttt{.stop()} method (for some reason, the sound stops at the end but does not gets ``rewind'', so when you try to play it again and notices that it is already at the end and stops without playing anything).
+
+Put your code into \texttt{code04.py}.
+
+\hypertarget{settings-files}{%
+\section{Settings file formats}\label{settings-files}}
+
+So far, we either hard-coded specific values or defined them as constants (a better of these two approaches). However, this means that if you want to run your game with different settings, you need to modify the program itself. And if you want to have two versions of the game (two experimental conditions), you would need to have two programs with all the problems of maintaining virtually identical code in several places at once.
+
+A better approach is to have separate files with settings, so you can keep the code constant and alter specific parameters by specifying which settings file the program should use. This is helpful even you plan to have a single set of setting as it separates code from constants, puts the latter all in one place and makes it easier to edit and check them. There are multiple formats for settings files: XML, INI, JSON, YAML, etc. Our format of the choice for today will be JSON. However, this is a question of taste. Personally, I like YAML for subjective reasons (fewer curly brackets and quotation marks), but you are free to use any format you like. As you will see, this makes little difference for the actual Python code.
+
+\hypertarget{xml}{%
+\subsection{XML}\label{xml}}
+
+\href{https://en.wikipedia.org/wiki/XML}{XML} --- an Extensible Markup Language --- looks similar to HTML (HyperText Markup Language). Experiments designed using PsychoPy Builder interface are stored using XML files but with \href{https://www.psychopy.org/psyexp.html}{.psyexp extension}. A settings file for our Christmas programin XML could look like this
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}}\KeywordTok{Balls}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{Ball}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{Position}\NormalTok{\textgreater{}}
+\NormalTok{      \textless{}}\KeywordTok{x}\NormalTok{\textgreater{}0.1\textless{}/}\KeywordTok{x}\NormalTok{\textgreater{}}
+\NormalTok{      \textless{}}\KeywordTok{y}\NormalTok{\textgreater{}0.2\textless{}/}\KeywordTok{y}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}/}\KeywordTok{Position}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{Size}\NormalTok{\textgreater{}0.01\textless{}/}\KeywordTok{Size}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{Color}\NormalTok{\textgreater{}red\textless{}/}\KeywordTok{Color}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{Ball}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{Ball}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{Position}\NormalTok{\textgreater{}}
+\NormalTok{      \textless{}}\KeywordTok{x}\NormalTok{\textgreater{}0.2\textless{}/}\KeywordTok{x}\NormalTok{\textgreater{}}
+\NormalTok{      \textless{}}\KeywordTok{y}\NormalTok{\textgreater{}0.1\textless{}/}\KeywordTok{y}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}/}\KeywordTok{Position}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{Size}\NormalTok{\textgreater{}0.02\textless{}/}\KeywordTok{Size}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{Color}\NormalTok{\textgreater{}yellow\textless{}/}\KeywordTok{Color}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{Ball}\NormalTok{\textgreater{}}
+\NormalTok{  ...}
+\NormalTok{\textless{}/}\KeywordTok{Balls}\NormalTok{\textgreater{}}
+\NormalTok{\textless{}}\KeywordTok{Timing}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{Twinkle}\OtherTok{ duration}\ErrorTok{\textgreater{}0.5\textless{}/Twinkle} \ErrorTok{duration\textgreater{}}
+\ErrorTok{\textless{}/Timing\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+The advantage of XML is that it is very flexible yet structured and you can use \href{https://docs.python.org/3/library/xml.html}{native Python interface} to work with it. However, XML is not easy for humans to read, it is overpowered for our purposes of having a simple set of unique constants and its power means that using it is fairly cumbersome (I use \texttt{\textbackslash{}} to split a single line into many lines).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ xml.dom }\ImportTok{import}\NormalTok{ minidom}
+\NormalTok{settings }\OperatorTok{=}\NormalTok{ minidom.parse(}\StringTok{\textquotesingle{}settings.xml\textquotesingle{}}\NormalTok{)}
+\CommentTok{\# this will give you string "0.4"}
+\NormalTok{size }\OperatorTok{=}\NormalTok{ settings.getElementsByTagName(}\StringTok{"Balls"}\NormalTok{)[}\DecValTok{0}\NormalTok{]. }\OperatorTok{\textbackslash{}}
+\NormalTok{                getElementsByTagName(}\StringTok{"Ball"}\NormalTok{)[}\DecValTok{0}\NormalTok{]. }\OperatorTok{\textbackslash{}}
+\NormalTok{                getElementsByTagName(}\StringTok{"Size"}\NormalTok{)[}\DecValTok{0}\NormalTok{].firstChild.data}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ini}{%
+\subsection{INI}\label{ini}}
+
+This is a format with a structure similar to that found in MS Windows INI files.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{[Balls]}
+\DataTypeTok{    x }\OtherTok{=}\StringTok{ }\FloatTok{0.1}\StringTok{, }\FloatTok{0.2}
+\DataTypeTok{    y }\OtherTok{=}\StringTok{ }\FloatTok{0.2}\StringTok{, }\FloatTok{0.1}
+\DataTypeTok{    size }\OtherTok{=}\StringTok{ }\FloatTok{0.01}\StringTok{, }\FloatTok{0.02}
+\DataTypeTok{    color }\OtherTok{=}\StringTok{ red, yellow}
+\KeywordTok{[Timing]}
+\DataTypeTok{    TwinkleDuration }\OtherTok{=}\StringTok{ }\FloatTok{0.5}
+\end{Highlighting}
+\end{Shaded}
+
+As you can see it is easier to read and Python has a special \href{https://docs.python.org/3/library/configparser.html}{configparser} library to work with them. The object you get is, effectively, a dictionary with additional methods and attributes. However \texttt{ConfigParser} does not try to guess the type of data, so all values are stored as \emph{strings} and it is your job to convert them to whatever type you need, e.g., integer, list, etc.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ configparser}
+\NormalTok{settings }\OperatorTok{=}\NormalTok{ configparser.ConfigParser()}
+\NormalTok{settings.read(}\StringTok{\textquotesingle{}settings.ini\textquotesingle{}}\NormalTok{)}
+\NormalTok{settings[}\StringTok{\textquotesingle{}Balls\textquotesingle{}}\NormalTok{][}\StringTok{\textquotesingle{}size\textquotesingle{}}\NormalTok{] }\CommentTok{\# this will give you a string \textquotesingle{}0.01, 0.02\textquotesingle{}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{json}{%
+\subsection{JSON}\label{json}}
+
+\href{https://en.wikipedia.org/wiki/JSON}{JSON} (JavaScript Object Notation) is a popular format to serialize data for web applications that use it to exchange data between a server and a client.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{\{}
+  \DataTypeTok{"Balls"}\FunctionTok{:} \FunctionTok{\{}
+    \DataTypeTok{"position"}\FunctionTok{:} \OtherTok{[[}\FloatTok{0.1}\OtherTok{,} \FloatTok{0.2}\OtherTok{],} \OtherTok{[}\FloatTok{0.2}\OtherTok{,} \FloatTok{0.1}\OtherTok{]]}\FunctionTok{,}
+    \DataTypeTok{"size"}\FunctionTok{:} \OtherTok{[}\FloatTok{0.01}\OtherTok{,} \FloatTok{0.02}\OtherTok{]}\FunctionTok{,}
+    \DataTypeTok{"color"}\FunctionTok{:} \OtherTok{[}\StringTok{"red"}\OtherTok{,} \StringTok{"yellow"}\OtherTok{]}
+  \FunctionTok{\},}
+  \DataTypeTok{"Timing"}\FunctionTok{:} \FunctionTok{\{}
+    \DataTypeTok{"Twinkle duration"} \FunctionTok{:} \FloatTok{0.5}
+  \FunctionTok{\}}
+\FunctionTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+You can parse any \emph{string} in JSON format into a dictionary in Python using \href{https://docs.python.org/3/library/json.html}{json} module. Its advantage over INI files is that JSON explicitly specifies data type (i.e., strings are in quotation marks), so it converts it automatically. Note that unlike configparse, json module does not work with files directly, so you need to open it manually (ignore the \texttt{with} magic for a moment, you will learn about it in detail when we will talk about context managers).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ json}
+\ControlFlowTok{with} \BuiltInTok{open}\NormalTok{(}\StringTok{\textquotesingle{}settings.json\textquotesingle{}}\NormalTok{) }\ImportTok{as}\NormalTok{ json\_file:}
+\NormalTok{    settings }\OperatorTok{=}\NormalTok{ json.load(json\_file)}
+    
+\NormalTok{settings[}\StringTok{"Balls"}\NormalTok{][}\StringTok{"size"}\NormalTok{] }\CommentTok{\# this will give a list [0.01, 0.02]}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{yaml}{%
+\subsection{YAML}\label{yaml}}
+
+\href{https://en.wikipedia.org/wiki/YAML}{YAML} (YAML Ain't Markup Language, rhymes with camel) is very similar to JSON but its config files are more human-readable. It has fewer special symbols and curly brackets but, as in Python, you must watch the indentations as they determine the hierarchy.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{Balls}\KeywordTok{:}
+\AttributeTok{  }\FunctionTok{position}\KeywordTok{:}\AttributeTok{ }\KeywordTok{[[}\FloatTok{0.1}\KeywordTok{,}\AttributeTok{ }\FloatTok{0.2}\KeywordTok{],}\AttributeTok{ }\KeywordTok{[}\FloatTok{0.2}\KeywordTok{,}\AttributeTok{ }\FloatTok{0.1}\KeywordTok{]]}
+\AttributeTok{  }\FunctionTok{size}\KeywordTok{:}\AttributeTok{ }\KeywordTok{[}\FloatTok{0.01}\KeywordTok{,}\AttributeTok{ }\FloatTok{0.02}\KeywordTok{]}
+\AttributeTok{  }\FunctionTok{color}\KeywordTok{:}\AttributeTok{ }\KeywordTok{[}\StringTok{"red"}\KeywordTok{,}\AttributeTok{ }\StringTok{"yellow"}\KeywordTok{]}
+\FunctionTok{Timing}\KeywordTok{:}
+\AttributeTok{  }\FunctionTok{Twinkle duration }\KeywordTok{:}\AttributeTok{ }\FloatTok{0.5}
+\end{Highlighting}
+\end{Shaded}
+
+You will need to install a third-party library \href{https://pyyaml.org/}{pyyaml} to work with YAML files. You get the same dictionary as for the JSON
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ yaml}
+\ControlFlowTok{with} \BuiltInTok{open}\NormalTok{(}\StringTok{"settings.yaml"}\NormalTok{) }\ImportTok{as}\NormalTok{ yaml\_stream:}
+\NormalTok{    settings }\OperatorTok{=}\NormalTok{ yaml.load(yaml\_stream)}
+    
+\NormalTok{settings[}\StringTok{"Balls"}\NormalTok{][}\StringTok{"size"}\NormalTok{] }\CommentTok{\# this will give a list [0.01, 0.02]}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{using-settings}{%
+\section{Using settings}\label{using-settings}}
+
+Look at your \emph{code04.py} and identify constants and hard-coded values that you should put into a settings file. E.g., definitely constants that describes Christmas balls and twinkle duration but, possibly, also the size of the window, name of the Christmas tree and song files, etc. In general, I put every such value into settings even if it used only once (as with the size of the window) because then I know that \emph{all} constants are the settings file. This way there is a single, nicely organized place to check and I do not need to search through the code to figure a specific value out.
+
+Once you transferred all your constants into the settings file (use either JSON or YAML), add the code that loads it at the very beginning and use settings dictionary in place of constants.
+
+Put your code into \texttt{code05.py}.
+
+\hypertarget{merry-christmas-and-a-happy-new-year}{%
+\section{Merry Christmas and a Happy New Year!}\label{merry-christmas-and-a-happy-new-year}}
 
   \bibliography{book.bib}
 

@@ -22,12 +22,13 @@ number_of_legs = 2
 
 The **assignment statement** above has very simple structure:
 
-```python
+`````python
 <variable-name> = <value>
-```
+````
 Variable name (name tag on the box) should be meaningful, it can start with letters or _ and can contain letters, numbers, and _ symbol but not spaces, tabs, special characters, etc. Python recommends (well, actually, [insists](https://www.python.org/dev/peps/pep-0008/)) that you use **snake_case** (all lower-case, underscore for spaces) to format your variable names. The `<value>` on the right side is a more complex story, as it can be hard-coded (as in example above), computed using other variables or the same variable, returned by a function, etc.
 
 Using variables means that you can concentrate what corresponding values **mean** rather than worrying about what these values are. For example, the next time you need to compute something based on number of character's legs (e.g., how many pairs of shoes does a character need), you can compute it based on current value of `number_of_legs` variable rather than assume that it is `1`. 
+`````
 
 ```python
 # BAD: why 1? Is it because the character has two legs or

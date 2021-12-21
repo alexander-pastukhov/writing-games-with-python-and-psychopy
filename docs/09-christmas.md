@@ -2,13 +2,7 @@
 
 Today we are going to program a Christmas-special. However, this is still an opportunity to learn something new. You will learn about zipping lists and we will start offloading settings into a separate file. Here is how the Christmas tree looks for me:
 
-```{r, eval=knitr::is_html_output(excludes = "epub"), results = 'asis', echo = F}
-cat(
-'<div style="text-align:center;"><video controls>
-    <source src="videos/christmas.m4v" type="video/mp4"> 
-  </video></div>'
-)
-```
+
 
 ## Chapter concepts
 
@@ -28,11 +22,15 @@ Put your code into `code01.py`.
 For the decoration, let us use [Circle](https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle) objects of various sizes and color. We could create each one separately with its own custom hard-coded values, but let us instead create three constants that are lists of equal length that describe, respectively position of each ball (`BALL_POS` would be a good name, each entry should be a tuple of `(x, y)`), size (`BALL_SIZE`), and color (`BALL_COLOR`, stick to `"red"`, `"blue"`, and `"yellow"`, this limited selection of specific colors will be important later when we animate them). 
 
 Create a list of balls by iterating over these three lists. You have two choices, you can either use an index variable, building an index via [range()](https://docs.python.org/3/library/functions.html#func-range) using [len()](https://docs.python.org/3/library/functions.html#len) of one of the lists (they should all be of the same length). But let use a cool trick of iterating over a [zip()](https://docs.python.org/3/library/functions.html#zip) of lists. [zip()](https://docs.python.org/3/library/functions.html#zip) gives you a tuple combining one element from each list that you can unpack on the fly as in the example below (note that loop variables will receive values in the  order that you used for lists).
-```{python}
+
+```python
 numbers = [1, 2, 3]
 letters = ["A", "B", "C"]
 for  a_number, a_letter in  zip(numbers, letters):
   print("%d: %s"%(a_number, a_letter))
+#> 1: A
+#> 2: B
+#> 3: C
 ```
 
 You can zip as many lists as you want. We, obviously, want three. Decide on whether you want to create `balls` as an empty list and then append each newly created [Circle](https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle) to it in the loop or use list comprehension. Do not forget to draw the balls and think about what you should draw first: the tree or the balls. Experiment with position and sizes to makes it look just perfect.

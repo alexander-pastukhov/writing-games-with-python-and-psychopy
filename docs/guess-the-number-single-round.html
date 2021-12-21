@@ -7,7 +7,7 @@
 <title>Chapter 5 Guess the Number: a single round edition | Writing games with Python and PsychoPy</title>
 <meta name="author" content="Alexander (Sasha) Pastukhov">
 <meta name="description" content="The previous chapter covered Python basics, so now you are ready to start developing you first game! We will build it step by step as there will be a lot to learn about input, libraries,...">
-<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
 <meta property="og:title" content="Chapter 5 Guess the Number: a single round edition | Writing games with Python and PsychoPy">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://alexander-pastukhov.github.io/writing-games-with-python-and-psychopy/guess-the-number-single-round.html">
@@ -15,9 +15,9 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 5 Guess the Number: a single round edition | Writing games with Python and PsychoPy">
 <meta name="twitter:description" content="The previous chapter covered Python basics, so now you are ready to start developing you first game! We will build it step by step as there will be a lot to learn about input, libraries,...">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -51,6 +51,7 @@
 <li><a class="" href="psychopy-basics.html"><span class="header-section-number">8</span> Gettings started with PsychoPy</a></li>
 <li><a class="" href="whack-a-mole.html"><span class="header-section-number">9</span> Whack-a-Mole</a></li>
 <li><a class="" href="memory-game.html"><span class="header-section-number">10</span> Memory game</a></li>
+<li><a class="" href="christmas-special.html"><span class="header-section-number">11</span> Christmas special</a></li>
 </ul>
 
         <div class="book-extra">
@@ -217,7 +218,7 @@
 <div class="rmdnote practice">
 <p>Go to exercise #1 to solve some comparisons.</p>
 </div>
-<p>Note that Python also has an <a href="https://docs.python.org/3/library/operator.html#operator.is_">is</a> operator that may <em>look</em> identical to <code><a href="https://rdrr.io/r/base/Comparison.html">==</a></code> (e.g., <code>x == 2</code> looks equivalent to <code>x is 2</code>). Moreover, is <em>some</em> cases it also works the same way. However, there is a subtle difference: <code><a href="https://rdrr.io/r/base/Comparison.html">==</a></code> checks whether <em>values</em> are identical, whereas <code>is</code> checks whether <em>objects</em> (that “hold” values) are identical. You need to understand classes and objects before you can appreciate this difference, so for now just keep in mind that you should only use <code><a href="https://rdrr.io/r/base/Comparison.html">==</a></code> (I will explicitly mentioned when <code>is</code> is needed).</p>
+<p>Note that Python also has an <a href="https://docs.python.org/3/library/operator.html#operator.is_">is</a> operator that may <em>look</em> identical to <code>==</code> (e.g., <code>x == 2</code> looks equivalent to <code>x is 2</code>). Moreover, is <em>some</em> cases it also works the same way. However, there is a subtle difference: <code>==</code> checks whether <em>values</em> are identical, whereas <code>is</code> checks whether <em>objects</em> (that “hold” values) are identical. You need to understand classes and objects before you can appreciate this difference, so for now just keep in mind that you should only use <code>==</code> (I will explicitly mentioned when <code>is</code> is needed).</p>
 <p>You can <em>invert</em> the logical value using <code>not</code> operator, as <code>not True</code> is <code>False</code> and <code>not False</code> is <code>True</code>. This means that <code>A != B</code> is the same as <code>not A == B</code> and, correspondingly, <code>A == B</code> is <code>not A != B</code>. To see how that works, consider both cases when <code>A</code> is indeed equal <code>B</code> and when it is not.</p>
 <ul>
 <li>If A is equal B then <code>A == B</code> evaluates to <code>True</code>. The <code>A != B</code> is then <code>False</code>, so <code>not A != B</code> → <code>not False</code> → <code>True</code>.</li>
@@ -253,7 +254,7 @@
 <h2>
 <span class="header-section-number">5.9</span> Grouping statements via indentation<a class="anchor" aria-label="anchor" href="#indentation"><i class="fas fa-link"></i></a>
 </h2>
-<p>Let us go back to a conditional if-statement. Take a look at following code example (and note an <code><a href="https://rdrr.io/r/base/Colon.html">:</a></code> at the end of the <code>if some_condition_is_true:</code>), in which <em>statement #1</em> is executed only if <em>some condition</em> is true, whereas <em>statement #2</em> is executed after that <em>irrespective</em> of the condition.</p>
+<p>Let us go back to a conditional if-statement. Take a look at following code example (and note an <code>:</code> at the end of the <code>if some_condition_is_true:</code>), in which <em>statement #1</em> is executed only if <em>some condition</em> is true, whereas <em>statement #2</em> is executed after that <em>irrespective</em> of the condition.</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb34-1"><a href="guess-the-number-single-round.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> some_condition_is_true:</span>
 <span id="cb34-2"><a href="guess-the-number-single-round.html#cb34-2" aria-hidden="true" tabindex="-1"></a>    statement <span class="co">#1</span></span>
 <span id="cb34-3"><a href="guess-the-number-single-round.html#cb34-3" aria-hidden="true" tabindex="-1"></a>statement <span class="co">#2 </span></span></code></pre></div>
@@ -408,7 +409,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2021-11-22.</p>
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2021-12-21.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
