@@ -40,7 +40,7 @@ Put your code into `code02.py`.
 :::
 
 ## Twinkle, twinkle, little star
-Now let us make our Christmas balls twinkle, as in the video. The idea is that only one color is "active" at a time. The balls of that color are "on" and balls of other color are "off" (white or gray, or some other color of your liking). 
+Now let us make our Christmas balls twinkle, as in the video. The idea is that only one color is "active" at a time. The balls of that color are "on" and balls of other color are "off" (white or gray, or some other color of your liking). Now our display becomes dynamic, so you need to have a game loop and with an opportunity to exit the program by pressing _escape_.
 
 For this, we need to define a list of colors ("red", "blue", "yellow") that we can cycle through and an variable that hold the index of the currently active color (I've called it `icolor`). Every X seconds (I do it  every 0.5 seconds, define this as a constant, e.g., `TWINKLE_DURATION`), increment this index, so that the next color in the list becomes active. Note that you have an out-of-range problem: When  you initialize `icolor` to 0 and increment it by 1 three times, your index is already too large (3, the length of our `colors` list is 3, so the maximal index is 2). You can either use an `if` to check for that or you can use a remainder operator `%` (think about the remainder if you divide _any_ positive value by the length of the `colors` list).
 
