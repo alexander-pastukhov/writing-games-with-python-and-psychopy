@@ -39,13 +39,13 @@ y.append(4)
 print(x)
 ```
 
-::: {.infobox .practice}
+::: {.rmdnote .practice}
 Do exercise #1.
 :::
 
-Huh? That is precisely what I meant with "stickers on the same object". First, we create a list and put an `x` sticker on it. Then, we assign `y` _to the same list_, in other words, we put a `y` sticker on the same list. Since both `x` and `y` are stickers on the _same_ object, they are, effectively, synonyms. In that specific situation, once you set `x = y`, it does not matter which variable name you use to change _the_ object, they are just two stickers hanging side-by-side on the _same_ list. Again, just a reminder, this is _not_ what would happen for _immutable_ values, like numbers, where things would behaved the way you expect them to behave.
+Huh? That is precisely what I meant with "stickers on the same object". First, we create a list and put an `x` sticker on it. Then, we assign _the same list_ to `y`, in other words, we put a `y` sticker on the same list. Since both `x` and `y` are stickers on the _same_ object, they are, effectively, synonyms. In that specific situation, once you set `x = y`, it does not matter which variable name you use to change _the_ object, they are just two stickers hanging side-by-side on the _same_ list. Again, just a reminder, this is _not_ what would happen for _immutable_ values, like numbers, where things would behave the way you expect them to behave.
 
-This variable-as-a-sticker, a.k.a. "passing value by reference", has very important implications for the function calls, as it breaks your scope without ever giving you a warning. Look at the code below and try figuring out what the output will be.
+This variable-as-a-sticker, a.k.a. "passing value by reference", has very important implications for function calls, as it breaks your scope without ever giving you a warning. Look at the code below and try figuring out what the output will be.
 
 ```python 
 def change_it(y):
@@ -55,13 +55,13 @@ x = [1, 2, 3]
 change_it(x)
 print(x)
 ```
-::: {.infobox .practice}
+::: {.rmdnote .practice}
 Do exercise #2.
 :::
 
-How did we manage to modify a _global_ variable from inside the function? Didn't we change the _local_ parameter of the function? Yep, that is exactly the problem with passing by reference. Your function parameter is yet another sticker on the _same_ object, so even though it _looks_ like you do not need to worry about global variables (that's why you wrote the function and learned about scopes!), you still do. If you are perplexed by this, you are in a good company. This is one of the most unexpected and confusing bits in Python that routinely catches people^[Well, at least me!] by surprise. Let us do a few more exercises, before I show you how to solve the scope problem for the mutable objects.
+How did we manage to modify a _global_ variable from inside the function? Didn't we change the _local_ parameter of the function? Yep, that is exactly the problem with passing by reference. Your function parameter is yet another sticker on the _same_ object, so even though it _looks_ like you do not need to worry about global variables (that's why you wrote the function and learned about scopes!), you still do. If you are perplexed by this, you are in a good company. This is one of the most unexpected and confusing bits in Python that routinely catches people^[Well, at least me!] by surprise. Let us do a few more exercises, before I show you how to solve the scope problem for mutable objects.
 
-::: {.infobox .practice}
+::: {.rmdnote .practice}
 Do exercise #3.
 :::
 
@@ -82,19 +82,29 @@ for number in i_am_a_tuple:
 ```
 
 but, as I said, appending will throw a mistake (try this code in a Jupyter Notebook)
+
 ```python
 i_am_a_tuple = (1, 2, 3)
 
 # throws AttributeError: 'tuple' object has no attribute 'append'
 i_am_a_tuple.append(4)
+#> Error in py_call_impl(callable, dots$args, dots$keywords): AttributeError: 'tuple' object has no attribute 'append'
+#> 
+#> Detailed traceback:
+#>   File "<string>", line 1, in <module>
 ```
 
 Same goes for trying to change it
+
 ```python
 i_am_a_tuple = (1, 2, 3)
 
 # throws TypeError: 'tuple' object does not support item assignment
 i_am_a_tuple[1] = 1 
+#> Error in py_call_impl(callable, dots$args, dots$keywords): TypeError: 'tuple' object does not support item assignment
+#> 
+#> Detailed traceback:
+#>   File "<string>", line 1, in <module>
 ```
 
 This means that when you need to pass a list of values to a function and you want them to have no link to the original variable, you should instead pass _a tuple of values_ to the function. The function still has a list of values but the link to the original list object is now broken. You can turn a list into a tuple using `tuple()`. Keeping in mind that `tuple()` creates a frozen copy of the list, what will happen below?
@@ -104,7 +114,7 @@ y = tuple(x)
 x.append(4)
 print(y)
 ```
-::: {.infobox .practice}
+::: {.rmdnote .practice}
 Do exercise #4.
 :::
 
@@ -112,13 +122,13 @@ As you probably figured out, when `y = tuple(x)`, Python creates **a copy** of t
 
 Conversely, you "unfreeze" a tuple by turning it into a list via `list()`. Please note that it creates **a new list**, which has no relation to any other existing list, even if values are the same or were originally taken from any of them!
 
-::: {.infobox .practice}
+::: {.rmdnote .practice}
 Do exercise #5.
 :::
 
 Remember I just said that `list()` creates a new list? This means that you can use it to create a copy of a list directly, without an intermediate tuple step. This way you can two _different_ lists with _identical_ values. You can also achieve the same results by slicing an entire list, e.g. `list(x)`, is the same as `x[:]`.
 
-::: {.infobox .practice}
+::: {.rmdnote .practice}
 Do exercise #6.
 :::
 
@@ -198,10 +208,10 @@ Our card has the following properties, so these will be key-value entries in a d
 1. `"front"`: front side (image of a chicken).
 2. `"back"`: back side (rectangle).
 3. `"filename"`: identity on the card that we will use later to check whether the player opened two identical cards (their filenames match) or two different ones.
-4. `"side"`: can be either `"front"` or `"back"`, information about which side is up (drawn on the screen). Set it `"back"` because, initially, all cards are face down. However, you can always set it temporarily to `"front"` to see how the cards are distributed.
+4. `"side"`: can be either `"front"` or `"back"`, information about which side is up (drawn on the screen). Set it to `"back"` because, initially, all cards are face down. However, you can always set it temporarily to `"front"` to see how the cards are distributed.
 5. `"show"`: a logical value, set it to `True`. We will use it later to mark out cards that are off the table and are, therefore, not shown. Initially, all cards are shown, so all cards should be created with `"show"` being equal to `True`. 
 
-Create a dictionary variable (name it `card`) and fill it with the relevant values (use either `"front"` and "`back"` for `"side"` key) and stimuli (you can put PsychoPy stimuli into a dictionary just like we put them into a list earlier). Modify you code so that it draws the correct image based on the value of the `"side"` entry. Note that you **do not need an if-statement for this**! Think about a key you need to access these two sides and the value that you have in for the `"side"` key.
+Create a dictionary variable (name it `card`) and fill it with relevant values (use either `"front"` and "`back"` for `"side"` key) and stimuli (you can put PsychoPy stimuli into a dictionary just like we put them into a list earlier). Modify you code so that it draws the correct image based on the value of the `"side"` entry. Note that you **do not need an if-statement for this**! Think about a key you need to access these two sides and the value that you have in for the `"side"` key.
 
 ::: {.rmdnote .program}
 Put your code into `code05.py`.
@@ -210,7 +220,7 @@ Put your code into `code05.py`.
 ## Card factory
 You have the code to create one card but we need eight of them. This definitely calls for a function. Write a function (put it into `utilities.py` to declutter the main file) that takes three parameters
 
-1. a window variable (you need it to create PsychoPy stimuli), 
+1. a window variable (you need it to create PsychoPy stimuli),
 2. a filename,
 3. card position index,
 

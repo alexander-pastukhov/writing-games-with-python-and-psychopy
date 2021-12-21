@@ -2360,9 +2360,9 @@ What on Earth do I mean? Keeping in mind that a variable is just a sticker (one 
 
 Do exercise \#1.
 
-Huh? That is precisely what I meant with ``stickers on the same object''. First, we create a list and put an \texttt{x} sticker on it. Then, we assign \texttt{y} \emph{to the same list}, in other words, we put a \texttt{y} sticker on the same list. Since both \texttt{x} and \texttt{y} are stickers on the \emph{same} object, they are, effectively, synonyms. In that specific situation, once you set \texttt{x\ =\ y}, it does not matter which variable name you use to change \emph{the} object, they are just two stickers hanging side-by-side on the \emph{same} list. Again, just a reminder, this is \emph{not} what would happen for \emph{immutable} values, like numbers, where things would behaved the way you expect them to behave.
+Huh? That is precisely what I meant with ``stickers on the same object''. First, we create a list and put an \texttt{x} sticker on it. Then, we assign \emph{the same list} to \texttt{y}, in other words, we put a \texttt{y} sticker on the same list. Since both \texttt{x} and \texttt{y} are stickers on the \emph{same} object, they are, effectively, synonyms. In that specific situation, once you set \texttt{x\ =\ y}, it does not matter which variable name you use to change \emph{the} object, they are just two stickers hanging side-by-side on the \emph{same} list. Again, just a reminder, this is \emph{not} what would happen for \emph{immutable} values, like numbers, where things would behave the way you expect them to behave.
 
-This variable-as-a-sticker, a.k.a. ``passing value by reference'', has very important implications for the function calls, as it breaks your scope without ever giving you a warning. Look at the code below and try figuring out what the output will be.
+This variable-as-a-sticker, a.k.a. ``passing value by reference'', has very important implications for function calls, as it breaks your scope without ever giving you a warning. Look at the code below and try figuring out what the output will be.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2377,7 +2377,7 @@ This variable-as-a-sticker, a.k.a. ``passing value by reference'', has very impo
 
 Do exercise \#2.
 
-How did we manage to modify a \emph{global} variable from inside the function? Didn't we change the \emph{local} parameter of the function? Yep, that is exactly the problem with passing by reference. Your function parameter is yet another sticker on the \emph{same} object, so even though it \emph{looks} like you do not need to worry about global variables (that's why you wrote the function and learned about scopes!), you still do. If you are perplexed by this, you are in a good company. This is one of the most unexpected and confusing bits in Python that routinely catches people\footnote{Well, at least me!} by surprise. Let us do a few more exercises, before I show you how to solve the scope problem for the mutable objects.
+How did we manage to modify a \emph{global} variable from inside the function? Didn't we change the \emph{local} parameter of the function? Yep, that is exactly the problem with passing by reference. Your function parameter is yet another sticker on the \emph{same} object, so even though it \emph{looks} like you do not need to worry about global variables (that's why you wrote the function and learned about scopes!), you still do. If you are perplexed by this, you are in a good company. This is one of the most unexpected and confusing bits in Python that routinely catches people\footnote{Well, at least me!} by surprise. Let us do a few more exercises, before I show you how to solve the scope problem for mutable objects.
 
 Do exercise \#3.
 
@@ -2413,6 +2413,10 @@ but, as I said, appending will throw a mistake (try this code in a Jupyter Noteb
 
 \CommentTok{\# throws AttributeError: \textquotesingle{}tuple\textquotesingle{} object has no attribute \textquotesingle{}append\textquotesingle{}}
 \NormalTok{i\_am\_a\_tuple.append(}\DecValTok{4}\NormalTok{)}
+\CommentTok{\#\textgreater{} Error in py\_call\_impl(callable, dots$args, dots$keywords): AttributeError: \textquotesingle{}tuple\textquotesingle{} object has no attribute \textquotesingle{}append\textquotesingle{}}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Detailed traceback:}
+\CommentTok{\#\textgreater{}   File "\textless{}string\textgreater{}", line 1, in \textless{}module\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2424,6 +2428,10 @@ Same goes for trying to change it
 
 \CommentTok{\# throws TypeError: \textquotesingle{}tuple\textquotesingle{} object does not support item assignment}
 \NormalTok{i\_am\_a\_tuple[}\DecValTok{1}\NormalTok{] }\OperatorTok{=} \DecValTok{1} 
+\CommentTok{\#\textgreater{} Error in py\_call\_impl(callable, dots$args, dots$keywords): TypeError: \textquotesingle{}tuple\textquotesingle{} object does not support item assignment}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Detailed traceback:}
+\CommentTok{\#\textgreater{}   File "\textless{}string\textgreater{}", line 1, in \textless{}module\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2554,12 +2562,12 @@ Our card has the following properties, so these will be key-value entries in a d
 \item
   \texttt{"filename"}: identity on the card that we will use later to check whether the player opened two identical cards (their filenames match) or two different ones.
 \item
-  \texttt{"side"}: can be either \texttt{"front"} or \texttt{"back"}, information about which side is up (drawn on the screen). Set it \texttt{"back"} because, initially, all cards are face down. However, you can always set it temporarily to \texttt{"front"} to see how the cards are distributed.
+  \texttt{"side"}: can be either \texttt{"front"} or \texttt{"back"}, information about which side is up (drawn on the screen). Set it to \texttt{"back"} because, initially, all cards are face down. However, you can always set it temporarily to \texttt{"front"} to see how the cards are distributed.
 \item
   \texttt{"show"}: a logical value, set it to \texttt{True}. We will use it later to mark out cards that are off the table and are, therefore, not shown. Initially, all cards are shown, so all cards should be created with \texttt{"show"} being equal to \texttt{True}.
 \end{enumerate}
 
-Create a dictionary variable (name it \texttt{card}) and fill it with the relevant values (use either \texttt{"front"} and ``\texttt{back"} for \texttt{"side"} key) and stimuli (you can put PsychoPy stimuli into a dictionary just like we put them into a list earlier). Modify you code so that it draws the correct image based on the value of the \texttt{"side"} entry. Note that you \textbf{do not need an if-statement for this}! Think about a key you need to access these two sides and the value that you have in for the \texttt{"side"} key.
+Create a dictionary variable (name it \texttt{card}) and fill it with relevant values (use either \texttt{"front"} and ``\texttt{back"} for \texttt{"side"} key) and stimuli (you can put PsychoPy stimuli into a dictionary just like we put them into a list earlier). Modify you code so that it draws the correct image based on the value of the \texttt{"side"} entry. Note that you \textbf{do not need an if-statement for this}! Think about a key you need to access these two sides and the value that you have in for the \texttt{"side"} key.
 
 Put your code into \texttt{code05.py}.
 
