@@ -161,6 +161,7 @@ yaml
 using-settings
 merry-christmas-and-a-happy-new-year
 flappy-bird
+chapter-concepts-7
 object-oriented-programming
 classes-and-objects-instances-of-classes
 encapsulation
@@ -182,4 +183,12 @@ it-is-all-newtons-fault
 flap-bird-flap
 stay-off-the-ground
 computed-attribute-property
-to-be-continued
+an-opening-in-an-obstacle
+an-obstacle
+a-moving-obstacle
+hitting-the-wall
+an-obstacle-manager
+loads-of-obstacles
+removing-redundant-obstacles
+keeping-the-score
+foundation

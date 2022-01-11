@@ -1,6 +1,19 @@
 # Flappy Bird
 
-Today we will stat developing a _Flappy Bird_ game. You control a bird that must fly through the openings in the obstacles but your only action is to "flap the wings" in order to counteract the effect of gravity. 
+Today we will stat developing a _Flappy Bird_ game. You control a bird that must fly through the openings in the obstacles but your only action is to "flap the wings" in order to counteract the effect of gravity. This is how the game will look like at the end.
+
+```{r, eval=knitr::is_html_output(excludes = "epub"), results = 'asis', echo = F}
+cat(
+'<div style="text-align:center;"><video controls>
+    <source src="videos/flappy-bird.m4v" type="video/mp4"> 
+  </video></div>'
+)
+```
+
+## Chapter concepts
+
+* Object-oriented programming
+* @property
 
 
 We will use this game as an opportunity to learn more about object-oriented programming. You already know how to use classes, now you get to create them and see how it makes your life easier.
@@ -107,6 +120,7 @@ Create `SuperFlexibleAccumulator` class and define<br/>super flexible  `add` and
 Although constructor `__init(...)__` is special, it is still a method. Thus, you can pass arguments to it just like you did it for other methods. You pass these arguments when you create an object, so in our case, you put it inside the bracket for `counter = SuperFlexibleAccumulator(...)`. 
 
 Modify the code so that you pass the initial value that total is set to, instead of zero.
+
 ::: {.rmdnote .practice}
 Add `initial_value` parameter to the constructor of the `SuperFlexibleAccumulator` class in a Jupiter notebook. Test it!
 :::
@@ -237,26 +251,118 @@ Use it in `code04.py` whenever player presses _space_.
 :::
 
 ## Stay off the ground
-In our game, the player can lose either if they hit an obstacle (we do not have any yet) or if the bird drops below the ground level, i.e., the bottom edge of the window. Create a new method `is_airbourne()` that will return `True` if `y` position of the bird is above `-1` (note, you do not need an explicit `if` for this, nor do you need to write `True` or `False` anywhere, think how this can be done without these).
+In our game, the player can lose either if they hit an obstacle (we do not have any yet) or if the bird drops below the ground level, i.e., the bottom edge of the window. Create a new method `is_airborne()` that will return `True` if `y` position of the bird is above `-1` (note, you do not need an explicit `if` for this, nor do you need to write `True` or `False` anywhere, think how this can be done without these).
 
-In the main loop add the check for `bird.is_airbourne()` condition so that it continues until player presses `"escape"` or the bird hits the ground.
+In the main loop add the check for `bird.is_airborne()` condition so that it continues until player presses `"escape"` or the bird hits the ground.
 
 ::: {.rmdnote .program}
-Add `is_airbourne` method to `FlappyBird` class.<br/>
+Add `is_airborne` method to `FlappyBird` class.<br/>
 Use it in `code05.py` as an additional condition<br/>for the game loop.
 :::
 
 ## Computed attribute `@property`
-As was explained the in "Object-oriented programming" section above, properties describe state of an object, whereas methods describe what an object can do or what you do to an object. Our `is_airbourne()` method breaks this logic: It describes the _state_ of the bird but we _call_ it (use it) as a method. What we have here is a _computed_ property that is inferred from other properties of an object. In our case, we infer property `is_airbourne` from `y`. We could, of course, make `is_airbourne` into a real property by defining it in the constructor and then updating it inside `update()` method. However, we will instead use a cool feature (called [decorators](https://www.python.org/dev/peps/pep-0318/)) to turn a method into a read-only property. The only thing you need to do is to add `@property` decorator right above the `def is_airbourne(self):` line and drop brackets when using it in the main loop (so just `bird.is_airbourne` instead of `bird.is_airbourne()`).
+As was explained the in "Object-oriented programming" section above, properties describe state of an object, whereas methods describe what an object can do or what you do to an object. Our `is_airborne()` method breaks this logic: It describes the _state_ of the bird but we _call_ it (use it) as a method. What we have here is a _computed_ property that is inferred from other properties of an object. In our case, we infer property `is_airborne` from `y`. We could, of course, make `is_airborne` into a real property by defining it in the constructor and then updating it inside `update()` method. However, we will instead use a cool feature (called [decorators](https://www.python.org/dev/peps/pep-0318/)) to turn a method into a read-only property. The only thing you need to do is to add `@property` decorator right above the `def is_airborne(self):` line and drop brackets when using it in the main loop (so just `bird.is_airborne` instead of `bird.is_airborne()`).
 
 `@property` tells Python that the method right below **will** (must!) return a value and that outside world should see it not as a method but as a _property_. You can use it to make properties read-only, so that they could not be (easily) changed from outside or to create properties that are computed on-the-fly as in our example.
 
 Note that difference is not so much of practical implementation (changes we made to the code were minimal) but of a conceptual nature: Object's states should be properties not methods. In our small example this may look like an overkill but in a moderately complex project even small conceptual blurring of lines could make it harder to understand the code.
 
 ::: {.rmdnote .program}
-Turn `is_airbourne` into a property.<br/>
+Turn `is_airborne` into a property.<br/>
 Use it as property in `code06.py`.
 :::
 
-## To be continued...
+## An opening in an obstacle
+We aim of the game is for the bird to fly avoiding obstacles. An obstacle consist of two rectangle, one that protrudes from above and another one from below. The opening between them gives the bird an opportunity to fly through. So let us begin by writing a code (in the Jupyter notebook) that would generate a random opening, characterized by `y_bottom` and `y_top` based on four parameters:
 
+* `lower_margin` : the lower margin relative to the bottom of the screen, i.e., the `y_bottom` cannot be closer to -1 than that.
+* `upper_margin` : the upper margin relative to the top of the screen, i.e., the `y_top` cannot be closer to 1 than that.
+* `min_size` : the minimal size of the opening, i.e., minimal distance between `y_top` and `y_bottom`.
+* `max_size` : the maximal size of the opening, i.e., maximal distance between `y_top` and `y_bottom`.
+
+Write a code that assume certain values for each parameter (e.g., `lower_margin = 0.2`, `upper_margin = 0.2`, `min_size = 0.2`, `max_size = 0.4`) and generates a random pair `(y_bottom, y_top)` that satisfies the conditions.
+
+::: {.rmdnote .practice}
+Write a random opening code in a Jupiter notebook.
+:::
+
+## An obstacle
+Now let us create an `Obstacle` class (put it into a separate file). It will consist of two rectangles, on protruding from the top and the other one from the bottom, with a random opening in between. At the moment you need six settings to describe an `Obstacle`: The four parameters that define a random opening plus a width of rectangles and their color. Describe them as a separate group in the settings files (probably under `"Obstacles"`) and pass them to the constructor of the `Obstacle` class.
+
+In the constructor, generate a random opening (you have the code for this already) and create the two rectangles both `width` wide, one going from the top till `y_top`, another one from the bottom till `y_bottom`. Place both horizontally at the right edge of the window but so you could see them. Decide on how you will store the two rectangles, you can put them into two different attributes (e.g., `upper_rect` and `lower_rect`) or have them in a list. I would suggest the latter approach, as it will simplify your future code. Think about which parameters you need for the `__init__()` constructor function.
+
+You also will need a `draw()` method that simply draws both rectangles. Implement the class in a separate file, then create and draw a single obstacle in the main code to check that it looks right.
+
+::: {.rmdnote .program}
+Create `Obstacle` class in a separate file.<br/>
+Use it in `code07.py`.
+:::
+
+## A moving obstacle
+Conceptually, our bird fly towards an obstacle but instead we will induce perception of its motion by moving obstacles from right to left. Define a new `speed` setting for an `Obstacle` class, it should be in `norm units per second` and create an `update` method that would change horizontal position of both rectangles based on the amount of time that passed between the calls. This is similar to how we updated bird's position based on its speed, so follow the same logic and think about which additional attributes you require and how you store and use any relevant information.
+
+Call `update()` at the same place that you update bird's location in the main loop and check that the obstacle is moving from right to left.
+
+::: {.rmdnote .program}
+Add `update` method to `Obstacle` class.<br/>
+Use it in `code08.py`.
+:::
+
+## Hitting the wall
+At the moment, our bird is flying through the obstacle like it is not there. But it is! Luckily for us, PsychoPy makes implementing this very easy, as it can check whether two stimuli overlap using [overlaps()](https://psychopy.org/api/visual/shapestim.html#psychopy.visual.ShapeStim.overlaps) method of one of them (and the second stimulus is passed as an argument).
+
+Thus, to check whether the bird hit the wall, we just need to create a method (let us call it `check_if_hit`) in an `Obstacle` class that will take a bird object and check whether it [overlaps()](https://psychopy.org/api/visual/shapestim.html#psychopy.visual.ShapeStim.overlaps) with one of the rectangles. Remember, our `FlappyBird` is a descendant of the [ImageStim](https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim), so we can pass it to the [overlaps()](https://psychopy.org/api/visual/shapestim.html#psychopy.visual.ShapeStim.overlaps) method directly (advantage of using the inheritance!)
+
+In the main game loop, add the check for the bird _not_ hitting the obstacle to the main condition (so now you should have three things to check for).
+Test your code by flying the bird into the wall. Also, by flying your bird through the opening. Note that if our settings make it too tricky, modify them to make the opening larger.
+
+::: {.rmdnote .program}
+Add `check_if_hit` method to `Obstacle` class.<br/>
+Use it in `code09.py`.
+:::
+
+## An obstacle manager
+A game with a single obstacle is no fun but before we add more, we need a class that will manage them for us. Let us call it `ObstaclesManager`. For the moment, it will simply wrap up all functionality that we implemented in the main script. In the constructor, it should create a _list_ attribute for obstacle object and add a first one, it should also implement methods `draw()`, `update()`, and `check_if_hit()` that draws, update, and checks for an overlap with a bird for _all_ obstacles on the list. For the moment we will still have just one of them in the list but implementing things in the loop means it will be easier to add more. Create the class and then use it in the main script. 
+
+There should be no actual changes how the game plays, just the code refactoring. However, it helps us to hide the management part from the main script (making it easier to understand) and, if you did everything correctly, the code should "just work" once you replace `Obstacle` with `ObstaclesManager` object.
+
+::: {.rmdnote .program}
+Create `ObstaclesManager` class.<br/>
+Use it in `code10.py`.
+:::
+
+## Loads of obstacles
+Now we are ready to add more obstacles. You need to update the `update` method of the `ObstaclesManager` so that add a new obstacle to the list after a random time interval. Define a new settings `Spawn time`, a list of two values that define a minimal and maximal time between spawns, and create a [CountdownTimer](https://psychopy.org/api/clock.html#psychopy.clock.CountdownTimer) (or a [Clock](https://psychopy.org/api/clock.html#psychopy.clock.Clock), remember they differ only in whether time is subtracted or added) attributed. Whenever the timer is up, add a new obstacle to the list, generate a new delay, and set the timer again. Note that now you need settings and a Window in the `update` because they are required for creating a new obstacle. Think how you can store them for later use in the constructor.
+
+Do you need to change anything in the main script? Check that more obstacles appear over time!
+
+::: {.rmdnote .program}
+Update `update` of the `ObstaclesManager` class.<br/>
+:::
+
+## Removing redundant obstacles
+Once the obstacle is past the left edge of the screen (its x-axis position is less than `-1`) we need to remove it from the list. Otherwise, we will waste a lot of time and memory keeping track and drawing obstacles that are neither relevant, nor visible. Think about how you would implement this before reading further.
+
+First, we need to compute the horizontal position of an obstacle. You can deduce it from `pos` attribute of one of the rectangles and implement this use of attribute (`pos` of `Obstacle`) of an attribute (`obstacles` of `ObstaclesManager`) directly. However, working with attributes of attributes makes code harder to read and to maintain. Instead, add a new computed property `x` to `Obstacle` class that would return a single number (horizontal position) using `@property` decorator we used for the bird's `is_airborne` dynamic attribute.
+
+Update the `update` method of the `ObstaclesManager` to check the position the _first_ obstacle in the list. If it less than -1, simply [pop](https://docs.python.org/3.1/tutorial/datastructures.html) it from the list. Why the first one? Because any other obstacle in the list was added later and, therefore, must be further to the right. Why _only_ the first one? If we assume both a reasonable motion speed and a reasonable spawn delay, it is very unlikely that more than one obstacles reaches the left edge at the same time.
+
+Note that for safety reasons, you must first check that the `obstacles` attribute is not empty! Hint, when used in a conditional statement directly, empty list evaluates to `False`. Debug the code to make sure that obstacles are indeed removed. You can either use a different cut-off point (e.g., -0.25) to see that easier or put a break point at the line that pops the redundant obstacle (better still, do both!)
+
+::: {.rmdnote .program}
+Update `update` of the `ObstaclesManager` class.
+:::
+
+## Keeping the score
+It is hard to brag about your bird-flying skills, if you do not how many obstacles did you fly through. Let us add the score! First, create a [TextStim](https://psychopy.org/api/visual/textstim.html#psychopy.visual.TextStim) (call it `score_text`) and put it somewhere one the screen, e.g., a top-left or top-right corner. Initialize its text to `"0"`. Draw it in the main loop. Make sure it works before you continue.
+
+To keep the score, we need to count the number of obstacles that the bird clears on every frame and add it to the total score. As with the removal of redundant obstacles, it will be either zero or one obstacle that crossed the middle of the screen. But in this case, it is not the leftmost that we have to check but the _leftmost_ among those that did not yet cross the mid-line. There are different way you can approach this, so think how you would approach this before reading on. And if you came up with a different plan, by all means -- implement it!
+
+My way of doing this is to introduce a new attribute `scored = False` and a method `score()` to the `Obstacle` class. In the `score()` method, if the object crossed the `0` line _and_ has not been scored, it marked as `scored` and the method returns `1`. Otherwise, the object was either already scored or did not cross the mid-line yet, so it returns `0`. Next, I added a `score()` method to the `ObstaclesManager` that simply computes the total score (sum of) scores of all obstacles in the list. In the main script this score is added to a `score` variable that, in turn, is used to update `score_text`.
+
+::: {.rmdnote .program}
+Update your code and<br/>use it in `code11.py`.
+:::
+
+## Foundation
+This is just a foundation of a game, so feel free to add to it. Animated bird? Difficulty levels? Different kinds of obstacles? High-score table?

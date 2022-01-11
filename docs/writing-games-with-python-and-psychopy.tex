@@ -3110,7 +3110,18 @@ Put your code into \texttt{code05.py}.
 \hypertarget{flappy-bird}{%
 \chapter{Flappy Bird}\label{flappy-bird}}
 
-Today we will stat developing a \emph{Flappy Bird} game. You control a bird that must fly through the openings in the obstacles but your only action is to ``flap the wings'' in order to counteract the effect of gravity.
+Today we will stat developing a \emph{Flappy Bird} game. You control a bird that must fly through the openings in the obstacles but your only action is to ``flap the wings'' in order to counteract the effect of gravity. This is how the game will look like at the end.
+
+\hypertarget{chapter-concepts-7}{%
+\section{Chapter concepts}\label{chapter-concepts-7}}
+
+\begin{itemize}
+\tightlist
+\item
+  Object-oriented programming
+\item
+  \citet{property}
+\end{itemize}
 
 We will use this game as an opportunity to learn more about object-oriented programming. You already know how to use classes, now you get to create them and see how it makes your life easier.
 
@@ -3237,9 +3248,8 @@ Create \texttt{SuperFlexibleAccumulator} class and definesuper flexible \texttt{
 Although constructor \texttt{\_\_init(...)\_\_} is special, it is still a method. Thus, you can pass arguments to it just like you did it for other methods. You pass these arguments when you create an object, so in our case, you put it inside the bracket for \texttt{counter\ =\ SuperFlexibleAccumulator(...)}.
 
 Modify the code so that you pass the initial value that total is set to, instead of zero.
-::: \{.rmdnote .practice\}
+
 Add \texttt{initial\_value} parameter to the constructor of the \texttt{SuperFlexibleAccumulator} class in a Jupiter notebook. Test it!
-:::
 
 \hypertarget{calling-methods-from-other-methods}{%
 \subsection{Calling methods from other methods}\label{calling-methods-from-other-methods}}
@@ -3382,27 +3392,128 @@ Use it in \texttt{code04.py} whenever player presses \emph{space}.
 \hypertarget{stay-off-the-ground}{%
 \section{Stay off the ground}\label{stay-off-the-ground}}
 
-In our game, the player can lose either if they hit an obstacle (we do not have any yet) or if the bird drops below the ground level, i.e., the bottom edge of the window. Create a new method \texttt{is\_airbourne()} that will return \texttt{True} if \texttt{y} position of the bird is above \texttt{-1} (note, you do not need an explicit \texttt{if} for this, nor do you need to write \texttt{True} or \texttt{False} anywhere, think how this can be done without these).
+In our game, the player can lose either if they hit an obstacle (we do not have any yet) or if the bird drops below the ground level, i.e., the bottom edge of the window. Create a new method \texttt{is\_airborne()} that will return \texttt{True} if \texttt{y} position of the bird is above \texttt{-1} (note, you do not need an explicit \texttt{if} for this, nor do you need to write \texttt{True} or \texttt{False} anywhere, think how this can be done without these).
 
-In the main loop add the check for \texttt{bird.is\_airbourne()} condition so that it continues until player presses \texttt{"escape"} or the bird hits the ground.
+In the main loop add the check for \texttt{bird.is\_airborne()} condition so that it continues until player presses \texttt{"escape"} or the bird hits the ground.
 
-Add \texttt{is\_airbourne} method to \texttt{FlappyBird} class.
+Add \texttt{is\_airborne} method to \texttt{FlappyBird} class.
 Use it in \texttt{code05.py} as an additional conditionfor the game loop.
 
 \hypertarget{computed-attribute-property}{%
 \section{\texorpdfstring{Computed attribute \texttt{@property}}{Computed attribute @property}}\label{computed-attribute-property}}
 
-As was explained the in ``Object-oriented programming'' section above, properties describe state of an object, whereas methods describe what an object can do or what you do to an object. Our \texttt{is\_airbourne()} method breaks this logic: It describes the \emph{state} of the bird but we \emph{call} it (use it) as a method. What we have here is a \emph{computed} property that is inferred from other properties of an object. In our case, we infer property \texttt{is\_airbourne} from \texttt{y}. We could, of course, make \texttt{is\_airbourne} into a real property by defining it in the constructor and then updating it inside \texttt{update()} method. However, we will instead use a cool feature (called \href{https://www.python.org/dev/peps/pep-0318/}{decorators}) to turn a method into a read-only property. The only thing you need to do is to add \texttt{@property} decorator right above the \texttt{def\ is\_airbourne(self):} line and drop brackets when using it in the main loop (so just \texttt{bird.is\_airbourne} instead of \texttt{bird.is\_airbourne()}).
+As was explained the in ``Object-oriented programming'' section above, properties describe state of an object, whereas methods describe what an object can do or what you do to an object. Our \texttt{is\_airborne()} method breaks this logic: It describes the \emph{state} of the bird but we \emph{call} it (use it) as a method. What we have here is a \emph{computed} property that is inferred from other properties of an object. In our case, we infer property \texttt{is\_airborne} from \texttt{y}. We could, of course, make \texttt{is\_airborne} into a real property by defining it in the constructor and then updating it inside \texttt{update()} method. However, we will instead use a cool feature (called \href{https://www.python.org/dev/peps/pep-0318/}{decorators}) to turn a method into a read-only property. The only thing you need to do is to add \texttt{@property} decorator right above the \texttt{def\ is\_airborne(self):} line and drop brackets when using it in the main loop (so just \texttt{bird.is\_airborne} instead of \texttt{bird.is\_airborne()}).
 
 \texttt{@property} tells Python that the method right below \textbf{will} (must!) return a value and that outside world should see it not as a method but as a \emph{property}. You can use it to make properties read-only, so that they could not be (easily) changed from outside or to create properties that are computed on-the-fly as in our example.
 
 Note that difference is not so much of practical implementation (changes we made to the code were minimal) but of a conceptual nature: Object's states should be properties not methods. In our small example this may look like an overkill but in a moderately complex project even small conceptual blurring of lines could make it harder to understand the code.
 
-Turn \texttt{is\_airbourne} into a property.
+Turn \texttt{is\_airborne} into a property.
 Use it as property in \texttt{code06.py}.
 
-\hypertarget{to-be-continued}{%
-\section{To be continued\ldots{}}\label{to-be-continued}}
+\hypertarget{an-opening-in-an-obstacle}{%
+\section{An opening in an obstacle}\label{an-opening-in-an-obstacle}}
+
+We aim of the game is for the bird to fly avoiding obstacles. An obstacle consist of two rectangle, one that protrudes from above and another one from below. The opening between them gives the bird an opportunity to fly through. So let us begin by writing a code (in the Jupyter notebook) that would generate a random opening, characterized by \texttt{y\_bottom} and \texttt{y\_top} based on four parameters:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{lower\_margin} : the lower margin relative to the bottom of the screen, i.e., the \texttt{y\_bottom} cannot be closer to -1 than that.
+\item
+  \texttt{upper\_margin} : the upper margin relative to the top of the screen, i.e., the \texttt{y\_top} cannot be closer to 1 than that.
+\item
+  \texttt{min\_size} : the minimal size of the opening, i.e., minimal distance between \texttt{y\_top} and \texttt{y\_bottom}.
+\item
+  \texttt{max\_size} : the maximal size of the opening, i.e., maximal distance between \texttt{y\_top} and \texttt{y\_bottom}.
+\end{itemize}
+
+Write a code that assume certain values for each parameter (e.g., \texttt{lower\_margin\ =\ 0.2}, \texttt{upper\_margin\ =\ 0.2}, \texttt{min\_size\ =\ 0.2}, \texttt{max\_size\ =\ 0.4}) and generates a random pair \texttt{(y\_bottom,\ y\_top)} that satisfies the conditions.
+
+Write a random opening code in a Jupiter notebook.
+
+\hypertarget{an-obstacle}{%
+\section{An obstacle}\label{an-obstacle}}
+
+Now let us create an \texttt{Obstacle} class (put it into a separate file). It will consist of two rectangles, on protruding from the top and the other one from the bottom, with a random opening in between. At the moment you need six settings to describe an \texttt{Obstacle}: The four parameters that define a random opening plus a width of rectangles and their color. Describe them as a separate group in the settings files (probably under \texttt{"Obstacles"}) and pass them to the constructor of the \texttt{Obstacle} class.
+
+In the constructor, generate a random opening (you have the code for this already) and create the two rectangles both \texttt{width} wide, one going from the top till \texttt{y\_top}, another one from the bottom till \texttt{y\_bottom}. Place both horizontally at the right edge of the window but so you could see them. Decide on how you will store the two rectangles, you can put them into two different attributes (e.g., \texttt{upper\_rect} and \texttt{lower\_rect}) or have them in a list. I would suggest the latter approach, as it will simplify your future code. Think about which parameters you need for the \texttt{\_\_init\_\_()} constructor function.
+
+You also will need a \texttt{draw()} method that simply draws both rectangles. Implement the class in a separate file, then create and draw a single obstacle in the main code to check that it looks right.
+
+Create \texttt{Obstacle} class in a separate file.
+Use it in \texttt{code07.py}.
+
+\hypertarget{a-moving-obstacle}{%
+\section{A moving obstacle}\label{a-moving-obstacle}}
+
+Conceptually, our bird fly towards an obstacle but instead we will induce perception of its motion by moving obstacles from right to left. Define a new \texttt{speed} setting for an \texttt{Obstacle} class, it should be in \texttt{norm\ units\ per\ second} and create an \texttt{update} method that would change horizontal position of both rectangles based on the amount of time that passed between the calls. This is similar to how we updated bird's position based on its speed, so follow the same logic and think about which additional attributes you require and how you store and use any relevant information.
+
+Call \texttt{update()} at the same place that you update bird's location in the main loop and check that the obstacle is moving from right to left.
+
+Add \texttt{update} method to \texttt{Obstacle} class.
+Use it in \texttt{code08.py}.
+
+\hypertarget{hitting-the-wall}{%
+\section{Hitting the wall}\label{hitting-the-wall}}
+
+At the moment, our bird is flying through the obstacle like it is not there. But it is! Luckily for us, PsychoPy makes implementing this very easy, as it can check whether two stimuli overlap using \href{https://psychopy.org/api/visual/shapestim.html\#psychopy.visual.ShapeStim.overlaps}{overlaps()} method of one of them (and the second stimulus is passed as an argument).
+
+Thus, to check whether the bird hit the wall, we just need to create a method (let us call it \texttt{check\_if\_hit}) in an \texttt{Obstacle} class that will take a bird object and check whether it \href{https://psychopy.org/api/visual/shapestim.html\#psychopy.visual.ShapeStim.overlaps}{overlaps()} with one of the rectangles. Remember, our \texttt{FlappyBird} is a descendant of the \href{https://psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim}{ImageStim}, so we can pass it to the \href{https://psychopy.org/api/visual/shapestim.html\#psychopy.visual.ShapeStim.overlaps}{overlaps()} method directly (advantage of using the inheritance!)
+
+In the main game loop, add the check for the bird \emph{not} hitting the obstacle to the main condition (so now you should have three things to check for).
+Test your code by flying the bird into the wall. Also, by flying your bird through the opening. Note that if our settings make it too tricky, modify them to make the opening larger.
+
+Add \texttt{check\_if\_hit} method to \texttt{Obstacle} class.
+Use it in \texttt{code09.py}.
+
+\hypertarget{an-obstacle-manager}{%
+\section{An obstacle manager}\label{an-obstacle-manager}}
+
+A game with a single obstacle is no fun but before we add more, we need a class that will manage them for us. Let us call it \texttt{ObstaclesManager}. For the moment, it will simply wrap up all functionality that we implemented in the main script. In the constructor, it should create a \emph{list} attribute for obstacle object and add a first one, it should also implement methods \texttt{draw()}, \texttt{update()}, and \texttt{check\_if\_hit()} that draws, update, and checks for an overlap with a bird for \emph{all} obstacles on the list. For the moment we will still have just one of them in the list but implementing things in the loop means it will be easier to add more. Create the class and then use it in the main script.
+
+There should be no actual changes how the game plays, just the code refactoring. However, it helps us to hide the management part from the main script (making it easier to understand) and, if you did everything correctly, the code should ``just work'' once you replace \texttt{Obstacle} with \texttt{ObstaclesManager} object.
+
+Create \texttt{ObstaclesManager} class.
+Use it in \texttt{code10.py}.
+
+\hypertarget{loads-of-obstacles}{%
+\section{Loads of obstacles}\label{loads-of-obstacles}}
+
+Now we are ready to add more obstacles. You need to update the \texttt{update} method of the \texttt{ObstaclesManager} so that add a new obstacle to the list after a random time interval. Define a new settings \texttt{Spawn\ time}, a list of two values that define a minimal and maximal time between spawns, and create a \href{https://psychopy.org/api/clock.html\#psychopy.clock.CountdownTimer}{CountdownTimer} (or a \href{https://psychopy.org/api/clock.html\#psychopy.clock.Clock}{Clock}, remember they differ only in whether time is subtracted or added) attributed. Whenever the timer is up, add a new obstacle to the list, generate a new delay, and set the timer again. Note that now you need settings and a Window in the \texttt{update} because they are required for creating a new obstacle. Think how you can store them for later use in the constructor.
+
+Do you need to change anything in the main script? Check that more obstacles appear over time!
+
+Update \texttt{update} of the \texttt{ObstaclesManager} class.
+
+\hypertarget{removing-redundant-obstacles}{%
+\section{Removing redundant obstacles}\label{removing-redundant-obstacles}}
+
+Once the obstacle is past the left edge of the screen (its x-axis position is less than \texttt{-1}) we need to remove it from the list. Otherwise, we will waste a lot of time and memory keeping track and drawing obstacles that are neither relevant, nor visible. Think about how you would implement this before reading further.
+
+First, we need to compute the horizontal position of an obstacle. You can deduce it from \texttt{pos} attribute of one of the rectangles and implement this use of attribute (\texttt{pos} of \texttt{Obstacle}) of an attribute (\texttt{obstacles} of \texttt{ObstaclesManager}) directly. However, working with attributes of attributes makes code harder to read and to maintain. Instead, add a new computed property \texttt{x} to \texttt{Obstacle} class that would return a single number (horizontal position) using \texttt{@property} decorator we used for the bird's \texttt{is\_airborne} dynamic attribute.
+
+Update the \texttt{update} method of the \texttt{ObstaclesManager} to check the position the \emph{first} obstacle in the list. If it less than -1, simply \href{https://docs.python.org/3.1/tutorial/datastructures.html}{pop} it from the list. Why the first one? Because any other obstacle in the list was added later and, therefore, must be further to the right. Why \emph{only} the first one? If we assume both a reasonable motion speed and a reasonable spawn delay, it is very unlikely that more than one obstacles reaches the left edge at the same time.
+
+Note that for safety reasons, you must first check that the \texttt{obstacles} attribute is not empty! Hint, when used in a conditional statement directly, empty list evaluates to \texttt{False}. Debug the code to make sure that obstacles are indeed removed. You can either use a different cut-off point (e.g., -0.25) to see that easier or put a break point at the line that pops the redundant obstacle (better still, do both!)
+
+Update \texttt{update} of the \texttt{ObstaclesManager} class.
+
+\hypertarget{keeping-the-score}{%
+\section{Keeping the score}\label{keeping-the-score}}
+
+It is hard to brag about your bird-flying skills, if you do not how many obstacles did you fly through. Let us add the score! First, create a \href{https://psychopy.org/api/visual/textstim.html\#psychopy.visual.TextStim}{TextStim} (call it \texttt{score\_text}) and put it somewhere one the screen, e.g., a top-left or top-right corner. Initialize its text to \texttt{"0"}. Draw it in the main loop. Make sure it works before you continue.
+
+To keep the score, we need to count the number of obstacles that the bird clears on every frame and add it to the total score. As with the removal of redundant obstacles, it will be either zero or one obstacle that crossed the middle of the screen. But in this case, it is not the leftmost that we have to check but the \emph{leftmost} among those that did not yet cross the mid-line. There are different way you can approach this, so think how you would approach this before reading on. And if you came up with a different plan, by all means -- implement it!
+
+My way of doing this is to introduce a new attribute \texttt{scored\ =\ False} and a method \texttt{score()} to the \texttt{Obstacle} class. In the \texttt{score()} method, if the object crossed the \texttt{0} line \emph{and} has not been scored, it marked as \texttt{scored} and the method returns \texttt{1}. Otherwise, the object was either already scored or did not cross the mid-line yet, so it returns \texttt{0}. Next, I added a \texttt{score()} method to the \texttt{ObstaclesManager} that simply computes the total score (sum of) scores of all obstacles in the list. In the main script this score is added to a \texttt{score} variable that, in turn, is used to update \texttt{score\_text}.
+
+Update your code anduse it in \texttt{code11.py}.
+
+\hypertarget{foundation}{%
+\section{Foundation}\label{foundation}}
+
+This is just a foundation of a game, so feel free to add to it. Animated bird? Difficulty levels? Different kinds of obstacles? High-score table?
 
   \bibliography{book.bib}
 
