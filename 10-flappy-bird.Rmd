@@ -13,7 +13,7 @@ cat(
 ## Chapter concepts
 
 * Object-oriented programming
-* @property
+* `@property`
 
 
 We will use this game as an opportunity to learn more about object-oriented programming. You already know how to use classes, now you get to create them and see how it makes your life easier.
@@ -364,5 +364,5 @@ My way of doing this is to introduce a new attribute `scored = False` and a meth
 Update your code and<br/>use it in `code11.py`.
 :::
 
-## Foundation
+## A foundation
 This is just a foundation of a game, so feel free to add to it. Animated bird? Difficulty levels? Different kinds of obstacles? High-score table?
