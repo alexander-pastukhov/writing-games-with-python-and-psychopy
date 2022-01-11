@@ -6,7 +6,7 @@
 ]{book}
 \title{Writing games with Python and PsychoPy}
 \author{Alexander (Sasha) Pastukhov}
-\date{2021-12-21}
+\date{2022-01-11}
 
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
@@ -3106,6 +3106,303 @@ Put your code into \texttt{code05.py}.
 
 \hypertarget{merry-christmas-and-a-happy-new-year}{%
 \section{Merry Christmas and a Happy New Year!}\label{merry-christmas-and-a-happy-new-year}}
+
+\hypertarget{flappy-bird}{%
+\chapter{Flappy Bird}\label{flappy-bird}}
+
+Today we will stat developing a \emph{Flappy Bird} game. You control a bird that must fly through the openings in the obstacles but your only action is to ``flap the wings'' in order to counteract the effect of gravity.
+
+We will use this game as an opportunity to learn more about object-oriented programming. You already know how to use classes, now you get to create them and see how it makes your life easier.
+
+\hypertarget{object-oriented-programming}{%
+\section{Object-oriented programming}\label{object-oriented-programming}}
+
+The core idea is in the name: Instead of having variables/data and functions separately, you combine them in an object that has attrbutes/properties (its own variables) and methods (functions). This approach uses our natural tendency to perceive the world as a collection of interacting objects and has several advantages that I will discuss below.
+
+\hypertarget{classes-and-objects-instances-of-classes}{%
+\subsection{Classes and objects (instances of classes)}\label{classes-and-objects-instances-of-classes}}
+
+Before we continue, I need to make an important distinction between \emph{classes} and \emph{objects}. A \emph{class} is a ``blue print'' that describes properties and behavior (methods) of objects of that class. This ``blue print'' is used to create an \emph{instance} of that class, which is called an \emph{object}. For example, Homo sapiens is a \emph{class} that describes species that have certain properties, such as height, and can do certain things, such as running. However, Homo sapiens as a class only has a concept of height but no specific height itself. E.g., you cannot ask ``What is height of Homo sapiens?'' only what is an average (mean, median, etc.) height of individuals of that class. Similarly, you cannot say ``Run, Homo sapiens! Run!'' as abstract concepts have trouble with real actions like that. Instead, it is Alexander Pastukhov who is an \emph{instance} of Homo sapiens class with a specific height and a specific (not particularly good) ability to run. Other instances of Homo sapiens (other people) will have different height and a different (typically better) ability to run. Thus, class describes what kind of properties and methods objects have. This means that whenever you meet a Homo sapien, you could be sure that they have height. However, individual objects have different values for various properties and so calling their methods (asking them to perform certain actions) may result in different outcomes.
+
+Another, a more applied, example would be your use of \href{https://psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim}{ImageStim} \emph{class} to create multiple \emph{instances} of front side of a card in \href{memory-game}{Memory} game. Again, the \emph{class} defines properties (\texttt{image}, \texttt{pos}, \texttt{size}, etc.) and methods (e.g., method \texttt{draw()}) that individual \emph{objects} will have. You created these objects to serve as front side of cards. You set \emph{different} values for same properties (\texttt{image}, \texttt{pos}) and that ensured that when you call their method \texttt{draw()}, each card was drawn at its own location and with it own image.
+
+\hypertarget{encapsulation}{%
+\subsection{Encapsulation}\label{encapsulation}}
+
+Putting all the data (properties) and behavior (methods) inside the class simplifies programming by ensuring that all relevant information can be found in its definition. Thus, you have a single place that should hold \emph{everything} that defines object's behavior. Contrast this with our approach in previous seminars where cards as dictionaries were separate from functions that created them. Today, you will see how encapsulating everything into classes turns this mess into a simpler and easier-to-understand code.
+
+\hypertarget{inheritance-generalization}{%
+\subsection{Inheritance / Generalization}\label{inheritance-generalization}}
+
+In object-oriented programming, a class can be derived from some other \emph{ancestor} class and thus \emph{inherit} its properties and methods. Moreover, several classes can be derived from a single ancestor producing a mix of unique and shared functionality. This means that instead of rewriting the same code for each class, you can define a common code in an ancestor class and focus on differences or additional methods and properties in descendants.
+
+Using the Homo sapiens example from above. Humans, chimpanzees and gorillas are all different species but we share a common ancestor. Hence, we are different in many respect, yet, you could think about all of us as ``apes'' that have common properties such as binocular trichromatic vision. In other words, if you are interested in color vision, you do not care what specific species you are looking it, as all apes are (roughly) the same in that respect. Or, you can move further down the evolution tree and think about us as ``mammals'' that, again, have common properties and behavior, such as thermoregulation and lactation. Again, if you are interested \emph{only} in whether an animal has thermoregulation, knowing that it is a mammal is enough.
+
+Similarly, in PsychoPy various visual stimuli that we used (\href{https://psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim}{ImageStim}, \href{https://psychopy.org/api/visual/textstim.html\#psychopy.visual.TextStim}{TextStim}, \href{https://psychopy.org/api/visual/rect.html\#psychopy.visual.rect.Rect}{Rect}) have same properties (e.g., \texttt{pos}, \texttt{size}, etc.) and methods (most notably, \texttt{draw()}). This is because they are all descendants from a common ancestor \texttt{BaseVisualStim} that defines their common properties and methods\footnote{\texttt{BaseVisualStim} does not actually define \texttt{draw()} method, only that it must be present.}. This means that you can assume that \emph{any} visual stimulus (as long as it descends from \texttt{BaseVisualStim}) will have \texttt{size}, \texttt{pos}, \texttt{ori} and can be drawn. This, in turn, means that you can have a list of various PsychoPy visual stimuli and move or draw all of them in a single loop without thinking which \emph{specific} visual stimulus you are moving or drawing. Also note that you cannot assume these same properties for \emph{sound} stimuli because they are \emph{not} descendants of \texttt{BaseVisualStim} but of \texttt{\_SoundBase} class.
+
+Where is other way of achieving common behavior (generalization) in Python without orderly inheritance, such as ``duck typing''\footnote{Yes, it is really called ``duck typing''.} but it will be a topic of another seminar.
+
+\hypertarget{polymorphism}{%
+\subsection{Polymorphism}\label{polymorphism}}
+
+As you've learned in the previous section, inheritance allows different descendants to share common properties and behavior, so that in certain cases you can view them as being equivalent to an ancestor. E.g., any visual stimulus (a descendant of \texttt{BaseVisualStim} class) can be drawn, so you just call its \texttt{draw()} method. However, it is clear that these different stimuli implement drawing \emph{differently}, as the \href{https://psychopy.org/api/visual/rect.html\#psychopy.visual.rect.Rect}{Rect} stimulus looks different from the \href{https://psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim}{ImageStim} or \href{https://psychopy.org/api/visual/textstim.html\#psychopy.visual.TextStim}{TextStim}. This is called ``polymorphism'' and the idea is to keep the common interface (same \texttt{draw()} call) while abstracting away the actual implementation. This allows you to think about what you want an object to do (or what to do with an object), instead of thinking how exactly it is implemented.
+
+\hypertarget{a-minimal-class-example}{%
+\subsection{A minimal class example}\label{a-minimal-class-example}}
+
+Enough of the theory, let us see how classes are implemented in Python. Here is a very simple class that has nothing but the \emph{constructor} \texttt{\_\_init\_\_()} method, which is called whenever a new object (class instance) is created, and a single attribute / property \texttt{total}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Accumulator:}
+    \CommentTok{"""}
+\CommentTok{    Simple class that accumulates (sums up) values.}
+
+\CommentTok{    Properties}
+\CommentTok{    {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{    total : float}
+\CommentTok{        Total accumulated value}
+\CommentTok{    """}
+
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \CommentTok{"""}
+\CommentTok{        Constructor, initializes the total value to zero.}
+\CommentTok{        """}
+        \VariableTok{self}\NormalTok{.total }\OperatorTok{=} \DecValTok{0}
+        
+\CommentTok{\# here we create an object number\_sum, which is an instance of class Accumulator.}
+\NormalTok{number\_sum }\OperatorTok{=}\NormalTok{ Accumulator()}
+\BuiltInTok{print}\NormalTok{(number\_sum.total)}
+\end{Highlighting}
+\end{Shaded}
+
+Let's go through it line by line. First line \texttt{class\ Accumulator:} shows that this is a declaration of a \texttt{class} whose name is \texttt{Accumulator}. Note that the first letter is capitalized. This is not required per se, so Python police won't be knocking on your door if you write it all in lower or upper case. However, the general recommendation is that \textbf{class} names are written using \texttt{UpperCaseCamelCase} whereas \textbf{object} (instances of the class) names are written using \texttt{lower\_case\_snake\_case}. This makes distinguishing between classes and objects (instances of classes) easier, so you should follow this convention.
+
+The definition of the class are the remaining \emph{indented} lines. As with functions or loops, it is the indentation that defines what is inside and what is outside of the class. The only method we defined is \texttt{def\ \_\_init\_\_(self):}. This is a \emph{special} method\footnote{There are more special methods that you will learn about later, they all follow \texttt{\_\_methodname\_\_()} convention.} that is called when an object (instance of the class) is created. This allows you to initialize the object based on parameters that were passed to this function (if any). You do not call this function directly, rather it is called whenever an object is created, e.g., \texttt{number\_sum\ =\ Accumulator()} (last line). Also, it does not return any value explicitly via \texttt{return}. Instead, \texttt{self} (the very first parameter, more on it below) is returned automatically.
+
+All class methods (apart from special cases we currently do not concern ourselves with) must have one special first parameter that is \emph{the object} itself. By convention it is called \texttt{self}\footnote{Again, you can use any name for that parameter but that will surely confuse everyone.}. It is passed to the method automatically, so whenever you write \texttt{square.draw()} (no explicit parameters written in the function call), the actual method still receives one parameter that is the \emph{reference} to the \texttt{square} variable whose method you called. Inside a method, you use this variable to refer to the object itself.
+Let us go back to the constructor \texttt{\_\_init()\_\_} to see how you can use \texttt{self}. Here, we add a new \emph{persistent} attribute/property to the object and assign a value to it: \texttt{self.total\ =\ 0}. It is \emph{persistent}, because even though we created it inside the method, the mutable object is passed by reference and, therefore, we assigned it to the object itself. Now you can use this property either from inside \texttt{self.total} or from outside \texttt{number\_sum.total}. You can think of properties as being similar to field/value pairs in the dictionary we used in Memory game but for syntax: \texttt{object.property} versus \texttt{dictonary{[}"field"{]}}\footnote{This is actually how all properties and methods are stored, in a \texttt{\_\_dict\_\_} attribute, so you can write \texttt{number\_sum.\_\_dict\_\_{[}"total"{]}} to get it.}. Technically, you can create new properties in any method or even from outside (e.g., nothing prevents you from writing \texttt{number\_sum.color\ =\ "red"}). However, this makes understanding the code much harder, so the general recommendation is to create \emph{all} properties inside the constructor \texttt{\_\_init\_\_()} method, even if this means assigning \texttt{None} to them\footnote{If you use a linter, it will complain whenever it sees a property not defined in the constructor}.
+
+\hypertarget{add-method}{%
+\subsection{\texorpdfstring{\texttt{add} method}{add method}}\label{add-method}}
+
+Let us add a method that adds 1 to the \texttt{total} property.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Accumulator:}
+\NormalTok{    ... }\CommentTok{\# I am skipping all previous code here}
+    
+    \KeywordTok{def}\NormalTok{ add(}\VariableTok{self}\NormalTok{):}
+        \CommentTok{"""}
+\CommentTok{        Add 1 to total}
+\CommentTok{        """}
+        \VariableTok{self}\NormalTok{.total }\OperatorTok{+=} \DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+It has first special argument \texttt{self} that is the object itself and we simply add 1 to its \texttt{total} property. Again, remember that \texttt{self} is passed automatically whenever you call the method, meaning that an actual call looks like \texttt{number\_sum.add()}.
+
+Create a Jupyter notebook (you will need to submit it as part of the assignment) and copy-paste the code for \texttt{Accumulator} class, including the \texttt{.add()} method. Create \textbf{two} objects, call them \texttt{counter1} and \texttt{counter2}. Call \texttt{.add()} method twice for \texttt{counter2} and thrice for \texttt{counter1} (bonus: do it using \texttt{for} loop). What is the value of the \texttt{.total} property of each object? Check it by printing it out.
+
+Copy-paste and test \texttt{Accumulator} class code in a Jupiter notebook.
+
+\hypertarget{flexible-accumulator-with-a-subtract-method}{%
+\subsection{\texorpdfstring{Flexible accumulator with a \texttt{subtract} method}{Flexible accumulator with a subtract method}}\label{flexible-accumulator-with-a-subtract-method}}
+
+Now lets us create a new class that is a \emph{descendant} of the \texttt{Accumulator}. We will call it \texttt{FlexibleAccumulator} as it will allow you to also \emph{subtract} from the total count. You specify ancestors (could be more than one!) in round brackets after the class name
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ FlexibleAccumulator(Accumulator):}
+    \ControlFlowTok{pass} \CommentTok{\# You must have at least one non{-}empty line, and pass means "do nothing"}
+\end{Highlighting}
+\end{Shaded}
+
+Now you have a new class that is a descendant of \texttt{Accumulator} but, so far, is a perfect copy of it. Add \texttt{subtract} method to the class. It should subtract \texttt{1} from the \texttt{.total} property (don't forget to \emph{document} it!). Check that it works. Create one instance of \texttt{Accumulator} and another one of \texttt{FlexibleAccumulator} class and check that you can call \texttt{add()} on both of them but \texttt{subtract()} only for the latter.
+
+Add \texttt{subtract} method to the \texttt{FlexibleAccumulator}
+class in a Jupiter notebook. Add testing.
+
+\hypertarget{method-arguments}{%
+\section{Method arguments}\label{method-arguments}}
+
+Now, create a new class \texttt{SuperFlexibleAccumulator} that will be able to both \texttt{add()} and \texttt{subtract()} an \emph{arbitrary} value. Think about which class it should inherit from. Redefine both \texttt{.add()} and \texttt{.subtract()} method in that new class by adding \texttt{value} argument to both method and add/subtract this value rather than \texttt{1}. Note that now you have \emph{two} arguments in each method \texttt{(self,\ value)} but when you call you only need to pass the latter (again, \texttt{self} is passed automatically). Don't forget to document \texttt{value} argument (but you do not need to document \texttt{self} as its meaning is fixed).
+
+Create \texttt{SuperFlexibleAccumulator} class and definesuper flexible \texttt{add} and \texttt{subtract} methodsthat have \texttt{value} parameter ( in a Jupiter notebook).Test them!
+
+\hypertarget{constructor-arguments}{%
+\subsection{Constructor arguments}\label{constructor-arguments}}
+
+Although constructor \texttt{\_\_init(...)\_\_} is special, it is still a method. Thus, you can pass arguments to it just like you did it for other methods. You pass these arguments when you create an object, so in our case, you put it inside the bracket for \texttt{counter\ =\ SuperFlexibleAccumulator(...)}.
+
+Modify the code so that you pass the initial value that total is set to, instead of zero.
+::: \{.rmdnote .practice\}
+Add \texttt{initial\_value} parameter to the constructor of the \texttt{SuperFlexibleAccumulator} class in a Jupiter notebook. Test it!
+:::
+
+\hypertarget{calling-methods-from-other-methods}{%
+\subsection{Calling methods from other methods}\label{calling-methods-from-other-methods}}
+
+You can call a function or object's method at any point of time, so, logically, you can use methods inside methods. Let's modify our code, realizing that \emph{subtracting} a value is like \emph{adding a negative} value. Modify your code, so that \texttt{.subtract()} only negates the value before passing is to \texttt{.add()} for actual processing. Thus, \texttt{total} is modified \emph{only} inside the \texttt{add()} method.
+
+Modify \texttt{subtract()} method of \texttt{SuperFlexibleAccumulator}to utilize \texttt{add()} in a Jupiter notebook.Test it!
+
+\hypertarget{local-variables}{%
+\subsection{Local variables}\label{local-variables}}
+
+Just like normal functions, you methods can have local variables. They are local (visible and accessible only from within the method) and are not persistent (their values do not survive between the calls). Conceptually, you separate variables that need to be persistent (retain their value the whole time object exists) as attributes/properties and temporary variables that are need only for the computation itself as local method variables. What would be value of property \texttt{.total} in this example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Accumulator:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, initial):}
+\NormalTok{        temp }\OperatorTok{=}\NormalTok{ initial }\OperatorTok{*} \DecValTok{2}
+        \VariableTok{self}\NormalTok{.total }\OperatorTok{=}\NormalTok{ inital}
+        
+\NormalTok{counter }\OperatorTok{=}\NormalTok{ Accumulator(}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+What about in this case?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Accumulator:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, initial):}
+\NormalTok{        temp }\OperatorTok{=}\NormalTok{ initial }\OperatorTok{*} \DecValTok{2}
+        \VariableTok{self}\NormalTok{.total }\OperatorTok{=}\NormalTok{ temp}
+        
+\NormalTok{counter }\OperatorTok{=}\NormalTok{ Accumulator(}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{flappy-bird-the-humble-beginnings}{%
+\section{Flappy Bird: the humble beginnings}\label{flappy-bird-the-humble-beginnings}}
+
+We will start with a basic scaffolding for our program. Download the \href{material/Blue-Bird.png}{bird image}\footnote{Created by \href{https://openclipart.org/artist/Scout}{Madison Kingsford}.} and put it into a folder where you will store the code. Create a basic code that uses \href{settings-files}{settings file} that defines minimal setting for a window (size) and a bird (image file). Organize it hierarchically, as follows, as this will help us keep settings for different classes organized.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{\{}
+  \DataTypeTok{"Bird"}\FunctionTok{:} \FunctionTok{\{}
+    \DataTypeTok{"Image"} \FunctionTok{:} \StringTok{"Blue{-}Bird.png"}
+  \FunctionTok{\},}
+  \DataTypeTok{"Window"}\FunctionTok{:} \FunctionTok{\{}
+    \DataTypeTok{"Size"}\FunctionTok{:} \OtherTok{[}\DecValTok{800}\OtherTok{,} \DecValTok{600}\OtherTok{]}\FunctionTok{,}
+  \FunctionTok{\}}
+\FunctionTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Create a \href{https://psychopy.org/api/visual/window.html\#psychopy.visual.Window}{window} using this specified size and an \href{https://psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim}{ImageStim} using the filename from the settings file. Add a basic game loop in which you repeatedly draw the bird (should appear right at the center of the screen) and check for a key press (\emph{escape} should exit the game).
+
+Put your code into \texttt{code01.py}.
+
+\hypertarget{flappy-bird-class}{%
+\section{Flappy Bird class}\label{flappy-bird-class}}
+
+Our flappy bird is, effectively, an image but we would like it to have additional behaviors, like, automatically falling down due to gravity, flying up due to flapping its wings, etc. There are several way we can do this. We can keep the image in \href{https://psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim}{ImageStim} and write additional functions to handle it (the way we did previously). We could create an new class \texttt{FlappyBird} that will have the \href{https://psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim}{ImageStim} as its attribute. Or, we could utilize the power of inheritance and build \texttt{FlappyBird} class on top of the \href{https://psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim}{ImageStim}. This means less work for us, so that is the path we will follow.
+
+Create a new file that will contain your \texttt{FlappyBird} class. Here is how it should look like:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{"""Your comment on what this file contains.}
+\CommentTok{"""}
+\CommentTok{\# import libraries, which ones do you need?}
+
+\KeywordTok{class}\NormalTok{ FlappyBird(visual.ImageStim):}
+  \CommentTok{"""}
+\CommentTok{  FlappyBird class based on ImageStim}
+\CommentTok{  """}
+  \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, win, settings):}
+    \CommentTok{"""}
+\CommentTok{    Constructor.}
+\CommentTok{    """}
+    \BuiltInTok{super}\NormalTok{().}\FunctionTok{\_\_init\_\_}\NormalTok{(win, image}\OperatorTok{=}\NormalTok{settings[}\StringTok{"Image"}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+In the code above, I defined \texttt{FlappyBird} as a descendant of the \href{https://psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim}{ImageStim}. To make the latter work, we need to initialize it properly by calling it constructor. This is what \texttt{super().\_\_init\_\_(...)} call does: Calls constructor of the ancestor class to enable all the magic that we want to reuse. Recall that \href{https://psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim}{ImageStim} needs at least two parameters: a PsychoPy \href{(https://psychopy.org/api/visual/window.html\#psychopy.visual.Window)}{window} that the stimulus will belong to and an image (a filename in this case). Here, I assume that when I create a bird object (call the constructor), I pass \emph{two} parameters (again, \texttt{self} comes ``for free'', so you do not pass it explicitly but assume that it is the \emph{first} argument that you get): the {[}window{]}((\url{https://psychopy.org/api/visual/window.html\#psychopy.visual.Window}) that we created plus a dictionary with settings for the bird (there will be more settings, so it would be practical to pass the whole dictionary instead of passing one parameter at a time).
+
+Copy paste that code (plus add appropriate imports and comments) and use \texttt{FlappyBird} class instead of \href{https://psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim}{ImageStim}. Note that \texttt{FlappyBird} inherits \emph{all} its functionality from \href{https://psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim}{ImageStim}, so, apart from how you create it, you can use it in exactly the same way. Meaning, you do not need to modify anything else in your code (told you, it would save us time and effort!).
+
+Put \texttt{FlappyBird} class code into a separate file.
+Use it instead of \texttt{ImageStim} in \texttt{code02.py}.
+
+\hypertarget{a-properly-sized-bird}{%
+\section{A properly-sized bird}\label{a-properly-sized-bird}}
+
+Our bird is very cute but is way too large. Add a new setting for it (I suggest calling is \texttt{Size} and setting it to 0.1) and then use it inside the constructor adding \texttt{size=...} to \texttt{super().\_\_init\_\_} call. Do you need to change anything in the main code?
+
+Add bird size setting.
+Use it in \texttt{FlappyBird} class constructor.
+
+\hypertarget{flappy-bird-is-falling-down-my-dear-lady}{%
+\section{Flappy Bird is falling down (my dear lady)}\label{flappy-bird-is-falling-down-my-dear-lady}}
+
+Before our bird flies, it needs to learn how to fall down. Falling down is just a change of bird's vertical position based on bird's vertical speed. We already have a property for the (horizontal and) vertical position: \texttt{self.pos}, a tuple with \texttt{(x,\ y)} position of the center of the image. But we do need an additional new attribute that would encode bird's vertical speed. Create it in the constructor (if you forgot how to do it, take a look above on how we create the \texttt{total} attribute for \texttt{Accumulator} class) and call it \texttt{vspeed}. Also, create a new setting (I would call it \texttt{"Initial\ vertical\ speed"}) and set it to \texttt{-0.01}, use this setting in the constructor to initialize \texttt{vspeed}.
+
+Now we also need a method that would update bird's position based on its (current) speed. Create this method below the constructor (does it need any parameters beyond compulsory \texttt{self}?). It should simply compute \(y_{new} = y + vspeed\) and assign \(y_{new}\) back to \texttt{pos} attribute (note that you cannot assign only y coordinate, you have to pass the tuple \texttt{(x,\ y)} reusing original \texttt{x} value from \texttt{pos}). Do not forget to document the new method!
+
+Now you need to call the \texttt{update()} on each frame before drawing the bird. This should make your bird fall of the screen! (Experiment with \texttt{"Initial\ vertical\ speed"} setting to make it fall faster or slower or even upwards!)
+
+Update \texttt{FlappyBird} class.
+Use \texttt{update} method in \texttt{code03.py}.
+
+\hypertarget{timing-the-fall}{%
+\section{Timing the fall}\label{timing-the-fall}}
+
+Currently, the speed of our bird's fall is measured in \texttt{norm\ units\ /\ frame}. This works but these are not the most convenient units to think in. Plus, it relies on PsychoPy (and the rest of our code) to ensure that time between individual frames is exactly the same. This is \emph{mostly} the case and is an occasionally slow bird is not a big problem for a game. However, that might be a problem for an actual experiment that requires precise timing of movement. Thus, we need to think about vertical speed in units of \texttt{norm\ units\ /\ second} and measure time between calls of \texttt{update()} method ourselves.
+
+Create a new \href{https://psychopy.org/api/clock.html\#psychopy.clock.Clock}{Clock} attribute that will count the time elapsed since it last reset (I would call it \texttt{frame\_timer}). Modify the \texttt{update()} method to compute \(y_{new} = y + vspeed * T_{elapsed}\), where \(T_{elapsed}\) is the time elapsed between frames. Do not forget to reset the timer! (What will happen if you do forget?)
+
+Now set your \texttt{"Initial\ vertical\ speed"} to some reasonable value (e.g., 0.5) and check that the time it takes for the bird to fall of the screen looks reasonable (for 0.5 norm units / second it should be off the screen in two seconds).
+
+Update \texttt{FlappyBird} class with a timer.
+
+\hypertarget{it-is-all-newtons-fault}{%
+\section{It is all Newton's fault}\label{it-is-all-newtons-fault}}
+
+Now let us add gravity, so that the speed of falling would be constantly changing. Create a new setting and call it \texttt{"Gravity"}. Set it to \texttt{-0.5} (units are \texttt{norm\ units\ per\ second\ squared}) but experiment with different values later on. Acceleration due to gravity changes vertical speed just like speed itself changes the vertical position. Update your \texttt{update} method to change the speed based on acceleration given the elapsed time. What do you need to update first, the speed or the location? Also, think about how you will store the acceleration: It is in settings parameter that exists only in the constructor. You can either store it in a new attribute or store all settings in an attribute for later use.
+
+Update \texttt{FlappyBird} class with acceleration due to gravity.
+
+\hypertarget{flap-bird-flap}{%
+\section{Flap bird, flap!}\label{flap-bird-flap}}
+
+Let us add ability of the bird to ``flap'' in order to stay in the air. First, create a new setting \texttt{Flap\ speed} and set it to \texttt{0.4} (as usual, feel free to experiment!). Add a new method \texttt{.flap(self)} and inside simply set \texttt{vspeed} to \texttt{Flap\ speed}. Thus, a single flap sets the bird flying up with \texttt{Flap\ speed} speed which, however, will be constantly reduced by the accelartion due to \texttt{Gravity} so the bird will eventually start falling down again.
+
+In the main code, check for \texttt{"escape"} and \texttt{"space"} keys. If the latter is pressed, call \texttt{.flap()} method of the bird. Check that you can keep the on the screen by timing the space button presses or can make it fly upwards off the screen.
+
+Add \texttt{flap} method to \texttt{FlappyBird} class.
+Use it in \texttt{code04.py} whenever player presses \emph{space}.
+
+\hypertarget{stay-off-the-ground}{%
+\section{Stay off the ground}\label{stay-off-the-ground}}
+
+In our game, the player can lose either if they hit an obstacle (we do not have any yet) or if the bird drops below the ground level, i.e., the bottom edge of the window. Create a new method \texttt{is\_airbourne()} that will return \texttt{True} if \texttt{y} position of the bird is above \texttt{-1} (note, you do not need an explicit \texttt{if} for this, nor do you need to write \texttt{True} or \texttt{False} anywhere, think how this can be done without these).
+
+In the main loop add the check for \texttt{bird.is\_airbourne()} condition so that it continues until player presses \texttt{"escape"} or the bird hits the ground.
+
+Add \texttt{is\_airbourne} method to \texttt{FlappyBird} class.
+Use it in \texttt{code05.py} as an additional conditionfor the game loop.
+
+\hypertarget{computed-attribute-property}{%
+\section{\texorpdfstring{Computed attribute \texttt{@property}}{Computed attribute @property}}\label{computed-attribute-property}}
+
+As was explained the in ``Object-oriented programming'' section above, properties describe state of an object, whereas methods describe what an object can do or what you do to an object. Our \texttt{is\_airbourne()} method breaks this logic: It describes the \emph{state} of the bird but we \emph{call} it (use it) as a method. What we have here is a \emph{computed} property that is inferred from other properties of an object. In our case, we infer property \texttt{is\_airbourne} from \texttt{y}. We could, of course, make \texttt{is\_airbourne} into a real property by defining it in the constructor and then updating it inside \texttt{update()} method. However, we will instead use a cool feature (called \href{https://www.python.org/dev/peps/pep-0318/}{decorators}) to turn a method into a read-only property. The only thing you need to do is to add \texttt{@property} decorator right above the \texttt{def\ is\_airbourne(self):} line and drop brackets when using it in the main loop (so just \texttt{bird.is\_airbourne} instead of \texttt{bird.is\_airbourne()}).
+
+\texttt{@property} tells Python that the method right below \textbf{will} (must!) return a value and that outside world should see it not as a method but as a \emph{property}. You can use it to make properties read-only, so that they could not be (easily) changed from outside or to create properties that are computed on-the-fly as in our example.
+
+Note that difference is not so much of practical implementation (changes we made to the code were minimal) but of a conceptual nature: Object's states should be properties not methods. In our small example this may look like an overkill but in a moderately complex project even small conceptual blurring of lines could make it harder to understand the code.
+
+Turn \texttt{is\_airbourne} into a property.
+Use it as property in \texttt{code06.py}.
+
+\hypertarget{to-be-continued}{%
+\section{To be continued\ldots{}}\label{to-be-continued}}
 
   \bibliography{book.bib}
 

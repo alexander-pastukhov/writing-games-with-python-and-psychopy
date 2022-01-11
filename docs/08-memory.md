@@ -1,4 +1,4 @@
-# Memory game
+# Memory game {#memory-game}
 
 Today, you will write a good old _Memory_ game: Eight cards are lying "face down", you can turn any two of them and, if they are identical, they are taken off the table. If they are different, the cards turn "face down" again.
 
