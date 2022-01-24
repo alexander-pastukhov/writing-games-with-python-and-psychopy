@@ -14,13 +14,7 @@ Today, we will program Guitar Hero game. In the original game, you must play not
 
 We will program this game (sans Guitar and Hero) and you can see it in the video below. The player must press a correct key (_left_, _down_, or _right_) whenever the target crosses the line. Pressing it to early or too late counts as a mistake. Of course, the faster the targets go, the harder it is to respond on time and with a correct key. As I wrote above, we will use the 3-up-1-down staircase procedure to control for that. 
 
-```{r, eval=knitr::is_html_output(excludes = "epub"), results = 'asis', echo = F}
-cat(
-'<div style="text-align:center;"><video controls>
-    <source src="videos/guitar-hero.m4v" type="video/mp4"> 
-  </video></div>'
-)
-```
+
 
 As per usual, we will take gradual approach:
 
@@ -70,7 +64,8 @@ Put updated code in _code03.py_  and update the class `Target`.
 ## Iterator/Generator functions
 In the next section, we will create a `TimedResponseTask` class that will generate targets at a random location and after a random interval. We can, of course, do it directly in the class but where's fun in that?! Instead, we will use this as an opportunity to learn about iterator/generator functions. An iterator is a _function_ that uses `yield` instead of `return` statement to, well,  _yield_ a value. It _yields_ it, because the function itself _returns_ an iterator object that you can iterate over in a for loop or via `next()` function. Importantly, `yield` "freezes" execution of the function and the next time you call the function _it continues from that point_ rather than from the start of the function. Once you reach the end of the function, it automatically raises `StopIteration()` exception, so you don't need to worry about how to communicate that you ran out of items. It may sound confusing but it is really simple. Here an example to illustrate this:
 
-```{python}
+
+```python
 def iterator_fun():
     yield 3
     yield 1
@@ -80,17 +75,24 @@ def iterator_fun():
 print(iterator_fun())
 
 # iterating via for loop
+#> <generator object iterator_fun at 0x0000000027BACD60>
 for elem in iterator_fun():
     print(elem)
     
 # iterating via next(), note you use an iterator object 
 # that function returned, not the function itself!
+#> 3
+#> 1
+#> wow!
 an_iterator = iterator_fun()  
 
 # now you can use an_iterator to get a next item from it
 print(next(an_iterator))
+#> 3
 print(next(an_iterator))
+#> 1
 print(next(an_iterator))
+#> wow!
 ```
 
 ```python
@@ -172,7 +174,8 @@ Create a new class (I have called it `ScoreText`) that inherits from [TextStim](
 
 Next, we need to update the score (both its numeric form _and_ the text that we draw) every time participant presses a key. We could implement the code _outside_ of the class but that is a fairly bad idea, as it puts class-related code elsewhere. We could also implement a "normal" method, e.g., `add()` that will take care of that. Instead, we will implement a _special_ method [__iadd__](https://docs.python.org/3/reference/datamodel.html#object.__iadd__) that allows to "add to" the object. It takes a single parameter (in addition to the compulsory `self`, of course), performs "adding to the self" operation (whatever that means with respect to your object, can be mathematical addition for an attribute, concatenation of the string, adding to the list, etc.), and **returns back the reference to itself**, i.e., returns `self` not a value of any attribute! Here's how it works:
 
-```{python}
+
+```python
 class AddIt():
     def __init__(self):
         self.number = 0
@@ -184,8 +187,10 @@ class AddIt():
 
 adder = AddIt()
 print(adder.number)
+#> 0
 adder += 10
 print(adder.number)
+#> 10
 ```
 
 Implement that special method for your class, so we can do `score_stim +=  timed_task.check(...)`. Remember, you have to update both numeric _and_ visual representations of the score in that method! Add the score to the main code.
