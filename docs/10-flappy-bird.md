@@ -132,7 +132,7 @@ Just like normal functions, you methods can have local variables. They are local
 class Accumulator:
     def __init__(self, initial):
         temp = initial * 2
-        self.total = inital
+        self.total = initial
         
 counter = Accumulator(1)
 ```
