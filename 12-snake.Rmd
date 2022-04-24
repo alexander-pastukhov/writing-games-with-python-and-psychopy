@@ -74,7 +74,7 @@ As I already wrote, our game will be made of squares. Snake is made of squares. 
 
 Computing the size of the square in units of window size is easy, so let us start with. If you used `"norm"` units for the PsychoPy window, we know that both its width and its height go from -1 (bottom) to 1 (top). We also know that we have to fit in `settings["grid width [in squares]"]` squares horizontally and`settings["grid height [in squares]"]` squares vertically (If you encoded grid size as a list of `[width, height]` then `settings["grid size [in squares]"][0]` and `settings["grid size [in squares]"][1]`). Compute the square width and height in the window units in the constructor method of the `GridWindow` and store it for later use as a tuple in `square_size` attribute. Also, store the grid size in an attribute (e.g., `grid_size`) as it will be useful for snake and apple classes later. Once you implemented the code, use [debugging](#debugging) to check that numbers make sense. E.g., if your grid is 20 squares tall then each square should be $0.1$ `"norm"` units tall.
 
-Next, let us create a method that maps a position on the grid to a position in the window. This way, we can think about position of the snake or apples in terms of the grid but draw them in window coordinates. Create a new method `grid_to_win()` in the `GridWindow` class that takes a tuple of integers `(x_index, y_index)` with grid position (I called this argument `ipos`) and returns a tuple of floats `(x_pos, y_pos)` with the coordinates of the _center_ of the square in _window_ coordinates. Use (list comprehension)[#list-comprehension] to simplify the code. 
+Next, let us create a method that maps a position on the grid to a position in the window. This way, we can think about position of the snake or apples in terms of the grid but draw them in window coordinates. Create a new method `grid_to_win()` in the `GridWindow` class that takes a single parameter with a tuple of integers `(x_index, y_index)` with grid position (I called this argument `ipos`, here and in all other places, I am not counting the compulsory `self` parameter) and returns a tuple of floats `(x_pos, y_pos)` with the coordinates of the _center_ of the square in _window_ coordinates. Use (list comprehension)[#list-comprehension] to simplify the code. 
 
 Take a look at the drawing below to see the geometry of the computation. The red text shows location of red points in _window norm_ units, whereas the black font shows location of a square in _grid index_ units. Note that you need to compute where the _center_(!) of the square should go.
 
@@ -114,4 +114,33 @@ Put your `Snake` class into a separate file (`snaking.py`?).
 Modify the code and save main script into _code06.py_.
 :::
 
+## Get a move on!
+
+Now we need to understand how we will move the snake given that it consist of many segments. Assume that we have a five segment snake that moves up, as in the picture below (segments are color coded to make it easier to see who goes where).
+
+```{r echo=FALSE}
+knitr::include_graphics("images/snake-movement.png")
+```
+
+Technically, we need to move each segment to a new position. The very first "head" segment moves to the position above the snake. The second segment moves to where the head was before. The third moves into the previous position of the forth one, etc. We _can_ implement movement like that but instead we will utilize the fact that, unless colored as in the figure above, all segments look identical. Look at the uniformly colored snake below. We can "move" it by adding a new segment at a new location (growing a new head at the bitey end of the snake, marked as red) and clipping off the last tail segment (marked by the cross), so that the previously penultimate segment becomes the tail. The rest can stay where they are, saving us a lot of hustle when the snake is long!
+
+```{r echo=FALSE}
+knitr::include_graphics("images/snake-movement-2.png")
+```
+
+In the program, we [list.insert(index, value)](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists)^[We could also have used [dqueue](https://docs.python.org/3/library/collections.html#collections.deque) class from _collections_ library instead of the `list`. It is, essentially, a list that allows appending and popping from the left as well.] the new head segment at index 0 and we remove the tail via [list.pop()](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists).
+
+To keep things neat and tidy, we will implement two methods: `grow()` and `trim()`. Why not combine both actions into a single function? Strategic thinking! Once we add apples to the game, the snake will grow after consuming them by _not_ shedding its tail. Thus, separating these two functions now will simplify our lives later on^[To be honest, I have initially implemented it as a single `move()` function , wrote things up up to eating apples, realized the problem, returned and rewrote the notes. So, admittedly, it is a hindsight kind of strategic thinking.].
+
+The `grow()` method should take just a single tuple parameter `dxy` with a direction of snake's movement. I.e., it will be `(-1, 0)` for leftward moving snake, `(1, 0)` for right moving, `(-1, 0)` for up, and `(1, 0)` for down. Inside the method, you compute the coordinates for the new head segment based on the position of the current head (the very first element of the snake) and the direction of motion (`dxy`), create a new snake segment at that location, and insert it before all other elements.
+
+The `trim()` method is even simpler as its just pops the last segment (trims the tail).
+
+To test these functions, create a snake and call its `grow()` method a few times using the same or different directions. Check visually that it works, i.e., that there are correct number of segment (initial head + as many segments as `grow()` method calls) and that the snake was growing in a correct direction. Combine `grow()` and `trim()` calls to visually check the snake as well.
+
+::: {.rmdnote .program}
+Update `Snake` class adding `grow()` and `trim()` methods.
+
+Test it in _code07.py_.
+:::
 
