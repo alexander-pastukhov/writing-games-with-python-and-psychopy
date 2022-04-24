@@ -106,7 +106,9 @@ Modify the code and save main script into _code05.py_.
 :::
 
 ## The snake
-In our game, a snake is just a list with snake segments. Create a new class `Snake`. Its constructor should take just two parameters: a PsychoPy window object and a dictionary with settings (a `"snake"` section of our `settings` variable in the main script). In the constructor, create a single segment and put it into a _list_ attribute `segments`. We will have just one attribute for now but using a list already helps us in the future. Place that only segment roughly at the center of the grid. Use `grid_size` attribute of the `GridWindow` to compute it (you will need to use a floor division [`\\`](https://docs.python.org/3/library/operator.html#mapping-operators-to-functions) for that). In addition, implement a `draw()` method that draws all `segments` in a loop. Test your code by creating and drawing a snake in the main script.
+In our game, a snake is just a list with snake segments. Create a new class `Snake`. Its constructor should take just two parameters: a PsychoPy window object and a dictionary with settings (a `"snake"` section of our `settings` variable in the main script). In the constructor, create a single segment and put it into a _list_ attribute `segments`. We will have just one attribute for now but using a list already helps us in the future. Place that only segment roughly at the center of the grid. Use `grid_size` attribute of the `GridWindow` to compute it (you will need to use a floor division [`\\`](https://docs.python.org/3/library/operator.html#mapping-operators-to-functions) for that). You should also store the window in an attribute for a later use (we need it every time we create a new segment). 
+
+In addition, implement a `draw()` method that draws all `segments` in a loop. Test your code by creating and drawing a snake in the main script.
 
 ::: {.rmdnote .program}
 Put your `Snake` class into a separate file (`snaking.py`?).
@@ -212,12 +214,28 @@ Use it instead of a dictionary look-up in _code12.py_.
 :::
 
 ## Hitting the wall
-We can steer the snake but, at the moment, you can steer it off the screen or make it go through itself. Let us fix the former!
+We can control the snake but, at the moment, you can steer it off the screen or make it go through itself. Let us fix the former!
 
-Develop a new function `hit_the_wall` and put it into _utilities.py_. The function should take `snake` variable as a first parameter and check whether the head of the snake (which segment is it?) is still within the grid that we defined (how do you check for that?). The function should return a logical value. `True`, if the head of the snake is outside of the grid limits (so, it is true that the snake hit the wall). `False`, if it is still inside. I mentioned that you should definitely pass the `snake` as an obvious parameter of the function but do you need other parameters? If yes, which ones? Document the function!
+Add a new computed [property](#computed-attribute-property) `hit_the_wall` to the `Snake` class. The method should check whether the head of the snake (which segment is it?) is still within the grid that we defined (how do you check for that?). It should return `True`, if the head of the snake is outside of the grid limits (so, it is true that the snake hit the wall) or `False`, if it is still inside.
 
-Test the function by adding a new condition inside the main game loop. Check whether the snake `hit_the_wall()` and, if that is the case, the game should be over. Think about the optimal place where to check for this. You could do it on every iteration but there is a more logical place for it, inside that main loop. Where is it?
+Test it by adding a new condition inside the main game loop. Check whether the snake `hit_the_wall` and, if that is the case, the game should be over. Think about the optimal place where to check for this. You could do it on every iteration but there is a more logical place for it in main loop. Where is it?
+
+Test that the game quits after you successfully steered the snake into the wall. 
 
 ::: {.infobox .program}
-Put function _hit_the_wall_ into _utilities.py_ and your updated code into _exercise01.py_.
+Add `hit_the_wall` property to the `Snake` class.
+
+Use it in _code13.py_.
 :::
+
+## Is this the snake?
+In the next section, we will be adding apples to the game. The catch is that these apples should appear at a location that is _not_ occupied by the snake. Otherwise, we would generate apples directly into snake's stomach. Practical for the snake but defeats the purpose of the game. To rephrase this problem, we need a method that checks whether a particular grid location is occupied by the snake.
+
+Add a new method `is_inside()` that takes a tuple with a grid location as a parameter and returns a logical value whether that grid location is occupied by the snake (i.e., by one of its segments). Document the function! Test the method via debugging. Calling it immediately after creating the snake with a location of the head (the only segment) or with a different location. Store a return value into a temporary variable and put a breakpoint at an appropriate place to check its value (or use a debug console).
+
+::: {.infobox .program}
+Add `is_inside()` method to the `Snake` class.
+
+Test it in _code14.py_.
+:::
+
