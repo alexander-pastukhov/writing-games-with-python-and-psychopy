@@ -198,3 +198,16 @@ Now let us think about when and how should we change a value of `direction` vari
 Add  `NEW_DIRECTION` and implement steering in _code11.py_.
 :::
 
+## Turning the hard(er) way
+Let us implement the same "figure out new direction" code in a more complicated way. The purpose of the exercise is to challenge you, show you new methods of the list, and to demonstrate how you can think about a change of the direction as moving through the list. Implement it as a function called `compute_new_direction()`, which  will take two parameters (current direction and pressed key) and will return the new direction of rotation. You can put it above the main script or, better still, put it into a separate _utilities.py_ file. However, in cases like these, I find it useful to play with the code in a Jupyter notebook before turning it into a function, so you could try this approach instead of debugging.
+
+Here is the idea. Imagine that you have a list `["left", "up", "right", "down"]`. For this list, rotation clockwise would correspond to moving through the list to the right (assuming that you jump to the beginning once you move past the last item). Conversely, rotation counterclockwise corresponds to moving to the left (again, assuming that you jump to the end of the list, once you went past the first item). As you see, rotation is expressed as a very intuitive "motion through the list".
+
+For the actual implementation, first, define a local variable as a list in the order I've described. Next, you need to identify the location of the current direction within the list using [index()](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists) method. Then, you need to figure out whether you increase or decrease that index (to move to the right or to the left), based on `pressed_key` parameter (you can use dictionary approach or a conditional assignment here). Finally, you need to control for range, so that index of `-1` becomes `3` (you went too far to the left) and index of `4` should become `0`. The most elegant way to do this, is using `%` [modulus](https://python-reference.readthedocs.io/en/latest/docs/operators/modulus.html) operation. Hint, `4 % 4` is `0`. What about `1 % 4`, `0 % 4`, or even `-1 % 4`? Check it in a Jupyter notebook to get an idea of what I am hinting at. And, of course, do not use `4` for division, use the [length](https://docs.python.org/3/library/functions.html#len) of the list, as it determines the range of values.
+
+::: {.infobox .program}
+Create `compute_new_direction() in _utilities.py_.
+
+Use it instead of a dictionary look-up in _code12.py_.
+:::
+
