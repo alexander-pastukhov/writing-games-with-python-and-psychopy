@@ -211,3 +211,13 @@ Create `compute_new_direction() in _utilities.py_.
 Use it instead of a dictionary look-up in _code12.py_.
 :::
 
+## Hitting the wall
+We can steer the snake but, at the moment, you can steer it off the screen or make it go through itself. Let us fix the former!
+
+Develop a new function `hit_the_wall` and put it into _utilities.py_. The function should take `snake` variable as a first parameter and check whether the head of the snake (which segment is it?) is still within the grid that we defined (how do you check for that?). The function should return a logical value. `True`, if the head of the snake is outside of the grid limits (so, it is true that the snake hit the wall). `False`, if it is still inside. I mentioned that you should definitely pass the `snake` as an obvious parameter of the function but do you need other parameters? If yes, which ones? Document the function!
+
+Test the function by adding a new condition inside the main game loop. Check whether the snake `hit_the_wall()` and, if that is the case, the game should be over. Think about the optimal place where to check for this. You could do it on every iteration but there is a more logical place for it, inside that main loop. Where is it?
+
+::: {.infobox .program}
+Put function _hit_the_wall_ into _utilities.py_ and your updated code into _exercise01.py_.
+:::
