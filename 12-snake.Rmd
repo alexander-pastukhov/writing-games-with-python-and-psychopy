@@ -144,3 +144,25 @@ Update `Snake` class adding `grow()` and `trim()` methods.
 Test it in _code07.py_.
 :::
 
+## The game loop
+Add a main game loop using a `game_state` variable, so that it runs for as long as the `game_state` is equal to `"in round"`. Inside the loop, draw the snake and check for keys without pausing the game. If a player pressed `"escape"`, change `game_state` to `"abort"` (the player decided to quit the game). If a player pressed `"space"` key, grow the snake in the direction of your liking and trim it. Thus, every time you press a _space_ key, the snake should move one square in the direction of your choice. Test the code!
+
+::: {.rmdnote .program}
+Add main loop in _code08.py_.
+:::
+
+## Self-motion
+Our snake should move by itself. For this, we can call `grow()` and `trim()` methods on every iteration of the main game loop, not just when a player presses _space_. However, by default, when you call `win.flip()` it will synchronize your loop with the refresh rate of the screen (typically, 60 Hz). This means that we would call these methods 60 times per second or, to put it differently, the snake will move 60 squares per second. This is waaaay too fast, given that our original grid size was just 30×20 squares. To appreciate just how fast this is, remove `if key was space:...` conditional statement, and call grow/trim snake methods on every iteration and see the snake fly off the screen.
+
+Instead, we should decide on snake's speed, e.g., 4 squares per second^[Note that speed does not need to be an integer number of squares per second. It can move at 1.5 squares per second, so 3 squares every two seconds.], and define it as a new parameter in settings. Use this parameter, to compute a new `Snake` class attribute `step_duration` that expresses the time needed to elapse before moving to a new square (i.e., interval between calls of grow/trim methods in seconds)^[Do it in the constructor, always define all attributes in the constructor, even if they are set to `None`.]. Why two variables that express the same information (interval is just an inverse of speed)? We could define `step_duration` directly in the settings but for a human it makes it harder to understand just how fast the movement will be. At least for me, a speed of `4 squares per second` is easier to comprehend than `0.25 second per square`. Thus, in cases like these, I prefer to have two variables, one human-oriented (in settings) and one computer-oriented (in the actual implementation, computed via a unit conversion). Remember, it is not just about writing a working code, it is about writing a code that is easy for a human to understand.
+
+Also in the constructor, add a new `movement_clock` attribute creating either a [clock](https://www.psychopy.org/api/clock.html#psychopy.clock.Clock) or a [countdown timer](https://www.psychopy.org/api/clock.html#psychopy.clock.CountdownTimer) object^[Remember, they work the same they, it is just a question of whether you start from zero and check whether time is over `step_duration` ([clock](https://www.psychopy.org/api/clock.html#psychopy.clock.Clock)) or you start at `step_duration` and check whether the time ran out/is already negative ([timer](https://www.psychopy.org/api/clock.html#psychopy.clock.CountdownTimer)).] Then add a `reset_clock()` method and a `can_move` computed [property](#computed-attribute-property). The former should reset the clock or the countdown timer (whatever you've picked). The latter should return `True`, if the timer ran out and the snake can move to the next square (in this case you need to reset the timer!), or `False` if that is not the case. In the main script, call `reset_clock()` method before the main loop and inside of the main loop call `grow()` and `trim()` methods _only_ if the snake `can_move`.
+
+Test your code by setting different snake speed.
+
+::: {.rmdnote .program}
+Update `Snake` class adding timer attributes and methods.
+
+Test it in _code09.py_.
+:::
+
