@@ -156,7 +156,7 @@ Our snake should move by itself. For this, we can call `grow()` and `trim()` met
 
 Instead, we should decide on snake's speed, e.g., 4 squares per second^[Note that speed does not need to be an integer number of squares per second. It can move at 1.5 squares per second, so 3 squares every two seconds.], and define it as a new parameter in settings. Use this parameter, to compute a new `Snake` class attribute `step_duration` that expresses the time needed to elapse before moving to a new square (i.e., interval between calls of grow/trim methods in seconds)^[Do it in the constructor, always define all attributes in the constructor, even if they are set to `None`.]. Why two variables that express the same information (interval is just an inverse of speed)? We could define `step_duration` directly in the settings but for a human it makes it harder to understand just how fast the movement will be. At least for me, a speed of `4 squares per second` is easier to comprehend than `0.25 second per square`. Thus, in cases like these, I prefer to have two variables, one human-oriented (in settings) and one computer-oriented (in the actual implementation, computed via a unit conversion). Remember, it is not just about writing a working code, it is about writing a code that is easy for a human to understand.
 
-Also in the constructor, add a new `movement_clock` attribute creating either a [clock](https://www.psychopy.org/api/clock.html#psychopy.clock.Clock) or a [countdown timer](https://www.psychopy.org/api/clock.html#psychopy.clock.CountdownTimer) object^[Remember, they work the same they, it is just a question of whether you start from zero and check whether time is over `step_duration` ([clock](https://www.psychopy.org/api/clock.html#psychopy.clock.Clock)) or you start at `step_duration` and check whether the time ran out/is already negative ([timer](https://www.psychopy.org/api/clock.html#psychopy.clock.CountdownTimer)).] Then add a `reset_clock()` method and a `can_move` computed [property](#computed-attribute-property). The former should reset the clock or the countdown timer (whatever you've picked). The latter should return `True`, if the timer ran out and the snake can move to the next square (in this case you need to reset the timer!), or `False` if that is not the case. In the main script, call `reset_clock()` method before the main loop and inside of the main loop call `grow()` and `trim()` methods _only_ if the snake `can_move`.
+Also in the constructor, add a new `movement_clock` attribute creating either a [clock](https://www.psychopy.org/api/clock.html#psychopy.clock.Clock) or a [countdown timer](https://www.psychopy.org/api/clock.html#psychopy.clock.CountdownTimer) object^[Remember, they work the same they, it is just a question of whether you start from zero and check whether time is over `step_duration` ([clock](https://www.psychopy.org/api/clock.html#psychopy.clock.Clock)) or you start at `step_duration` and check whether the time ran out/is already negative ([timer](https://www.psychopy.org/api/clock.html#psychopy.clock.CountdownTimer)).] Then add a `reset_clock()` method and a `can_move` computed [property](#computed-attribute-property). The former should reset the clock or the countdown timer (whatever you have picked). The latter should return `True`, if the timer ran out and the snake can move to the next square (in this case you need to reset the timer!), or `False` if that is not the case. In the main script, call `reset_clock()` method before the main loop and inside of the main loop call `grow()` and `trim()` methods _only_ if the snake `can_move`.
 
 Test your code by setting different snake speed.
 
@@ -164,5 +164,26 @@ Test your code by setting different snake speed.
 Update `Snake` class adding timer attributes and methods.
 
 Test it in _code09.py_.
+:::
+
+## Describing direction using words
+
+In our current design, we described direction as a tuple `(dx, dy)`. Let us change it, so that it is described using words `"up"`, `"down"`, `"left"`, and `"right"`. This is not strictly necessary but will make our lives somewhat easier later on when we add steering controls. More importantly, it will serve a didactic purpose as well, showing how you can use dictionaries to translate values from one representation to another.
+
+Thus, in the main script, let us create a new string variable `direction` and set it to `"up"` (or any other direction you like). We will keep the `grow()` method as is and will translate individual strings to pairs of `(dx, dy)` values in the main script itself. E.g., `"up"` should correspond to `(0, -1)`, `"right"` to `(1, 0)`, etc.
+
+We can implement this translation via if-elif conditional statements:
+```python
+if direction == "up":
+  dxy = (0, -1)
+elif direction == "right":
+  dxy = (1, 0)
+  ...
+```
+
+However, this approach introduces a lot of repetitive code and does not scale particularly well. Instead, we can use a [dictionary](#dictionaries) (let us call it `DIRECTION_TO_DXY` as it is another constant) with `"up"`, `"right"`, etc. string as keys and tuples `(0, -1)`, `(1, 0)`, etc. as values. This way, we can use current value of the `direction` variable as a key to get the `(dx, dy)` pair from `DIRECTION_TO_DXY` dictionary. Do this translation directly in the `grow()` method call rather than creating a temporary variable as in the if-elif examples above. Test the translation by changing `direction` and checking that the snake moves accordingly.
+
+::: {.rmdnote .program}
+Use `direction` and `DIRECTION_TO_DXY` in _code10.py_.
 :::
 
