@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 14 The Snake | Writing games with Python and PsychoPy</title>
+<meta name="author" content="Alexander (Sasha) Pastukhov">
+<meta name="description" content="This chapter marks the beginning of the second semester in the course, therefore we will use our first game to refresh your knowledge of Python acquired previously. We will use classes (and their...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Chapter 14 The Snake | Writing games with Python and PsychoPy">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://alexander-pastukhov.github.io/writing-games-with-python-and-psychopy/the-snake.html">
+<meta property="og:description" content="This chapter marks the beginning of the second semester in the course, therefore we will use our first game to refresh your knowledge of Python acquired previously. We will use classes (and their...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 14 The Snake | Writing games with Python and PsychoPy">
+<meta name="twitter:description" content="This chapter marks the beginning of the second semester in the course, therefore we will use our first game to refresh your knowledge of Python acquired previously. We will use classes (and their...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.13/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Writing games with Python and PsychoPy</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="" href="software.html"><span class="header-section-number">2</span> Software</a></li>
+<li><a class="" href="programming-tips.html"><span class="header-section-number">3</span> Programming tips and tricks</a></li>
+<li><a class="" href="python-basics.html"><span class="header-section-number">4</span> Python basics</a></li>
+<li><a class="" href="guess-the-number-single-round.html"><span class="header-section-number">5</span> Guess the Number: a single round edition</a></li>
+<li><a class="" href="guess-the-number-multi-round.html"><span class="header-section-number">6</span> Guess the Number: a multi round edition</a></li>
+<li><a class="" href="guess-the-number-ai.html"><span class="header-section-number">7</span> Guess the Number: AI takes a turn</a></li>
+<li><a class="" href="psychopy-basics.html"><span class="header-section-number">8</span> Gettings started with PsychoPy</a></li>
+<li><a class="" href="whack-a-mole.html"><span class="header-section-number">9</span> Whack-a-Mole</a></li>
+<li><a class="" href="memory-game.html"><span class="header-section-number">10</span> Memory game</a></li>
+<li><a class="" href="christmas-special.html"><span class="header-section-number">11</span> Christmas special</a></li>
+<li><a class="" href="flappy-bird.html"><span class="header-section-number">12</span> Flappy Bird</a></li>
+<li><a class="" href="seminar-02-06.html"><span class="header-section-number">13</span> Guitar Hero: staircase and iterator functions</a></li>
+<li><a class="active" href="the-snake.html"><span class="header-section-number">14</span> The Snake</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/alexander-pastukhov/writing-games-with-python-and-psychopy">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="the-snake" class="section level1" number="14">
+<h1>
+<span class="header-section-number">14</span> The Snake<a class="anchor" aria-label="anchor" href="#the-snake"><i class="fas fa-link"></i></a>
+</h1>
+<p>This chapter marks the beginning of the second semester in the course, therefore we will use our first game to refresh your knowledge of Python acquired previously. We will use classes (and their instances, objects), lists, conditional statements, loops, and external setting files to program a classic game of Snake. Consults previous chapters for any information you need to complete the game.</p>
+<div id="snake-game-an-overview" class="section level2" number="14.1">
+<h2>
+<span class="header-section-number">14.1</span> Snake game: an overview<a class="anchor" aria-label="anchor" href="#snake-game-an-overview"><i class="fas fa-link"></i></a>
+</h2>
+<p>Today, we will program a good old classic: the snake game! The story is simple: you control a snake trying to eat as many apples as you can. Every time you consume an apple, snake’s length increases. However, if you hit the wall or bite yourself, the game is over (or you lose one of your lives and game is over once you run out of lives).</p>
+<p>Here is how the final product will look like.</p>
+<div style="text-align:center;">
+<video controls><source src="videos/snake.mp4" type="video/mp4"></source></video>
+</div>
+<p>As before, we will program the game step by step, starting with an empty gray PsychoPy window. Here is the general outline of how we will proceed:</p>
+<ol style="list-style-type: decimal">
+<li>Create boilerplate code to initialize PsychoPy.</li>
+<li>Figure out how to place a square. We need this because our snake is made of square segments and lives on a rectangular grid made of squares.</li>
+<li>Create a single segment stationary snake<a href="the-snake.html#fn72" class="footnote-ref" id="fnref72"><sup>72</sup></a>.</li>
+<li>Make the snake move assuming a rectangular grid.</li>
+<li>Implement “died by hitting a wall”.</li>
+<li>Add apples.
+7, Make the snake grow when it eats an apple.</li>
+<li>Add check for biting itself (and dying).</li>
+<li>Add bells-and-whistles to make game look awesome.</li>
+</ol>
+<p>As you can see, each new step builds on the previous one. Because of that do not proceed to the next step until the current one works and you fully(!) understand what each line of code does. Any leftover uncertainty will linger, grow and complicate your life disproportionately!</p>
+</div>
+<div id="minimal-boilerplate" class="section level2" number="14.2">
+<h2>
+<span class="header-section-number">14.2</span> Minimal boilerplate<a class="anchor" aria-label="anchor" href="#minimal-boilerplate"><i class="fas fa-link"></i></a>
+</h2>
+<p>We need the <a href="psychopy-basics.html#psychopy-basics">usual boilerplate</a> code to get us going:</p>
+<ul>
+<li>Create a PsychoPy window (hardcode its size, as we will compute it from settings later on).</li>
+<li>Wait for any key press.</li>
+<li>Close the window.</li>
+</ul>
+<div class="rmdnote program">
+<p>Put your code into <em>code01.py</em>.</p>
+</div>
+<p>Do not forget to put the multiline comment at the top of the file, describing what we will be doing.</p>
+</div>
+<div id="fancy-boilerplate" class="section level2" number="14.3">
+<h2>
+<span class="header-section-number">14.3</span> Fancy boilerplate<a class="anchor" aria-label="anchor" href="#fancy-boilerplate"><i class="fas fa-link"></i></a>
+</h2>
+<p>In the game, our snake will be composed of square segments and move on a grid made out of squares. Thus, it would be much easier to define our window size based on the size of the grid (in squares) and that of individual squares (in pixels). This way we can figure out window’s height as</p>
+<p><span class="math display">\[window~height~[in~pixels] = window~height~[in~squares] \times square~size~[in~pixels]\]</span></p>
+<p>Note that the latter parameter determines how the game looks, double the size of the square in pixels and that will double both width and height of the window.</p>
+<p>Now, let us think about the <em>units</em> that we will use in our game. Recall that PsychoPy has <a href="psychopy-basics.html#psychopy-units">five different units</a> for size and position. So, which units should we pick to make it easier to draw squares? Reread section on <a href="psychopy-basics.html#psychopy-units">units</a> and think which units you would pick before continuing.</p>
+<hr>
+<p>What is your decision? My suggestion would be <code>"norm"</code> units as they make sizing squares easy, as long as we use a suitable aspect ratio for the window itself. Good news is that the formula above automatically ensures the correct aspect ratio (think why this is the case).</p>
+<p>Before we start coding the window size computation, create a <a href="christmas-special.html#settings-files">settings file</a> using the format of your choice that contains <code>grid size [in squares]</code> (with a list of two values or you could define it as <code>grid width [in squares]</code> plus <code>grid height [in squares]</code>) and <code>square size [in pixels]</code><a href="the-snake.html#fn73" class="footnote-ref" id="fnref73"><sup>73</sup></a>. I would suggest to start with a 30 × 20 grid as it should give us enough space to try things out but you can always increase the resolution of the game later. As for the square size, 20 pixels should be enough (but decide based on your screen resolution).</p>
+<p>Add the code for loading the file into <code>settings</code> variable and then use the settings to compute the window’s size. Test that it works correctly by doubling (or halving) the size of the grid or of the square size.</p>
+<div class="rmdnote program">
+<p>Put your code into <em>code02.py</em>.</p>
+</div>
+</div>
+<div id="fancier-boilerplate" class="section level2" number="14.4">
+<h2>
+<span class="header-section-number">14.4</span> Fancier boilerplate<a class="anchor" aria-label="anchor" href="#fancier-boilerplate"><i class="fas fa-link"></i></a>
+</h2>
+<p>The code for computing window size belongs to the business logic of setting up a window and, therefore, should be part of a window class code. Therefore, let us define a new <code>GridWindow</code> class that will inherit from PsychoPy <a href="https://psychopy.org/api/visual/window.html#psychopy.visual.Window">Window</a> class but modify the constructor to perform a window size computation. The new <code>__init__()</code> method should take grid size and square size as parameters, compute an actual size of the window in pixels, and call the <code>__init__()</code> method of the <em>parent</em> <a href="https://psychopy.org/api/visual/window.html#psychopy.visual.Window">Window</a> class to finish the setup (if you forgot how to call parent’s methods, take a look at how we implemented <a href="flappy-bird.html#flappy-bird-class">Flappy Bird class</a> by inheriting from <a href="https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim">ImageStim</a>). You already have all the code you need but in the main script, so the only thing you are doing is tidying things up by moving it into the constructor where it belongs and adjusting it for use of parameter and parent methods.</p>
+<div class="rmdnote program">
+<p>Put your <code>GridWindow</code> class into a separate file (<code>gridwindow.py</code>?).</p>
+<p>Modify the code and save main script into <em>code03.py</em>.</p>
+</div>
+</div>
+<div id="adding-a-square" class="section level2" number="14.5">
+<h2>
+<span class="header-section-number">14.5</span> Adding a square<a class="anchor" aria-label="anchor" href="#adding-a-square"><i class="fas fa-link"></i></a>
+</h2>
+<p>As I already wrote, our game will be made of squares. Snake is made of squares. Grid it lives on is made of squares. An apple is a square<a href="the-snake.html#fn74" class="footnote-ref" id="fnref74"><sup>74</sup></a>. Which means we need to know the size of that square in the units of the window and we need to know where within the window each square should go based on its coordinates on the grid.</p>
+<p>Computing the size of the square in units of window size is easy, so let us start with. If you used <code>"norm"</code> units for the PsychoPy window, we know that both its width and its height go from -1 (bottom) to 1 (top). We also know that we have to fit in <code>settings["grid width [in squares]"]</code> squares horizontally and<code>settings["grid height [in squares]"]</code> squares vertically (If you encoded grid size as a list of <code>[width, height]</code> then <code>settings["grid size [in squares]"][0]</code> and <code>settings["grid size [in squares]"][1]</code>). Compute the square width and height in the window units in the constructor method of the <code>GridWindow</code> and store it for later use as a tuple in <code>square_size</code> attribute. Also, store the grid size in an attribute (e.g., <code>grid_size</code>) as it will be useful for snake and apple classes later. Once you implemented the code, use <a href="guess-the-number-single-round.html#debugging">debugging</a> to check that numbers make sense. E.g., if your grid is 20 squares tall then each square should be <span class="math inline">\(0.1\)</span> <code>"norm"</code> units tall.</p>
+<p>Next, let us create a method that maps a position on the grid to a position in the window. This way, we can think about position of the snake or apples in terms of the grid but draw them in window coordinates. Create a new method <code>grid_to_win()</code> in the <code>GridWindow</code> class that takes a single parameter with a tuple of integers <code>(x_index, y_index)</code> with grid position (I called this argument <code>ipos</code>, here and in all other places, I am not counting the compulsory <code>self</code> parameter) and returns a tuple of floats <code>(x_pos, y_pos)</code> with the coordinates of the <em>center</em> of the square in <em>window</em> coordinates. Use <a href="memory-game.html#list-comprehension">list comprehension</a> to simplify the code.</p>
+<p>Take a look at the drawing below to see the geometry of the computation. The red text shows location of red points in <em>window norm</em> units, whereas the black font shows location of a square in <em>grid index</em> units. Note that you need to compute where the <em>center</em>(!) of the square should go.</p>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-2"></span>
+<img src="images/snake-grid.png" alt="Grid versus window coordinates" width="594"><p class="caption">
+Figure 14.1: Grid versus window coordinates
+</p>
+</div>
+<p>Remember to document the method following <a href="https://numpydoc.readthedocs.io/en/latest/format.html">NumPy docstring format</a>.</p>
+<p>Now, test this method by creating a <a href="https://psychopy.org/api/visual/rect.html#psychopy.visual.rect.Rect">square</a> (you now get its size from the <code>GridWindow</code> attribute(s) that you created) in the main script and placing it at different locations on the grid. Run the code several times, using different grid indexes or adding several squares to check that it works as intended. I.e., for a 30×20 grid, a grid coordinate <code>0×0</code> should place a square at the bottom-left corner, whereas <code>14×9</code> should put it almost at the center.</p>
+<div class="rmdnote program">
+<p>Put your code into <em>code04.py</em>.</p>
+</div>
+</div>
+<div id="a-snake-segment" class="section level2" number="14.6">
+<h2>
+<span class="header-section-number">14.6</span> A snake segment<a class="anchor" aria-label="anchor" href="#a-snake-segment"><i class="fas fa-link"></i></a>
+</h2>
+<p>Let us think about how can we represent a snake. It consist of one or more segments. The first one is its head, while the last one is its tail<a href="the-snake.html#fn75" class="footnote-ref" id="fnref75"><sup>75</sup></a>. Thus, we can think about a snake as a <a href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists">list</a> of individual segments.</p>
+<p>Consider an individual segment. We need to 1) keep track of its location in <em>grid</em> coordinate system and 2) have its visual representation — a square, just like the one you create during the previous exercise — positioned in <em>window</em> coordinate system. Good news is, you already have a method of the <code>GridWindow</code> class that maps the former on the latter, so as long as you know where the segment is on the grid, placing its square within the window is easy. Thus, each segment has two pieces of information associated with it and we could represent it as a <a href="https://docs.python.org/3/tutorial/datastructures.html#dictionaries">dictionary</a> with two keys (<code>"pos"</code> (tuple of x and y in grid coordinates) and <code>"visuals"</code> (the square)) or, better still, as a class of it own.</p>
+<p>Let us create a <code>SnakeSegment</code> class. Its constructor <code>__init__()</code> methods should take three parameters: 1) a PsychoPy [Window] object, 2) segment coordinates on the grid, 3) segment color. Save the grid coordinates into the <code>ipos</code> attribute (we need to keep track of it when the snake will start moving around) and reuse the code from the previous exercise when created a square. Store that square in <code>visuals</code> attribute and add a <code>draw()</code> method that simply calls the <code>draw()</code> method of the square<a href="the-snake.html#fn76" class="footnote-ref" id="fnref76"><sup>76</sup></a>.</p>
+<p>Test the class by creating and drawing a snake segment in the main script. Define snake segment color in settings, create it inside a separate section <code>"snake"</code> as it will add more parameters later on.</p>
+<div class="rmdnote program">
+<p>Put your <code>SnakeSegment</code> class into a separate file (<em>snaking.py</em>).</p>
+<p>Modify the code and save main script into <em>code05.py</em>.</p>
+</div>
+</div>
+<div id="the-snake-1" class="section level2" number="14.7">
+<h2>
+<span class="header-section-number">14.7</span> The snake<a class="anchor" aria-label="anchor" href="#the-snake-1"><i class="fas fa-link"></i></a>
+</h2>
+<p>As already noted, a snake is just a list with snake segments. Create a new class <code>Snake</code>. Its constructor should take just two parameters: a PsychoPy window object and a dictionary with settings (a <code>"snake"</code> section of our <code>settings</code> variable in the main script). In the constructor, create a single segment and put it into a <em>list</em> attribute <code>segments</code>. We will have just one attribute for now but using a list already helps us in the future. Place that only segment roughly at the center of the grid. Use <code>grid_size</code> attribute of the <code>GridWindow</code> to compute it (you will need to use a floor division <a href="https://docs.python.org/3/library/operator.html#mapping-operators-to-functions"><code>\\</code></a> for that). You should also store the window in an attribute for a later use, as we need it every time we create a new segment.</p>
+<p>In addition, implement a <code>draw()</code> method that draws all <code>segments</code> in a loop. Test your code by creating and drawing a snake in the main script.</p>
+<div class="rmdnote program">
+<p>Put your <code>Snake</code> class into a separate file (<em>snaking.py</em>).</p>
+<p>Modify the code and save main script into <em>code06.py</em>.</p>
+</div>
+</div>
+<div id="get-a-move-on" class="section level2" number="14.8">
+<h2>
+<span class="header-section-number">14.8</span> Get a move on!<a class="anchor" aria-label="anchor" href="#get-a-move-on"><i class="fas fa-link"></i></a>
+</h2>
+<p>Now we need to understand how we will move the snake given that it consist of many segments. Assume that we have a five segment snake that moves up, as in the picture below (segments are color coded to make it easier to see who goes where).</p>
+<div class="inline-figure"><img src="images/snake-movement.png" width="517"></div>
+<p>Technically, we need to move each segment to a new position. The very first “head” segment moves to the position above the snake. The second segment moves to where the head was before. The third moves into the previous position of the forth one, etc. We <em>can</em> implement movement like that but instead we will utilize the fact that, unless colored as in the figure above, all segments look identical. Look at the uniformly colored snake below. We can “move” it by adding a new segment at a new location (growing a new head at the bitey end of the snake, marked as red) and clipping off the last tail segment (marked by the cross), so that the previously penultimate segment becomes the tail. The rest can stay where they are, saving us a lot of hustle when the snake is long!</p>
+<div class="inline-figure"><img src="images/snake-movement-2.png" width="517"></div>
+<p>In the program, we <a href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists">list.insert(index, value)</a><a href="the-snake.html#fn77" class="footnote-ref" id="fnref77"><sup>77</sup></a> the new head segment at index 0 and we remove the tail via <a href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists">list.pop()</a>.</p>
+<p>To keep things neat and tidy, we will implement two methods: <code>grow()</code> and <code>trim()</code>. Why not combine both actions into a single function? Strategic thinking! Once we add apples to the game, the snake will grow after consuming them by <em>not</em> shedding its tail. Thus, separating these two functions now will simplify our lives later on<a href="the-snake.html#fn78" class="footnote-ref" id="fnref78"><sup>78</sup></a>.</p>
+<p>The <code>grow()</code> method should take just a single tuple parameter <code>dxy</code> with a direction of snake’s movement. I.e., it will be <code>(-1, 0)</code> for leftward moving snake, <code>(1, 0)</code> for right moving, <code>(-1, 0)</code> for up, and <code>(1, 0)</code> for down. Inside the method, you compute the coordinates for the new head segment based on the position of the current head (the very first element of the snake) and the direction of motion (<code>dxy</code>), create a new snake segment at that location, and insert it before all other elements.</p>
+<p>The <code>trim()</code> method is even simpler as its just pops the last segment (trims the tail).</p>
+<p>To test these functions, create a snake and call its <code>grow()</code> method a few times using the same or different directions. Check visually that it works, i.e., that there are correct number of segment (initial head + as many segments as <code>grow()</code> method calls) and that the snake was growing in a correct direction. Combine <code>grow()</code> and <code>trim()</code> calls to visually check the snake as well.</p>
+<div class="rmdnote program">
+<p>Update <code>Snake</code> class adding <code>grow()</code> and <code>trim()</code> methods.</p>
+<p>Test it in <em>code07.py</em>.</p>
+</div>
+</div>
+<div id="the-game-loop" class="section level2" number="14.9">
+<h2>
+<span class="header-section-number">14.9</span> The game loop<a class="anchor" aria-label="anchor" href="#the-game-loop"><i class="fas fa-link"></i></a>
+</h2>
+<p>Add a main game loop using a <code>user_abort</code> variable, so that it runs for as long as the <code>user_abort</code> is <code>False</code>. Inside the loop, draw the snake and check for keys without pausing the game. If a player pressed <code>"escape"</code>, change <code>user_abort</code> to <code>True</code> (the player decided to quit the game). If a player pressed <code>"space"</code> key, grow the snake in the direction of your liking and trim it. Thus, every time you press a <em>space</em> key, the snake should move one square in the direction of your choice. Test the code!</p>
+<div class="rmdnote program">
+<p>Add main loop in <em>code08.py</em>.</p>
+</div>
+</div>
+<div id="self-motion" class="section level2" number="14.10">
+<h2>
+<span class="header-section-number">14.10</span> Self-motion<a class="anchor" aria-label="anchor" href="#self-motion"><i class="fas fa-link"></i></a>
+</h2>
+<p>Our snake should move by itself. For this, we can call <code>grow()</code> and <code>trim()</code> methods on every iteration of the main game loop, not just when a player presses <em>space</em>. However, by default, when you call <code>win.flip()</code> it will synchronize your loop with the refresh rate of the screen (typically, 60 Hz). This means that we would call these methods 60 times per second or, to put it differently, the snake will move 60 squares per second. This is waaaay too fast, given that our original grid size was just 30×20 squares. To appreciate just how fast this is, remove <code>if key was space:...</code> conditional statement, and call grow/trim snake methods on every iteration and see the snake fly off the screen.</p>
+<p>Instead, we should decide on snake’s speed, e.g., 4 squares per second<a href="the-snake.html#fn79" class="footnote-ref" id="fnref79"><sup>79</sup></a>, and define it as a new parameter in settings. In the <code>Snake</code> class constructor, use this parameter to compute a new attribute <code>step_duration</code> that expresses the time needed to elapse before moving to a new square (i.e., interval between calls of grow/trim methods in seconds)<a href="the-snake.html#fn80" class="footnote-ref" id="fnref80"><sup>80</sup></a>. Why two variables that express the same information (interval is just an inverse of speed)? We could define <code>step_duration</code> directly in the settings but for a human it makes it harder to understand just how fast the movement will be. At least for me, a speed of <code>4 squares per second</code> is easier to comprehend than <code>0.25 second per square</code>. Thus, in cases like these, I prefer to have two variables, one human-oriented (in settings) and one computer-oriented (in the actual implementation, computed via a unit conversion). Remember, it is not just about writing a working code, it is about writing a code that is easy for a human to understand.</p>
+<p>Also in the constructor, add a new <code>movement_clock</code> attribute creating either a <a href="https://www.psychopy.org/api/clock.html#psychopy.clock.Clock">clock</a> or a <a href="https://www.psychopy.org/api/clock.html#psychopy.clock.CountdownTimer">countdown timer</a> object<a href="the-snake.html#fn81" class="footnote-ref" id="fnref81"><sup>81</sup></a> Then add a <code>reset_clock()</code> method and a <code>can_move</code> computed <a href="flappy-bird.html#computed-attribute-property">property</a>. The former should reset the clock or the countdown timer (whatever you have picked). The latter should return <code>True</code>, if the timer ran out and the snake can move to the next square (in this case you need to reset the timer!), or <code>False</code> if that is not the case. In the main script, call <code>reset_clock()</code> method before the main loop and inside of the main loop call <code>grow()</code> and <code>trim()</code> methods <em>only</em> if the snake <code>can_move</code>.</p>
+<p>Test your code by setting different snake speed.</p>
+<div class="rmdnote program">
+<p>Update <code>Snake</code> class adding timer attributes and methods.</p>
+<p>Test it in <em>code09.py</em>.</p>
+</div>
+</div>
+<div id="describing-direction-using-words" class="section level2" number="14.11">
+<h2>
+<span class="header-section-number">14.11</span> Describing direction using words<a class="anchor" aria-label="anchor" href="#describing-direction-using-words"><i class="fas fa-link"></i></a>
+</h2>
+<p>In our current design, we described direction as a tuple <code>(dx, dy)</code>. Let us change it, so that it is described using words <code>"up"</code>, <code>"down"</code>, <code>"left"</code>, and <code>"right"</code>. This is not strictly necessary but will make our lives somewhat easier later on when we add steering controls. More importantly, it will serve a didactic purpose as well, showing how you can use dictionaries to translate values from one representation to another.</p>
+<p>Thus, in the main script, let us create a new string variable <code>direction</code> and set it to <code>"up"</code> (or any other direction you like). We will keep the <code>grow()</code> method as is and will translate individual strings to pairs of <code>(dx, dy)</code> values in the main script itself. E.g., <code>"up"</code> should correspond to <code>(0, -1)</code>, <code>"right"</code> to <code>(1, 0)</code>, etc.</p>
+<p>We can implement this translation via if-elif conditional statements:</p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb118-1"><a href="the-snake.html#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> direction <span class="op">==</span> <span class="st">"up"</span>:</span>
+<span id="cb118-2"><a href="the-snake.html#cb118-2" aria-hidden="true" tabindex="-1"></a>  dxy <span class="op">=</span> (<span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb118-3"><a href="the-snake.html#cb118-3" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> direction <span class="op">==</span> <span class="st">"right"</span>:</span>
+<span id="cb118-4"><a href="the-snake.html#cb118-4" aria-hidden="true" tabindex="-1"></a>  dxy <span class="op">=</span> (<span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb118-5"><a href="the-snake.html#cb118-5" aria-hidden="true" tabindex="-1"></a>  ...</span></code></pre></div>
+<p>However, this approach introduces a lot of repetitive code and does not scale particularly well. Instead, we can use a <a href="memory-game.html#dictionaries">dictionary</a> (let us call it <code>DIRECTION_TO_DXY</code> as it is another constant) with <code>"up"</code>, <code>"right"</code>, etc. string as keys and tuples <code>(0, -1)</code>, <code>(1, 0)</code>, etc. as values. This way, we can use current value of the <code>direction</code> variable as a key to get the <code>(dx, dy)</code> pair from <code>DIRECTION_TO_DXY</code> dictionary. Do this translation directly in the <code>grow()</code> method call rather than creating a temporary variable as in the if-elif examples above. Test the translation by changing <code>direction</code> and checking that the snake moves accordingly.</p>
+<div class="rmdnote program">
+<p>Use <code>direction</code> and <code>DIRECTION_TO_DXY</code> in <em>code10.py</em>.</p>
+</div>
+</div>
+<div id="it-is-all-about-control" class="section level2" number="14.12">
+<h2>
+<span class="header-section-number">14.12</span> It is all about control<a class="anchor" aria-label="anchor" href="#it-is-all-about-control"><i class="fas fa-link"></i></a>
+</h2>
+<p>Playing the game would be more fun, if we could steer the snake! If the player presses <em>right arrow</em> key, the snake should turn <em>clockwise</em>. Conversely, the <em>left arrow</em> key, should turn the snake <em>counterclockwise</em>. We need to figure out two things. First, how to determine a new direction of motion given the current one and the key that was pressed. Second, we must decide when and how to change the value of <code>direction</code> variable. Let us tackle these problems one at a time.</p>
+<p>Determining the new direction of motion is fairly straightforward. If current is <code>"up"</code> and key was <em>right</em> (<em>clockwise</em> rotation), the new direction should be <code>"right"</code>. If current is <code>"down"</code> and key was <em>left</em>, the new direction is again <code>"right"</code> (<em>counterclockwise</em> rotation), etc. You could implement it as a bunch of <code>if-elif</code> statements or, better still, use the dictionary look up approach we implemented in the previous exercise. Here, you need a nested dictionary (dictionary inside a dictionary) <code>NEW_DIRECTION[key][direction]</code>. The first level has two keys <code>"left"</code> and <code>"right"</code> (so, effectively, counterclockwise and clockwise rotation) that selects which translation should be used and the second level is the dictionary that translates current direction into the new direction of motion. E.g., if current direction is <code>"down"</code> and key was <code>"right"</code>, <code>NEW_DIRECTION["right"]["down"]</code> should be <code>"left"</code> (rotating clockwise from <code>"down"</code> gets us to <code>"left"</code>). You know how define a simple dictionary. Good news, defining nested dictionaries follows the same rules, so should be straightforward.</p>
+<p>Now let us think about when and how should we change a value of <code>direction</code> variable. The simplest approach would be to change it as soon as the player presses the key. However, because our snake does not move on every frame this could lead to some odd behavior. Imagine that our game is on “easy” mode, so that the snake moves very slowly (one square per second). In this case, the player could easily press <em>left</em> twice during that second, which would make a snake move <em>backwards</em>, because its direction was changed by 180°. Snakes, at least our snake, cannot do this. Thus, we need a temporary variable, let us call it <code>new_direction</code>, which we will set every time the player presses the key but whose value will be transferred to <code>direction</code> only when it is time to move the snake (when the snake can move). We will compute it from the current <code>direction</code> and the key pressed. This way, even when the player presses <em>left</em> key several times, the snake would still turn only once because we compute the each turn using the same original <code>direction</code> value and not the changed <code>new_direction</code> variable. This also means that players can “change their mind”, as the last key press before the snake moves will determine the direction of motion.</p>
+<div class="rmdnote program">
+<p>Add <code>NEW_DIRECTION</code> and implement steering in <em>code11.py</em>.</p>
+</div>
+</div>
+<div id="turning-the-harder-way" class="section level2" number="14.13">
+<h2>
+<span class="header-section-number">14.13</span> Turning the hard(er) way<a class="anchor" aria-label="anchor" href="#turning-the-harder-way"><i class="fas fa-link"></i></a>
+</h2>
+<p>Let us implement the same “figure out new direction” code in a more complicated way. The purpose of the exercise is to challenge you, show you new methods of the list, and to demonstrate how you can think about a change of the direction as moving through the list. Implement it as a function called <code>compute_new_direction()</code>, which will take two parameters (current direction and pressed key) and will return the new direction of rotation. You can put it above the main script or, better still, put it into a separate <em>utilities.py</em> file. However, in cases like these, I find it useful to play with the code in a Jupyter notebook before turning it into a function, so you could try this approach instead of debugging.</p>
+<p>Here is the idea. Imagine that you have a list <code>["left", "up", "right", "down"]</code>. For this list, rotation clockwise would correspond to moving through the list to the right (assuming that you jump to the beginning once you move past the last item). Conversely, rotation counterclockwise corresponds to moving to the left (again, assuming that you jump to the end of the list, once you went past the first item). As you see, rotation is expressed as a very intuitive “motion through the list”.</p>
+<p>For the actual implementation, first, define a local variable as a list in the order I’ve described. Next, you need to identify the location of the current direction within the list using <a href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists">index()</a> method. Then, you need to figure out whether you increase or decrease that index (to move to the right or to the left), based on <code>pressed_key</code> parameter (you can use dictionary approach or a conditional assignment here). Finally, you need to control for range, so that index of <code>-1</code> becomes <code>3</code> (you went too far to the left) and index of <code>4</code> should become <code>0</code>. The most elegant way to do this, is using <code>%</code> <a href="https://python-reference.readthedocs.io/en/latest/docs/operators/modulus.html">modulus</a> operation. Hint, <code>4 % 4</code> is <code>0</code>. What about <code>1 % 4</code>, <code>0 % 4</code>, or even <code>-1 % 4</code>? Check it in a Jupyter notebook to get an idea of what I am hinting at. And, of course, do not use <code>4</code> for division, use the <a href="https://docs.python.org/3/library/functions.html#len">length</a> of the list, as it determines the range of values.</p>
+<div class="rmdnote program">
+<p>Create `compute_new_direction() in <em>utilities.py</em>.</p>
+<p>Use it instead of a dictionary look-up in <em>code12.py</em>.</p>
+</div>
+</div>
+<div id="hitting-the-wall-1" class="section level2" number="14.14">
+<h2>
+<span class="header-section-number">14.14</span> Hitting the wall<a class="anchor" aria-label="anchor" href="#hitting-the-wall-1"><i class="fas fa-link"></i></a>
+</h2>
+<p>We can control the snake but, at the moment, you can steer it off the screen or make it go through itself. Let us fix the former!</p>
+<p>Add a new computed <a href="flappy-bird.html#computed-attribute-property">property</a> <code>hit_the_wall</code> to the <code>Snake</code> class. The method should check whether the head of the snake (which segment is it?) is still within the grid that we defined (how do you check for that?). It should return <code>True</code>, if the head of the snake is outside of the grid limits (so, it is true that the snake hit the wall) or <code>False</code>, if it is still inside.</p>
+<p>Test it by adding a new condition inside the main game loop. Check whether the snake <code>hit_the_wall</code> and, if that is the case, the game should be over. Think about the optimal place where to check for this. You could do it on every iteration but there is a more logical place for it in main loop. Where is it?</p>
+<p>Test that the game quits after you successfully steered the snake into the wall.</p>
+<div class="rmdnote program">
+<p>Add <code>hit_the_wall</code> property to the <code>Snake</code> class.</p>
+<p>Use it in <em>code13.py</em>.</p>
+</div>
+</div>
+<div id="is-this-the-snake" class="section level2" number="14.15">
+<h2>
+<span class="header-section-number">14.15</span> Is this the snake?<a class="anchor" aria-label="anchor" href="#is-this-the-snake"><i class="fas fa-link"></i></a>
+</h2>
+<p>In the next section, we will be adding apples to the game. The catch is that these apples should appear at a location that is <em>not</em> occupied by the snake. Otherwise, we would generate apples directly into snake’s stomach. Practical for the snake but defeats the purpose of the game. To rephrase this problem, we need a method that checks whether a particular grid location is occupied by the snake.</p>
+<p>Add a new method <code>is_inside()</code> that takes a tuple with a grid location as a parameter and returns a logical value whether that grid location is occupied by the snake (i.e., by one of its segments). Document the function! Test the method via debugging. Calling it immediately after creating the snake with a location of the head (the only segment) or with a different location. Store a return value into a temporary variable and put a breakpoint at an appropriate place to check its value (or use a debug console).</p>
+<div class="rmdnote program">
+<p>Add <code>is_inside()</code> method to the <code>Snake</code> class.</p>
+<p>Test it in <em>code14.py</em>.</p>
+</div>
+</div>
+<div id="an-inedible-apple" class="section level2" number="14.16">
+<h2>
+<span class="header-section-number">14.16</span> An inedible apple<a class="anchor" aria-label="anchor" href="#an-inedible-apple"><i class="fas fa-link"></i></a>
+</h2>
+<p>Let us add that highly desirable fruit: the apple! We will use <a href="material/apple.png">an apple bitmap</a><a href="the-snake.html#fn82" class="footnote-ref" id="fnref82"><sup>82</sup></a>, so we will create a new class as a descendant of <a href="https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim">ImageStim</a> class. Its constructor should take <code>GridWindow</code> and <code>Snake</code> as parameters. In the constructor, you need to find a <a href="https://docs.python.org/3/library/random.html#random.randrange">random</a> grid location that is not occupied by snake, store it in an <code>ipos</code> attribute and call the parent’s constructor to initialize the image with an appropriate size and location (again, check <a href="flappy-bird.html#flappy-bird-class">Flappy Bird class</a> or <code>GridWindow</code> class, if you forgot how to do this).</p>
+<p>The only tricky part is finding the unoccupied location. There are many different strategies for doing this. The simplest one is to generate a potential location <a href="https://docs.python.org/3/library/random.html#random.randrange">at random</a>, check whether it is occupied by a snake (<code>is_inside()</code>?) and keep doing it until you find an unoccupied one.</p>
+<p>In the main script, create an apple and draw it in the main loop. For a moment, the snake cannot eat it and will pass through it but we will fix this shortly.</p>
+<div class="rmdnote program">
+<p>Create <code>Apple</code> class in <em>apples.py</em>.</p>
+<p>Use the apple in <em>code15.py</em>.</p>
+</div>
+</div>
+<div id="eating-an-apple" class="section level2" number="14.17">
+<h2>
+<span class="header-section-number">14.17</span> Eating an apple<a class="anchor" aria-label="anchor" href="#eating-an-apple"><i class="fas fa-link"></i></a>
+</h2>
+<p>Apples exist for snakes to eat them! Let us add this functionality. The general idea is very simple. If the <em>head</em> of the snake moves on to the grid location with an apple, you should not trim its tail. See how useful it was to split growing and trimming into two separate functions? Told you, strategic thinking!</p>
+<p>You need to add a conditional statement that if the snake’s head <em>is</em> on the apple, you should not trim the tail but create a new apple. What should you do, if there is no apple at that location?</p>
+<div class="rmdnote program">
+<p>Make snake eat apples in <em>code16.py</em>.</p>
+</div>
+</div>
+<div id="eating-yourself" class="section level2" number="14.18">
+<h2>
+<span class="header-section-number">14.18</span> Eating yourself<a class="anchor" aria-label="anchor" href="#eating-yourself"><i class="fas fa-link"></i></a>
+</h2>
+<p>Once our snake grows beyond four segments, it has an opportunity to bite itself<a href="the-snake.html#fn83" class="footnote-ref" id="fnref83"><sup>83</sup></a>. For this, we need to check that, <em>after</em> the snake moved, its head is <em>not</em> at the same location as one of the segments of its body. Create a new property <code>bit_itself</code> that returns <code>True</code> or <code>False</code> based on whether that is the case. The property is very similar but not identical to <code>is_inside()</code> method you implemented earlier. What is the critical difference and why cannot you simply reuse that function?</p>
+<p>Once you implemented <code>bit_itself</code>, you should check for that it does lead to the end of the game.</p>
+<div class="rmdnote program">
+<p>Implement <code>bit_itself</code> property.</p>
+<p>Use it in <em>code17.py</em>.</p>
+</div>
+</div>
+<div id="bells-and-whistles-score" class="section level2" number="14.19">
+<h2>
+<span class="header-section-number">14.19</span> Bells and whistles: score<a class="anchor" aria-label="anchor" href="#bells-and-whistles-score"><i class="fas fa-link"></i></a>
+</h2>
+<p>Now that we have a fully functional game, we can start adding non-essential but nice-to-have features to it. The first one will be the score. Create a new class <code>Score</code> that inherits from <a href="https://psychopy.org/api/visual/textstim.html#psychopy.visual.TextStim">TextStim</a> and has an extra attribute <code>score</code> (initialized to <span class="math inline">\(0\)</span> in the constructor) and a method <code>plus_one()</code> that should increase the score by one and update the <code>text</code> attribute. As with an apple, initialize the <a href="https://psychopy.org/api/visual/textstim.html#psychopy.visual.TextStim">TextStim</a> part by calling parent’s <code>__init__()</code> method using appropriate parameters. I decided to put it at the top of the window and it reads <strong>Score: XXX</strong> but you are free to do it as you feel fit.</p>
+<p>In the main script, create a <code>Score</code> object, draw it when appropriate and increase the score every time the snake eats an apple.</p>
+<div class="rmdnote program">
+<p>Create <code>Score</code> class in <em>scoring.py</em>.</p>
+<p>Use it in <em>code18.py</em>.</p>
+</div>
+</div>
+<div id="bells-and-whistels-three-lives" class="section level2" number="14.20">
+<h2>
+<span class="header-section-number">14.20</span> Bells and whistels: three lives<a class="anchor" aria-label="anchor" href="#bells-and-whistels-three-lives"><i class="fas fa-link"></i></a>
+</h2>
+<p>Let us give the player three attempts to achieve the top score. They have three lives, every time the snake dies, the game <em>but not the score</em> resets: A single segment snake appears at the center and a new random apple appears elsewhere (where should you put the code to create them?). Once the snake dies three times, the game is over. Think how you can implement this three repetitions.</p>
+<p>The score should be cumulative, so at the beginning of round two it should be equal to the final score of round one. Think how you can achieve this. <em>Another important point</em>: now you have two nested loop, one is for the game, one is for the round. When the snake dies, the round is over and, if you run out of lives, the game as well. When the player presses <em>escape</em> both round <strong>and</strong> the game are over. Think about how you can implement it.</p>
+<div class="rmdnote program">
+<p>Put your updated code into <em>code19.py</em>.</p>
+</div>
+</div>
+<div id="bells-and-whistels-press-space-to-start-the-round" class="section level2" number="14.21">
+<h2>
+<span class="header-section-number">14.21</span> Bells and whistels: press space to start the round<a class="anchor" aria-label="anchor" href="#bells-and-whistels-press-space-to-start-the-round"><i class="fas fa-link"></i></a>
+</h2>
+<p>At the moment, our round starts immediately. It would be friendlier, if the player would start it themselves. Before each round, draw <em>all</em> visuals (snake, apple, score) plus a text “Press SPACE to start” and wait until either a <em>space</em> or <em>escape</em> key is pressed. In the former case, the trial should start. In the latter case, the player should exit the game.</p>
+<div class="rmdnote program">
+<p>Put your updated code into <em>code20.py</em>.</p>
+</div>
+</div>
+<div id="bells-and-whistels-showing-remaining-lives" class="section level2" number="14.22">
+<h2>
+<span class="header-section-number">14.22</span> Bells and whistels: showing remaining lives<a class="anchor" aria-label="anchor" href="#bells-and-whistels-showing-remaining-lives"><i class="fas fa-link"></i></a>
+</h2>
+<p>Let us not just repeat the game three times but show the player how many lives they still have. Download the <a href="material/heart.png">heart.png</a><a href="the-snake.html#fn84" class="footnote-ref" id="fnref84"><sup>84</sup></a> and use it show remaining lives at the top-left corner of the screen: three hearts in round one, two hearts in round two, and just a single heart in round three. You will need to use (ImageStim)[<a href="https://www.psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim" class="uri">https://www.psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim</a>] for this. Think about the size of images and their location. Hint: I created a list of heart images using list comprehension and drawing hearts definitely requires a for loop.</p>
+<div class="rmdnote program">
+<p>Put your updated code into <em>code21.py</em>.</p>
+</div>
+</div>
+<div id="bells-and-whistles-difficulty" class="section level2" number="14.23">
+<h2>
+<span class="header-section-number">14.23</span> Bells and whistles: difficulty<a class="anchor" aria-label="anchor" href="#bells-and-whistles-difficulty"><i class="fas fa-link"></i></a>
+</h2>
+<p>At the moment, the difficulty of the game, the speed with which the snake moves, is fixed and the player has no way of choosing it. Let us create dialog that appears <em>before</em> we create the window and start the game that will allow the player to choose between <em>easy</em>, <em>normal</em>, and <em>difficult</em><a href="the-snake.html#fn85" class="footnote-ref" id="fnref85"><sup>85</sup></a>. I leave it up to you to decide which snake speeds correspond to each difficulty. You can have more than three options, if you want. However, they definitely should be define in settings file.</p>
+<p>To create and run the dialog, use <a href="https://www.psychopy.org/api/gui.html#dlg">Dlg</a> class from
+<a href="https://www.psychopy.org/api/gui.html">giu</a> module of PsychoPy. Your challenge for today is to figure out how to use it based on the manual alone. Take a look at the example and experiment with in a separate file or a Jupyter notebook.</p>
+<div class="rmdnote program">
+<p>Put your updated code into <em>code22.py</em>.</p>
+</div>
+</div>
+<div id="bells-and-whistles-blinking-game-over-message" class="section level2" number="14.24">
+<h2>
+<span class="header-section-number">14.24</span> Bells and whistles: blinking “game over” message<a class="anchor" aria-label="anchor" href="#bells-and-whistles-blinking-game-over-message"><i class="fas fa-link"></i></a>
+</h2>
+<p>Once the game is over (but not when a player pressed <em>escape</em> key), show a blinking “Game Over” message <em>superimposed</em> over the final static game screen. Thus, you need to draw all the game objects and messages (but without moving the snake) plus you show a text message that is on for 0.5 second and off for 0.5 seconds until the player presses <em>Space</em> button. Hint: it should be a separate loop after the main game loop over rounds, logical variables and clocks/timers have definitely something to do with it.</p>
+<div class="rmdnote program">
+<p>Put your updated code into <em>code23.py</em>.</p>
+</div>
+</div>
+<div id="bells-and-whistles-sounds" class="section level2" number="14.25">
+<h2>
+<span class="header-section-number">14.25</span> Bells and whistles: sounds<a class="anchor" aria-label="anchor" href="#bells-and-whistles-sounds"><i class="fas fa-link"></i></a>
+</h2>
+<p>Download <a href="material/game-over-arcade.wav">game-over-arcade.wav</a><a href="the-snake.html#fn86" class="footnote-ref" id="fnref86"><sup>86</sup></a> and <a href="material/8-bit-game-over-sound.wav">8-bit-game-over-sound.wav</a><a href="the-snake.html#fn87" class="footnote-ref" id="fnref87"><sup>87</sup></a>. Use the former whenever the snake dies and use the latter when the player runs out of lives. Note, no sound should be played if the player pressed <em>escape</em>.</p>
+<p>You will need to use <code>Sound</code> class from <a href="https://psychopy.org/api/sound/playback.html">sound</a> module of PsychoPy. Important: use <code>Sound</code> class not a library-specific implementation such as <code>PTBSound</code> or <code>SoundDevice</code> classes. The PsychoPy will figure out which backend is the best (available at all) for you.</p>
+<div class="rmdnote program">
+<p>Put your updated code into <em>code24.py</em>.</p>
+</div>
+</div>
+<div id="the-sky-is-the-limit" class="section level2" number="14.26">
+<h2>
+<span class="header-section-number">14.26</span> The sky is the limit<a class="anchor" aria-label="anchor" href="#the-sky-is-the-limit"><i class="fas fa-link"></i></a>
+</h2>
+<p>Good job! Lots of coding but now you have a cool retro game!</p>
+
+</div>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr>
+<ol>
+<li id="fn1"><p>Good habits! Form good habits! Thank you for reading this subliminal message.<a href="index.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>If you are part of the seminar, ask me whenever you have problems or are unsure about how to proceeed<a href="software.html#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>Happened to me more often than I dare to admit.<a href="programming-tips.html#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>“Boring is Good!”, see “The Hitman’s Bodyguard” movie.<a href="programming-tips.html#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>Seriously, 100%! If you have even a shadow of a doubt, check again. That shadow will grow and make you progressively uncertain about your code.<a href="programming-tips.html#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p>However, if you are doing the seminar, ask me first!<a href="programming-tips.html#fnref6" class="footnote-back">↩︎</a></p></li>
+<li id="fn7"><p>Tip: Read your text one sentence at a time starting from the back or read one random sentence at a time. This breaks the flow of the text and helps you concentrate on words rather than on the meaning and the story.<a href="programming-tips.html#fnref7" class="footnote-back">↩︎</a></p></li>
+<li id="fn8"><p>Hindsight is always 20/20!<a href="programming-tips.html#fnref8" class="footnote-back">↩︎</a></p></li>
+<li id="fn9"><p>not really<a href="python-basics.html#fnref9" class="footnote-back">↩︎</a></p></li>
+<li id="fn10"><p>You can “Save as…” the previous code to avoid copy-pasting things by hand.<a href="guess-the-number-single-round.html#fnref10" class="footnote-back">↩︎</a></p></li>
+<li id="fn11"><p>I recommend using <code>01</code> instead of <code>1</code>, as it will ensure consistent file sorting in your file manager<a href="guess-the-number-single-round.html#fnref11" class="footnote-back">↩︎</a></p></li>
+<li id="fn12"><p>Of course, we know it because we hard-coded it. But that won’t be the case when computer will generate it randomly, so let us plan for the future<a href="guess-the-number-single-round.html#fnref12" class="footnote-back">↩︎</a></p></li>
+<li id="fn13"><p>Or, at least, easier.<a href="guess-the-number-single-round.html#fnref13" class="footnote-back">↩︎</a></p></li>
+<li id="fn14"><p>This is because you can convert any value to a logical one via <a href="https://docs.python.org/3/library/functions.html#bool">bool()</a> function that you learned about the last time and so any value is (converted to) either <code>True</code> or <code>False</code>.<a href="guess-the-number-single-round.html#fnref14" class="footnote-back">↩︎</a></p></li>
+<li id="fn15"><p>pun intended<a href="guess-the-number-single-round.html#fnref15" class="footnote-back">↩︎</a></p></li>
+<li id="fn16"><p>Did I already say never? never!<a href="guess-the-number-single-round.html#fnref16" class="footnote-back">↩︎</a></p></li>
+<li id="fn17"><p>This is the last time, I promise!<a href="guess-the-number-ai.html#fnref17" class="footnote-back">↩︎</a></p></li>
+<li id="fn18"><p>You should imagine Dora the Explorer staring at you while you think.<a href="guess-the-number-ai.html#fnref18" class="footnote-back">↩︎</a></p></li>
+<li id="fn19"><p>The official magic number is <a href="https://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two">7±2</a> but reading the original paper tells you that this is more like four for most of us<a href="guess-the-number-ai.html#fnref19" class="footnote-back">↩︎</a></p></li>
+<li id="fn20"><p>This is similar to scientific writing, where a single paragraph conveys a single idea. For me, it helps to first write the idea of the paragraph in a single sentence before writing the paragraph itself. If one sentence is not enough, I need to split the text into more paragraphs.<a href="guess-the-number-ai.html#fnref20" class="footnote-back">↩︎</a></p></li>
+<li id="fn21"><p>This is not strictly true but that will concern us only once we get to so-called “mutable” objects like lists or dictionaries.<a href="guess-the-number-ai.html#fnref21" class="footnote-back">↩︎</a></p></li>
+<li id="fn22"><p>it is normal to have more code devoted to testing than to the actual program<a href="guess-the-number-ai.html#fnref22" class="footnote-back">↩︎</a></p></li>
+<li id="fn23"><p>You still need tests for the integrated system but testing individual functions is a clear prerequisite.<a href="guess-the-number-ai.html#fnref23" class="footnote-back">↩︎</a></p></li>
+<li id="fn24"><p>Again, this not strictly true but you will have to wait until you learn about named parameters and default values<a href="guess-the-number-ai.html#fnref24" class="footnote-back">↩︎</a></p></li>
+<li id="fn25"><p>Again, almost, as <em>mutable</em> objects like lists are more complicated, more on that later<a href="guess-the-number-ai.html#fnref25" class="footnote-back">↩︎</a></p></li>
+<li id="fn26"><p>Also called properties<a href="psychopy-basics.html#fnref26" class="footnote-back">↩︎</a></p></li>
+<li id="fn27"><p>Technically, we call a class constructor method called <code>__init__</code> but this is not important for now.<a href="psychopy-basics.html#fnref27" class="footnote-back">↩︎</a></p></li>
+<li id="fn28"><p>However, stick to original order for consistency otherwise.<a href="psychopy-basics.html#fnref28" class="footnote-back">↩︎</a></p></li>
+<li id="fn29"><p>This is called flipping because a window has two buffers: one that is currently displayed on the screen and the other one in which you can draw your stimuli. Once you are done with drawing, you “flip” the buffers so that they exchange their places. Now the one you drew in gets displayed and you have the other buffer to draw in.<a href="psychopy-basics.html#fnref29" class="footnote-back">↩︎</a></p></li>
+<li id="fn30"><p>my personal preference but in most cases it makes no difference<a href="psychopy-basics.html#fnref30" class="footnote-back">↩︎</a></p></li>
+<li id="fn31"><p>So specific that I cannot think of one, to be honest.<a href="psychopy-basics.html#fnref31" class="footnote-back">↩︎</a></p></li>
+<li id="fn32"><p>You need to import the random library for this, of course.<a href="psychopy-basics.html#fnref32" class="footnote-back">↩︎</a></p></li>
+<li id="fn33"><p>You can use <code>if..else</code>, because we only have two options but I would recommend to go for a more general solution <code>if..elif</code> <a href="psychopy-basics.html#fnref33" class="footnote-back">↩︎</a></p></li>
+<li id="fn34"><p>More on that and tuples (list’s immutable cousins) later.<a href="whack-a-mole.html#fnref34" class="footnote-back">↩︎</a></p></li>
+<li id="fn35"><p>This is typical for “classic” programming languages but less so for ones that are linear algebra / data science oriented. Both Matlab and R use one-based indexing, so you need to be careful and double-check whether you are using correct indexes.<a href="whack-a-mole.html#fnref35" class="footnote-back">↩︎</a></p></li>
+<li id="fn36"><p>There is a simpler way to do this, which you will learn in a little while.<a href="whack-a-mole.html#fnref36" class="footnote-back">↩︎</a></p></li>
+<li id="fn37"><p>Note, that this is almost but not quite the same thing as just writing <code>my_pretty_numbers</code>, the difference is subtle but important. We will return to it later when talking about mutable versus immutable types.<a href="whack-a-mole.html#fnref37" class="footnote-back">↩︎</a></p></li>
+<li id="fn38"><p>If you are familiar with R and its liberal attitude towards indexes, you will find this very satisfying.<a href="whack-a-mole.html#fnref38" class="footnote-back">↩︎</a></p></li>
+<li id="fn39"><p>and we barely scratched the surface!<a href="whack-a-mole.html#fnref39" class="footnote-back">↩︎</a></p></li>
+<li id="fn40"><p>Note, this is note a <em>better</em> way but an <em>alternative</em> way to do this.<a href="whack-a-mole.html#fnref40" class="footnote-back">↩︎</a></p></li>
+<li id="fn41"><p>Style hint: if a variable is an <em>index</em> of something, I tend to call it <code>isomething</code>. E.g., if it holds an index to a current mole, I would call it <code>imole</code>. This is <em>my</em> way of doing it. Others use <code>i_</code> prefix or an <code>_i</code> suffix. But either way, it is a useful naming convention. Remember, the easier it is to understand the meaning of a variable from its name, the easier it is for you to read and modify the code.<a href="whack-a-mole.html#fnref41" class="footnote-back">↩︎</a></p></li>
+<li id="fn42"><p><code>itarget</code>? <code>imole</code>?<a href="whack-a-mole.html#fnref42" class="footnote-back">↩︎</a></p></li>
+<li id="fn43"><p>I know it feels redundant but these are little checks that cost little time by themselves but help you avoid wasting lots of time on tracing weird mistakes. Here, you check that your expectations (if the middle target is shown, the index should be 1) match the reality. Once you check this, you do not <em>expect</em> it to be true, you <em>know</em> it to be true!<a href="whack-a-mole.html#fnref43" class="footnote-back">↩︎</a></p></li>
+<li id="fn44"><p>Confusingly, if no key was pressed, <a href="https://psychopy.org/api/event.html#psychopy.event.getKeys">getKeys()</a> returns an empty list but <a href="https://psychopy.org/api/event.html#psychopy.event.waitKeys">waitKeys()</a> returns <code>None</code> and <code>None</code> has no length.<a href="whack-a-mole.html#fnref44" class="footnote-back">↩︎</a></p></li>
+<li id="fn45"><p>Want to know key codes for sure? Write a small program that open a window and then repeatedly waits for any key press and prints out into console.<a href="whack-a-mole.html#fnref45" class="footnote-back">↩︎</a></p></li>
+<li id="fn46"><p>You will get more than one item in that list only if you set <code>clearEvents=False</code>. In this case, you will get the list of keys pressed before the call. However, if you opted for a default <code>clearEvents=True</code>, you will get only one key press in the list (at least I was never able to get more than one).<a href="whack-a-mole.html#fnref46" class="footnote-back">↩︎</a></p></li>
+<li id="fn47"><p>The images are courtesy of <a href="https://openclipart.org/artist/Firkin">Kevin David Pointon</a> and were downloaded
+from <a href="https://openclipart.org/">OpenClipart</a>. They are <a href="https://creativecommons.org/publicdomain/zero/1.0/">public domain</a> and can be used and distributed freely.<a href="memory-game.html#fnref47" class="footnote-back">↩︎</a></p></li>
+<li id="fn48"><p>Not really, but this makes it easier to understand.<a href="memory-game.html#fnref48" class="footnote-back">↩︎</a></p></li>
+<li id="fn49"><p>A metaphor attempt: You can wear different shirts, so your <em>look</em> (variable) changes but each individual shirt (potential values) remains the same (we ignore the wear and tear here) irrespective of whether your are wearing it (value is assigned to a variable) or not.<a href="memory-game.html#fnref49" class="footnote-back">↩︎</a></p></li>
+<li id="fn50"><p>Coming up shortly!<a href="memory-game.html#fnref50" class="footnote-back">↩︎</a></p></li>
+<li id="fn51"><p>Building on the looks metaphor: You can change your look by using a different (immutable) shirt or by <em>changing</em> your haircut. You hair is mutable, you do not wear a different one on different days to look different, you need to modify it to look different.<a href="memory-game.html#fnref51" class="footnote-back">↩︎</a></p></li>
+<li id="fn52"><p>Well, at least me!<a href="memory-game.html#fnref52" class="footnote-back">↩︎</a></p></li>
+<li id="fn53"><p>Immutable values are <a href="https://docs.python.org/3/glossary.html#term-hashable">hashable</a>, whereas mutable ones, like dictionaries and lists, are not. This is because mutable objects can <em>change</em> while the program is running and therefore are unusable as a key. I.e., it is hard to match by a key, if the key can be different by the time you need to access the dictionary.<a href="memory-game.html#fnref53" class="footnote-back">↩︎</a></p></li>
+<li id="fn54"><p>Use absolute path only if it is the only option, as it will almost certainly will break your code on another machine.<a href="memory-game.html#fnref54" class="footnote-back">↩︎</a></p></li>
+<li id="fn55"><p>A very arbitrary example!<a href="memory-game.html#fnref55" class="footnote-back">↩︎</a></p></li>
+<li id="fn56"><p>You will learn about practical implications of this later. For now, keep in mind that seemingly identical output might be fundamentally different underneath.<a href="memory-game.html#fnref56" class="footnote-back">↩︎</a></p></li>
+<li id="fn57"><p>A list you cannot change, more on this later.<a href="memory-game.html#fnref57" class="footnote-back">↩︎</a></p></li>
+<li id="fn58"><p>Pick the timing you like!<a href="memory-game.html#fnref58" class="footnote-back">↩︎</a></p></li>
+<li id="fn59"><p>More generally, never compare float values to exact numbers. They are <a href="http://www.lahey.com/float.htm">tricky</a>, as the underlying representation <a href="https://docs.python.org/3/tutorial/floatingpoint.html">does not guarantee</a> that the computation will produce <em>exactly</em> the number that it should: <code>.1 + .1 + .1 == .3</code> is surprisingly <code>False</code>, try it yourself<a href="memory-game.html#fnref59" class="footnote-back">↩︎</a></p></li>
+<li id="fn60"><p>Deck the Halls B by Kevin MacLeod <a href="http://incompetech.com" class="uri">http://incompetech.com</a>
+Creative Commons — Attribution 4.0 International — CC BY 4.0
+Free Download / Stream: <a href="https://bit.ly/deck-the-halls-b" class="uri">https://bit.ly/deck-the-halls-b</a>
+Music promoted by Audio Library <a href="https://youtu.be/RzjZ-WdVeyk" class="uri">https://youtu.be/RzjZ-WdVeyk</a><a href="christmas-special.html#fnref60" class="footnote-back">↩︎</a></p></li>
+<li id="fn61"><p><code>BaseVisualStim</code> does not actually define <code>draw()</code> method, only that it must be present.<a href="flappy-bird.html#fnref61" class="footnote-back">↩︎</a></p></li>
+<li id="fn62"><p>Yes, it is really called “duck typing”.<a href="flappy-bird.html#fnref62" class="footnote-back">↩︎</a></p></li>
+<li id="fn63"><p>There are more special methods that you will learn about later, they all follow <code>__methodname__()</code> convention.<a href="flappy-bird.html#fnref63" class="footnote-back">↩︎</a></p></li>
+<li id="fn64"><p>Again, you can use any name for that parameter but that will surely confuse everyone.<a href="flappy-bird.html#fnref64" class="footnote-back">↩︎</a></p></li>
+<li id="fn65"><p>This is actually how all properties and methods are stored, in a <code>__dict__</code> attribute, so you can write <code>number_sum.__dict__["total"]</code> to get it.<a href="flappy-bird.html#fnref65" class="footnote-back">↩︎</a></p></li>
+<li id="fn66"><p>If you use a linter, it will complain whenever it sees a property not defined in the constructor<a href="flappy-bird.html#fnref66" class="footnote-back">↩︎</a></p></li>
+<li id="fn67"><p>Created by <a href="https://openclipart.org/artist/Scout">Madison Kingsford</a>.<a href="flappy-bird.html#fnref67" class="footnote-back">↩︎</a></p></li>
+<li id="fn68"><p>Here, I assume that 50% is chance level performance.<a href="seminar-02-06.html#fnref68" class="footnote-back">↩︎</a></p></li>
+<li id="fn69"><p>It is the usual paradox that in order to optimally measure a threshold condition for a particular task, you should measure at or around the threshold. But if you already know where to measure, you don’t need to measure.<a href="seminar-02-06.html#fnref69" class="footnote-back">↩︎</a></p></li>
+<li id="fn70"><p>Inheriting from <code>visual.Rect</code> would’ve make things simpler but, at least in PsychoPy 2021.1.4, it does not work due to so technical glitch.<a href="seminar-02-06.html#fnref70" class="footnote-back">↩︎</a></p></li>
+<li id="fn71"><p>Again, inheriting from <code>visual.Rect()</code> would have taken care of this for you.<a href="seminar-02-06.html#fnref71" class="footnote-back">↩︎</a></p></li>
+<li id="fn72"><p>Not very exciting, I know. But one has to start somewhere!<a href="the-snake.html#fnref72" class="footnote-back">↩︎</a></p></li>
+<li id="fn73"><p>I always add units in square brackets as a reminder to my(future)self. One can deduce units from code itself but documenting them explicitly makes your life much easier.<a href="the-snake.html#fnref73" class="footnote-back">↩︎</a></p></li>
+<li id="fn74"><p>We will use a bitmap to make it look like an actual apple but it will need to be a square bitmap, so at the end the apple will still be square<a href="the-snake.html#fnref74" class="footnote-back">↩︎</a></p></li>
+<li id="fn75"><p>A single segment snake is a special case, as its head is also its tail!<a href="the-snake.html#fnref75" class="footnote-back">↩︎</a></p></li>
+<li id="fn76"><p>It would be much simpler to inherit from <a href="https://psychopy.org/api/visual/rect.html#psychopy.visual.rect.Rect">Rect</a> class directly but it does not work (raises an error), at least for the version 2021.1.4 that I use.<a href="the-snake.html#fnref76" class="footnote-back">↩︎</a></p></li>
+<li id="fn77"><p>We could also have used <a href="https://docs.python.org/3/library/collections.html#collections.deque">dqueue</a> class from <em>collections</em> library instead of the <code>list</code>. It is, essentially, a list that allows appending and popping from the left as well.<a href="the-snake.html#fnref77" class="footnote-back">↩︎</a></p></li>
+<li id="fn78"><p>To be honest, I have initially implemented it as a single <code>move()</code> function , wrote things up up to eating apples, realized the problem, returned and rewrote the notes. So, admittedly, it is a hindsight kind of strategic thinking.<a href="the-snake.html#fnref78" class="footnote-back">↩︎</a></p></li>
+<li id="fn79"><p>Note that speed does not need to be an integer number of squares per second. It can move at 1.5 squares per second, so 3 squares every two seconds.<a href="the-snake.html#fnref79" class="footnote-back">↩︎</a></p></li>
+<li id="fn80"><p>Do it in the constructor, always define all attributes in the constructor, even if they are set to <code>None</code>.<a href="the-snake.html#fnref80" class="footnote-back">↩︎</a></p></li>
+<li id="fn81"><p>Remember, they work the same they, it is just a question of whether you start from zero and check whether time is over <code>step_duration</code> (<a href="https://www.psychopy.org/api/clock.html#psychopy.clock.Clock">clock</a>) or you start at <code>step_duration</code> and check whether the time ran out/is already negative (<a href="https://www.psychopy.org/api/clock.html#psychopy.clock.CountdownTimer">timer</a>).<a href="the-snake.html#fnref81" class="footnote-back">↩︎</a></p></li>
+<li id="fn82"><p>Created by <a href="https://openclipart.org/artist/cyanidecupcake">Jess Wiechler</a>.<a href="the-snake.html#fnref82" class="footnote-back">↩︎</a></p></li>
+<li id="fn83"><p>Why at least five? Draw it on the grid and figure out whether it can eat itself with just four segments.<a href="the-snake.html#fnref83" class="footnote-back">↩︎</a></p></li>
+<li id="fn84"><p>This image was downloaded from <a href="https://openclipart.org/">openclipart.org</a> and was created by <a href="https://openclipart.org/artist/cliparteles">cliparteles</a><a href="the-snake.html#fnref84" class="footnote-back">↩︎</a></p></li>
+<li id="fn85"><p>Or, if you played Doom, between <em>I’m Too Young To Die</em>, <em>Hey, Not Too Rough</em>, <em>Hurt Me Plenty</em>, <em>Ultra-Violence</em>, and <em>Nightmare</em>.<a href="the-snake.html#fnref85" class="footnote-back">↩︎</a></p></li>
+<li id="fn86"><p>Downloaded from <a href="https://freesound.org/">freesound.org</a> and created by <a href="https://freesound.org/people/myfox14/">myfox14</a><a href="the-snake.html#fnref86" class="footnote-back">↩︎</a></p></li>
+<li id="fn87"><p>Also downloaded from <a href="https://freesound.org/">freesound.org</a> and created by <a href="https://freesound.org/people/EVRetro/">EVRetro</a><a href="the-snake.html#fnref87" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="seminar-02-06.html"><span class="header-section-number">13</span> Guitar Hero: staircase and iterator functions</a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#the-snake"><span class="header-section-number">14</span> The Snake</a></li>
+<li><a class="nav-link" href="#snake-game-an-overview"><span class="header-section-number">14.1</span> Snake game: an overview</a></li>
+<li><a class="nav-link" href="#minimal-boilerplate"><span class="header-section-number">14.2</span> Minimal boilerplate</a></li>
+<li><a class="nav-link" href="#fancy-boilerplate"><span class="header-section-number">14.3</span> Fancy boilerplate</a></li>
+<li><a class="nav-link" href="#fancier-boilerplate"><span class="header-section-number">14.4</span> Fancier boilerplate</a></li>
+<li><a class="nav-link" href="#adding-a-square"><span class="header-section-number">14.5</span> Adding a square</a></li>
+<li><a class="nav-link" href="#a-snake-segment"><span class="header-section-number">14.6</span> A snake segment</a></li>
+<li><a class="nav-link" href="#the-snake-1"><span class="header-section-number">14.7</span> The snake</a></li>
+<li><a class="nav-link" href="#get-a-move-on"><span class="header-section-number">14.8</span> Get a move on!</a></li>
+<li><a class="nav-link" href="#the-game-loop"><span class="header-section-number">14.9</span> The game loop</a></li>
+<li><a class="nav-link" href="#self-motion"><span class="header-section-number">14.10</span> Self-motion</a></li>
+<li><a class="nav-link" href="#describing-direction-using-words"><span class="header-section-number">14.11</span> Describing direction using words</a></li>
+<li><a class="nav-link" href="#it-is-all-about-control"><span class="header-section-number">14.12</span> It is all about control</a></li>
+<li><a class="nav-link" href="#turning-the-harder-way"><span class="header-section-number">14.13</span> Turning the hard(er) way</a></li>
+<li><a class="nav-link" href="#hitting-the-wall-1"><span class="header-section-number">14.14</span> Hitting the wall</a></li>
+<li><a class="nav-link" href="#is-this-the-snake"><span class="header-section-number">14.15</span> Is this the snake?</a></li>
+<li><a class="nav-link" href="#an-inedible-apple"><span class="header-section-number">14.16</span> An inedible apple</a></li>
+<li><a class="nav-link" href="#eating-an-apple"><span class="header-section-number">14.17</span> Eating an apple</a></li>
+<li><a class="nav-link" href="#eating-yourself"><span class="header-section-number">14.18</span> Eating yourself</a></li>
+<li><a class="nav-link" href="#bells-and-whistles-score"><span class="header-section-number">14.19</span> Bells and whistles: score</a></li>
+<li><a class="nav-link" href="#bells-and-whistels-three-lives"><span class="header-section-number">14.20</span> Bells and whistels: three lives</a></li>
+<li><a class="nav-link" href="#bells-and-whistels-press-space-to-start-the-round"><span class="header-section-number">14.21</span> Bells and whistels: press space to start the round</a></li>
+<li><a class="nav-link" href="#bells-and-whistels-showing-remaining-lives"><span class="header-section-number">14.22</span> Bells and whistels: showing remaining lives</a></li>
+<li><a class="nav-link" href="#bells-and-whistles-difficulty"><span class="header-section-number">14.23</span> Bells and whistles: difficulty</a></li>
+<li><a class="nav-link" href="#bells-and-whistles-blinking-game-over-message"><span class="header-section-number">14.24</span> Bells and whistles: blinking “game over” message</a></li>
+<li><a class="nav-link" href="#bells-and-whistles-sounds"><span class="header-section-number">14.25</span> Bells and whistles: sounds</a></li>
+<li><a class="nav-link" href="#the-sky-is-the-limit"><span class="header-section-number">14.26</span> The sky is the limit</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/alexander-pastukhov/writing-games-with-python-and-psychopy/blob/master/12-snake.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/alexander-pastukhov/writing-games-with-python-and-psychopy/edit/master/12-snake.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2022-04-25.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

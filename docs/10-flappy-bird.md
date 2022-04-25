@@ -167,7 +167,7 @@ Put your code into `code01.py`.
 :::
 
 
-## Flappy Bird class
+## Flappy Bird class {#flappy-bird-class}
 Our flappy bird is, effectively, an image but we would like it to have additional behaviors, like, automatically falling down due to gravity, flying up due to flapping its wings, etc. There are several way we can do this. We can keep the image in [ImageStim](https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim) and write additional functions to handle it (the way we did previously). We could create an new class `FlappyBird` that will have the [ImageStim](https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim) as its attribute. Or, we could utilize the power of inheritance and build `FlappyBird` class on top of the [ImageStim](https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim). This means less work for us, so that is the path we will follow.
 
 Create a new file that will contain your `FlappyBird` class. Here is how it should look like:

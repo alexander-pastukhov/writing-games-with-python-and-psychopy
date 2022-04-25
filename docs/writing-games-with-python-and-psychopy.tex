@@ -4,10 +4,6 @@
 %
 \documentclass[
 ]{book}
-\title{Writing games with Python and PsychoPy}
-\author{Alexander (Sasha) Pastukhov}
-\date{2022-02-08}
-
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
 \usepackage{iftex}
@@ -118,6 +114,10 @@
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
+
+\title{Writing games with Python and PsychoPy}
+\author{Alexander (Sasha) Pastukhov}
+\date{2022-04-25}
 
 \begin{document}
 \maketitle
@@ -332,12 +332,12 @@ The \textbf{assignment statement} above has very simple structure:
 \begin{Shaded}
 \begin{Highlighting}[]
 \OperatorTok{\textless{}}\NormalTok{variable}\OperatorTok{{-}}\NormalTok{name}\OperatorTok{\textgreater{}} \OperatorTok{=} \OperatorTok{\textless{}}\NormalTok{value}\OperatorTok{\textgreater{}}
-\NormalTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\textasciigrave{}}
-\NormalTok{Variable name (name tag on the box) should be meaningful, it can start }\ControlFlowTok{with}\NormalTok{ letters }\KeywordTok{or}\NormalTok{ \_ }\KeywordTok{and}\NormalTok{ can contain letters, numbers, }\KeywordTok{and}\NormalTok{ \_ symbol but }\KeywordTok{not}\NormalTok{ spaces, tabs, special characters, etc. Python recommends (well, actually, [insists](https:}\OperatorTok{//}\NormalTok{www.python.org}\OperatorTok{/}\NormalTok{dev}\OperatorTok{/}\NormalTok{peps}\OperatorTok{/}\NormalTok{pep}\OperatorTok{{-}}\DecValTok{0008}\OperatorTok{/}\NormalTok{)) that you use }\OperatorTok{**}\NormalTok{snake\_case}\OperatorTok{**}\NormalTok{ (}\BuiltInTok{all}\NormalTok{ lower}\OperatorTok{{-}}\NormalTok{case, underscore }\ControlFlowTok{for}\NormalTok{ spaces) to }\BuiltInTok{format}\NormalTok{ your variable names. The \textasciigrave{}}\OperatorTok{\textless{}}\NormalTok{value}\OperatorTok{\textgreater{}}\NormalTok{\textasciigrave{} on the right side }\KeywordTok{is}\NormalTok{ a more }\BuiltInTok{complex}\NormalTok{ story, }\ImportTok{as}\NormalTok{ it can be hard}\OperatorTok{{-}}\NormalTok{coded (}\ImportTok{as} \KeywordTok{in}\NormalTok{ example above), computed using other variables }\KeywordTok{or}\NormalTok{ the same variable, returned by a function, etc.}
-
-\NormalTok{Using variables means that you can concentrate what corresponding values }\OperatorTok{**}\NormalTok{mean}\OperatorTok{**}\NormalTok{ rather than worrying about what these values are. For example, the }\BuiltInTok{next}\NormalTok{ time you need to compute something based on number of character}\StringTok{\textquotesingle{}s legs (e.g., how many pairs of shoes does a character need), you can compute it based on current value of \textasciigrave{}number\_of\_legs\textasciigrave{} variable rather than assume that it is \textasciigrave{}1\textasciigrave{}. }
 \end{Highlighting}
 \end{Shaded}
+
+Variable name (name tag on the box) should be meaningful, it can start with letters or \_ and can contain letters, numbers, and \_ symbol but not spaces, tabs, special characters, etc. Python recommends (well, actually, \href{https://www.python.org/dev/peps/pep-0008/}{insists}) that you use \textbf{snake\_case} (all lower-case, underscore for spaces) to format your variable names. The \texttt{\textless{}value\textgreater{}} on the right side is a more complex story, as it can be hard-coded (as in example above), computed using other variables or the same variable, returned by a function, etc.
+
+Using variables means that you can concentrate what corresponding values \textbf{mean} rather than worrying about what these values are. For example, the next time you need to compute something based on number of character's legs (e.g., how many pairs of shoes does a character need), you can compute it based on current value of \texttt{number\_of\_legs} variable rather than assume that it is \texttt{1}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3015,9 +3015,9 @@ This is a format with a structure similar to that found in MS Windows INI files.
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{[Balls]}
-\DataTypeTok{    x }\OtherTok{=}\StringTok{ }\FloatTok{0.1}\StringTok{, }\FloatTok{0.2}
-\DataTypeTok{    y }\OtherTok{=}\StringTok{ }\FloatTok{0.2}\StringTok{, }\FloatTok{0.1}
-\DataTypeTok{    size }\OtherTok{=}\StringTok{ }\FloatTok{0.01}\StringTok{, }\FloatTok{0.02}
+\DataTypeTok{    x }\OtherTok{=}\StringTok{ 0.1, 0.2}
+\DataTypeTok{    y }\OtherTok{=}\StringTok{ 0.2, 0.1}
+\DataTypeTok{    size }\OtherTok{=}\StringTok{ 0.01, 0.02}
 \DataTypeTok{    color }\OtherTok{=}\StringTok{ red, yellow}
 \KeywordTok{[Timing]}
 \DataTypeTok{    TwinkleDuration }\OtherTok{=}\StringTok{ }\FloatTok{0.5}
@@ -3613,7 +3613,7 @@ In the next section, we will create a \texttt{TimedResponseTask} class that will
 \BuiltInTok{print}\NormalTok{(iterator\_fun())}
 
 \CommentTok{\# iterating via for loop}
-\CommentTok{\#\textgreater{} \textless{}generator object iterator\_fun at 0x0000000027D1BD60\textgreater{}}
+\CommentTok{\#\textgreater{} \textless{}generator object iterator\_fun at 0x000000002E8A8C80\textgreater{}}
 \ControlFlowTok{for}\NormalTok{ elem }\KeywordTok{in}\NormalTok{ iterator\_fun():}
     \BuiltInTok{print}\NormalTok{(elem)}
     
@@ -3783,6 +3783,358 @@ Save staircase logs in \emph{code09.py}.
 \section{This is just a start!}\label{this-is-just-a-start}}
 
 As per usual, think about how you can extend the game. A clock showing the remaining time is definitely missing. Auditory feedback would be nice. More positions? Random colors to confuse a player?
+
+\hypertarget{the-snake}{%
+\chapter{The Snake}\label{the-snake}}
+
+This chapter marks the beginning of the second semester in the course, therefore we will use our first game to refresh your knowledge of Python acquired previously. We will use classes (and their instances, objects), lists, conditional statements, loops, and external setting files to program a classic game of Snake. Consults previous chapters for any information you need to complete the game.
+
+\hypertarget{snake-game-an-overview}{%
+\section{Snake game: an overview}\label{snake-game-an-overview}}
+
+Today, we will program a good old classic: the snake game! The story is simple: you control a snake trying to eat as many apples as you can. Every time you consume an apple, snake's length increases. However, if you hit the wall or bite yourself, the game is over (or you lose one of your lives and game is over once you run out of lives).
+
+Here is how the final product will look like.
+
+As before, we will program the game step by step, starting with an empty gray PsychoPy window. Here is the general outline of how we will proceed:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Create boilerplate code to initialize PsychoPy.
+\item
+  Figure out how to place a square. We need this because our snake is made of square segments and lives on a rectangular grid made of squares.
+\item
+  Create a single segment stationary snake\footnote{Not very exciting, I know. But one has to start somewhere!}.
+\item
+  Make the snake move assuming a rectangular grid.
+\item
+  Implement ``died by hitting a wall''.
+\item
+  Add apples.
+  7, Make the snake grow when it eats an apple.
+\item
+  Add check for biting itself (and dying).
+\item
+  Add bells-and-whistles to make game look awesome.
+\end{enumerate}
+
+As you can see, each new step builds on the previous one. Because of that do not proceed to the next step until the current one works and you fully(!) understand what each line of code does. Any leftover uncertainty will linger, grow and complicate your life disproportionately!
+
+\hypertarget{minimal-boilerplate}{%
+\section{Minimal boilerplate}\label{minimal-boilerplate}}
+
+We need the \protect\hyperlink{psychopy-basics}{usual boilerplate} code to get us going:
+
+\begin{itemize}
+\tightlist
+\item
+  Create a PsychoPy window (hardcode its size, as we will compute it from settings later on).
+\item
+  Wait for any key press.
+\item
+  Close the window.
+\end{itemize}
+
+Put your code into \emph{code01.py}.
+
+Do not forget to put the multiline comment at the top of the file, describing what we will be doing.
+
+\hypertarget{fancy-boilerplate}{%
+\section{Fancy boilerplate}\label{fancy-boilerplate}}
+
+In the game, our snake will be composed of square segments and move on a grid made out of squares. Thus, it would be much easier to define our window size based on the size of the grid (in squares) and that of individual squares (in pixels). This way we can figure out window's height as
+
+\[window~height~[in~pixels] = window~height~[in~squares] \times square~size~[in~pixels]\]
+
+Note that the latter parameter determines how the game looks, double the size of the square in pixels and that will double both width and height of the window.
+
+Now, let us think about the \emph{units} that we will use in our game. Recall that PsychoPy has \protect\hyperlink{psychopy-units}{five different units} for size and position. So, which units should we pick to make it easier to draw squares? Reread section on \protect\hyperlink{psychopy-units}{units} and think which units you would pick before continuing.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+What is your decision? My suggestion would be \texttt{"norm"} units as they make sizing squares easy, as long as we use a suitable aspect ratio for the window itself. Good news is that the formula above automatically ensures the correct aspect ratio (think why this is the case).
+
+Before we start coding the window size computation, create a \protect\hyperlink{settings-files}{settings file} using the format of your choice that contains \texttt{grid\ size\ {[}in\ squares{]}} (with a list of two values or you could define it as \texttt{grid\ width\ {[}in\ squares{]}} plus \texttt{grid\ height\ {[}in\ squares{]}}) and \texttt{square\ size\ {[}in\ pixels{]}}\footnote{I always add units in square brackets as a reminder to my(future)self. One can deduce units from code itself but documenting them explicitly makes your life much easier.}. I would suggest to start with a 30 × 20 grid as it should give us enough space to try things out but you can always increase the resolution of the game later. As for the square size, 20 pixels should be enough (but decide based on your screen resolution).
+
+Add the code for loading the file into \texttt{settings} variable and then use the settings to compute the window's size. Test that it works correctly by doubling (or halving) the size of the grid or of the square size.
+
+Put your code into \emph{code02.py}.
+
+\hypertarget{fancier-boilerplate}{%
+\section{Fancier boilerplate}\label{fancier-boilerplate}}
+
+The code for computing window size belongs to the business logic of setting up a window and, therefore, should be part of a window class code. Therefore, let us define a new \texttt{GridWindow} class that will inherit from PsychoPy \href{https://psychopy.org/api/visual/window.html\#psychopy.visual.Window}{Window} class but modify the constructor to perform a window size computation. The new \texttt{\_\_init\_\_()} method should take grid size and square size as parameters, compute an actual size of the window in pixels, and call the \texttt{\_\_init\_\_()} method of the \emph{parent} \href{https://psychopy.org/api/visual/window.html\#psychopy.visual.Window}{Window} class to finish the setup (if you forgot how to call parent's methods, take a look at how we implemented \protect\hyperlink{flappy-bird-class}{Flappy Bird class} by inheriting from \href{https://psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim}{ImageStim}). You already have all the code you need but in the main script, so the only thing you are doing is tidying things up by moving it into the constructor where it belongs and adjusting it for use of parameter and parent methods.
+
+Put your \texttt{GridWindow} class into a separate file (\texttt{gridwindow.py}?).
+
+Modify the code and save main script into \emph{code03.py}.
+
+\hypertarget{adding-a-square}{%
+\section{Adding a square}\label{adding-a-square}}
+
+As I already wrote, our game will be made of squares. Snake is made of squares. Grid it lives on is made of squares. An apple is a square\footnote{We will use a bitmap to make it look like an actual apple but it will need to be a square bitmap, so at the end the apple will still be square}. Which means we need to know the size of that square in the units of the window and we need to know where within the window each square should go based on its coordinates on the grid.
+
+Computing the size of the square in units of window size is easy, so let us start with. If you used \texttt{"norm"} units for the PsychoPy window, we know that both its width and its height go from -1 (bottom) to 1 (top). We also know that we have to fit in \texttt{settings{[}"grid\ width\ {[}in\ squares{]}"{]}} squares horizontally and\texttt{settings{[}"grid\ height\ {[}in\ squares{]}"{]}} squares vertically (If you encoded grid size as a list of \texttt{{[}width,\ height{]}} then \texttt{settings{[}"grid\ size\ {[}in\ squares{]}"{]}{[}0{]}} and \texttt{settings{[}"grid\ size\ {[}in\ squares{]}"{]}{[}1{]}}). Compute the square width and height in the window units in the constructor method of the \texttt{GridWindow} and store it for later use as a tuple in \texttt{square\_size} attribute. Also, store the grid size in an attribute (e.g., \texttt{grid\_size}) as it will be useful for snake and apple classes later. Once you implemented the code, use \protect\hyperlink{debugging}{debugging} to check that numbers make sense. E.g., if your grid is 20 squares tall then each square should be \(0.1\) \texttt{"norm"} units tall.
+
+Next, let us create a method that maps a position on the grid to a position in the window. This way, we can think about position of the snake or apples in terms of the grid but draw them in window coordinates. Create a new method \texttt{grid\_to\_win()} in the \texttt{GridWindow} class that takes a single parameter with a tuple of integers \texttt{(x\_index,\ y\_index)} with grid position (I called this argument \texttt{ipos}, here and in all other places, I am not counting the compulsory \texttt{self} parameter) and returns a tuple of floats \texttt{(x\_pos,\ y\_pos)} with the coordinates of the \emph{center} of the square in \emph{window} coordinates. Use \protect\hyperlink{list-comprehension}{list comprehension} to simplify the code.
+
+Take a look at the drawing below to see the geometry of the computation. The red text shows location of red points in \emph{window norm} units, whereas the black font shows location of a square in \emph{grid index} units. Note that you need to compute where the \emph{center}(!) of the square should go.
+
+\begin{figure}
+\includegraphics[width=16.49in]{images/snake-grid} \caption{Grid versus window coordinates}\label{fig:unnamed-chunk-2}
+\end{figure}
+
+Remember to document the method following \href{https://numpydoc.readthedocs.io/en/latest/format.html}{NumPy docstring format}.
+
+Now, test this method by creating a \href{https://psychopy.org/api/visual/rect.html\#psychopy.visual.rect.Rect}{square} (you now get its size from the \texttt{GridWindow} attribute(s) that you created) in the main script and placing it at different locations on the grid. Run the code several times, using different grid indexes or adding several squares to check that it works as intended. I.e., for a 30×20 grid, a grid coordinate \texttt{0×0} should place a square at the bottom-left corner, whereas \texttt{14×9} should put it almost at the center.
+
+Put your code into \emph{code04.py}.
+
+\hypertarget{a-snake-segment}{%
+\section{A snake segment}\label{a-snake-segment}}
+
+Let us think about how can we represent a snake. It consist of one or more segments. The first one is its head, while the last one is its tail\footnote{A single segment snake is a special case, as its head is also its tail!}. Thus, we can think about a snake as a \href{https://docs.python.org/3/tutorial/datastructures.html\#more-on-lists}{list} of individual segments.
+
+Consider an individual segment. We need to 1) keep track of its location in \emph{grid} coordinate system and 2) have its visual representation --- a square, just like the one you create during the previous exercise --- positioned in \emph{window} coordinate system. Good news is, you already have a method of the \texttt{GridWindow} class that maps the former on the latter, so as long as you know where the segment is on the grid, placing its square within the window is easy. Thus, each segment has two pieces of information associated with it and we could represent it as a \href{https://docs.python.org/3/tutorial/datastructures.html\#dictionaries}{dictionary} with two keys (\texttt{"pos"} (tuple of x and y in grid coordinates) and \texttt{"visuals"} (the square)) or, better still, as a class of it own.
+
+Let us create a \texttt{SnakeSegment} class. Its constructor \texttt{\_\_init\_\_()} methods should take three parameters: 1) a PsychoPy {[}Window{]} object, 2) segment coordinates on the grid, 3) segment color. Save the grid coordinates into the \texttt{ipos} attribute (we need to keep track of it when the snake will start moving around) and reuse the code from the previous exercise when created a square. Store that square in \texttt{visuals} attribute and add a \texttt{draw()} method that simply calls the \texttt{draw()} method of the square\footnote{It would be much simpler to inherit from \href{https://psychopy.org/api/visual/rect.html\#psychopy.visual.rect.Rect}{Rect} class directly but it does not work (raises an error), at least for the version 2021.1.4 that I use.}.
+
+Test the class by creating and drawing a snake segment in the main script. Define snake segment color in settings, create it inside a separate section \texttt{"snake"} as it will add more parameters later on.
+
+Put your \texttt{SnakeSegment} class into a separate file (\emph{snaking.py}).
+
+Modify the code and save main script into \emph{code05.py}.
+
+\hypertarget{the-snake-1}{%
+\section{The snake}\label{the-snake-1}}
+
+As already noted, a snake is just a list with snake segments. Create a new class \texttt{Snake}. Its constructor should take just two parameters: a PsychoPy window object and a dictionary with settings (a \texttt{"snake"} section of our \texttt{settings} variable in the main script). In the constructor, create a single segment and put it into a \emph{list} attribute \texttt{segments}. We will have just one attribute for now but using a list already helps us in the future. Place that only segment roughly at the center of the grid. Use \texttt{grid\_size} attribute of the \texttt{GridWindow} to compute it (you will need to use a floor division \href{https://docs.python.org/3/library/operator.html\#mapping-operators-to-functions}{\texttt{\textbackslash{}\textbackslash{}}} for that). You should also store the window in an attribute for a later use, as we need it every time we create a new segment.
+
+In addition, implement a \texttt{draw()} method that draws all \texttt{segments} in a loop. Test your code by creating and drawing a snake in the main script.
+
+Put your \texttt{Snake} class into a separate file (\emph{snaking.py}).
+
+Modify the code and save main script into \emph{code06.py}.
+
+\hypertarget{get-a-move-on}{%
+\section{Get a move on!}\label{get-a-move-on}}
+
+Now we need to understand how we will move the snake given that it consist of many segments. Assume that we have a five segment snake that moves up, as in the picture below (segments are color coded to make it easier to see who goes where).
+
+\includegraphics[width=14.36in]{images/snake-movement}
+
+Technically, we need to move each segment to a new position. The very first ``head'' segment moves to the position above the snake. The second segment moves to where the head was before. The third moves into the previous position of the forth one, etc. We \emph{can} implement movement like that but instead we will utilize the fact that, unless colored as in the figure above, all segments look identical. Look at the uniformly colored snake below. We can ``move'' it by adding a new segment at a new location (growing a new head at the bitey end of the snake, marked as red) and clipping off the last tail segment (marked by the cross), so that the previously penultimate segment becomes the tail. The rest can stay where they are, saving us a lot of hustle when the snake is long!
+
+\includegraphics[width=14.36in]{images/snake-movement-2}
+
+In the program, we \href{https://docs.python.org/3/tutorial/datastructures.html\#more-on-lists}{list.insert(index, value)}\footnote{We could also have used \href{https://docs.python.org/3/library/collections.html\#collections.deque}{dqueue} class from \emph{collections} library instead of the \texttt{list}. It is, essentially, a list that allows appending and popping from the left as well.} the new head segment at index 0 and we remove the tail via \href{https://docs.python.org/3/tutorial/datastructures.html\#more-on-lists}{list.pop()}.
+
+To keep things neat and tidy, we will implement two methods: \texttt{grow()} and \texttt{trim()}. Why not combine both actions into a single function? Strategic thinking! Once we add apples to the game, the snake will grow after consuming them by \emph{not} shedding its tail. Thus, separating these two functions now will simplify our lives later on\footnote{To be honest, I have initially implemented it as a single \texttt{move()} function , wrote things up up to eating apples, realized the problem, returned and rewrote the notes. So, admittedly, it is a hindsight kind of strategic thinking.}.
+
+The \texttt{grow()} method should take just a single tuple parameter \texttt{dxy} with a direction of snake's movement. I.e., it will be \texttt{(-1,\ 0)} for leftward moving snake, \texttt{(1,\ 0)} for right moving, \texttt{(-1,\ 0)} for up, and \texttt{(1,\ 0)} for down. Inside the method, you compute the coordinates for the new head segment based on the position of the current head (the very first element of the snake) and the direction of motion (\texttt{dxy}), create a new snake segment at that location, and insert it before all other elements.
+
+The \texttt{trim()} method is even simpler as its just pops the last segment (trims the tail).
+
+To test these functions, create a snake and call its \texttt{grow()} method a few times using the same or different directions. Check visually that it works, i.e., that there are correct number of segment (initial head + as many segments as \texttt{grow()} method calls) and that the snake was growing in a correct direction. Combine \texttt{grow()} and \texttt{trim()} calls to visually check the snake as well.
+
+Update \texttt{Snake} class adding \texttt{grow()} and \texttt{trim()} methods.
+
+Test it in \emph{code07.py}.
+
+\hypertarget{the-game-loop}{%
+\section{The game loop}\label{the-game-loop}}
+
+Add a main game loop using a \texttt{user\_abort} variable, so that it runs for as long as the \texttt{user\_abort} is \texttt{False}. Inside the loop, draw the snake and check for keys without pausing the game. If a player pressed \texttt{"escape"}, change \texttt{user\_abort} to \texttt{True} (the player decided to quit the game). If a player pressed \texttt{"space"} key, grow the snake in the direction of your liking and trim it. Thus, every time you press a \emph{space} key, the snake should move one square in the direction of your choice. Test the code!
+
+Add main loop in \emph{code08.py}.
+
+\hypertarget{self-motion}{%
+\section{Self-motion}\label{self-motion}}
+
+Our snake should move by itself. For this, we can call \texttt{grow()} and \texttt{trim()} methods on every iteration of the main game loop, not just when a player presses \emph{space}. However, by default, when you call \texttt{win.flip()} it will synchronize your loop with the refresh rate of the screen (typically, 60 Hz). This means that we would call these methods 60 times per second or, to put it differently, the snake will move 60 squares per second. This is waaaay too fast, given that our original grid size was just 30×20 squares. To appreciate just how fast this is, remove \texttt{if\ key\ was\ space:...} conditional statement, and call grow/trim snake methods on every iteration and see the snake fly off the screen.
+
+Instead, we should decide on snake's speed, e.g., 4 squares per second\footnote{Note that speed does not need to be an integer number of squares per second. It can move at 1.5 squares per second, so 3 squares every two seconds.}, and define it as a new parameter in settings. In the \texttt{Snake} class constructor, use this parameter to compute a new attribute \texttt{step\_duration} that expresses the time needed to elapse before moving to a new square (i.e., interval between calls of grow/trim methods in seconds)\footnote{Do it in the constructor, always define all attributes in the constructor, even if they are set to \texttt{None}.}. Why two variables that express the same information (interval is just an inverse of speed)? We could define \texttt{step\_duration} directly in the settings but for a human it makes it harder to understand just how fast the movement will be. At least for me, a speed of \texttt{4\ squares\ per\ second} is easier to comprehend than \texttt{0.25\ second\ per\ square}. Thus, in cases like these, I prefer to have two variables, one human-oriented (in settings) and one computer-oriented (in the actual implementation, computed via a unit conversion). Remember, it is not just about writing a working code, it is about writing a code that is easy for a human to understand.
+
+Also in the constructor, add a new \texttt{movement\_clock} attribute creating either a \href{https://www.psychopy.org/api/clock.html\#psychopy.clock.Clock}{clock} or a \href{https://www.psychopy.org/api/clock.html\#psychopy.clock.CountdownTimer}{countdown timer} object\footnote{Remember, they work the same they, it is just a question of whether you start from zero and check whether time is over \texttt{step\_duration} (\href{https://www.psychopy.org/api/clock.html\#psychopy.clock.Clock}{clock}) or you start at \texttt{step\_duration} and check whether the time ran out/is already negative (\href{https://www.psychopy.org/api/clock.html\#psychopy.clock.CountdownTimer}{timer}).} Then add a \texttt{reset\_clock()} method and a \texttt{can\_move} computed \protect\hyperlink{computed-attribute-property}{property}. The former should reset the clock or the countdown timer (whatever you have picked). The latter should return \texttt{True}, if the timer ran out and the snake can move to the next square (in this case you need to reset the timer!), or \texttt{False} if that is not the case. In the main script, call \texttt{reset\_clock()} method before the main loop and inside of the main loop call \texttt{grow()} and \texttt{trim()} methods \emph{only} if the snake \texttt{can\_move}.
+
+Test your code by setting different snake speed.
+
+Update \texttt{Snake} class adding timer attributes and methods.
+
+Test it in \emph{code09.py}.
+
+\hypertarget{describing-direction-using-words}{%
+\section{Describing direction using words}\label{describing-direction-using-words}}
+
+In our current design, we described direction as a tuple \texttt{(dx,\ dy)}. Let us change it, so that it is described using words \texttt{"up"}, \texttt{"down"}, \texttt{"left"}, and \texttt{"right"}. This is not strictly necessary but will make our lives somewhat easier later on when we add steering controls. More importantly, it will serve a didactic purpose as well, showing how you can use dictionaries to translate values from one representation to another.
+
+Thus, in the main script, let us create a new string variable \texttt{direction} and set it to \texttt{"up"} (or any other direction you like). We will keep the \texttt{grow()} method as is and will translate individual strings to pairs of \texttt{(dx,\ dy)} values in the main script itself. E.g., \texttt{"up"} should correspond to \texttt{(0,\ -1)}, \texttt{"right"} to \texttt{(1,\ 0)}, etc.
+
+We can implement this translation via if-elif conditional statements:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ direction }\OperatorTok{==} \StringTok{"up"}\NormalTok{:}
+\NormalTok{  dxy }\OperatorTok{=}\NormalTok{ (}\DecValTok{0}\NormalTok{, }\OperatorTok{{-}}\DecValTok{1}\NormalTok{)}
+\ControlFlowTok{elif}\NormalTok{ direction }\OperatorTok{==} \StringTok{"right"}\NormalTok{:}
+\NormalTok{  dxy }\OperatorTok{=}\NormalTok{ (}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)}
+\NormalTok{  ...}
+\end{Highlighting}
+\end{Shaded}
+
+However, this approach introduces a lot of repetitive code and does not scale particularly well. Instead, we can use a \protect\hyperlink{dictionaries}{dictionary} (let us call it \texttt{DIRECTION\_TO\_DXY} as it is another constant) with \texttt{"up"}, \texttt{"right"}, etc. string as keys and tuples \texttt{(0,\ -1)}, \texttt{(1,\ 0)}, etc. as values. This way, we can use current value of the \texttt{direction} variable as a key to get the \texttt{(dx,\ dy)} pair from \texttt{DIRECTION\_TO\_DXY} dictionary. Do this translation directly in the \texttt{grow()} method call rather than creating a temporary variable as in the if-elif examples above. Test the translation by changing \texttt{direction} and checking that the snake moves accordingly.
+
+Use \texttt{direction} and \texttt{DIRECTION\_TO\_DXY} in \emph{code10.py}.
+
+\hypertarget{it-is-all-about-control}{%
+\section{It is all about control}\label{it-is-all-about-control}}
+
+Playing the game would be more fun, if we could steer the snake! If the player presses \emph{right arrow} key, the snake should turn \emph{clockwise}. Conversely, the \emph{left arrow} key, should turn the snake \emph{counterclockwise}. We need to figure out two things. First, how to determine a new direction of motion given the current one and the key that was pressed. Second, we must decide when and how to change the value of \texttt{direction} variable. Let us tackle these problems one at a time.
+
+Determining the new direction of motion is fairly straightforward. If current is \texttt{"up"} and key was \emph{right} (\emph{clockwise} rotation), the new direction should be \texttt{"right"}. If current is \texttt{"down"} and key was \emph{left}, the new direction is again \texttt{"right"} (\emph{counterclockwise} rotation), etc. You could implement it as a bunch of \texttt{if-elif} statements or, better still, use the dictionary look up approach we implemented in the previous exercise. Here, you need a nested dictionary (dictionary inside a dictionary) \texttt{NEW\_DIRECTION{[}key{]}{[}direction{]}}. The first level has two keys \texttt{"left"} and \texttt{"right"} (so, effectively, counterclockwise and clockwise rotation) that selects which translation should be used and the second level is the dictionary that translates current direction into the new direction of motion. E.g., if current direction is \texttt{"down"} and key was \texttt{"right"}, \texttt{NEW\_DIRECTION{[}"right"{]}{[}"down"{]}} should be \texttt{"left"} (rotating clockwise from \texttt{"down"} gets us to \texttt{"left"}). You know how define a simple dictionary. Good news, defining nested dictionaries follows the same rules, so should be straightforward.
+
+Now let us think about when and how should we change a value of \texttt{direction} variable. The simplest approach would be to change it as soon as the player presses the key. However, because our snake does not move on every frame this could lead to some odd behavior. Imagine that our game is on ``easy'' mode, so that the snake moves very slowly (one square per second). In this case, the player could easily press \emph{left} twice during that second, which would make a snake move \emph{backwards}, because its direction was changed by 180°. Snakes, at least our snake, cannot do this. Thus, we need a temporary variable, let us call it \texttt{new\_direction}, which we will set every time the player presses the key but whose value will be transferred to \texttt{direction} only when it is time to move the snake (when the snake can move). We will compute it from the current \texttt{direction} and the key pressed. This way, even when the player presses \emph{left} key several times, the snake would still turn only once because we compute the each turn using the same original \texttt{direction} value and not the changed \texttt{new\_direction} variable. This also means that players can ``change their mind'', as the last key press before the snake moves will determine the direction of motion.
+
+Add \texttt{NEW\_DIRECTION} and implement steering in \emph{code11.py}.
+
+\hypertarget{turning-the-harder-way}{%
+\section{Turning the hard(er) way}\label{turning-the-harder-way}}
+
+Let us implement the same ``figure out new direction'' code in a more complicated way. The purpose of the exercise is to challenge you, show you new methods of the list, and to demonstrate how you can think about a change of the direction as moving through the list. Implement it as a function called \texttt{compute\_new\_direction()}, which will take two parameters (current direction and pressed key) and will return the new direction of rotation. You can put it above the main script or, better still, put it into a separate \emph{utilities.py} file. However, in cases like these, I find it useful to play with the code in a Jupyter notebook before turning it into a function, so you could try this approach instead of debugging.
+
+Here is the idea. Imagine that you have a list \texttt{{[}"left",\ "up",\ "right",\ "down"{]}}. For this list, rotation clockwise would correspond to moving through the list to the right (assuming that you jump to the beginning once you move past the last item). Conversely, rotation counterclockwise corresponds to moving to the left (again, assuming that you jump to the end of the list, once you went past the first item). As you see, rotation is expressed as a very intuitive ``motion through the list''.
+
+For the actual implementation, first, define a local variable as a list in the order I've described. Next, you need to identify the location of the current direction within the list using \href{https://docs.python.org/3/tutorial/datastructures.html\#more-on-lists}{index()} method. Then, you need to figure out whether you increase or decrease that index (to move to the right or to the left), based on \texttt{pressed\_key} parameter (you can use dictionary approach or a conditional assignment here). Finally, you need to control for range, so that index of \texttt{-1} becomes \texttt{3} (you went too far to the left) and index of \texttt{4} should become \texttt{0}. The most elegant way to do this, is using \texttt{\%} \href{https://python-reference.readthedocs.io/en/latest/docs/operators/modulus.html}{modulus} operation. Hint, \texttt{4\ \%\ 4} is \texttt{0}. What about \texttt{1\ \%\ 4}, \texttt{0\ \%\ 4}, or even \texttt{-1\ \%\ 4}? Check it in a Jupyter notebook to get an idea of what I am hinting at. And, of course, do not use \texttt{4} for division, use the \href{https://docs.python.org/3/library/functions.html\#len}{length} of the list, as it determines the range of values.
+
+Create `compute\_new\_direction() in \emph{utilities.py}.
+
+Use it instead of a dictionary look-up in \emph{code12.py}.
+
+\hypertarget{hitting-the-wall-1}{%
+\section{Hitting the wall}\label{hitting-the-wall-1}}
+
+We can control the snake but, at the moment, you can steer it off the screen or make it go through itself. Let us fix the former!
+
+Add a new computed \protect\hyperlink{computed-attribute-property}{property} \texttt{hit\_the\_wall} to the \texttt{Snake} class. The method should check whether the head of the snake (which segment is it?) is still within the grid that we defined (how do you check for that?). It should return \texttt{True}, if the head of the snake is outside of the grid limits (so, it is true that the snake hit the wall) or \texttt{False}, if it is still inside.
+
+Test it by adding a new condition inside the main game loop. Check whether the snake \texttt{hit\_the\_wall} and, if that is the case, the game should be over. Think about the optimal place where to check for this. You could do it on every iteration but there is a more logical place for it in main loop. Where is it?
+
+Test that the game quits after you successfully steered the snake into the wall.
+
+Add \texttt{hit\_the\_wall} property to the \texttt{Snake} class.
+
+Use it in \emph{code13.py}.
+
+\hypertarget{is-this-the-snake}{%
+\section{Is this the snake?}\label{is-this-the-snake}}
+
+In the next section, we will be adding apples to the game. The catch is that these apples should appear at a location that is \emph{not} occupied by the snake. Otherwise, we would generate apples directly into snake's stomach. Practical for the snake but defeats the purpose of the game. To rephrase this problem, we need a method that checks whether a particular grid location is occupied by the snake.
+
+Add a new method \texttt{is\_inside()} that takes a tuple with a grid location as a parameter and returns a logical value whether that grid location is occupied by the snake (i.e., by one of its segments). Document the function! Test the method via debugging. Calling it immediately after creating the snake with a location of the head (the only segment) or with a different location. Store a return value into a temporary variable and put a breakpoint at an appropriate place to check its value (or use a debug console).
+
+Add \texttt{is\_inside()} method to the \texttt{Snake} class.
+
+Test it in \emph{code14.py}.
+
+\hypertarget{an-inedible-apple}{%
+\section{An inedible apple}\label{an-inedible-apple}}
+
+Let us add that highly desirable fruit: the apple! We will use \href{material/apple.png}{an apple bitmap}\footnote{Created by \href{https://openclipart.org/artist/cyanidecupcake}{Jess Wiechler}.}, so we will create a new class as a descendant of \href{https://psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim}{ImageStim} class. Its constructor should take \texttt{GridWindow} and \texttt{Snake} as parameters. In the constructor, you need to find a \href{https://docs.python.org/3/library/random.html\#random.randrange}{random} grid location that is not occupied by snake, store it in an \texttt{ipos} attribute and call the parent's constructor to initialize the image with an appropriate size and location (again, check \protect\hyperlink{flappy-bird-class}{Flappy Bird class} or \texttt{GridWindow} class, if you forgot how to do this).
+
+The only tricky part is finding the unoccupied location. There are many different strategies for doing this. The simplest one is to generate a potential location \href{https://docs.python.org/3/library/random.html\#random.randrange}{at random}, check whether it is occupied by a snake (\texttt{is\_inside()}?) and keep doing it until you find an unoccupied one.
+
+In the main script, create an apple and draw it in the main loop. For a moment, the snake cannot eat it and will pass through it but we will fix this shortly.
+
+Create \texttt{Apple} class in \emph{apples.py}.
+
+Use the apple in \emph{code15.py}.
+
+\hypertarget{eating-an-apple}{%
+\section{Eating an apple}\label{eating-an-apple}}
+
+Apples exist for snakes to eat them! Let us add this functionality. The general idea is very simple. If the \emph{head} of the snake moves on to the grid location with an apple, you should not trim its tail. See how useful it was to split growing and trimming into two separate functions? Told you, strategic thinking!
+
+You need to add a conditional statement that if the snake's head \emph{is} on the apple, you should not trim the tail but create a new apple. What should you do, if there is no apple at that location?
+
+Make snake eat apples in \emph{code16.py}.
+
+\hypertarget{eating-yourself}{%
+\section{Eating yourself}\label{eating-yourself}}
+
+Once our snake grows beyond four segments, it has an opportunity to bite itself\footnote{Why at least five? Draw it on the grid and figure out whether it can eat itself with just four segments.}. For this, we need to check that, \emph{after} the snake moved, its head is \emph{not} at the same location as one of the segments of its body. Create a new property \texttt{bit\_itself} that returns \texttt{True} or \texttt{False} based on whether that is the case. The property is very similar but not identical to \texttt{is\_inside()} method you implemented earlier. What is the critical difference and why cannot you simply reuse that function?
+
+Once you implemented \texttt{bit\_itself}, you should check for that it does lead to the end of the game.
+
+Implement \texttt{bit\_itself} property.
+
+Use it in \emph{code17.py}.
+
+\hypertarget{bells-and-whistles-score}{%
+\section{Bells and whistles: score}\label{bells-and-whistles-score}}
+
+Now that we have a fully functional game, we can start adding non-essential but nice-to-have features to it. The first one will be the score. Create a new class \texttt{Score} that inherits from \href{https://psychopy.org/api/visual/textstim.html\#psychopy.visual.TextStim}{TextStim} and has an extra attribute \texttt{score} (initialized to \(0\) in the constructor) and a method \texttt{plus\_one()} that should increase the score by one and update the \texttt{text} attribute. As with an apple, initialize the \href{https://psychopy.org/api/visual/textstim.html\#psychopy.visual.TextStim}{TextStim} part by calling parent's \texttt{\_\_init\_\_()} method using appropriate parameters. I decided to put it at the top of the window and it reads \textbf{Score: XXX} but you are free to do it as you feel fit.
+
+In the main script, create a \texttt{Score} object, draw it when appropriate and increase the score every time the snake eats an apple.
+
+Create \texttt{Score} class in \emph{scoring.py}.
+
+Use it in \emph{code18.py}.
+
+\hypertarget{bells-and-whistels-three-lives}{%
+\section{Bells and whistels: three lives}\label{bells-and-whistels-three-lives}}
+
+Let us give the player three attempts to achieve the top score. They have three lives, every time the snake dies, the game \emph{but not the score} resets: A single segment snake appears at the center and a new random apple appears elsewhere (where should you put the code to create them?). Once the snake dies three times, the game is over. Think how you can implement this three repetitions.
+
+The score should be cumulative, so at the beginning of round two it should be equal to the final score of round one. Think how you can achieve this. \emph{Another important point}: now you have two nested loop, one is for the game, one is for the round. When the snake dies, the round is over and, if you run out of lives, the game as well. When the player presses \emph{escape} both round \textbf{and} the game are over. Think about how you can implement it.
+
+Put your updated code into \emph{code19.py}.
+
+\hypertarget{bells-and-whistels-press-space-to-start-the-round}{%
+\section{Bells and whistels: press space to start the round}\label{bells-and-whistels-press-space-to-start-the-round}}
+
+At the moment, our round starts immediately. It would be friendlier, if the player would start it themselves. Before each round, draw \emph{all} visuals (snake, apple, score) plus a text ``Press SPACE to start'' and wait until either a \emph{space} or \emph{escape} key is pressed. In the former case, the trial should start. In the latter case, the player should exit the game.
+
+Put your updated code into \emph{code20.py}.
+
+\hypertarget{bells-and-whistels-showing-remaining-lives}{%
+\section{Bells and whistels: showing remaining lives}\label{bells-and-whistels-showing-remaining-lives}}
+
+Let us not just repeat the game three times but show the player how many lives they still have. Download the \href{material/heart.png}{heart.png}\footnote{This image was downloaded from \href{https://openclipart.org/}{openclipart.org} and was created by \href{https://openclipart.org/artist/cliparteles}{cliparteles}} and use it show remaining lives at the top-left corner of the screen: three hearts in round one, two hearts in round two, and just a single heart in round three. You will need to use (ImageStim){[}\url{https://www.psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim}{]} for this. Think about the size of images and their location. Hint: I created a list of heart images using list comprehension and drawing hearts definitely requires a for loop.
+
+Put your updated code into \emph{code21.py}.
+
+\hypertarget{bells-and-whistles-difficulty}{%
+\section{Bells and whistles: difficulty}\label{bells-and-whistles-difficulty}}
+
+At the moment, the difficulty of the game, the speed with which the snake moves, is fixed and the player has no way of choosing it. Let us create dialog that appears \emph{before} we create the window and start the game that will allow the player to choose between \emph{easy}, \emph{normal}, and \emph{difficult}\footnote{Or, if you played Doom, between \emph{I'm Too Young To Die}, \emph{Hey, Not Too Rough}, \emph{Hurt Me Plenty}, \emph{Ultra-Violence}, and \emph{Nightmare}.}. I leave it up to you to decide which snake speeds correspond to each difficulty. You can have more than three options, if you want. However, they definitely should be define in settings file.
+
+To create and run the dialog, use \href{https://www.psychopy.org/api/gui.html\#dlg}{Dlg} class from
+\href{https://www.psychopy.org/api/gui.html}{giu} module of PsychoPy. Your challenge for today is to figure out how to use it based on the manual alone. Take a look at the example and experiment with in a separate file or a Jupyter notebook.
+
+Put your updated code into \emph{code22.py}.
+
+\hypertarget{bells-and-whistles-blinking-game-over-message}{%
+\section{Bells and whistles: blinking ``game over'' message}\label{bells-and-whistles-blinking-game-over-message}}
+
+Once the game is over (but not when a player pressed \emph{escape} key), show a blinking ``Game Over'' message \emph{superimposed} over the final static game screen. Thus, you need to draw all the game objects and messages (but without moving the snake) plus you show a text message that is on for 0.5 second and off for 0.5 seconds until the player presses \emph{Space} button. Hint: it should be a separate loop after the main game loop over rounds, logical variables and clocks/timers have definitely something to do with it.
+
+Put your updated code into \emph{code23.py}.
+
+\hypertarget{bells-and-whistles-sounds}{%
+\section{Bells and whistles: sounds}\label{bells-and-whistles-sounds}}
+
+Download \href{material/game-over-arcade.wav}{game-over-arcade.wav}\footnote{Downloaded from \href{https://freesound.org/}{freesound.org} and created by \href{https://freesound.org/people/myfox14/}{myfox14}} and \href{material/8-bit-game-over-sound.wav}{8-bit-game-over-sound.wav}\footnote{Also downloaded from \href{https://freesound.org/}{freesound.org} and created by \href{https://freesound.org/people/EVRetro/}{EVRetro}}. Use the former whenever the snake dies and use the latter when the player runs out of lives. Note, no sound should be played if the player pressed \emph{escape}.
+
+You will need to use \texttt{Sound} class from \href{https://psychopy.org/api/sound/playback.html}{sound} module of PsychoPy. Important: use \texttt{Sound} class not a library-specific implementation such as \texttt{PTBSound} or \texttt{SoundDevice} classes. The PsychoPy will figure out which backend is the best (available at all) for you.
+
+Put your updated code into \emph{code24.py}.
+
+\hypertarget{the-sky-is-the-limit}{%
+\section{The sky is the limit}\label{the-sky-is-the-limit}}
+
+Good job! Lots of coding but now you have a cool retro game!
 
   \bibliography{book.bib}
 

@@ -15,7 +15,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 11 Christmas special | Writing games with Python and PsychoPy">
 <meta name="twitter:description" content="Today we are going to program a Christmas-special. However, this is still an opportunity to learn something new. You will learn about zipping lists and we will start offloading settings into a...">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.13/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
@@ -54,6 +54,7 @@
 <li><a class="active" href="christmas-special.html"><span class="header-section-number">11</span> Christmas special</a></li>
 <li><a class="" href="flappy-bird.html"><span class="header-section-number">12</span> Flappy Bird</a></li>
 <li><a class="" href="seminar-02-06.html"><span class="header-section-number">13</span> Guitar Hero: staircase and iterator functions</a></li>
+<li><a class="" href="the-snake.html"><span class="header-section-number">14</span> The Snake</a></li>
 </ul>
 
         <div class="book-extra">
@@ -111,8 +112,8 @@
 <span class="header-section-number">11.4</span> Twinkle, twinkle, little star<a class="anchor" aria-label="anchor" href="#twinkle-twinkle-little-star"><i class="fas fa-link"></i></a>
 </h2>
 <p>Now let us make our Christmas balls twinkle, as in the video. The idea is that only one color is “active” at a time. The balls of that color are “on” and balls of other color are “off” (white or gray, or some other color of your liking). Now our display becomes dynamic, so you need to have a game loop and with an opportunity to exit the program by pressing <em>escape</em>.</p>
-<p>For this, we need to define a list of colors (“red,” “blue,” “yellow”) that we can cycle through and an variable that hold the index of the currently active color (I’ve called it <code>icolor</code>). Every X seconds (I do it every 0.5 seconds, define this as a constant, e.g., <code>TWINKLE_DURATION</code>), increment this index, so that the next color in the list becomes active. Note that you have an out-of-range problem: When you initialize <code>icolor</code> to 0 and increment it by 1 three times, your index is already too large (3, the length of our <code>colors</code> list is 3, so the maximal index is 2). You can either use an <code>if</code> to check for that or you can use a remainder operator <code>%</code> (think about the remainder if you divide <em>any</em> positive value by the length of the <code>colors</code> list).</p>
-<p>Once you need to update whether balls are “on” or “off,” you need to loop both through the balls and their colors in the original <code>BALLS_COLOR</code> list (when you use a string with color name, it gets translated into an RGB value, so we cannot compare it directly). Again, you can use <a href="https://docs.python.org/3/library/functions.html#zip">zip()</a> to loop simultaneously through Christmas balls and their color. If their color matches the active one, their <code>fillColor</code> should be that color. If not, their <code>fillColor</code> should be some “neutral” / “off” color (white? gray?).</p>
+<p>For this, we need to define a list of colors (“red”, “blue”, “yellow”) that we can cycle through and an variable that hold the index of the currently active color (I’ve called it <code>icolor</code>). Every X seconds (I do it every 0.5 seconds, define this as a constant, e.g., <code>TWINKLE_DURATION</code>), increment this index, so that the next color in the list becomes active. Note that you have an out-of-range problem: When you initialize <code>icolor</code> to 0 and increment it by 1 three times, your index is already too large (3, the length of our <code>colors</code> list is 3, so the maximal index is 2). You can either use an <code>if</code> to check for that or you can use a remainder operator <code>%</code> (think about the remainder if you divide <em>any</em> positive value by the length of the <code>colors</code> list).</p>
+<p>Once you need to update whether balls are “on” or “off”, you need to loop both through the balls and their colors in the original <code>BALLS_COLOR</code> list (when you use a string with color name, it gets translated into an RGB value, so we cannot compare it directly). Again, you can use <a href="https://docs.python.org/3/library/functions.html#zip">zip()</a> to loop simultaneously through Christmas balls and their color. If their color matches the active one, their <code>fillColor</code> should be that color. If not, their <code>fillColor</code> should be some “neutral” / “off” color (white? gray?).</p>
 <p>To keep track of time, you will need a timer variable, use either <a href="https://psychopy.org/api/clock.html#psychopy.clock.Clock">Clock</a> or <a href="https://psychopy.org/api/clock.html#psychopy.clock.CountdownTimer">CountdownTimer</a>. Once the <code>TWINKLE_DURATION</code> elapsed, update the active color, all the balls, and do not forget to reset the timer.</p>
 <div class="rmdnote program">
 <p>Put your code into <code>code03.py</code>.</p>
@@ -122,13 +123,10 @@
 <h2>
 <span class="header-section-number">11.5</span> Let’s make some noise!<a class="anchor" aria-label="anchor" href="#lets-make-some-noise"><i class="fas fa-link"></i></a>
 </h2>
-<p>Let add some Christmas music! Download <a href="material/Deck%20the%20Halls%20B.ogg">Deck the Halls version by Kevin MacLeod</a><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Deck the Halls B by Kevin MacLeod &lt;a href="http://incompetech.com" class="uri"&gt;http://incompetech.com&lt;/a&gt;
-Creative Commons — Attribution 4.0 International — CC BY 4.0
-Free Download / Stream: &lt;a href="https://bit.ly/deck-the-halls-b" class="uri"&gt;https://bit.ly/deck-the-halls-b&lt;/a&gt;
-Music promoted by Audio Library &lt;a href="https://youtu.be/RzjZ-WdVeyk" class="uri"&gt;https://youtu.be/RzjZ-WdVeyk&lt;/a&gt;&lt;/p&gt;'><sup>60</sup></a>. For this, we will use <a href="https://psychopy.org/api/sound.html">sound</a> module of PsychoPy library that generate sounds on the fly and also play audio files in various format such as wav or ogg (but not mp3!). Unfortunately, sound it surprisingly tricky, there are many libraries that might be used by PsychoPy (as of end of 2021 PsychoPy lists four backends that it might use), and things sometimes break. Thus, if the music does not play for you, ask me and we will try to set your sound libraries up.</p>
+<p>Let add some Christmas music! Download <a href="material/Deck%20the%20Halls%20B.ogg">Deck the Halls version by Kevin MacLeod</a><a href="the-snake.html#fn60" class="footnote-ref" id="fnref60"><sup>60</sup></a>. For this, we will use <a href="https://psychopy.org/api/sound.html">sound</a> module of PsychoPy library that generate sounds on the fly and also play audio files in various format such as wav or ogg (but not mp3!). Unfortunately, sound it surprisingly tricky, there are many libraries that might be used by PsychoPy (as of end of 2021 PsychoPy lists four backends that it might use), and things sometimes break. Thus, if the music does not play for you, ask me and we will try to set your sound libraries up.</p>
 <p>Using sound is very simple. First, you need to import the <code>Sound</code> class as suggested in the manual:</p>
 <div class="sourceCode" id="cb98"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb98-1"><a href="christmas-special.html#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> psychopy.sound <span class="im">import</span> Sound</span></code></pre></div>
-<p>Then, you need a new object of <code>Sound</code> class supplying the file name as the first parameter (I called the variable <code>song</code>). Right before start the loop, you <code>.play()</code> the sound. Note, if you want to play the same sound again, you need to “rewind” it by explicitly calling its <code>.stop()</code> method (for some reason, the sound stops at the end but does not gets “rewind,” so when you try to play it again and notices that it is already at the end and stops without playing anything).</p>
+<p>Then, you need a new object of <code>Sound</code> class supplying the file name as the first parameter (I called the variable <code>song</code>). Right before start the loop, you <code>.play()</code> the sound. Note, if you want to play the same sound again, you need to “rewind” it by explicitly calling its <code>.stop()</code> method (for some reason, the sound stops at the end but does not gets “rewind”, so when you try to play it again and notices that it is already at the end and stops without playing anything).</p>
 <div class="rmdnote program">
 <p>Put your code into <code>code04.py</code>.</p>
 </div>
@@ -180,9 +178,9 @@ Music promoted by Audio Library &lt;a href="https://youtu.be/RzjZ-WdVeyk" class=
 </h3>
 <p>This is a format with a structure similar to that found in MS Windows INI files.</p>
 <div class="sourceCode" id="cb101"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb101-1"><a href="christmas-special.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[Balls]</span></span>
-<span id="cb101-2"><a href="christmas-special.html#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="dt">    x </span><span class="ot">=</span><span class="st"> </span><span class="fl">0.1</span><span class="st">, </span><span class="fl">0.2</span></span>
-<span id="cb101-3"><a href="christmas-special.html#cb101-3" aria-hidden="true" tabindex="-1"></a><span class="dt">    y </span><span class="ot">=</span><span class="st"> </span><span class="fl">0.2</span><span class="st">, </span><span class="fl">0.1</span></span>
-<span id="cb101-4"><a href="christmas-special.html#cb101-4" aria-hidden="true" tabindex="-1"></a><span class="dt">    size </span><span class="ot">=</span><span class="st"> </span><span class="fl">0.01</span><span class="st">, </span><span class="fl">0.02</span></span>
+<span id="cb101-2"><a href="christmas-special.html#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="dt">    x </span><span class="ot">=</span><span class="st"> 0.1, 0.2</span></span>
+<span id="cb101-3"><a href="christmas-special.html#cb101-3" aria-hidden="true" tabindex="-1"></a><span class="dt">    y </span><span class="ot">=</span><span class="st"> 0.2, 0.1</span></span>
+<span id="cb101-4"><a href="christmas-special.html#cb101-4" aria-hidden="true" tabindex="-1"></a><span class="dt">    size </span><span class="ot">=</span><span class="st"> 0.01, 0.02</span></span>
 <span id="cb101-5"><a href="christmas-special.html#cb101-5" aria-hidden="true" tabindex="-1"></a><span class="dt">    color </span><span class="ot">=</span><span class="st"> red, yellow</span></span>
 <span id="cb101-6"><a href="christmas-special.html#cb101-6" aria-hidden="true" tabindex="-1"></a><span class="kw">[Timing]</span></span>
 <span id="cb101-7"><a href="christmas-special.html#cb101-7" aria-hidden="true" tabindex="-1"></a><span class="dt">    TwinkleDuration </span><span class="ot">=</span><span class="st"> </span><span class="fl">0.5</span></span></code></pre></div>
@@ -250,7 +248,6 @@ Music promoted by Audio Library &lt;a href="https://youtu.be/RzjZ-WdVeyk" class=
 
 </div>
 </div>
-
   <div class="chapter-nav">
 <div class="prev"><a href="memory-game.html"><span class="header-section-number">10</span> Memory game</a></div>
 <div class="next"><a href="flappy-bird.html"><span class="header-section-number">12</span> Flappy Bird</a></div>
@@ -290,7 +287,7 @@ Music promoted by Audio Library &lt;a href="https://youtu.be/RzjZ-WdVeyk" class=
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2022-02-08.</p>
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2022-04-25.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

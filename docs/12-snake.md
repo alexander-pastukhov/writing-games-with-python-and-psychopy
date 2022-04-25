@@ -8,13 +8,7 @@ Today, we will program a good old classic: the snake game! The story is simple: 
 
 Here is how the final product will look like.
 
-```{r, eval=knitr::is_html_output(excludes = "epub"), results = 'asis', echo = F}
-cat(
-'<div style="text-align:center;"><video controls>
-    <source src="videos/snake.mp4" type="video/mp4"> 
-  </video></div>'
-)
-```
+
 
 As before, we will program the game step by step, starting with an empty gray PsychoPy window. Here is the general outline of how we will proceed:
 
@@ -83,9 +77,10 @@ Next, let us create a method that maps a position on the grid to a position in t
 
 Take a look at the drawing below to see the geometry of the computation. The red text shows location of red points in _window norm_ units, whereas the black font shows location of a square in _grid index_ units. Note that you need to compute where the _center_(!) of the square should go.
 
-```{r echo=FALSE, fig.cap = "Grid versus window coordinates"}
-knitr::include_graphics("images/snake-grid.png")
-```
+<div class="figure">
+<img src="images/snake-grid.png" alt="Grid versus window coordinates" width="1187" />
+<p class="caption">(\#fig:unnamed-chunk-2)Grid versus window coordinates</p>
+</div>
 
 Remember to document the method following [NumPy docstring format](https://numpydoc.readthedocs.io/en/latest/format.html).
 
@@ -125,15 +120,11 @@ Modify the code and save main script into _code06.py_.
 
 Now we need to understand how we will move the snake given that it consist of many segments. Assume that we have a five segment snake that moves up, as in the picture below (segments are color coded to make it easier to see who goes where).
 
-```{r echo=FALSE}
-knitr::include_graphics("images/snake-movement.png")
-```
+<img src="images/snake-movement.png" width="1034" />
 
 Technically, we need to move each segment to a new position. The very first "head" segment moves to the position above the snake. The second segment moves to where the head was before. The third moves into the previous position of the forth one, etc. We _can_ implement movement like that but instead we will utilize the fact that, unless colored as in the figure above, all segments look identical. Look at the uniformly colored snake below. We can "move" it by adding a new segment at a new location (growing a new head at the bitey end of the snake, marked as red) and clipping off the last tail segment (marked by the cross), so that the previously penultimate segment becomes the tail. The rest can stay where they are, saving us a lot of hustle when the snake is long!
 
-```{r echo=FALSE}
-knitr::include_graphics("images/snake-movement-2.png")
-```
+<img src="images/snake-movement-2.png" width="1034" />
 
 In the program, we [list.insert(index, value)](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists)^[We could also have used [dqueue](https://docs.python.org/3/library/collections.html#collections.deque) class from _collections_ library instead of the `list`. It is, essentially, a list that allows appending and popping from the left as well.] the new head segment at index 0 and we remove the tail via [list.pop()](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists).
 
