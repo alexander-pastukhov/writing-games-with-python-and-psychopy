@@ -139,7 +139,7 @@ In the program, we [list.insert(index, value)](https://docs.python.org/3/tutoria
 
 To keep things neat and tidy, we will implement two methods: `grow()` and `trim()`. Why not combine both actions into a single function? Strategic thinking! Once we add apples to the game, the snake will grow after consuming them by _not_ shedding its tail. Thus, separating these two functions now will simplify our lives later on^[To be honest, I have initially implemented it as a single `move()` function , wrote things up up to eating apples, realized the problem, returned and rewrote the notes. So, admittedly, it is a hindsight kind of strategic thinking.].
 
-The `grow()` method should take just a single tuple parameter `dxy` with a direction of snake's movement. I.e., it will be `(-1, 0)` for leftward moving snake, `(1, 0)` for right moving, `(-1, 0)` for up, and `(1, 0)` for down. Inside the method, you compute the coordinates for the new head segment based on the position of the current head (the very first element of the snake) and the direction of motion (`dxy`), create a new snake segment at that location, and insert it before all other elements.
+The `grow()` method should take just a single tuple parameter `dxy` with a direction of snake's movement. I.e., it will be `(-1, 0)` for leftward moving snake, `(1, 0)` for right moving, `(0, -1)` for up, and `(0, 1)` for down. Inside the method, you compute the coordinates for the new head segment based on the position of the current head (the very first element of the snake) and the direction of motion (`dxy`), create a new snake segment at that location, and insert it before all other elements.
 
 The `trim()` method is even simpler as its just pops the last segment (trims the tail).
 
