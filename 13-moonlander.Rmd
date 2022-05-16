@@ -1,0 +1,161 @@
+# Moon lander
+
+Today we will create a moon lander game. You job is simple: land your ship on the pad but do not crash it! Here is a brief video of my implementation of the game
+
+```{r, eval=knitr::is_html_output(excludes = "epub"), results = 'asis', echo = F}
+cat(
+'<div style="text-align:center;"><video controls>
+    <source src="videos/moonlander.m4v" type="video/mp4"> 
+  </video></div>'
+)
+```
+
+But first you will learn about context management and exceptions.
+
+## Boilerplate
+As per usual, we will start with our usual boilerplate code. Create settings file that, for now, defines only the size of the window. Create `code01.py` with the usual boilerplate for loading settings, opening the window (its size determined by the settings), a main game loop (you can add a text message to make it look less plain) with a check for an _"escape"_ button to exit the loop, and closing the window at the end. I am being so specific because next you will learn how to hide this boilerplate in a context manager.
+
+::: {.rmdnote .program}
+Put your code into _code01.py_.
+:::
+
+## Context manager
+On the one hand, context management is a frequently used feature in Python, particularly for file operations (you used it when loading settings from a JSON or YAML file). On the other hand, its full power that relies on a custom class implementation is rarely used. However, it can be very useful whenever you the context of your programs is the same or very similar, as in case of the PsychoPy games that we programmed or typical PsychoPy experiments. In both cases, there is a fairly fixed structure of the program:
+
+1. Initialization 
+    * define experimental settings by either reading them from an [external file](#settings-files)
+    * create PsychoPy window, logger for experimental results, mouse (if required), initialize special devices such as response box, eye tracker, etc.
+2. Actual experiment
+3. Saving and cleaning up
+    * save data logs
+    * if required, close connection to special devices such as response boxes, eye tracker, etc.
+    * close PsychoPy window
+  
+If you look at your code, you will realized that steps 1 and 3 remain fairly the same throughout all the games that we programmed. Thus, we will create a context manager class that you can always reuse and which will hide away the boilerplate code.
+
+Here is a reminded of how a context manager is used when working with files. First, how it works _without_ a context manager: 1) you open a file and assign the object to a variable, 2) you work with it, 3) you close it. The latter is important to ensure that information was fully written into it and that you do not lock for file.
+
+```python
+file = open("somefile.txt", "r")
+# ... do something with the file, such as reading the entire file into a single variable
+data = file.read()
+close(file)
+```
+
+A better way is to use a context manager via a `with ... as ...` statement (again, this should look familiar by now):
+```python
+with open("somefile.txt", "r") as file:
+    file.read()
+```
+
+Note that now the `file.read()` is inside of the `with` block and there is no `file.close()` call. The latter is evoked automatically, once you run all the code inside the `with` block and exit it. Although for this example the difference is minimal --- a different way to assign a value to a variable and explicit versus implicit file closing --- the second variant takes care of cleaning up, ensures that you do not forget about it, and allows you to concentrate on the important bits.
+
+Here's how it works behind the scenes. A context manager is a class that implements two special methods `__enter__` and `__exit__` (spoilers, this approach is called [duck typing](duck-typing) and we will learn more about in the next game). The former creates and returns a context, which is whatever attribute or value you require, wheres the latter performs cleaning up that is necessary before exiting the context. Here is how we would implement a limited file context manager by ourselves:
+```python
+class FileManager():
+    def __init__(self, filename, mode):
+        """
+        Stores the settings for use in __enter__
+        
+        Parameters
+        ----------
+        filename : str
+        mode : str
+        """
+        self.file = None
+        self.filename = filename
+        self.mode = mode
+        
+    def __enter__(self):
+      """ 
+      What we need to do to create context:
+        * Open the file and returns the object.
+      
+      Returns
+      ----------
+      File object
+      """
+      self.file = open(self.filename, self.mode)
+      return self.file
+      
+    def __exit__(self, exc_type, exc_value, traceback):
+      """
+      What we need to do before destroying the context:
+        * Close the file before we exit the context.
+      """
+      close(self.file)
+      
+# and now we use it!
+with FileManager("somefile.txt", "r") as file:
+    file.read()
+```
+
+Note that `__exit__` method has extra parameters `exc_type`, `exc_value`, and `traceback`. They will be relevant for exception handling later on but you can ignore them for now.
+
+Now is your turn! Create a `WindowContext` class (in a separate file, of course) that will load settings (filename should be passed to the constructor), create a PsychoPy Window object of a given size upon entering the context, and [close](https://psychopy.org/api/visual/window.html#psychopy.visual.Window.close) when the code exists the context. For now, you will need one attribute to store settings (call it `settings`) and one attribute for PsychoPy Window itself (hint, use `win`as an attribute name). There will be a small but important difference relative to `FileManager` class in the example. Here, we have two objects that we would like to use inside the context: `settings` and `win`. Therefore, instead of returning just the window object, the __enter__ it should return the reference to the object itself (reminder, reference to the current object is always in the `self` parameter of a method). This way you can always access either via `context.settings` or `context.win`.
+
+```python
+with WindowContext("settings.yaml") as context:
+  # your usual code inside but
+  # PsychoPy window is ctx.win
+  context.win.flip()
+```
+
+::: {.infobox .program}
+Create `WindowContext` class and use it in  _code02.py_.
+:::
+
+As you can see, the repetitive part is now hidden in the context class making it easier to concentrate on the main code. But the context manager has another ace up its sleeve: it makes handling exceptions (a.k.a. errors) and safe exiting much simpler.
+
+## Exceptions
+When you are running an actual experiment, one of the worries that you have is "what happens to the data I have already logged if the program crashes with an error"? Not collecting a full measurement is bad but not keeping at least partial log is even worse, as you can still use it for analysis or as a guidance for future adjustments. Python, as other languages, has special mechanisms to handle [exceptions](https://docs.python.org/3/tutorial/errors.html) that arise during the code execution.
+
+Whenever an error occurs at a run time, it [raises](https://docs.python.org/3/reference/simple_stmts.html#the-raise-statement) an exception: it creates an object of [a special class](https://docs.python.org/3/library/exceptions.html#concrete-exceptions) that contains information describing the problem. For example, a [ZeroDivisionError](https://docs.python.org/3/library/exceptions.html#ZeroDivisionError) is raised whenever you try to divide by zero, e.g., `1 / 0` (you can try this in a Jupyter notebook). A [KeyError](https://docs.python.org/3/library/exceptions.html#KeyError) is raised, if you using a dictionary with a wrong key, the code below will raise it:
+```python
+a_dict = {"a_key" : 1}
+a_dict["b_key"]
+```
+
+Similarly, an [IndexError](https://docs.python.org/3/library/exceptions.html#IndexError) is raise, if you try to use an invalid index for a list, a [NameError](https://docs.python.org/3/library/exceptions.html#NameError), if you are trying to access variable that does not exist, [AttributeError](https://docs.python.org/3/library/exceptions.html#AttributeError) when an object does not have an attribute you are trying to use, etc. 
+
+
+
+In Python, you can use `try: ... except:...finally:` operators:
+```python
+try:
+    # some code that might generate a runtime error
+except:  
+    # code that is executed if something bad happens
+finally:
+    # code that is executed both with and without exception
+    
+# code that is executed ONLY if there were no exceptions or if an exception was handled
+```
+
+In the simplest case, you need just the first two operators: `try` and `except`. Create a Jupyter notebook (that you will submit as part of the assignment) and write the code that generates a division-by-zero error but is handled via `try...except...`. In the `except` simply print out a message, so that you know that it was executed. Create another cell, copy the code and now check that the exception handling code is _not_ executed, if the error is not generated (i.e., divide by some non-zero number).
+
+Using `except:` catches _all_ exceptions. However, you can be more specific and handle exceptions based on their class.
+```python
+try:
+    # some code that might generate a runtime error
+except KeyError as key_error:  
+    # code that is executed only if KeyError exception was raised
+except ZeroDivisionError as zero_division_error:  
+    # code that is executed only if ZeroDivisionError exception was raised
+except:
+    # code that is executed if any OTHER exception is raised.
+```
+
+Implement handling for `KeyError` and `ZeroDivisionError`, they should print out different messages to check that it works. Test it generating these runtime errors with your code. What happens if you have the first two specific exception handlers but no general `except:`?
+
+So far, you generated exception but cause the errors in the code but you can raise these exceptions yourself via `raise` operator. For example, instead of dividing by zero, you can `raise ZeroDivisionError()` (note that you are create an object of the class, hence the round brackets!). Use it with you previous code, instead of an actual division by zero. Try raising other exception and see how your code handles them.
+
+
+
+::: {.infobox .program}
+Put exception handling code is cell of a Jupyter notebook.
+:::
+
+
+So far I have talked about exceptions as a way to report runtime errors. However, they can be used in a more general way to control the execution flow. You already did it when implementing [class-as-an-iterator](file:///E:/Teaching/2020WS/python-for-experimental-psychology/docs/seminar-02-05.html#duck-typiing-iterators) approach. Once you ran out of items to return, your __next__` method raised (StopIteration)[https://docs.python.org/3/library/exceptions.html#StopIteration] exception that informed the `for` loop that it has no more items to loop through. We will use that side of exception in the next section when dealing with context.
+
