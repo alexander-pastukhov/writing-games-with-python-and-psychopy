@@ -13,6 +13,7 @@ cat(
 Here is the general outline of how we will proceed:
 
 1. Create a basic PsychoPy window and main experimental loop.
+2. Outsource the boilerplate to a context manager
 2. Define a basic `MoonLander` class with a static image and add its drawing to the main loop.
 3. Randomize position of the lander.
 4. Add gravity pull.
@@ -121,7 +122,7 @@ Create `GameContext` class and use it in  _code02.py_.
 
 As you can see, the repetitive part is now hidden in the context class making it easier to concentrate on the main code. But the context manager has another ace up its sleeve: it makes handling exceptions (a.k.a. errors) and safe exiting much simpler.
 
-## Exceptions
+## Exceptions {#exceptions}
 When you are running an actual experiment, one of the worries that you have is "what happens to the data I have already logged if the program crashes with an error"? Not collecting a full measurement is bad but not keeping at least partial log is even worse, as you can still use it for analysis or as a guidance for future adjustments. Python, as other languages, has special mechanisms to handle [exceptions](https://docs.python.org/3/tutorial/errors.html) that arise during the code execution.
 
 Whenever an error occurs at a run time, it [raises](https://docs.python.org/3/reference/simple_stmts.html#the-raise-statement) an exception: it creates an object of [a special class](https://docs.python.org/3/library/exceptions.html#concrete-exceptions) that contains information describing the problem. For example, a [ZeroDivisionError](https://docs.python.org/3/library/exceptions.html#ZeroDivisionError) is raised whenever you try to divide by zero, e.g., `1 / 0` (you can try this in a Jupyter notebook). A [KeyError](https://docs.python.org/3/library/exceptions.html#KeyError) is raised, if you using a dictionary with a wrong key, the code below will raise it:
@@ -252,14 +253,14 @@ Define a `vertical accelartion [norm/sec^2]` to be twice the gravity (but you ca
 
 Test that the vertical thruster works (do you need to update the main code?)!
 
-::: {.infobox .program}
+::: {.rmdnote .program}
 Update `MoonLander` class with a vertical thruster.
 :::
 
 ## Horizontal thursters
 Now implement the same logic, computing acceleration, speed, and position but for horizontal thrusters (define `horizontal acceleration [norm/sec^2]` setting and decide on its value yourself). Remember, the _right_ thruster pushes the lander to the _left_ and vice versa! Think about what you should do if both _left_ and _right_ keys are pressed at the same time. Test it by flying around!
 
-::: {.infobox .program}
+::: {.rmdnote .program}
 Add horizontal thrusters to `MoonLander`.
 :::
 
@@ -270,7 +271,7 @@ Create a new file _landing_pad.py_ and a new class `LandingPad`. In the construc
 
 In the main code, create an object of class `LandingPad` and draw it in the main loop, along with the lander itself.
 
-::: {.infobox .program}
+::: {.rmdnote .program}
 Create `LandingPad` class.<br/> 
 Use it in _code07.py_.
 :::
@@ -281,7 +282,7 @@ The aim of the game is a soft touchdown on a landing pad. For this, we need to k
 
 We do not have information about it _directly_. We have the vertical position of the lander in `self.image.pos[1]` (I assume here that the visuals attribute is called `image`) and its height in `self.image.size[1]`. From this, it is easy to compute the bottom edge (but remember that position is about the _center_ of the rectangle). Accordingly, you could create a [computed property](#computed-attribute-property)  `bottom`. Create computed attributes for `bottom`, `left`, and `right` of the lander class and for `top`, `left`, and `right` of the landing pad.
 
-::: {.infobox .program}
+::: {.rmdnote .program}
 Implement computed properties for `MoonLander` and `LandingPad` classes.
 :::
 
@@ -304,14 +305,14 @@ else:
   ...
 ```
 
-::: {.infobox .program}
+::: {.rmdnote .program}
 Implement landing checks in _code08.py_.
 :::
 
 ## More rounds
 Extend the game to have more than one round after the player either landed or crashed. Remember to reset the position of the lander before each new round. You can also add a `reset()` method to the landing pad as well, randomizing it horizontal position.
 
-::: {.infobox .program}
+::: {.rmdnote .program}
 Add `reset()` method to the `LandingPad` class.</br>
 Add more rounds in _code09.py_.
 :::
@@ -323,7 +324,7 @@ Every use of a thruster should reduce this by 1 and thrusters should work _only_
 
 We also need to tell the player how much the fuel is left. I've implemented it as a bar gauge but you can implement it as text stimulus as well. Create the appropriate visual attribute in the constructor of the `Lander` class. Remember to update it every time the level of the fuel changes and to draw it whenever you draw the lander itself. As a nice touch, you can change the color to indicate how much of the fuel is left. I've used _green_ for more than 2/3, _yellow_ for more than 1/3, and _red_ if less than that.
 
-::: {.infobox .program}
+::: {.rmdnote .program}
 Add fuel and fuel gauge to `Lander` class.<br/>
 :::
 
