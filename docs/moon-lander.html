@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 15 Moon lander | Writing games with Python and PsychoPy</title>
+<meta name="author" content="Alexander (Sasha) Pastukhov">
+<meta name="description" content="Today we will create a moon lander game. You job is simple: land your ship on the pad but do not crash it! Here is a brief video of my implementation of the game  Here is the general outline of...">
+<meta name="generator" content="bookdown 0.26 with bs4_book()">
+<meta property="og:title" content="Chapter 15 Moon lander | Writing games with Python and PsychoPy">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://alexander-pastukhov.github.io/writing-games-with-python-and-psychopy/moon-lander.html">
+<meta property="og:description" content="Today we will create a moon lander game. You job is simple: land your ship on the pad but do not crash it! Here is a brief video of my implementation of the game  Here is the general outline of...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 15 Moon lander | Writing games with Python and PsychoPy">
+<meta name="twitter:description" content="Today we will create a moon lander game. You job is simple: land your ship on the pad but do not crash it! Here is a brief video of my implementation of the game  Here is the general outline of...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="bs4_style.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Writing games with Python and PsychoPy</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled"><li><a class="" href="index.html"><span class="header-section-number">Chapter 15</span> Moon lander</a></li></ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/alexander-pastukhov/writing-games-with-python-and-psychopy">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="moon-lander" class="section level1" number="15">
+<h1>
+<span class="header-section-number">15</span> Moon lander<a class="anchor" aria-label="anchor" href="#moon-lander"><i class="fas fa-link"></i></a>
+</h1>
+<p>Today we will create a moon lander game. You job is simple: land your ship on the pad but do not crash it! Here is a brief video of my implementation of the game</p>
+<div style="text-align:center;">
+<video controls><source src="videos/moonlander.m4v" type="video/mp4"></source></video>
+</div>
+<p>Here is the general outline of how we will proceed:</p>
+<ol style="list-style-type: decimal">
+<li>Create a basic PsychoPy window and main experimental loop.</li>
+<li>Define a basic <code>MoonLander</code> class with a static image and add its drawing to the main loop.</li>
+<li>Randomize position of the lander.</li>
+<li>Add gravity pull.</li>
+<li>Add vertical thruster that counter-act gravity.</li>
+<li>Add horizontal thrusters, so you can maneuver around.</li>
+<li>Define <code>LandingPad</code> class.</li>
+<li>Implement landing / crashing checks.</li>
+<li>Add more runs.</li>
+<li>Limit the fuel.</li>
+</ol>
+<p>But first you will learn about context management and exceptions.</p>
+<div id="boilerplate-1" class="section level2" number="15.1">
+<h2>
+<span class="header-section-number">15.1</span> Boilerplate<a class="anchor" aria-label="anchor" href="#boilerplate-1"><i class="fas fa-link"></i></a>
+</h2>
+<p>As per usual, we will start with our usual boilerplate code. Create settings file that, for now, defines only the size of the window. Create <code>code01.py</code> with the usual boilerplate for loading settings, opening the window (its size determined by the settings), a main game loop (you can add a text message to make it look less plain) with a check for an <em>“escape”</em> button to exit the loop, and closing the window at the end. I am being so specific because next you will learn how to hide this boilerplate in a context manager.</p>
+<div class="rmdnote program">
+<p>Put your code into <em>code01.py</em>.</p>
+</div>
+</div>
+<div id="context-manager" class="section level2" number="15.2">
+<h2>
+<span class="header-section-number">15.2</span> Context manager<a class="anchor" aria-label="anchor" href="#context-manager"><i class="fas fa-link"></i></a>
+</h2>
+<p>On the one hand, context management is a frequently used feature in Python, particularly for file operations (you used it when loading settings from a JSON or YAML file). On the other hand, its full power that relies on a custom class implementation is rarely used. However, it can be very useful whenever the context of your programs is the same or very similar, as in case of the PsychoPy games that we programmed or typical PsychoPy experiments. In both cases, there is a fairly fixed structure of the program:</p>
+<ol style="list-style-type: decimal">
+<li>Initialization
+<ul>
+<li>get experimental settings by reading them from an <a href="christmas-special.html#settings-files">external file</a>
+</li>
+<li>create PsychoPy window, logger for experimental results, mouse (if required)</li>
+<li>initialize special devices such as response box, eye tracker, etc.</li>
+</ul>
+</li>
+<li>Actual experiment</li>
+<li>Saving and cleaning up
+<ul>
+<li>save data logs</li>
+<li>if required, close connection to special devices such as response boxes, eye tracker, etc.</li>
+<li>close PsychoPy window</li>
+</ul>
+</li>
+</ol>
+<p>If you look at your code, you will realized that steps 1 and 3 remain pretty much the same throughout all the games that we programmed. Thus, we will create a context manager class that you can always reuse and which will hide away the boilerplate code.</p>
+<p>Here is a reminded of how a context manager is used when working with files. First, how it works <em>without</em> a context manager: 1) you open a file and assign the object to a variable, 2) you work with it, 3) you close it. The latter is important to ensure that information was fully written into it and that you do not lock for file.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="moon-lander.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">file</span> <span class="op">=</span> <span class="bu">open</span>(<span class="st">"somefile.txt"</span>, <span class="st">"r"</span>)</span>
+<span id="cb1-2"><a href="moon-lander.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ... do something with the file, such as reading the entire file into a single variable</span></span>
+<span id="cb1-3"><a href="moon-lander.html#cb1-3" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> <span class="bu">file</span>.read()</span>
+<span id="cb1-4"><a href="moon-lander.html#cb1-4" aria-hidden="true" tabindex="-1"></a>close(<span class="bu">file</span>)</span></code></pre></div>
+<p>A better way is to use a context manager via a <code>with ... as ...</code> statement (again, this should look familiar by now):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="moon-lander.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"somefile.txt"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb2-2"><a href="moon-lander.html#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">file</span>.read()</span></code></pre></div>
+<p>Note that now the <code>file.read()</code> is inside of the <code>with</code> block and there is no <code>file.close()</code> call. The latter is evoked automatically, once you run all the code inside the <code>with</code> block and exit it. Although for this example the difference is minimal — a different way to assign a value to a variable and explicit versus implicit file closing — the second variant takes care of cleaning up, ensures that you do not forget about it, and allows you to concentrate on the important bits.</p>
+<p>Here’s how it works behind the scenes. A context manager is a class that implements two special methods <code>__enter__</code> and <code>__exit__</code>[Spoiler alert! This approach is called <a href="duck-typing">duck typing</a> and we will learn more about in the next game]. The former creates and returns a context, which is whatever attribute or value you require, wheres the latter performs cleaning up that is necessary before exiting the context. Here is how we would implement a limited file context manager by ourselves:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="moon-lander.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> FileManager():</span>
+<span id="cb3-2"><a href="moon-lander.html#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, filename, mode):</span>
+<span id="cb3-3"><a href="moon-lander.html#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb3-4"><a href="moon-lander.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">        Stores the settings for use in __enter__</span></span>
+<span id="cb3-5"><a href="moon-lander.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">        </span></span>
+<span id="cb3-6"><a href="moon-lander.html#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">        Parameters</span></span>
+<span id="cb3-7"><a href="moon-lander.html#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">        ----------</span></span>
+<span id="cb3-8"><a href="moon-lander.html#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">        filename : str</span></span>
+<span id="cb3-9"><a href="moon-lander.html#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">        mode : str</span></span>
+<span id="cb3-10"><a href="moon-lander.html#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb3-11"><a href="moon-lander.html#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.<span class="bu">file</span> <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb3-12"><a href="moon-lander.html#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.filename <span class="op">=</span> filename</span>
+<span id="cb3-13"><a href="moon-lander.html#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.mode <span class="op">=</span> mode</span>
+<span id="cb3-14"><a href="moon-lander.html#cb3-14" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-15"><a href="moon-lander.html#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__enter__</span>(<span class="va">self</span>):</span>
+<span id="cb3-16"><a href="moon-lander.html#cb3-16" aria-hidden="true" tabindex="-1"></a>      <span class="co">""" </span></span>
+<span id="cb3-17"><a href="moon-lander.html#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">      What we need to do to create context:</span></span>
+<span id="cb3-18"><a href="moon-lander.html#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">        * Open the file and returns the object.</span></span>
+<span id="cb3-19"><a href="moon-lander.html#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">      </span></span>
+<span id="cb3-20"><a href="moon-lander.html#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">      Returns</span></span>
+<span id="cb3-21"><a href="moon-lander.html#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">      ----------</span></span>
+<span id="cb3-22"><a href="moon-lander.html#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">      File object</span></span>
+<span id="cb3-23"><a href="moon-lander.html#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">      """</span></span>
+<span id="cb3-24"><a href="moon-lander.html#cb3-24" aria-hidden="true" tabindex="-1"></a>      <span class="va">self</span>.<span class="bu">file</span> <span class="op">=</span> <span class="bu">open</span>(<span class="va">self</span>.filename, <span class="va">self</span>.mode)</span>
+<span id="cb3-25"><a href="moon-lander.html#cb3-25" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="va">self</span>.<span class="bu">file</span></span>
+<span id="cb3-26"><a href="moon-lander.html#cb3-26" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb3-27"><a href="moon-lander.html#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__exit__</span>(<span class="va">self</span>, exc_type, exc_value, traceback):</span>
+<span id="cb3-28"><a href="moon-lander.html#cb3-28" aria-hidden="true" tabindex="-1"></a>      <span class="co">"""</span></span>
+<span id="cb3-29"><a href="moon-lander.html#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co">      What we need to do before destroying the context:</span></span>
+<span id="cb3-30"><a href="moon-lander.html#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="co">        * Close the file before we exit the context.</span></span>
+<span id="cb3-31"><a href="moon-lander.html#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="co">      """</span></span>
+<span id="cb3-32"><a href="moon-lander.html#cb3-32" aria-hidden="true" tabindex="-1"></a>      close(<span class="va">self</span>.<span class="bu">file</span>)</span>
+<span id="cb3-33"><a href="moon-lander.html#cb3-33" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb3-34"><a href="moon-lander.html#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="co"># and now we use it!</span></span>
+<span id="cb3-35"><a href="moon-lander.html#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> FileManager(<span class="st">"somefile.txt"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb3-36"><a href="moon-lander.html#cb3-36" aria-hidden="true" tabindex="-1"></a>    <span class="bu">file</span>.read()</span></code></pre></div>
+<p>Note that <code>__exit__</code> method has extra parameters <code>exc_type</code>, <code>exc_value</code>, and <code>traceback</code>. They will be relevant for exception handling later on but you can ignore them for now.</p>
+<p>Now is your turn! Create a <code>GameContext</code> class (in a separate file, of course) that will load settings (filename should be passed to the constructor), create a PsychoPy Window object of a given size upon entering the context, and <a href="https://psychopy.org/api/visual/window.html#psychopy.visual.Window.close">close</a> when the code exists the context. For now, you will need one attribute to store settings (call it <code>settings</code>) and one attribute for PsychoPy Window itself (use <code>win</code> as an attribute name). There will be a small but important difference relative to <code>FileManager</code> class in the example above. Here, we have two objects (attributes) that we would like to use inside the context: <code>settings</code> and <code>win</code>. We could return both as a tuple but this approach does not scale well. Instead, the <strong>enter</strong> should return the reference to the context object itself (reminder, reference to the current object is always in the <code>self</code> parameter of a method). This way you can always access either attribute via <code>context.settings</code> or <code>context.win</code>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="moon-lander.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> GameContext(<span class="st">"settings.yaml"</span>) <span class="im">as</span> context:</span>
+<span id="cb4-2"><a href="moon-lander.html#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># your usual code inside but</span></span>
+<span id="cb4-3"><a href="moon-lander.html#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># PsychoPy window is context.win</span></span>
+<span id="cb4-4"><a href="moon-lander.html#cb4-4" aria-hidden="true" tabindex="-1"></a>  context.win.flip()</span></code></pre></div>
+<div class="rmdnote program">
+<p>Create <code>GameContext</code> class and use it in <em>code02.py</em>.</p>
+</div>
+<p>As you can see, the repetitive part is now hidden in the context class making it easier to concentrate on the main code. But the context manager has another ace up its sleeve: it makes handling exceptions (a.k.a. errors) and safe exiting much simpler.</p>
+</div>
+<div id="exceptions" class="section level2" number="15.3">
+<h2>
+<span class="header-section-number">15.3</span> Exceptions<a class="anchor" aria-label="anchor" href="#exceptions"><i class="fas fa-link"></i></a>
+</h2>
+<p>When you are running an actual experiment, one of the worries that you have is “what happens to the data I have already logged if the program crashes with an error”? Not collecting a full measurement is bad but not keeping at least partial log is even worse, as you can still use it for analysis or as a guidance for future adjustments. Python, as other languages, has special mechanisms to handle <a href="https://docs.python.org/3/tutorial/errors.html">exceptions</a> that arise during the code execution.</p>
+<p>Whenever an error occurs at a run time, it <a href="https://docs.python.org/3/reference/simple_stmts.html#the-raise-statement">raises</a> an exception: it creates an object of <a href="https://docs.python.org/3/library/exceptions.html#concrete-exceptions">a special class</a> that contains information describing the problem. For example, a <a href="https://docs.python.org/3/library/exceptions.html#ZeroDivisionError">ZeroDivisionError</a> is raised whenever you try to divide by zero, e.g., <code>1 / 0</code> (you can try this in a Jupyter notebook). A <a href="https://docs.python.org/3/library/exceptions.html#KeyError">KeyError</a> is raised, if you using a dictionary with a wrong key, the code below will raise it:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="moon-lander.html#cb5-1" aria-hidden="true" tabindex="-1"></a>a_dict <span class="op">=</span> {<span class="st">"a_key"</span> : <span class="dv">1</span>}</span>
+<span id="cb5-2"><a href="moon-lander.html#cb5-2" aria-hidden="true" tabindex="-1"></a>a_dict[<span class="st">"b_key"</span>]</span>
+<span id="cb5-3"><a href="moon-lander.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in py_call_impl(callable, dots$args, dots$keywords): KeyError: 'b_key'</span></span>
+<span id="cb5-4"><a href="moon-lander.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-5"><a href="moon-lander.html#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Detailed traceback:</span></span>
+<span id="cb5-6"><a href="moon-lander.html#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   File "&lt;string&gt;", line 1, in &lt;module&gt;</span></span></code></pre></div>
+<p>Similarly, an <a href="https://docs.python.org/3/library/exceptions.html#IndexError">IndexError</a> is raised, if you try to use an invalid index for a list, a <a href="https://docs.python.org/3/library/exceptions.html#NameError">NameError</a>, if you are trying to access variable that does not exist, <a href="https://docs.python.org/3/library/exceptions.html#AttributeError">AttributeError</a> when an object does not have an attribute you are trying to use, etc.</p>
+<p>In Python, you use <code>try: ... except:...finally:</code> operators to anticipate and handle exceptions:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="moon-lander.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb6-2"><a href="moon-lander.html#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># some code that might generate a runtime error</span></span>
+<span id="cb6-3"><a href="moon-lander.html#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span>:  </span>
+<span id="cb6-4"><a href="moon-lander.html#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># code that is executed if something bad happens</span></span>
+<span id="cb6-5"><a href="moon-lander.html#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="cf">finally</span>:</span>
+<span id="cb6-6"><a href="moon-lander.html#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># code that is executed both with and without exception</span></span>
+<span id="cb6-7"><a href="moon-lander.html#cb6-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-8"><a href="moon-lander.html#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># code that is executed ONLY if there were no exceptions or if an exception was handled</span></span></code></pre></div>
+<p>In the simplest case, you need just the first two operators: <code>try</code> and <code>except</code>. Create a Jupyter notebook (that you will submit as part of the assignment) and write the code that generates a division-by-zero error but is handled via <code>try...except...</code>. In the <code>except</code> simply print out a message, so that you know that it was executed. Create another cell, copy the code and now check that the exception handling code is <em>not</em> executed, if the error is not generated (i.e., divide by some non-zero number).</p>
+<div class="rmdnote program">
+<p>Put exception handling code is cell of a Jupyter notebook.</p>
+</div>
+<p>Using <code>except:</code> catches <em>all</em> exceptions. However, this is considered a bad style (too general) and a linter will complain. Instead, you can be more specific and handle exceptions based on their class.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="moon-lander.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb7-2"><a href="moon-lander.html#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># some code that might generate a runtime error</span></span>
+<span id="cb7-3"><a href="moon-lander.html#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">KeyError</span> <span class="im">as</span> key_error:</span>
+<span id="cb7-4"><a href="moon-lander.html#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># code that is executed only if KeyError exception was raised </span></span>
+<span id="cb7-5"><a href="moon-lander.html#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># with exception information stored in the key_error object</span></span>
+<span id="cb7-6"><a href="moon-lander.html#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ZeroDivisionError</span> <span class="im">as</span> zero_division_error:  </span>
+<span id="cb7-7"><a href="moon-lander.html#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># code that is executed only if ZeroDivisionError exception was raised</span></span>
+<span id="cb7-8"><a href="moon-lander.html#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># with exception information stored in the zero_division_error object</span></span>
+<span id="cb7-9"><a href="moon-lander.html#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span>:</span>
+<span id="cb7-10"><a href="moon-lander.html#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># code that is executed if any OTHER exception is raised.</span></span></code></pre></div>
+<p>Implement handling for <code>KeyError</code> and <code>ZeroDivisionError</code>, they should print out different messages to check that it works. Test it by generating these runtime errors with your code.</p>
+<div class="rmdnote program">
+<p>Put specific exception handling code is cell of a Jupyter notebook.</p>
+</div>
+<p>So far, you generated exception by causing runtime errors code but you can raise these exceptions yourself via <a href="https://docs.python.org/3/reference/simple_stmts.html#the-raise-statement">raise</a> operator. For example, instead of dividing by zero, you can <code>raise ZeroDivisionError()</code><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Confusingly, if you do not pass any additional parameters, you can also create the object &lt;em&gt;without&lt;/em&gt; round brackets: &lt;code&gt;raise ZeroDivisionError&lt;/code&gt;. I find this mightily confusing but this is fairly common, so drop brackets if it feels more natural.&lt;/p&gt;"><sup>1</sup></a>. Use it with you previous code, instead of an actual division by zero. Try raising other exceptions and see how your code handles them. Also check what happens if you have the first two specific exception handlers but no general <code>except:</code> and raise an <a href="https://docs.python.org/3/library/exceptions.html#NameError">NameError</a>?</p>
+<div class="rmdnote program">
+<p>Use <code>raise</code> to test exception handling in a Jupyter notebook.</p>
+</div>
+<p>So far I have talked about exceptions as a way to alert about runtime errors. However, they can be used in a more general way to control the execution flow. We will use that side of exception in the next section when dealing with context.</p>
+</div>
+<div id="exception-within-context" class="section level2" number="15.4">
+<h2>
+<span class="header-section-number">15.4</span> Exception within context<a class="anchor" aria-label="anchor" href="#exception-within-context"><i class="fas fa-link"></i></a>
+</h2>
+<p><code>try..except...</code> operators provide a general mechanism for exceptions handling but what happens if an exception is raised inside a context? You can, of course, put a <code>try...except...</code> in the code itself, something you should do, if you are planning to handling <em>specific</em> exceptions. However, if an exception occurs in the code inside the context, Python will first <em>exit</em> the context, i.e., call the <code>__exit__</code> method, before handling it explicitly. Moreover, it will kindly put the exception information into the parameters <code>exc_type</code> (a class of the exception) and <code>exc_value</code> (an object of that class). This way, you can perform a proper clean-up (save data, close window, etc.) and then either handle an exception or leave it alone, so that it propagates further and can be handled by other pieces of your code (or it will stop the execution, if you do not handle it explicitly).</p>
+<p>Here, we will use this mechanism not only for safe clean-up but also to make aborting an experiment (or a game) easy. In previous games with many rounds, you had nested loops that made aborting a game via <em>escape</em> key press awkward. You had to check it in the inner loop and then differentiate between a normal end-of-round and a used abort in the outside loop. We can make our life much easier via a combination of a context manager and a custom exception.</p>
+<p>First, create a custom <code>GameAbort</code> class, which is a descendant of the <code>Exception</code> class. You do not need any code in it, even a constructor does not need to be redefined, so use <a href="https://docs.python.org/3/reference/simple_stmts.html#the-pass-statement">pass</a> statement for its body (you do need to have at least one line of code in the class). Next, you <code>raise GameAbort()</code>, if the player pressed <em>escape</em> key (do not forget to import <code>GameAbort</code> class, so you can use it in the main script). Finally, in the <strong>exit</strong> method of the <code>GameContext</code> manager, you should check whether <code>exc_type is GameAbort</code> (<code>exc_type</code> will be <code>None</code>, if no exception occurred) and, <strong>very important(!)</strong>, <code>return True</code> in that case:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="moon-lander.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> GameContext:</span>
+<span id="cb8-2"><a href="moon-lander.html#cb8-2" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb8-3"><a href="moon-lander.html#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__exit__</span>(<span class="va">self</span>, exc_type, exc_value, traceback):</span>
+<span id="cb8-4"><a href="moon-lander.html#cb8-4" aria-hidden="true" tabindex="-1"></a>        ...</span>
+<span id="cb8-5"><a href="moon-lander.html#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> exc_type <span class="kw">is</span> GameAbort:</span>
+<span id="cb8-6"><a href="moon-lander.html#cb8-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">True</span></span>
+<span id="cb8-7"><a href="moon-lander.html#cb8-7" aria-hidden="true" tabindex="-1"></a>  </span></code></pre></div>
+<p>That last bit <code>return True</code> informs Python that you handled the exception and all is good (not need to propagate it further). However, note that your <em>return</em> <code>True</code> meaning that any other code that handles the exit from a context must be <em>before</em> that statement. Now, you can safely abort your experiment from any code location, inside nested loops, functions, etc. In all cases, the exception will be propagated until the <code>__exit__</code> method, doing away with awkward extra checks.</p>
+<div class="rmdnote program">
+<p>Create <code>GameAbort</code> exception class,<br>update <code>GameContext</code> class to handle it,<br>use this in an updated main script in <em>code03.py</em>.</p>
+</div>
+</div>
+<div id="create-moonlander-class" class="section level2" number="15.5">
+<h2>
+<span class="header-section-number">15.5</span> Create MoonLander class<a class="anchor" aria-label="anchor" href="#create-moonlander-class"><i class="fas fa-link"></i></a>
+</h2>
+<p>In <em>moonlander.py</em>, create a new <code>MoonLander</code> class. It should have an <a href="https://psychopy.org/api/visual/imagestim.html">ImageStim</a> attribute (I will assume it is called <code>image</code>) that will contain the visuals of the ship created using <a href="material/ufo.png">ufo.png</a> image. However, instead of hardcoding the filename, create a new group <code>"Lander"</code> in the settings file and add a new setting <code>"ship image : ufo.png"</code> (assuming you use YAML). Pass Lander-specific settings to the constructor and save them in an attribute (we will have more of them later).</p>
+<p>Note that we do not want to inherit from the <a href="https://psychopy.org/api/visual/imagestim.html">ImageStim</a> directly, as we will have more visuals elements later on. Also, implement <code>draw()</code> method that should draw all visual elements of the lander (we have one for now, of course).</p>
+<p>Create an instance of <code>MoonLander</code> class in the main script and draw it in the main game loop. You should see a static picture of the ship at the center of the screen.</p>
+<div class="rmdnote program">
+<p>Create <code>MoonLander</code> class and use it in the main game loop.<br>
+Put updated code into <em>code04.py</em>.</p>
+</div>
+</div>
+<div id="randomize-landers-position" class="section level2" number="15.6">
+<h2>
+<span class="header-section-number">15.6</span> Randomize lander’s position<a class="anchor" aria-label="anchor" href="#randomize-landers-position"><i class="fas fa-link"></i></a>
+</h2>
+<p>Implement a new method <code>reset()</code> that resets the lander for the next round. At the moment, the only thing it should do is to randomize position of the image. Use a range of -0.5..0.5 horizontally and 0.8..0.9 vertically (I assume that we are using <code>"norm"</code> units). Call it in the constructor and test it in the main loop by calling it every time you press <em>space</em> button (that should make the ship jump).</p>
+<div class="rmdnote program">
+<p>Add <code>reset()</code> method to <code>MoonLander</code> class and use it in the main game loop.<br>
+Put updated code into <em>code05.py</em>.</p>
+</div>
+</div>
+<div id="flying-but-only-down" class="section level2" number="15.7">
+<h2>
+<span class="header-section-number">15.7</span> Flying (but only down)<a class="anchor" aria-label="anchor" href="#flying-but-only-down"><i class="fas fa-link"></i></a>
+</h2>
+<p>For the lander to fly, we must adjust its position or, more specifically, the position of its image (<code>self.image.pos</code>) based on its speed. But before that, speed itself must be adjusted based on the forces from gravity and thrusters that act upon the lander. Accordingly, we need</p>
+<ol style="list-style-type: decimal">
+<li>A new setting that defines acceleration due to the gravitational force. Define in the settings file, call it <code>gravity [norm/sec^2]</code> (so, it is an acceleration in distance units of <code>"norm"</code> rather than in meters of the real world) and set to <code>0.0001</code><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;The constant itself does not mean anything, I adjusted it to be reasonable for the image and window size that we are using.&lt;/p&gt;"><sup>2</sup></a>
+</li>
+<li>A new attribute <code>speed</code> that will contain horizontal and vertical velocity in norm units per second. Initialize to <code>[0, 0]</code> in the <code>reset()</code> but also assign some value (e.g., also <code>[0, 0]</code>) as linters do not like to see attributes that were never mentioned in the constructor.</li>
+<li>A new attribute with a PsychoPy <a href="https://psychopy.org/api/clock.html#psychopy.clock.Clock">clock</a> that will measure the time elapsed since the last position adjustment (this way we can compute our speed and acceleration “per second”). Do not forget to reset it in <code>reset()</code>.</li>
+</ol>
+<p>Now, implement a method that will update lander position (call it, unimaginatively, <code><a href="https://rdrr.io/r/stats/update.html">update()</a></code>). Inside, figure out the time elapsed since the last call (or since the last <code>reset()</code>) and do not forget to restart the clock. Once you know how much time has elapsed, you can adjust, first, speed based on acceleration (only vertical speed based on gravity for now, we will worry about the horizontal component once we implement thrusters) and, then, position based on speed. Call it in the main loop and watch your lander fall out of the sky. Once it is off the screen, press space and see it go again. Play with the <code>gravity</code> setting to adjust the speed of falling to your liking.</p>
+<div class="rmdnote program">
+<p>Update <code>MoonLander</code> class for the effect of gravity.<br>
+Use it in the main loop of <em>code06.py</em>.</p>
+</div>
+</div>
+<div id="vertical-thurster" class="section level2" number="15.8">
+<h2>
+<span class="header-section-number">15.8</span> Vertical thurster<a class="anchor" aria-label="anchor" href="#vertical-thurster"><i class="fas fa-link"></i></a>
+</h2>
+<p>PsychoPy allows you to get key presses or, using <a href="https://www.psychopy.org/api/hardware/keyboard.html">hardware.keyboard</a> to get both press and release time. Unfortunately, you get both only <em>after</em> the key was released. In our game, the thursters must be active for as long as the player presses the key. Thus, we need to know whether a key is <em>currently</em> pressed, not that it was pressed and released at some time in the past. For this, we will use <em>pyglet</em> library (a backend used by PsychoPy) directly. First, in your <em>moonlander.py</em> add <code>import pyglet</code> and then include the following code inside the constructor of the class.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="moon-lander.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setting up keyboard monitoring</span></span>
+<span id="cb9-2"><a href="moon-lander.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="va">self</span>.key <span class="op">=</span> pyglet.window.key</span>
+<span id="cb9-3"><a href="moon-lander.html#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="va">self</span>.keyboard <span class="op">=</span> <span class="va">self</span>.key.KeyStateHandler()</span>
+<span id="cb9-4"><a href="moon-lander.html#cb9-4" aria-hidden="true" tabindex="-1"></a>win.winHandle.push_handlers(<span class="va">self</span>.keyboard)</span></code></pre></div>
+<p>This installs a “handler” that monitors the state of the keyboard. Now, you can read out the state of, say, <em>down arrow</em> key as<code>self.keyboard[self.key.DOWN]</code> (<code>True</code> if pressed, <code>False</code> otherwise). We will use <code>DOWN</code> for the vertical thruster and <code>LEFT</code> and <code>RIGHT</code> for the horizontal ones.</p>
+<p>Define a <code>vertical accelartion [norm/sec^2]</code> to be twice the gravity (but you can use some other number, of course) and update the <code><a href="https://rdrr.io/r/stats/update.html">update()</a></code><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Pun intended.&lt;/p&gt;"><sup>3</sup></a>, so that the total vertical acceleration is <span class="math inline">\(vertical acceleration + gravity\)</span> if the the user is pressing <em>down</em> key (use <code>self.keyboard</code> and <code>self.key</code> to figure that out) but <span class="math inline">\(gravity\)</span> alone, if not.</p>
+<p>Test that the vertical thruster works (do you need to update the main code?)!</p>
+<div class="infobox program">
+<p>Update <code>MoonLander</code> class with a vertical thruster.</p>
+</div>
+</div>
+<div id="horizontal-thursters" class="section level2" number="15.9">
+<h2>
+<span class="header-section-number">15.9</span> Horizontal thursters<a class="anchor" aria-label="anchor" href="#horizontal-thursters"><i class="fas fa-link"></i></a>
+</h2>
+<p>Now implement the same logic, computing acceleration, speed, and position but for horizontal thrusters (define <code>horizontal acceleration [norm/sec^2]</code> setting and decide on its value yourself). Remember, the <em>right</em> thruster pushes the lander to the <em>left</em> and vice versa! Think about what you should do if both <em>left</em> and <em>right</em> keys are pressed at the same time. Test it by flying around!</p>
+<div class="infobox program">
+<p>Add horizontal thrusters to <code>MoonLander</code>.</p>
+</div>
+</div>
+<div id="landing-pad-visuals" class="section level2" number="15.10">
+<h2>
+<span class="header-section-number">15.10</span> Landing pad: visuals<a class="anchor" aria-label="anchor" href="#landing-pad-visuals"><i class="fas fa-link"></i></a>
+</h2>
+<p>The purpose of the game is to land on a landing pad. A landing pad is just a rectangle with some additional methods and properties. So it stands to reason to make it a descendant of the <code>visual.Rect</code> class, unfortunately, for some technical reason I have not figured out yet, this does not work for shape classes like <code>Rect</code> or <code>Circle</code>.</p>
+<p>Create a new file <em>landing_pad.py</em> and a new class <code>LandingPad</code>. In the constructor, create a rectangle and store it in attribute (you pick the name). It should be <code>0.5</code> units wide and located at the bottom of the window but at a <a href="https://docs.python.org/3/library/random.html">random</a> position within the window horizontally. Pick the fill and line colors that you like. The only other method the class needs is <code>draw()</code>.</p>
+<p>In the main code, create an object of class <code>LandingPad</code> and draw it in the main loop, along with the lander itself.</p>
+<div class="infobox program">
+<p>Create <code>LandingPad</code> class.<br>
+Use it in <em>code07.py</em>.</p>
+</div>
+</div>
+<div id="computing-edges-of-game-objects" class="section level2" number="15.11">
+<h2>
+<span class="header-section-number">15.11</span> Computing edges of game objects<a class="anchor" aria-label="anchor" href="#computing-edges-of-game-objects"><i class="fas fa-link"></i></a>
+</h2>
+<p>The aim of the game is a soft touchdown on a landing pad. For this, we need to know where the <em>top</em> of the landing pad is, as well as where the <em>bottom</em> of the lander is and where <em>left</em> and <em>right</em> limits of each object are. Let us think about <em>bottom</em> of the lander first, as the rest are very similar.</p>
+<p>We do not have information about it <em>directly</em>. We have the vertical position of the lander in <code>self.image.pos[1]</code> (I assume here that the visuals attribute is called <code>image</code>) and its height in <code>self.image.size[1]</code>. From this, it is easy to compute the bottom edge (but remember that position is about the <em>center</em> of the rectangle). Accordingly, you could create a <a href="flappy-bird.html#computed-attribute-property">computed property</a> <code>bottom</code>. Create computed attributes for <code>bottom</code>, <code>left</code>, and <code>right</code> of the lander class and for <code>top</code>, <code>left</code>, and <code>right</code> of the landing pad.</p>
+<div class="infobox program">
+<p>Implement computed properties for <code>MoonLander</code> and <code>LandingPad</code> classes.</p>
+</div>
+</div>
+<div id="landing" class="section level2" number="15.12">
+<h2>
+<span class="header-section-number">15.12</span> Landing<a class="anchor" aria-label="anchor" href="#landing"><i class="fas fa-link"></i></a>
+</h2>
+<p>We should check for landing whenever the bottom edge of the lander is at or below the top edge of the landing pad. A successful landing must satisfy several conditions:</p>
+<ul>
+<li>The lander must be within the limits of the lander pad horizontally.</li>
+<li>The vertical speed must be zero or negative (otherwise, the lander flies up) but below a certain threshold that we will define as <code>vertical speed threshold [norm/sec]</code>. I set it to <code>0.05</code>.</li>
+<li>The absolute horizontal speed must be below a certain threshold, also defined as <code>horizontal speed threshold [norm/sec] : 0.05</code>.</li>
+</ul>
+<p>If <em>any</em> of these three conditions are false, the lander has crashed. Either way, the game is over, so you should record the outcome (whether the landing was successful) and exit the main game loop. After the loop, inform the player about the outcome. Draw all game objects plus the message about the outcome (e.g., “You did it!” / “Oh, no!” or something else) and wait for a space key press.</p>
+<p>The condition above will be quite long, so fitting it into a single line will make it hard to read. In Python, you can split the line by putting <code>\</code> at the end of it. So a multiline if statement will look as follows:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="moon-lander.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> lander_is_within_horizontal_limits <span class="kw">and</span> <span class="op">\</span></span>
+<span id="cb10-2"><a href="moon-lander.html#cb10-2" aria-hidden="true" tabindex="-1"></a>   lander_vertical_speed_is_good <span class="kw">and</span> <span class="op">\</span></span>
+<span id="cb10-3"><a href="moon-lander.html#cb10-3" aria-hidden="true" tabindex="-1"></a>   lander_horizontal_speed_is_good:</span>
+<span id="cb10-4"><a href="moon-lander.html#cb10-4" aria-hidden="true" tabindex="-1"></a>   ...</span>
+<span id="cb10-5"><a href="moon-lander.html#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb10-6"><a href="moon-lander.html#cb10-6" aria-hidden="true" tabindex="-1"></a>  ...</span></code></pre></div>
+<div class="infobox program">
+<p>Implement landing checks in <em>code08.py</em>.</p>
+</div>
+</div>
+<div id="more-rounds" class="section level2" number="15.13">
+<h2>
+<span class="header-section-number">15.13</span> More rounds<a class="anchor" aria-label="anchor" href="#more-rounds"><i class="fas fa-link"></i></a>
+</h2>
+<p>Extend the game to have more than one round after the player either landed or crashed. Remember to reset the position of the lander before each new round. You can also add a <code>reset()</code> method to the landing pad as well, randomizing it horizontal position.</p>
+<div class="infobox program">
+<p>Add <code>reset()</code> method to the <code>LandingPad</code> class.
+Add more rounds in <em>code09.py</em>.</p>
+</div>
+</div>
+<div id="limited-fuel" class="section level2" number="15.14">
+<h2>
+<span class="header-section-number">15.14</span> Limited fuel<a class="anchor" aria-label="anchor" href="#limited-fuel"><i class="fas fa-link"></i></a>
+</h2>
+<p>Let us add a fuel limit to make things more interesting, so that thrursters would work <em>only</em> if there is any fuel left. For this, define a new setting <code>full tank</code> (I’ve picked it to be <code>100</code> but you can have more) and add a new attribute <code>fuel</code> to the <code>Lander</code> class (remember that you need to explicitly define all attributes in the constructor). The <code>fuel</code> level should be set to <code>full tank</code> whenever you reset the lander.</p>
+<p>Every use of a thruster should reduce this by 1 and thrusters should work <em>only</em> if there is fuel. You need to take care of this in the <code><a href="https://rdrr.io/r/stats/update.html">update()</a></code> method. Think about how you would do it for both vertical and horizontal thrusters.</p>
+<p>We also need to tell the player how much the fuel is left. I’ve implemented it as a bar gauge but you can implement it as text stimulus as well. Create the appropriate visual attribute in the constructor of the <code>Lander</code> class. Remember to update it every time the level of the fuel changes and to draw it whenever you draw the lander itself. As a nice touch, you can change the color to indicate how much of the fuel is left. I’ve used <em>green</em> for more than 2/3, <em>yellow</em> for more than 1/3, and <em>red</em> if less than that.</p>
+<div class="infobox program">
+<p>Add fuel and fuel gauge to <code>Lander</code> class.<br></p>
+</div>
+</div>
+<div id="add-to-it" class="section level2" number="15.15">
+<h2>
+<span class="header-section-number">15.15</span> Add to it!<a class="anchor" aria-label="anchor" href="#add-to-it"><i class="fas fa-link"></i></a>
+</h2>
+<p>We already have a functioning game but you can add so much more to it: visuals for the thrusters, sounds, background, etc. Experiment at will!</p>
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+  <div class="chapter-nav">
+<div class="empty"></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <div id="book-on-this-page"></div>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2022-05-17.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

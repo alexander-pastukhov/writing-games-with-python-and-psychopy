@@ -2,13 +2,9 @@
 
 Today we will create a moon lander game. You job is simple: land your ship on the pad but do not crash it! Here is a brief video of my implementation of the game
 
-```{r, eval=knitr::is_html_output(excludes = "epub"), results = 'asis', echo = F}
-cat(
-'<div style="text-align:center;"><video controls>
+<div style="text-align:center;"><video controls>
     <source src="videos/moonlander.m4v" type="video/mp4"> 
-  </video></div>'
-)
-```
+  </video></div>
 
 Here is the general outline of how we will proceed:
 
@@ -125,9 +121,14 @@ As you can see, the repetitive part is now hidden in the context class making it
 When you are running an actual experiment, one of the worries that you have is "what happens to the data I have already logged if the program crashes with an error"? Not collecting a full measurement is bad but not keeping at least partial log is even worse, as you can still use it for analysis or as a guidance for future adjustments. Python, as other languages, has special mechanisms to handle [exceptions](https://docs.python.org/3/tutorial/errors.html) that arise during the code execution.
 
 Whenever an error occurs at a run time, it [raises](https://docs.python.org/3/reference/simple_stmts.html#the-raise-statement) an exception: it creates an object of [a special class](https://docs.python.org/3/library/exceptions.html#concrete-exceptions) that contains information describing the problem. For example, a [ZeroDivisionError](https://docs.python.org/3/library/exceptions.html#ZeroDivisionError) is raised whenever you try to divide by zero, e.g., `1 / 0` (you can try this in a Jupyter notebook). A [KeyError](https://docs.python.org/3/library/exceptions.html#KeyError) is raised, if you using a dictionary with a wrong key, the code below will raise it:
-```{python, error=TRUE}
+
+```python
 a_dict = {"a_key" : 1}
 a_dict["b_key"]
+#> Error in py_call_impl(callable, dots$args, dots$keywords): KeyError: 'b_key'
+#> 
+#> Detailed traceback:
+#>   File "<string>", line 1, in <module>
 ```
 
 Similarly, an [IndexError](https://docs.python.org/3/library/exceptions.html#IndexError) is raised, if you try to use an invalid index for a list, a [NameError](https://docs.python.org/3/library/exceptions.html#NameError), if you are trying to access variable that does not exist, [AttributeError](https://docs.python.org/3/library/exceptions.html#AttributeError) when an object does not have an attribute you are trying to use, etc. 

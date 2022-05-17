@@ -59,6 +59,7 @@
 <li><a class="" href="flappy-bird.html"><span class="header-section-number">12</span> Flappy Bird</a></li>
 <li><a class="" href="seminar-02-06.html"><span class="header-section-number">13</span> Guitar Hero: staircase and iterator functions</a></li>
 <li><a class="active" href="the-snake.html"><span class="header-section-number">14</span> The Snake</a></li>
+<li><a class="" href="moon-lander.html"><span class="header-section-number">15</span> Moon lander</a></li>
 </ul>
 
         <div class="book-extra">
@@ -189,7 +190,7 @@ Figure 14.1: Grid versus window coordinates
 <div class="inline-figure"><img src="images/snake-movement-2.png" width="517"></div>
 <p>In the program, we <a href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists">list.insert(index, value)</a><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;We could also have used &lt;a href="https://docs.python.org/3/library/collections.html#collections.deque"&gt;dqueue&lt;/a&gt; class from &lt;em&gt;collections&lt;/em&gt; library instead of the &lt;code&gt;list&lt;/code&gt;. It is, essentially, a list that allows appending and popping from the left as well.&lt;/p&gt;'><sup>77</sup></a> the new head segment at index 0 and we remove the tail via <a href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists">list.pop()</a>.</p>
 <p>To keep things neat and tidy, we will implement two methods: <code>grow()</code> and <code>trim()</code>. Why not combine both actions into a single function? Strategic thinking! Once we add apples to the game, the snake will grow after consuming them by <em>not</em> shedding its tail. Thus, separating these two functions now will simplify our lives later on<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;To be honest, I have initially implemented it as a single &lt;code&gt;move()&lt;/code&gt; function , wrote things up up to eating apples, realized the problem, returned and rewrote the notes. So, admittedly, it is a hindsight kind of strategic thinking.&lt;/p&gt;"><sup>78</sup></a>.</p>
-<p>The <code>grow()</code> method should take just a single tuple parameter <code>dxy</code> with a direction of snake’s movement. I.e., it will be <code>(-1, 0)</code> for leftward moving snake, <code>(1, 0)</code> for right moving, <code>(-1, 0)</code> for up, and <code>(1, 0)</code> for down. Inside the method, you compute the coordinates for the new head segment based on the position of the current head (the very first element of the snake) and the direction of motion (<code>dxy</code>), create a new snake segment at that location, and insert it before all other elements.</p>
+<p>The <code>grow()</code> method should take just a single tuple parameter <code>dxy</code> with a direction of snake’s movement. I.e., it will be <code>(-1, 0)</code> for leftward moving snake, <code>(1, 0)</code> for right moving, <code>(0, -1)</code> for up, and <code>(0, 1)</code> for down. Inside the method, you compute the coordinates for the new head segment based on the position of the current head (the very first element of the snake) and the direction of motion (<code>dxy</code>), create a new snake segment at that location, and insert it before all other elements.</p>
 <p>The <code>trim()</code> method is even simpler as its just pops the last segment (trims the tail).</p>
 <p>To test these functions, create a snake and call its <code>grow()</code> method a few times using the same or different directions. Check visually that it works, i.e., that there are correct number of segment (initial head + as many segments as <code>grow()</code> method calls) and that the snake was growing in a correct direction. Combine <code>grow()</code> and <code>trim()</code> calls to visually check the snake as well.</p>
 <div class="rmdnote program">
@@ -394,105 +395,9 @@ Figure 14.1: Grid versus window coordinates
 </div>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   <div class="chapter-nav">
 <div class="prev"><a href="seminar-02-06.html"><span class="header-section-number">13</span> Guitar Hero: staircase and iterator functions</a></div>
-<div class="empty"></div>
+<div class="next"><a href="moon-lander.html"><span class="header-section-number">15</span> Moon lander</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -540,7 +445,7 @@ Figure 14.1: Grid versus window coordinates
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2022-04-26.</p>
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2022-05-17.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

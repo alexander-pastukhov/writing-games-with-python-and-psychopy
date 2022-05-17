@@ -117,7 +117,7 @@
 
 \title{Writing games with Python and PsychoPy}
 \author{Alexander (Sasha) Pastukhov}
-\date{2022-04-26}
+\date{2022-05-17}
 
 \begin{document}
 \maketitle
@@ -3613,7 +3613,7 @@ In the next section, we will create a \texttt{TimedResponseTask} class that will
 \BuiltInTok{print}\NormalTok{(iterator\_fun())}
 
 \CommentTok{\# iterating via for loop}
-\CommentTok{\#\textgreater{} \textless{}generator object iterator\_fun at 0x000002385AFA8C80\textgreater{}}
+\CommentTok{\#\textgreater{} \textless{}generator object iterator\_fun at 0x00000277F0588C10\textgreater{}}
 \ControlFlowTok{for}\NormalTok{ elem }\KeywordTok{in}\NormalTok{ iterator\_fun():}
     \BuiltInTok{print}\NormalTok{(elem)}
     
@@ -3933,7 +3933,7 @@ In the program, we \href{https://docs.python.org/3/tutorial/datastructures.html\
 
 To keep things neat and tidy, we will implement two methods: \texttt{grow()} and \texttt{trim()}. Why not combine both actions into a single function? Strategic thinking! Once we add apples to the game, the snake will grow after consuming them by \emph{not} shedding its tail. Thus, separating these two functions now will simplify our lives later on\footnote{To be honest, I have initially implemented it as a single \texttt{move()} function , wrote things up up to eating apples, realized the problem, returned and rewrote the notes. So, admittedly, it is a hindsight kind of strategic thinking.}.
 
-The \texttt{grow()} method should take just a single tuple parameter \texttt{dxy} with a direction of snake's movement. I.e., it will be \texttt{(-1,\ 0)} for leftward moving snake, \texttt{(1,\ 0)} for right moving, \texttt{(-1,\ 0)} for up, and \texttt{(1,\ 0)} for down. Inside the method, you compute the coordinates for the new head segment based on the position of the current head (the very first element of the snake) and the direction of motion (\texttt{dxy}), create a new snake segment at that location, and insert it before all other elements.
+The \texttt{grow()} method should take just a single tuple parameter \texttt{dxy} with a direction of snake's movement. I.e., it will be \texttt{(-1,\ 0)} for leftward moving snake, \texttt{(1,\ 0)} for right moving, \texttt{(0,\ -1)} for up, and \texttt{(0,\ 1)} for down. Inside the method, you compute the coordinates for the new head segment based on the position of the current head (the very first element of the snake) and the direction of motion (\texttt{dxy}), create a new snake segment at that location, and insert it before all other elements.
 
 The \texttt{trim()} method is even simpler as its just pops the last segment (trims the tail).
 
@@ -4135,6 +4135,378 @@ Put your updated code into \emph{code24.py}.
 \section{The sky is the limit}\label{the-sky-is-the-limit}}
 
 Good job! Lots of coding but now you have a cool retro game!
+
+\hypertarget{moon-lander}{%
+\chapter{Moon lander}\label{moon-lander}}
+
+Today we will create a moon lander game. You job is simple: land your ship on the pad but do not crash it! Here is a brief video of my implementation of the game
+
+But first you will learn about context management and exceptions.
+
+\hypertarget{boilerplate-1}{%
+\section{Boilerplate}\label{boilerplate-1}}
+
+As per usual, we will start with our usual boilerplate code. Create settings file that, for now, defines only the size of the window. Create \texttt{code01.py} with the usual boilerplate for loading settings, opening the window (its size determined by the settings), a main game loop (you can add a text message to make it look less plain) with a check for an \emph{``escape''} button to exit the loop, and closing the window at the end. I am being so specific because next you will learn how to hide this boilerplate in a context manager.
+
+Put your code into \emph{code01.py}.
+
+\hypertarget{context-manager}{%
+\section{Context manager}\label{context-manager}}
+
+On the one hand, context management is a frequently used feature in Python, particularly for file operations (you used it when loading settings from a JSON or YAML file). On the other hand, its full power that relies on a custom class implementation is rarely used. However, it can be very useful whenever the context of your programs is the same or very similar, as in case of the PsychoPy games that we programmed or typical PsychoPy experiments. In both cases, there is a fairly fixed structure of the program:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Initialization
+
+  \begin{itemize}
+  \tightlist
+  \item
+    get experimental settings by reading them from an \protect\hyperlink{settings-files}{external file}
+  \item
+    create PsychoPy window, logger for experimental results, mouse (if required)
+  \item
+    initialize special devices such as response box, eye tracker, etc.
+  \end{itemize}
+\item
+  Actual experiment
+\item
+  Saving and cleaning up
+
+  \begin{itemize}
+  \tightlist
+  \item
+    save data logs
+  \item
+    if required, close connection to special devices such as response boxes, eye tracker, etc.
+  \item
+    close PsychoPy window
+  \end{itemize}
+\end{enumerate}
+
+If you look at your code, you will realized that steps 1 and 3 remain pretty much the same throughout all the games that we programmed. Thus, we will create a context manager class that you can always reuse and which will hide away the boilerplate code.
+
+Here is a reminded of how a context manager is used when working with files. First, how it works \emph{without} a context manager: 1) you open a file and assign the object to a variable, 2) you work with it, 3) you close it. The latter is important to ensure that information was fully written into it and that you do not lock for file.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{file} \OperatorTok{=} \BuiltInTok{open}\NormalTok{(}\StringTok{"somefile.txt"}\NormalTok{, }\StringTok{"r"}\NormalTok{)}
+\CommentTok{\# ... do something with the file, such as reading the entire file into a single variable}
+\NormalTok{data }\OperatorTok{=} \BuiltInTok{file}\NormalTok{.read()}
+\NormalTok{close(}\BuiltInTok{file}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+A better way is to use a context manager via a \texttt{with\ ...\ as\ ...} statement (again, this should look familiar by now):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{with} \BuiltInTok{open}\NormalTok{(}\StringTok{"somefile.txt"}\NormalTok{, }\StringTok{"r"}\NormalTok{) }\ImportTok{as} \BuiltInTok{file}\NormalTok{:}
+    \BuiltInTok{file}\NormalTok{.read()}
+\end{Highlighting}
+\end{Shaded}
+
+Note that now the \texttt{file.read()} is inside of the \texttt{with} block and there is no \texttt{file.close()} call. The latter is evoked automatically, once you run all the code inside the \texttt{with} block and exit it. Although for this example the difference is minimal --- a different way to assign a value to a variable and explicit versus implicit file closing --- the second variant takes care of cleaning up, ensures that you do not forget about it, and allows you to concentrate on the important bits.
+
+Here's how it works behind the scenes. A context manager is a class that implements two special methods \texttt{\_\_enter\_\_} and \texttt{\_\_exit\_\_}{[}Spoiler alert! This approach is called \href{duck-typing}{duck typing} and we will learn more about in the next game{]}. The former creates and returns a context, which is whatever attribute or value you require, wheres the latter performs cleaning up that is necessary before exiting the context. Here is how we would implement a limited file context manager by ourselves:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ FileManager():}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, filename, mode):}
+        \CommentTok{"""}
+\CommentTok{        Stores the settings for use in \_\_enter\_\_}
+\CommentTok{        }
+\CommentTok{        Parameters}
+\CommentTok{        {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{        filename : str}
+\CommentTok{        mode : str}
+\CommentTok{        """}
+        \VariableTok{self}\NormalTok{.}\BuiltInTok{file} \OperatorTok{=} \VariableTok{None}
+        \VariableTok{self}\NormalTok{.filename }\OperatorTok{=}\NormalTok{ filename}
+        \VariableTok{self}\NormalTok{.mode }\OperatorTok{=}\NormalTok{ mode}
+        
+    \KeywordTok{def} \FunctionTok{\_\_enter\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+      \CommentTok{""" }
+\CommentTok{      What we need to do to create context:}
+\CommentTok{        * Open the file and returns the object.}
+\CommentTok{      }
+\CommentTok{      Returns}
+\CommentTok{      {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{      File object}
+\CommentTok{      """}
+      \VariableTok{self}\NormalTok{.}\BuiltInTok{file} \OperatorTok{=} \BuiltInTok{open}\NormalTok{(}\VariableTok{self}\NormalTok{.filename, }\VariableTok{self}\NormalTok{.mode)}
+      \ControlFlowTok{return} \VariableTok{self}\NormalTok{.}\BuiltInTok{file}
+      
+    \KeywordTok{def} \FunctionTok{\_\_exit\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, exc\_type, exc\_value, traceback):}
+      \CommentTok{"""}
+\CommentTok{      What we need to do before destroying the context:}
+\CommentTok{        * Close the file before we exit the context.}
+\CommentTok{      """}
+\NormalTok{      close(}\VariableTok{self}\NormalTok{.}\BuiltInTok{file}\NormalTok{)}
+      
+\CommentTok{\# and now we use it!}
+\ControlFlowTok{with}\NormalTok{ FileManager(}\StringTok{"somefile.txt"}\NormalTok{, }\StringTok{"r"}\NormalTok{) }\ImportTok{as} \BuiltInTok{file}\NormalTok{:}
+    \BuiltInTok{file}\NormalTok{.read()}
+\end{Highlighting}
+\end{Shaded}
+
+Note that \texttt{\_\_exit\_\_} method has extra parameters \texttt{exc\_type}, \texttt{exc\_value}, and \texttt{traceback}. They will be relevant for exception handling later on but you can ignore them for now.
+
+Now is your turn! Create a \texttt{GameContext} class (in a separate file, of course) that will load settings (filename should be passed to the constructor), create a PsychoPy Window object of a given size upon entering the context, and \href{https://psychopy.org/api/visual/window.html\#psychopy.visual.Window.close}{close} when the code exists the context. For now, you will need one attribute to store settings (call it \texttt{settings}) and one attribute for PsychoPy Window itself (use \texttt{win} as an attribute name). There will be a small but important difference relative to \texttt{FileManager} class in the example above. Here, we have two objects (attributes) that we would like to use inside the context: \texttt{settings} and \texttt{win}. We could return both as a tuple but this approach does not scale well. Instead, the \textbf{enter} should return the reference to the context object itself (reminder, reference to the current object is always in the \texttt{self} parameter of a method). This way you can always access either attribute via \texttt{context.settings} or \texttt{context.win}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{with}\NormalTok{ GameContext(}\StringTok{"settings.yaml"}\NormalTok{) }\ImportTok{as}\NormalTok{ context:}
+  \CommentTok{\# your usual code inside but}
+  \CommentTok{\# PsychoPy window is context.win}
+\NormalTok{  context.win.flip()}
+\end{Highlighting}
+\end{Shaded}
+
+Create \texttt{GameContext} class and use it in \emph{code02.py}.
+
+As you can see, the repetitive part is now hidden in the context class making it easier to concentrate on the main code. But the context manager has another ace up its sleeve: it makes handling exceptions (a.k.a. errors) and safe exiting much simpler.
+
+\hypertarget{exceptions}{%
+\section{Exceptions}\label{exceptions}}
+
+When you are running an actual experiment, one of the worries that you have is ``what happens to the data I have already logged if the program crashes with an error''? Not collecting a full measurement is bad but not keeping at least partial log is even worse, as you can still use it for analysis or as a guidance for future adjustments. Python, as other languages, has special mechanisms to handle \href{https://docs.python.org/3/tutorial/errors.html}{exceptions} that arise during the code execution.
+
+Whenever an error occurs at a run time, it \href{https://docs.python.org/3/reference/simple_stmts.html\#the-raise-statement}{raises} an exception: it creates an object of \href{https://docs.python.org/3/library/exceptions.html\#concrete-exceptions}{a special class} that contains information describing the problem. For example, a \href{https://docs.python.org/3/library/exceptions.html\#ZeroDivisionError}{ZeroDivisionError} is raised whenever you try to divide by zero, e.g., \texttt{1\ /\ 0} (you can try this in a Jupyter notebook). A \href{https://docs.python.org/3/library/exceptions.html\#KeyError}{KeyError} is raised, if you using a dictionary with a wrong key, the code below will raise it:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a\_dict }\OperatorTok{=}\NormalTok{ \{}\StringTok{"a\_key"}\NormalTok{ : }\DecValTok{1}\NormalTok{\}}
+\NormalTok{a\_dict[}\StringTok{"b\_key"}\NormalTok{]}
+\CommentTok{\#\textgreater{} Error in py\_call\_impl(callable, dots$args, dots$keywords): KeyError: \textquotesingle{}b\_key\textquotesingle{}}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Detailed traceback:}
+\CommentTok{\#\textgreater{}   File "\textless{}string\textgreater{}", line 1, in \textless{}module\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+Similarly, an \href{https://docs.python.org/3/library/exceptions.html\#IndexError}{IndexError} is raised, if you try to use an invalid index for a list, a \href{https://docs.python.org/3/library/exceptions.html\#NameError}{NameError}, if you are trying to access variable that does not exist, \href{https://docs.python.org/3/library/exceptions.html\#AttributeError}{AttributeError} when an object does not have an attribute you are trying to use, etc.
+
+In Python, you use \texttt{try:\ ...\ except:...finally:} operators to anticipate and handle exceptions:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{try}\NormalTok{:}
+    \CommentTok{\# some code that might generate a runtime error}
+\ControlFlowTok{except}\NormalTok{:  }
+    \CommentTok{\# code that is executed if something bad happens}
+\ControlFlowTok{finally}\NormalTok{:}
+    \CommentTok{\# code that is executed both with and without exception}
+    
+\CommentTok{\# code that is executed ONLY if there were no exceptions or if an exception was handled}
+\end{Highlighting}
+\end{Shaded}
+
+In the simplest case, you need just the first two operators: \texttt{try} and \texttt{except}. Create a Jupyter notebook (that you will submit as part of the assignment) and write the code that generates a division-by-zero error but is handled via \texttt{try...except...}. In the \texttt{except} simply print out a message, so that you know that it was executed. Create another cell, copy the code and now check that the exception handling code is \emph{not} executed, if the error is not generated (i.e., divide by some non-zero number).
+
+Put exception handling code is cell of a Jupyter notebook.
+
+Using \texttt{except:} catches \emph{all} exceptions. However, this is considered a bad style (too general) and a linter will complain. Instead, you can be more specific and handle exceptions based on their class.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{try}\NormalTok{:}
+    \CommentTok{\# some code that might generate a runtime error}
+\ControlFlowTok{except} \PreprocessorTok{KeyError} \ImportTok{as}\NormalTok{ key\_error:}
+    \CommentTok{\# code that is executed only if KeyError exception was raised }
+    \CommentTok{\# with exception information stored in the key\_error object}
+\ControlFlowTok{except} \PreprocessorTok{ZeroDivisionError} \ImportTok{as}\NormalTok{ zero\_division\_error:  }
+    \CommentTok{\# code that is executed only if ZeroDivisionError exception was raised}
+    \CommentTok{\# with exception information stored in the zero\_division\_error object}
+\ControlFlowTok{except}\NormalTok{:}
+    \CommentTok{\# code that is executed if any OTHER exception is raised.}
+\end{Highlighting}
+\end{Shaded}
+
+Implement handling for \texttt{KeyError} and \texttt{ZeroDivisionError}, they should print out different messages to check that it works. Test it by generating these runtime errors with your code.
+
+Put specific exception handling code is cell of a Jupyter notebook.
+
+So far, you generated exception by causing runtime errors code but you can raise these exceptions yourself via \href{https://docs.python.org/3/reference/simple_stmts.html\#the-raise-statement}{raise} operator. For example, instead of dividing by zero, you can \texttt{raise\ ZeroDivisionError()}\footnote{Confusingly, if you do not pass any additional parameters, you can also create the object \emph{without} round brackets: \texttt{raise\ ZeroDivisionError}. I find this mightily confusing but this is fairly common, so drop brackets if it feels more natural.}. Use it with you previous code, instead of an actual division by zero. Try raising other exceptions and see how your code handles them. Also check what happens if you have the first two specific exception handlers but no general \texttt{except:} and raise an \href{https://docs.python.org/3/library/exceptions.html\#NameError}{NameError}?
+
+Use \texttt{raise} to test exception handling in a Jupyter notebook.
+
+So far I have talked about exceptions as a way to alert about runtime errors. However, they can be used in a more general way to control the execution flow. We will use that side of exception in the next section when dealing with context.
+
+\hypertarget{exception-within-context}{%
+\section{Exception within context}\label{exception-within-context}}
+
+\texttt{try..except...} operators provide a general mechanism for exceptions handling but what happens if an exception is raised inside a context? You can, of course, put a \texttt{try...except...} in the code itself, something you should do, if you are planning to handling \emph{specific} exceptions. However, if an exception occurs in the code inside the context, Python will first \emph{exit} the context, i.e., call the \texttt{\_\_exit\_\_} method, before handling it explicitly. Moreover, it will kindly put the exception information into the parameters \texttt{exc\_type} (a class of the exception) and \texttt{exc\_value} (an object of that class). This way, you can perform a proper clean-up (save data, close window, etc.) and then either handle an exception or leave it alone, so that it propagates further and can be handled by other pieces of your code (or it will stop the execution, if you do not handle it explicitly).
+
+Here, we will use this mechanism not only for safe clean-up but also to make aborting an experiment (or a game) easy. In previous games with many rounds, you had nested loops that made aborting a game via \emph{escape} key press awkward. You had to check it in the inner loop and then differentiate between a normal end-of-round and a used abort in the outside loop. We can make our life much easier via a combination of a context manager and a custom exception.
+
+First, create a custom \texttt{GameAbort} class, which is a descendant of the \texttt{Exception} class. You do not need any code in it, even a constructor does not need to be redefined, so use \href{https://docs.python.org/3/reference/simple_stmts.html\#the-pass-statement}{pass} statement for its body (you do need to have at least one line of code in the class). Next, you \texttt{raise\ GameAbort()}, if the player pressed \emph{escape} key (do not forget to import \texttt{GameAbort} class, so you can use it in the main script). Finally, in the \textbf{exit} method of the \texttt{GameContext} manager, you should check whether \texttt{exc\_type\ is\ GameAbort} (\texttt{exc\_type} will be \texttt{None}, if no exception occurred) and, \textbf{very important(!)}, \texttt{return\ True} in that case:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ GameContext:}
+\NormalTok{    ...}
+    \KeywordTok{def} \FunctionTok{\_\_exit\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, exc\_type, exc\_value, traceback):}
+\NormalTok{        ...}
+        \ControlFlowTok{if}\NormalTok{ exc\_type }\KeywordTok{is}\NormalTok{ GameAbort:}
+            \ControlFlowTok{return} \VariableTok{True}
+  
+\end{Highlighting}
+\end{Shaded}
+
+That last bit \texttt{return\ True} informs Python that you handled the exception and all is good (not need to propagate it further). However, note that your \emph{return} \texttt{True} meaning that any other code that handles the exit from a context must be \emph{before} that statement. Now, you can safely abort your experiment from any code location, inside nested loops, functions, etc. In all cases, the exception will be propagated until the \texttt{\_\_exit\_\_} method, doing away with awkward extra checks.
+
+Create \texttt{GameAbort} exception class,update \texttt{GameContext} class to handle it,use this in an updated main script in \emph{code03.py}.
+
+\hypertarget{create-moonlander-class}{%
+\section{Create MoonLander class}\label{create-moonlander-class}}
+
+In \emph{moonlander.py}, create a new \texttt{MoonLander} class. It should have an \href{https://psychopy.org/api/visual/imagestim.html}{ImageStim} attribute (I will assume it is called \texttt{image}) that will contain the visuals of the ship created using \href{material/ufo.png}{ufo.png} image. However, instead of hardcoding the filename, create a new group \texttt{"Lander"} in the settings file and add a new setting \texttt{"ship\ image\ :\ ufo.png"} (assuming you use YAML). Pass Lander-specific settings to the constructor and save them in an attribute (we will have more of them later).
+
+Note that we do not want to inherit from the \href{https://psychopy.org/api/visual/imagestim.html}{ImageStim} directly, as we will have more visuals elements later on. Also, implement \texttt{draw()} method that should draw all visual elements of the lander (we have one for now, of course).
+
+Create an instance of \texttt{MoonLander} class in the main script and draw it in the main game loop. You should see a static picture of the ship at the center of the screen.
+
+Create \texttt{MoonLander} class and use it in the main game loop.
+Put updated code into \emph{code04.py}.
+
+\hypertarget{randomize-landers-position}{%
+\section{Randomize lander's position}\label{randomize-landers-position}}
+
+Implement a new method \texttt{reset()} that resets the lander for the next round. At the moment, the only thing it should do is to randomize position of the image. Use a range of -0.5..0.5 horizontally and 0.8..0.9 vertically (I assume that we are using \texttt{"norm"} units). Call it in the constructor and test it in the main loop by calling it every time you press \emph{space} button (that should make the ship jump).
+
+Add \texttt{reset()} method to \texttt{MoonLander} class and use it in the main game loop.
+Put updated code into \emph{code05.py}.
+
+\hypertarget{flying-but-only-down}{%
+\section{Flying (but only down)}\label{flying-but-only-down}}
+
+For the lander to fly, we must adjust its position or, more specifically, the position of its image (\texttt{self.image.pos}) based on its speed. But before that, speed itself must be adjusted based on the forces from gravity and thrusters that act upon the lander. Accordingly, we need
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  A new setting that defines acceleration due to the gravitational force. Define in the settings file, call it \texttt{gravity\ {[}norm/sec\^{}2{]}} (so, it is an acceleration in distance units of \texttt{"norm"} rather than in meters of the real world) and set to \texttt{0.0001}\footnote{The constant itself does not mean anything, I adjusted it to be reasonable for the image and window size that we are using.}
+\item
+  A new attribute \texttt{speed} that will contain horizontal and vertical velocity in norm units per second. Initialize to \texttt{{[}0,\ 0{]}} in the \texttt{reset()} but also assign some value (e.g., also \texttt{{[}0,\ 0{]}}) as linters do not like to see attributes that were never mentioned in the constructor.
+\item
+  A new attribute with a PsychoPy \href{https://psychopy.org/api/clock.html\#psychopy.clock.Clock}{clock} that will measure the time elapsed since the last position adjustment (this way we can compute our speed and acceleration ``per second''). Do not forget to reset it in \texttt{reset()}.
+\end{enumerate}
+
+Now, implement a method that will update lander position (call it, unimaginatively, \texttt{update()}). Inside, figure out the time elapsed since the last call (or since the last \texttt{reset()}) and do not forget to restart the clock. Once you know how much time has elapsed, you can adjust, first, speed based on acceleration (only vertical speed based on gravity for now, we will worry about the horizontal component once we implement thrusters) and, then, position based on speed. Call it in the main loop and watch your lander fall out of the sky. Once it is off the screen, press space and see it go again. Play with the \texttt{gravity} setting to adjust the speed of falling to your liking.
+
+Update \texttt{MoonLander} class for the effect of gravity.
+Use it in the main loop of \emph{code06.py}.
+
+\hypertarget{vertical-thurster}{%
+\section{Vertical thurster}\label{vertical-thurster}}
+
+PsychoPy allows you to get key presses or, using \href{https://www.psychopy.org/api/hardware/keyboard.html}{hardware.keyboard} to get both press and release time. Unfortunately, you get both only \emph{after} the key was released. In our game, the thursters must be active for as long as the player presses the key. Thus, we need to know whether a key is \emph{currently} pressed, not that it was pressed and released at some time in the past. For this, we will use \emph{pyglet} library (a backend used by PsychoPy) directly. First, in your \emph{moonlander.py} add \texttt{import\ pyglet} and then include the following code inside the constructor of the class.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# setting up keyboard monitoring}
+\VariableTok{self}\NormalTok{.key }\OperatorTok{=}\NormalTok{ pyglet.window.key}
+\VariableTok{self}\NormalTok{.keyboard }\OperatorTok{=} \VariableTok{self}\NormalTok{.key.KeyStateHandler()}
+\NormalTok{win.winHandle.push\_handlers(}\VariableTok{self}\NormalTok{.keyboard)}
+\end{Highlighting}
+\end{Shaded}
+
+This installs a ``handler'' that monitors the state of the keyboard. Now, you can read out the state of, say, \emph{down arrow} key as\texttt{self.keyboard{[}self.key.DOWN{]}} (\texttt{True} if pressed, \texttt{False} otherwise). We will use \texttt{DOWN} for the vertical thruster and \texttt{LEFT} and \texttt{RIGHT} for the horizontal ones.
+
+Define a \texttt{vertical\ accelartion\ {[}norm/sec\^{}2{]}} to be twice the gravity (but you can use some other number, of course) and update the \texttt{update()}\footnote{Pun intended.}, so that the total vertical acceleration is \(vertical acceleration + gravity\) if the the user is pressing \emph{down} key (use \texttt{self.keyboard} and \texttt{self.key} to figure that out) but \(gravity\) alone, if not.
+
+Test that the vertical thruster works (do you need to update the main code?)!
+
+Update \texttt{MoonLander} class with a vertical thruster.
+
+\hypertarget{horizontal-thursters}{%
+\section{Horizontal thursters}\label{horizontal-thursters}}
+
+Now implement the same logic, computing acceleration, speed, and position but for horizontal thrusters (define \texttt{horizontal\ acceleration\ {[}norm/sec\^{}2{]}} setting and decide on its value yourself). Remember, the \emph{right} thruster pushes the lander to the \emph{left} and vice versa! Think about what you should do if both \emph{left} and \emph{right} keys are pressed at the same time. Test it by flying around!
+
+Add horizontal thrusters to \texttt{MoonLander}.
+
+\hypertarget{landing-pad-visuals}{%
+\section{Landing pad: visuals}\label{landing-pad-visuals}}
+
+The purpose of the game is to land on a landing pad. A landing pad is just a rectangle with some additional methods and properties. So it stands to reason to make it a descendant of the \texttt{visual.Rect} class, unfortunately, for some technical reason I have not figured out yet, this does not work for shape classes like \texttt{Rect} or \texttt{Circle}.
+
+Create a new file \emph{landing\_pad.py} and a new class \texttt{LandingPad}. In the constructor, create a rectangle and store it in attribute (you pick the name). It should be \texttt{0.5} units wide and located at the bottom of the window but at a \href{https://docs.python.org/3/library/random.html}{random} position within the window horizontally. Pick the fill and line colors that you like. The only other method the class needs is \texttt{draw()}.
+
+In the main code, create an object of class \texttt{LandingPad} and draw it in the main loop, along with the lander itself.
+
+Create \texttt{LandingPad} class.
+Use it in \emph{code07.py}.
+
+\hypertarget{computing-edges-of-game-objects}{%
+\section{Computing edges of game objects}\label{computing-edges-of-game-objects}}
+
+The aim of the game is a soft touchdown on a landing pad. For this, we need to know where the \emph{top} of the landing pad is, as well as where the \emph{bottom} of the lander is and where \emph{left} and \emph{right} limits of each object are. Let us think about \emph{bottom} of the lander first, as the rest are very similar.
+
+We do not have information about it \emph{directly}. We have the vertical position of the lander in \texttt{self.image.pos{[}1{]}} (I assume here that the visuals attribute is called \texttt{image}) and its height in \texttt{self.image.size{[}1{]}}. From this, it is easy to compute the bottom edge (but remember that position is about the \emph{center} of the rectangle). Accordingly, you could create a \protect\hyperlink{computed-attribute-property}{computed property} \texttt{bottom}. Create computed attributes for \texttt{bottom}, \texttt{left}, and \texttt{right} of the lander class and for \texttt{top}, \texttt{left}, and \texttt{right} of the landing pad.
+
+Implement computed properties for \texttt{MoonLander} and \texttt{LandingPad} classes.
+
+\hypertarget{landing}{%
+\section{Landing}\label{landing}}
+
+We should check for landing whenever the bottom edge of the lander is at or below the top edge of the landing pad. A successful landing must satisfy several conditions:
+
+\begin{itemize}
+\tightlist
+\item
+  The lander must be within the limits of the lander pad horizontally.
+\item
+  The vertical speed must be zero or negative (otherwise, the lander flies up) but below a certain threshold that we will define as \texttt{vertical\ speed\ threshold\ {[}norm/sec{]}}. I set it to \texttt{0.05}.
+\item
+  The absolute horizontal speed must be below a certain threshold, also defined as \texttt{horizontal\ speed\ threshold\ {[}norm/sec{]}\ :\ 0.05}.
+\end{itemize}
+
+If \emph{any} of these three conditions are false, the lander has crashed. Either way, the game is over, so you should record the outcome (whether the landing was successful) and exit the main game loop. After the loop, inform the player about the outcome. Draw all game objects plus the message about the outcome (e.g., ``You did it!'' / ``Oh, no!'' or something else) and wait for a space key press.
+
+The condition above will be quite long, so fitting it into a single line will make it hard to read. In Python, you can split the line by putting \texttt{\textbackslash{}} at the end of it. So a multiline if statement will look as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ lander\_is\_within\_horizontal\_limits }\KeywordTok{and} \OperatorTok{\textbackslash{}}
+\NormalTok{   lander\_vertical\_speed\_is\_good }\KeywordTok{and} \OperatorTok{\textbackslash{}}
+\NormalTok{   lander\_horizontal\_speed\_is\_good:}
+\NormalTok{   ...}
+\ControlFlowTok{else}\NormalTok{:}
+\NormalTok{  ...}
+\end{Highlighting}
+\end{Shaded}
+
+Implement landing checks in \emph{code08.py}.
+
+\hypertarget{more-rounds}{%
+\section{More rounds}\label{more-rounds}}
+
+Extend the game to have more than one round after the player either landed or crashed. Remember to reset the position of the lander before each new round. You can also add a \texttt{reset()} method to the landing pad as well, randomizing it horizontal position.
+
+Add \texttt{reset()} method to the \texttt{LandingPad} class.
+Add more rounds in \emph{code09.py}.
+
+\hypertarget{limited-fuel}{%
+\section{Limited fuel}\label{limited-fuel}}
+
+Let us add a fuel limit to make things more interesting, so that thrursters would work \emph{only} if there is any fuel left. For this, define a new setting \texttt{full\ tank} (I've picked it to be \texttt{100} but you can have more) and add a new attribute \texttt{fuel} to the \texttt{Lander} class (remember that you need to explicitly define all attributes in the constructor). The \texttt{fuel} level should be set to \texttt{full\ tank} whenever you reset the lander.
+
+Every use of a thruster should reduce this by 1 and thrusters should work \emph{only} if there is fuel. You need to take care of this in the \texttt{update()} method. Think about how you would do it for both vertical and horizontal thrusters.
+
+We also need to tell the player how much the fuel is left. I've implemented it as a bar gauge but you can implement it as text stimulus as well. Create the appropriate visual attribute in the constructor of the \texttt{Lander} class. Remember to update it every time the level of the fuel changes and to draw it whenever you draw the lander itself. As a nice touch, you can change the color to indicate how much of the fuel is left. I've used \emph{green} for more than 2/3, \emph{yellow} for more than 1/3, and \emph{red} if less than that.
+
+Add fuel and fuel gauge to \texttt{Lander} class.
+
+\hypertarget{add-to-it}{%
+\section{Add to it!}\label{add-to-it}}
+
+We already have a functioning game but you can add so much more to it: visuals for the thrusters, sounds, background, etc. Experiment at will!
 
   \bibliography{book.bib}
 
