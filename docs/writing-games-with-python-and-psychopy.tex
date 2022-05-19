@@ -117,7 +117,7 @@
 
 \title{Writing games with Python and PsychoPy}
 \author{Alexander (Sasha) Pastukhov}
-\date{2022-05-17}
+\date{2022-05-19}
 
 \begin{document}
 \maketitle
@@ -3613,7 +3613,7 @@ In the next section, we will create a \texttt{TimedResponseTask} class that will
 \BuiltInTok{print}\NormalTok{(iterator\_fun())}
 
 \CommentTok{\# iterating via for loop}
-\CommentTok{\#\textgreater{} \textless{}generator object iterator\_fun at 0x00000277F0588C10\textgreater{}}
+\CommentTok{\#\textgreater{} \textless{}generator object iterator\_fun at 0x000001BD1CBDC6D0\textgreater{}}
 \ControlFlowTok{for}\NormalTok{ elem }\KeywordTok{in}\NormalTok{ iterator\_fun():}
     \BuiltInTok{print}\NormalTok{(elem)}
     
@@ -4141,6 +4141,35 @@ Good job! Lots of coding but now you have a cool retro game!
 
 Today we will create a moon lander game. You job is simple: land your ship on the pad but do not crash it! Here is a brief video of my implementation of the game
 
+Here is the general outline of how we will proceed:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Create a basic PsychoPy window and main experimental loop.
+\item
+  Outsource the boilerplate to a context manager
+\item
+  Define a basic \texttt{MoonLander} class with a static image and add its drawing to the main loop.
+\item
+  Randomize position of the lander.
+\item
+  Add gravity pull.
+\item
+  Add vertical thruster that counter-act gravity.
+\item
+  Add horizontal thrusters, so you can maneuver around.
+\item
+  Define \texttt{LandingPad} class.
+\item
+  Implement landing / crashing checks.
+\item
+  Add more runs.
+\item
+  Limit the fuel.
+\end{enumerate}
+
 But first you will learn about context management and exceptions.
 
 \hypertarget{boilerplate-1}{%
@@ -4507,6 +4536,357 @@ Add fuel and fuel gauge to \texttt{Lander} class.
 \section{Add to it!}\label{add-to-it}}
 
 We already have a functioning game but you can add so much more to it: visuals for the thrusters, sounds, background, etc. Experiment at will!
+
+\hypertarget{space-invaders}{%
+\chapter{Space invaders: mixins and duck typing}\label{space-invaders}}
+
+Today we will program a classic Space Invaders game with a twist. We will be using object-oriented programming but you will learn about \emph{mixins} and \emph{duck typing}. Previously, you have learned how to ensure generalization --- common behavior for different classes --- via inheritance. E.g., when all visual stimuli inherit from the save \texttt{BaseVisualStim} class, you can be sure that they all have \texttt{size}, \texttt{ori}, and \texttt{pos} properties and that you can \texttt{draw()} them. However, this approach may not be best suited for cases when the same class must implement several different behaviours. One solution is to use \emph{multiple inheritance}, so that a class is a descendant of several classes and, thus, get behavior from many of them. This is the canonical way of ensuring generalization but you can achieve same means differently.
+
+\hypertarget{mixins}{%
+\section{Mixins}\label{mixins}}
+
+One way to infuse a \emph{common} behavior into \emph{different} classes is via a mixin classes. These are classes that only define a single \emph{behavior} (i.e., a method) and nothing else. No constructor and, typically, no attributes. Thus, they are too limited to be used on their own but can be inherited from (mixed into the proper class) enabling that single behavior in the descendant.
+
+Think about all creatures that can fly: insects, birds, bats, astronauts, etc. They do have a common ancestor but that common ancestor did not have the ability to fly. Instead, each line evolved that ability independently and all have evolutionary ``cousins'' that cannot fly. When programming, you can follow the same pattern of creating a common ancestor for flying and non-flying insects, then implementing ability to fly in the former. Do the same for birds, bats, astronauts, etc. If your implementation must be very detailed and creature-specific, this might be unavoidable. However, if your ability to ``fly'' is very abstract and, therefore, the same for all creatures in question, you will end up writing the same code for every insect, bird, bat class. An easy copy-paste, of course, but that means you get multiple places with identical implementation, so when you need to change it, you will have to make sure that you do it in all the places (and you gonna miss some, I always do). Alternative? Mixins! You create a class \texttt{FlightAbility} that implements that common abstract ``flying'' and, then, you inherit from that class whenever you need a flying someone. Mix a non-flying bird with the \texttt{FlightAbility} and it can fly! Mix it with an insect: Flying insect! You may also mix in more than one ability. Again, start with a bird that just walks around (a chicken). Add a mixin \texttt{FlightAbility} and you get a flying bird (a pigeon). Take the walking bird again and mix in \texttt{SwimAbility} and you get a swimming bird (a penguin). Mix in \emph{both} and you get a bird that can both fly and swim (a swan)!
+
+You may not need mixins frequently but they are a powerful way of creating an isolated behavior that different classes might need without enforcing strict inheritance structure. PsychoPy is big on mixins. For example, it has \texttt{ColorMixin} that could be mixed-in to a visual class that needs to work with color, so it implements all the repetitive\footnote{boilerplate} code for translating an arbitrary color representation (string, hexadecimal code, RGB triplet, HSL triplet, single grayscale value, etc.) into the internal RGB color value. It also has \texttt{TextureMixin} for classes that use textures for drawing objects. In our \emph{Space Invaders} game, we will use a Mixin class to mix in a ``boom sound when exploded'' behavior, common to both aliens and the player's ship.
+
+\hypertarget{duck-typing}{%
+\section{Duck typing}\label{duck-typing}}
+
+Alternatively, you might need your object to behave in a certain way but having a proper class hierarchy is an overkill because this is only one class and you might want some but not all the functionality. The idea is to use ``duck typing'', which comes from saying ``If it walks like a duck, and it quacks like a duck, then it must be a duck.'' In other words, if the only things you care about are walking and quacking, do you need it to be an actual duck\footnote{A man is hailing a taxi on a sidewalk. A car stops next to him. The guy looks at it and says ``But where is the taxi sign on the roof?''. The driver replies: ``Do you need a taxi sign on the roof or a ride?''}? Will a goose that can walk and quack the same way do? Will a \emph{dog} that can walk and quack like a duck do? Obviously, the correct answer is ``it depends'' but in a lot of situations you are interested in a common behavior rather than in a common ancestor.
+
+Duck typing is a popular method in Python. For example, \texttt{len(object)} is a canonical way to compute length of an object. That object could be a string \texttt{len("four")}, or a list \texttt{len({[}1,\ 2,\ 3,\ 4{]})}, a tuple \texttt{len(tuple(1,\ 4,\ 2))}, a dictionary \texttt{len(\{"A":\ 1,\ "B":\ 5\})}, etc. The idea is that as long as a class has a concept of length (number of elements, number of characters, etc.), you should be able compute its length via \texttt{len()}. This is achieved by adding a \emph{special method} to the class \texttt{\_\_len\_\_(self)} that must return an integer. This is called a ``hook method'', as it is never called directly but is ``hooked'' to the \texttt{len()} function call. Thus, whenever you write \texttt{len(object)}, it is actually translated into \texttt{object.\_\_len()\_\_}\footnote{Why not implement it as a method \texttt{object.len()} or, even better, as a read-only property \texttt{object.len}? Read \href{https://mail.python.org/pipermail/python-3000/2006-November/004643.html}{here} for the justification.}.
+
+Another popular duck typing application is an implementation of an iterator: an object that yields one item at a time, so you can do lazy computation\footnote{Lazy computation means that you compute or get only what is necessary right now, rather than computing or getting all items in one go.} or loop over them. You already know how to implement an \protect\hyperlink{iteratorgenerator-functions}{iterator as a function} but it also be defined as a class with two special methods: \texttt{\_\_iter\_\_(self)} and \texttt{\_\_next\_\_(self)}. The former is called when iteration starts and it should perform a necessary initialization (e.g., setting internal counter to 0, shuffling elements, etc.) and must return an \emph{iterator object} (typically, a reference to itself). The \texttt{\_\_next()\_\_} method is called whenever the next item is needed: if you use iterator in the \texttt{for} loop, it is called automatically or you can call it yourself via \texttt{next(iterator\_object)}. \texttt{\_\_next()\_\_} must return the next item or \href{https://docs.python.org/3/reference/simple_stmts.html\#the-raise-statement}{raise} a \href{https://docs.python.org/3/library/exceptions.html\#StopIteration}{StopIteration} \protect\hyperlink{exceptions}{exception}, signalling that it ran out of items.
+
+Note that an iterator does not require an implementation of the \texttt{\_\_len()\_\_} method! How come? If you have items you can iterate over, doesn't it make sense to also know how many (length of an object)? Not necessarily! First, if you use an iterator in a \texttt{for} loop and you just want to iterate over all of the items until you run out of them (which is signaled by the \href{https://docs.python.org/3/library/exceptions.html\#StopIteration}{StopIteration} exception). Thus, their total number and, hence, \texttt{len()} method is of little interest. Accordingly, why implement a function that you do not need\footnote{Of course, if you \emph{do} need it, you should implement it. The point is that quite often you do not.}? Second, what if your iterator is endless (in that case, it is called a \emph{generator})? E.g., every time \texttt{\_\_next\_\_()} is called it returns one random item or a random number. This way, it will never run out of items, so the question of ``what is its length'' is meaningless unless you take ``infinity'' as an answer. This lack of need for \texttt{\_\_len\_\_()} for iterators is the spirit of duck typing: implement only the methods you need for your duck, ignore the rest.
+
+Below, you will practice duck typing by implementing both \texttt{\_\_len()\_\_} and two special iterator methods as part of our \texttt{AlienArmada} class.
+
+\hypertarget{which-one-to-use}{%
+\section{Which one to use?}\label{which-one-to-use}}
+
+Now you know \emph{three} methods to produce common behavior: proper inheritance, mixins, and duck typing. Which one should you use? Depends on what you need. If you have many classes and you can have a well defined inheritance tree, use it. However, if you have some specific behavior that you need in some classes that is hard to fit with the inheritance tree, use mixins. If you have a single class that needs very specific functionality, such as an iterator: use duck typing. Using any one of them does not preclude you using others, but be moderate, using too many different paradigms will be confusing for you and a reader.
+
+\hypertarget{space-invaders-1}{%
+\section{Space Invaders}\label{space-invaders-1}}
+
+We will program a simple version of the game with a gradually descending alien armada. Your task is to capture all aliens by firing a teleport beam before one of them rams your ship or gets away. Below, you can see my version of the game.
+
+As per usual, the plan is to move slowly in small steps to keep complexity of changes low. Here are the steps:
+
+\begin{itemize}
+\tightlist
+\item
+  Start with our usual PsychoPy boilerplate hidden in a context manager.
+\item
+  Add a \texttt{Spaceship} and use mouse to move it along the bottom of the screen.
+\item
+  Create an \texttt{Alien} and then the whole \texttt{AlienArmada}.
+\item
+  Add \texttt{Laser}, then a \texttt{LaserGun}, so that the player can fire many laser shots by pressing left mouse key.
+\item
+  Add check for hitting aliens with the laser and teleporting them off the screen.
+\item
+  Use mixin to add teleport sound.
+\item
+  Use cool iterators to cycle through lasers and aliens.
+\item
+  Make alien armada move.
+\item
+  Check for end-of-game.
+\end{itemize}
+
+Before we start, grab images that we will use for the game \href{material/space-invaders.zip}{space-invaders.zip}, created specifically for our seminar by Andrej Pastukhov, who said you absolutely must look at this link: \href{https://youtu.be/dQw4w9WgXcQ}{Wie die Pixelarts meines Sohnes Andrej entstanden sind}\footnote{No worries, it is safe. He says, you should understand. But I have no idea because, evidently, I am a dinosaur out of touch with modern trends.}.
+
+\hypertarget{boilerplate-2}{%
+\section{Boilerplate}\label{boilerplate-2}}
+
+Create our usual boilerplate via a context manager with \texttt{GameAbort} exception handling. You can reuse the code from our last game but I strongly suggest checking that you understand every step. My suggestion for the window size is 640×480 because the sprites are 32×32 but chose whatever looks good on your screen.
+
+Create \texttt{GameContext} and \texttt{GameAbort} classes.
+Put your boilerplate code into \emph{code01.py}.
+
+\hypertarget{the-spaceship}{%
+\section{The spaceship}\label{the-spaceship}}
+
+Create a new file for \texttt{Spaceship} class. It is remarkably boring as it just an image that moves left-right on a horizontal line. Thus, we will create it as a descendant of \href{https://psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim}{ImageStim} class. The only method that you need to define right now is the constructor \texttt{\_\_init\_\_()}. It should take \href{https://psychopy.org/api/visual/window.html\#psychopy.visual.Window}{Window} and image filename (should be stored in settings) as parameters (plus the compulsory \texttt{self}, of course) and call \texttt{super().\_\_init\_\_(...)} to initialize itself via the inherited constuctor. Apart from the two parameters you have, you also need to specify the initial position of the ship via \texttt{pos}. The ship should be somewhere just above the lower edge of the window. For me, vertical position of -0.9 worked quite nicely.
+
+In the main code, create an object and draw it in the main loop.
+
+Create \texttt{Spaceship} class in a separate file.
+Use it in \emph{code.py}.
+
+\hypertarget{the-spaceship-moves}{%
+\section{The spaceship moves}\label{the-spaceship-moves}}
+
+Now, let us use the \href{https://psychopy.org/api/event.html\#psychopy.event.Mouse}{mouse} to control the horizontal position of the ship and, later on, left button to shoot. First, initialize the mouse in the context manager, so that it is one its attributes. Then, in the main loop, use \href{https://psychopy.org/api/event.html\#psychopy.event.Mouse.getPos}{getPos()} method to get the position of the mouse and use the \emph{horizontal} component to alter the position of the ship. Note that you \emph{cannot} assign just a horizontal or vertical components to the position via \texttt{.pos{[}0{]}\ =\ ...}. In my PsychoPy 2020.2.10 it does not generate an error but does not change the actual position either. Thus, you need to assign a tuple of \texttt{(new\ horizontal\ component,\ original\ vertical\ component)} (the ship should stay at the same vertical position throughout the game). Test moving your spaceship around. You can make mouse invisible (see \href{https://psychopy.org/api/event.html\#psychopy.event.Mouse}{documentation} ) to make it more immersive.
+
+Add mouse to \texttt{GameContext}
+Use mouse to move ship in \emph{code03.py}.
+
+\hypertarget{an-alien-appears}{%
+\section{An alien appears}\label{an-alien-appears}}
+
+Before we create an alien armada, let us create a single alien. The class will be very basic, which is why, we will put both \texttt{Alien} and \texttt{AlienArmada} into the same file (so, think about its filename). The class itself will very similar to the \texttt{Spaceship}. The only differences are that it should take (and pass) \texttt{pos} parameter (unlike the spaceship that always appears at the same location) and that the image should be \href{https://docs.python.org/3/library/random.html\#random.choice}{randomly picked} from a tuple of filenames (\emph{alien-1.png} and \emph{alien-2.png}, should be define in the settings in an ``aliens'' group of settings). For testing, place a few alians at arbitrary locations on the screen to check that an alien image is randomly picked. Do not forget to draw them in the main loop.
+
+Create an \texttt{Alien} class
+Use them in \emph{code04.py}.
+
+\hypertarget{using-names-to-indicate-access-restrictions}{%
+\section{Using names to indicate access restrictions}\label{using-names-to-indicate-access-restrictions}}
+
+Before we create an alien armada, we need to make a quick detour to talk about \href{https://peps.python.org/pep-0008}{naming conventions} for attributes and names of classes. Unlike most other languages, Python does not have private attributes or methods, i.e., attributes or methods accessible only from inside the object. If you come from Java or C\#/C++, a thought that you can call \emph{any} method and modify \emph{any} attribute from outside should give you chills, as it becomes impossible to predict object's behavior. Python ``solves'' the access problem via a ``gentlemen's agreement'' that methods and attributes whose names start either with \texttt{\_\_} or \texttt{\_} should be \emph{considered} private. In other words, you should not use them directly. In case of \texttt{\_\_}, you are also prevented from doing it in a straightforward way, as the name is \href{https://peps.python.org/pep-0008/\#descriptive-naming-styles}{mangled}. In the example below you cannot you access the \texttt{\_\_color} attribute directly:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ ExampleClass:}
+  \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+    \VariableTok{self}\NormalTok{.\_\_color }\OperatorTok{=} \StringTok{"red"}
+
+\NormalTok{example }\OperatorTok{=}\NormalTok{ ExampleClass()}
+
+\CommentTok{\# raises AttributeError}
+\BuiltInTok{print}\NormalTok{(example.\_\_color)}
+\CommentTok{\#\textgreater{} Error in py\_call\_impl(callable, dots$args, dots$keywords): AttributeError: \textquotesingle{}ExampleClass\textquotesingle{} object has no attribute \textquotesingle{}\_\_color\textquotesingle{}}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Detailed traceback:}
+\CommentTok{\#\textgreater{}   File "\textless{}string\textgreater{}", line 1, in \textless{}module\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+You can still access it via its mangled name\texttt{object.\_\textless{}ClassName\textgreater{}\textless{}hidden\ attribute\ name\textgreater{}}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{example.\_ExampleClass\_\_color}
+\CommentTok{\#\textgreater{} \textquotesingle{}red\textquotesingle{}}
+\end{Highlighting}
+\end{Shaded}
+
+However, this is a last resort sort of thing that you should use only if you absolutely must access that attribute or method and, hopefully, know what you doing.
+
+As noted above, you can also come across attributes with a \emph{single} leading underscore in the name, e.g.~\texttt{\_color}. This is a weak ``internal use'' indicator, so they are fully visible. However, the leading underscore does \emph{hint} that this attribute or method should be \emph{considered} private. So, if you see an attribute like \texttt{\_color}, you should pretend that you know not of its existence and, therefore, you never read or modify it directly. Of course, this is only an \emph{agreement}, so you can always ignore it and work with that attribute directly\footnote{On a side note of doing crazy things that you should not: You can replace a class method without inheritance with your own at run time, this is called a \href{https://en.wikipedia.org/wiki/Monkey_patch}{monkey patch}!}. However, this almost certainly will break the code in unexpected and hard-to-trace ways.
+
+\hypertarget{an-alien-armada-appears}{%
+\section{An alien armada appears}\label{an-alien-armada-appears}}
+
+One alien is neither scary, nor challenging enough. We want more! For this, we will create an \texttt{AlienArmada} class with a twist. It will be responsible for creating a grid of aliens, moving them around (our chance to learn about setter methods), allowing outside processes to iterate over them (iterator duck typing), and reporting the number of remaining aliens (length duck typing). As usual, we will do this one step at a time.
+
+Start by creating an \texttt{AlienArmada} class, below the \texttt{Alien} class. Our initial version will have a compulsory constructor, \texttt{spawn()}, and \texttt{draw()} methods plus \texttt{win}, \texttt{\_\_pos} (a tuple with the position within the window) and \texttt{aliens} (a list with alien objects) attributes. Let us go through methods implementation.
+
+We will create and place aliens in a separate method \texttt{spawn()}, so our constructor will be very simple. You need a \href{https://psychopy.org/api/visual/index.html}{Window} for creating \texttt{Alien} objects and a dictionary with armada-specific settings. You already specified filenames for aliens, so add an \texttt{"Initial\ position"} setting (center of the armada, I've picked \texttt{{[}0,\ 0.5{]}} but you can always optimize it later on), \texttt{"Grid\ size"} (number of aliens horizontally and vertically, I've used \texttt{{[}7,\ 3{]}}), and \texttt{Grid\ size\ {[}norm{]}} (distance between aliens in ``norm'' units, I've picked 0.2). Store \href{https://psychopy.org/api/visual/index.html}{Window} into a \texttt{win} attribute, settings into \texttt{settings} plus store the initial position of the armada in a \texttt{\_\_pos} attribute. Why the \texttt{\_\_} in front? Because we want it to be a private with a virtual \texttt{pos} attribute taking its place for public relations (more on that later). In addition, initialize \texttt{aliens} attribute to an empty list (again, all attributes must be initialized in the constructor, even if to an empty list or \texttt{None}), and call \texttt{spawn()} method.
+
+In the \texttt{spawn()} create aliens on a grid based on your \texttt{"Grid\ size"} and \texttt{"Grid\ step\ {[}norm{]}"} settings, so they are centered at \texttt{AlienArmada}'s position (\texttt{\_\_pos}). All aliens go to \texttt{aliens} attribute, of course. Remember that they need a list of file names for visuals but you have it covered as you have them in the \texttt{settings} attribute. It should look like this:
+
+\begin{center}\includegraphics[width=8.89in]{images/alien-armada} \end{center}
+
+In the draw \texttt{draw()} method, you simply draw all aliens.
+
+Create the \texttt{AlienArmada} class.
+Use it in \emph{code05.py}.
+
+\hypertarget{a-laser-shot-appears}{%
+\section{A laser shot appears}\label{a-laser-shot-appears}}
+
+Now we need to create \texttt{Laser} class (in a separate file). Eventually, when a player presses left mouse button, the laser should appear at the location just above the ship and fly up with a certain speed. Let us take care of the first step. Create \texttt{Laser} class as a descendant of \href{https://psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim}{ImageStim} (just like our \texttt{Spaceship} and \texttt{Alien} classes). It should take \texttt{win}, \texttt{pos} and \texttt{speed} as arguments and call the ancestor constructor. The \texttt{pos} argument will hold the position of the ship but the laser must appear \emph{above} it, so you need to adjust \texttt{pos{[}1{]}} for that. Hint, you can get window height from \texttt{win.size{[}1{]}} and you know that sprites are 32 pixels high. The algebra should be straightforward. The \texttt{speed} is in \emph{norm units per second} and be define in settings (I've picked 1 norm / second, so it takes 2 seconds for the shot to fly across the screen). You need to save the \texttt{speed} value in an attribute for later use.
+
+For testing, create a laser object right after you create the ship itself and draw it in the main loop. It won't move but you will be able to see whether you've got the height right.
+
+Create the \texttt{Laser} class.
+Use in \emph{code06.py}.
+
+\hypertarget{the-laser-shot-flies}{%
+\section{The laser shot flies}\label{the-laser-shot-flies}}
+
+Let us add \texttt{fly()} method to the laser. It will be very simple, every time it is called the laser should move upwards. As in a Moonlander game, we need a \href{https://psychopy.org/api/clock.html\#psychopy.clock.Clock}{clock} to measure the time elapsed between the updates, so create it as an attribute. In the \texttt{fly()} method, you need to figure out the time elapsed since the last call or since the shot was created (don't forget to reset the timer after that) and move the shot based on its \texttt{speed} and elapsed time.
+
+Remember to call \texttt{fly()} method in the main loop and see how the laser flies up and off the screen.
+
+Add \texttt{fly()} method to \texttt{Laser} class.
+Use it in \emph{code07.py}.
+
+\hypertarget{we-want-more-lasers}{%
+\section{We want more lasers!}\label{we-want-more-lasers}}
+
+Now we will create a \texttt{LaserGun} class that will take care of individual laser shots. It will 1) create a new \texttt{Laser} object whenever we \texttt{fire()} from it, 2) ensure that it does not overheat by allowing only one shot every N seconds (let's say 0.3 s), 3) call \texttt{draw()} and \texttt{fly()} methods for all laser shots. We will create the class \texttt{LaserGun} in the same file as the \texttt{Laser}.
+
+In the constructor, pass PsychoPy window variable and a dictionary with laser gun specific settings (these should include the \texttt{speed} that you specified earlier and the cool down period in seconds) and store both in attributes for later use. Initialize \texttt{lasershots} attribute with empty list, and create a cool down \href{https://psychopy.org/api/clock.html\#psychopy.clock.CountdownTimer}{timer}.
+
+The \texttt{fire()} method should take position of the ship as a single parameter. If enough time passed since the last shot (check the cool down timer for that), create a new \texttt{Laser} at the supplied position, add it to the \texttt{lasershots} list, and reset the cool down timer. In \texttt{draw()} and \texttt{fly()} simply draw or fly all \texttt{lasershots}.
+
+For testing, use \texttt{LaserGun} in place of the \texttt{Laser}. Both have same \texttt{draw()} and \texttt{fly()} methods that you should be calling already. In the main loop, check if left mouse button is \href{https://psychopy.org/api/event.html\#psychopy.event.Mouse.getPressed}{pressed}. If it is, \texttt{fire()} the laser gun, passing current position of the ship to it.
+
+Create \texttt{LaserGun} class.
+Test it in \emph{code07.py}.
+
+\hypertarget{too-many-lasers}{%
+\section{Too many lasers!}\label{too-many-lasers}}
+
+We do not need our lasers once they fly of the screen, so we should remove them. First, we need to know which \texttt{Laser} shot has expired (is off the screen). For this, modify the \texttt{Laser} class by adding a \protect\hyperlink{computed-attribute-property}{computed property} \texttt{expired} that is \texttt{True} if the shot is above the upper edge of the window.
+
+Next, add a \texttt{cleanup()} method to the \texttt{LaserGun} class that will remove all \texttt{expired} shots. This is both simple and tricky! Conceptually simple: you loop over \texttt{lasershots} and delete any object that is \texttt{expired}. You can do it via list comprehension (deleting objects by not including them in the updated list) but for didactic reasons we will use \href{https://docs.python.org/3/tutorial/datastructures.html\#the-del-statement}{del} instead. If you have a list and you want to delete a second element, you write
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{]}
+\KeywordTok{del}\NormalTok{ x[}\DecValTok{1}\NormalTok{]}
+\BuiltInTok{print}\NormalTok{(x)}
+\CommentTok{\#\textgreater{} [1, 3, 4, 5]}
+\end{Highlighting}
+\end{Shaded}
+
+However, there is a catch. Imagine that you want to delete second and forth elements, so that the result should be \texttt{{[}1,\ 3,\ 5{]}}. If you just delete second and then forth elements, you won't get what you want:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{]}
+\KeywordTok{del}\NormalTok{ x[}\DecValTok{1}\NormalTok{]}
+\KeywordTok{del}\NormalTok{ x[}\DecValTok{3}\NormalTok{]}
+\BuiltInTok{print}\NormalTok{(x)}
+\CommentTok{\#\textgreater{} [1, 3, 4]}
+\end{Highlighting}
+\end{Shaded}
+
+Do you see why? Solution: start deleting from the end, this way indexes of earlier elements won't be affected:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{]}
+\KeywordTok{del}\NormalTok{ x[}\DecValTok{3}\NormalTok{]}
+\KeywordTok{del}\NormalTok{ x[}\DecValTok{1}\NormalTok{]}
+\BuiltInTok{print}\NormalTok{(x)}
+\CommentTok{\#\textgreater{} [1, 3, 5]}
+\end{Highlighting}
+\end{Shaded}
+
+Note that you must use \texttt{del\ list{[}index{]}} format, so you need to use indexing for loop for the \texttt{cleanup()} function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ ishot }\KeywordTok{in}\NormalTok{ backwards}\OperatorTok{{-}}\NormalTok{index}\OperatorTok{{-}}\NormalTok{built}\OperatorTok{{-}}\NormalTok{via}\OperatorTok{{-}}\NormalTok{the}\OperatorTok{{-}}\BuiltInTok{range}\OperatorTok{{-}}\NormalTok{function:}
+  \ControlFlowTok{if} \VariableTok{self}\NormalTok{.lasershots[ishot] needs to be deleted:}
+\NormalTok{    delete that }\VariableTok{self}\NormalTok{.lasershots[ishot]}
+\end{Highlighting}
+\end{Shaded}
+
+Add \texttt{cleanup()} call to the main loop right after the \texttt{fly()} to automatically delete expired shots. Once you fired a few shots and they are all off the screen, put a breakpoint and check that the \texttt{.lasershots} is empty (you \texttt{cleanup()} works as it should).
+
+Add \texttt{expired} property to \texttt{Laser}.
+Add \texttt{cleanup()} method to \texttt{LaserShot}.
+Use \texttt{cleanup()} in \emph{code08.py}.
+
+\hypertarget{i-am-hit-i-am-hit}{%
+\section{I am hit! I am hit!}\label{i-am-hit-i-am-hit}}
+
+Now we need to check whether a lasershot hit an alien. In that case, all the relevant aliens and shots must be removed. It is easy for lasershots, we just set them as \texttt{expired} and \texttt{cleanup()} does the rest. Clearly, we need the same mechanism for the aliens.
+
+Add \texttt{teleported} attribute to the \texttt{Alien} class and initialize to \texttt{False}. In \texttt{AlienArmade} class, implement a \texttt{cleanup()} method, analogous to one in \texttt{LaserGun} that will delete any \texttt{teleported} aliens. Add the call to it in the main loop at the same location as for the \texttt{LaserGun}. You can test it by setting \texttt{teleported} to \texttt{True} for one of the aliens and it should be missing.
+
+Now for the actual check. You should loop over all aliens and laser shots checking whether whether they \href{https://psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim.overlaps}{overlap}. If they do, set laser shot to \texttt{expired} and the alien as \texttt{teleported}. Do this check \emph{before} the clean up but after the laser shots fly.
+
+Test it!
+
+Put your updated code into \emph{exercise08.py}, update \texttt{Alien} and \texttt{AlienArmade} classes.
+
+\hypertarget{duck-typiing-iterators}{%
+\section{Duck typiing iterators}\label{duck-typiing-iterators}}
+
+In the precious exercise, you used \texttt{aliens} and \texttt{lasershots} attributes directly in the loop. However, let us inject some coolness into our code and turn \texttt{AlienArmada} and \texttt{LaserGun} classes into iterators. Recall that you need to implement two special methods for this: \texttt{\_\_iter\_\_(self)} and \texttt{\_\_next\_\_(self)\_\_}. The first one, initializes the loop, the second one yields the next item. The actual implementation is very simple. You need to create a new attribute that will be used to track which item you need to yield, call it \texttt{iter}. Initialize it to \texttt{None} in the constructor.
+
+In the \texttt{\_\_iter\_\_(self)}, initialize the counter to \texttt{0} and return \texttt{self}, returning the reference to the iterator, which is the object itself\footnote{You can cheat and return the reference to the list attribute itself and it'll do the rest. Don't do it for didactic purposes.}. In the \texttt{\_\_next\_\_(self)}, check if \texttt{iter} is within the list length. If it is not (i.e., you ran out aliens/shots to iterate over), \texttt{raise\ StopIteration()}. If it is, increase the iteration counter and return the element it was indexing \emph{before} that: Think about why you need to return \texttt{self.aliens{[}self.iter-1{]}} rather than \texttt{self.aliens{[}self.iter-1{]}} or how you can use a different starting value and range check to avoid this.
+
+Do this for both classes and use them in for loops directly, instead of \texttt{aliens.aliens} and \texttt{laser.lasershots}.
+
+Test it! It should work as before, of course, but with cooler duck typing inside!
+
+Put your updated code into \emph{exercise09.py}, update \texttt{LaserGun} and \texttt{AlienArmade} classes.
+
+\hypertarget{gotem-all}{%
+\section{Got'em all!}\label{gotem-all}}
+
+Now, implement \texttt{\_\_len()\_\_} method for \texttt{AlienArmada} class that so returns the number of remaining aliens. In the main loop, use it via \texttt{len()} function to check whether you won: no aliens left, the game is over. Use \texttt{len()} with the object, not with the list attribute!
+
+Put your updated code into \emph{exercise10.py}, update \texttt{LaserGun} and \texttt{AlienArmade} classes.
+
+\hypertarget{ping}{%
+\section{Ping!}\label{ping}}
+
+Now let us use a \texttt{TeleportSoundMixin} class that defines a single \texttt{teleport()} method that plays the \emph{teleport.wav} sound (created by Sergenious and obtained from \href{https://freesound.org/people/Sergenious/sounds/55853/}{freesound.org}) is in \href{material/space-invaders.zip}{materials}. Thus, it can be a single line method when you both create and play the sound in one go, no temporary variable or an attribute are required. Then, use it as an ancestor for the \texttt{Alien} class. Now it has that \texttt{teleport()} method. Call it when you set \emph{teleported} to \texttt{True}.
+
+Put your updated code into \emph{exercise11.py}, create \texttt{TeleportSoundMixin} class and update \texttt{Alien} class.
+
+\hypertarget{the-alien-armada-jumps}{%
+\section{The alien armada jumps}\label{the-alien-armada-jumps}}
+
+Currently, our aliens are sitting ducks. No fun! They need to get a move on. But before we can move alien armada around, we need to be able to change its position. Recall that we have \texttt{\_\_pos} attribute in \texttt{AlienArmada} class. I've made it (kinda) private via \texttt{\_\_pos} on purpose, so we can define getter and setter methods for it and call the virtual attribute \texttt{pos} to make it consistent with the rest. If you forgot what getter/setter methods are, \protect\hyperlink{getter-setter}{read again}.
+
+To start with, define a getter. It only needs to return the value of the hidden position attribute.
+
+Now, to more complicated and, hence, fun bit! Remember, we need to move \emph{all} individual aliens relative to the center of the armada. For this, 1) compute the \emph{change} in position, 2) use it to alter position of individual aliens based on their current position, 3) store the new position in the hidden attribute.
+
+Test it by making armada jump to a random location every time you press \emph{space} button. The armada should keep its formation!
+
+Put your updated code into \emph{exercise12.py}, update \texttt{AlienArmada} class.
+
+\hypertarget{the-alien-armada-moves}{%
+\section{The alien armada moves}\label{the-alien-armada-moves}}
+
+Our alien armada will move downwards along a sine trajectory. Thus, we need to define a \texttt{fly()} method that will move it downwards by some small step (I've used 0.001, which is quite fast for 60 Hz, as it will move 0.06 units per second). And the horizontal position will be computed as a sine wave. The general formula is:
+\[x = x_{max} \cdot sin(2 \pi f \cdot (y-y_{origin})) \]
+where \(x_{max}\) is maximal deviation of the armada from the middle of the screen (I've set it to 0.25), the \(f\) is the frequency, i.e., how fast is horizontal movement (I've set to 3), \(y\) is the current vertical coordinate of the armada and \(y_{origin}\) is the initial one (0.5 in my case). Experiment with values to see how they affect the movement.
+
+Once you computed both components, assign the tuple to the \texttt{pos} and it will move the entire armada. In the main loop, call \texttt{fly()} when you call it for laser gun.
+
+Put your updated code into \emph{exercise13.py}, update \texttt{AlienArmada} class.
+
+\hypertarget{the-alien-armada-wins-crash}{%
+\section{The alien armada wins: crash!}\label{the-alien-armada-wins-crash}}
+
+So far, the player always wins. Let us make it more dangerous! They will lose if either an alien crashes into the spaceship or if the armada goes past the ship. Implement the former the same way as you checked whether laser shot hit an alien: loop of aliens and see if the overlap with the spaceship (game over if they do). Implement and test.
+
+Put your updated code into \emph{exercise14.py}.
+
+\hypertarget{the-alien-armada-wins-missed-them}{%
+\section{The alien armada wins: missed them!}\label{the-alien-armada-wins-missed-them}}
+
+The second way to lose the game, is if at least one alien got past the ship. For this, we need to check the position of the \emph{lowest} alien and if it is lower than that of the spaceship, the game is over. You can do it in the same loop you are checking for the hit but, for didactic reasons, let us practice \texttt{@proprety} a bit more. Implement a new read-only property \texttt{lowest\_y} of the \texttt{AlienArmada} class that will return the y-coordinate of the lowest alien in the armada. You need to loop over individual aliens to find the lowest y and return it. There are different way to do it, come up with one yourself! In the main code, add the check and make sure the game is over, if aliens got past the player.
+
+Put your updated code into \emph{exercise15.py}, update \texttt{AlienArmada} class.
+
+\hypertarget{mixin-teleport}{%
+\section{Mixin teleport}\label{mixin-teleport}}
+
+Mix in the teleport sound method to the \texttt{Spaceship} and play it if alien crashed into it.
+
+Put your updated code into \emph{exercise16.py}, update \texttt{Spaceship} class.
+
+\hypertarget{game-over-message}{%
+\section{Game over message}\label{game-over-message}}
+
+Create a game over message (a blinking one would be cool but this is up to you) that will reflect the outcome. Something like this but use your imagination:
+
+\begin{itemize}
+\tightlist
+\item
+  ``Coward!'', if the player pressed escape.
+\item
+  ``Congrats!'', if the player won.
+\item
+  ``Crash! Boom! Bang!'', if the player was hit.
+\item
+  ``They got away!'', if the armada got past the player.
+\end{itemize}
+
+One way to simplify you life is to rename \texttt{gameover} variable into the \texttt{gamestate} variable. Initially, it could be \texttt{"playing"}, so your loop repeats \texttt{while\ gamestate\ ==\ "playing"}. Then, you can set it based on the type of the event, e.g., \texttt{"abort"} for \emph{escape} button press, \texttt{"victory"} when player wins, etc. and use it after the main loop to determine which message to show. Better still, use dictionary for this instead of if-else. Or ``cheat'' and store the message in the variable itself.
+
+Put your updated code into \emph{exercise17.py}.
+
+\hypertarget{we-want-more}{%
+\section{We want more!}\label{we-want-more}}
+
+You have a solid game but it can be improved in many ways. Currently, we move all game object assuming constant frame rate. That might not be the case, so it would be wiser to use inter-frame timer and use time elapsed since the last update. And it can use more feature. Score? Difficulty? More levels? Aliens shooting back at you? Anything is possible!
 
   \bibliography{book.bib}
 
