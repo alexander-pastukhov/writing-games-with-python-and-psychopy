@@ -28,13 +28,9 @@ Now you know _three_ methods to produce common behavior: proper inheritance, mix
 We will program a simple version of the game with a gradually descending alien armada. Your task is to capture all aliens by firing a teleport beam before one of them rams your ship or gets away. Below, you can see my version of the game.
 
 
-```{r, eval=knitr::is_html_output(excludes = "epub"), results = 'asis', echo = F}
-cat(
-'<div style="text-align:center;"><video controls>
+<div style="text-align:center;"><video controls>
     <source src="videos/space-invaders.mp4" type="video/mp4"> 
-  </video></div>'
-)
-```
+  </video></div>
 
 As per usual, the plan is to move slowly in small steps to keep complexity of changes low. Here are the steps:
 
@@ -89,7 +85,8 @@ Use them in _code04.py_.
 ## Using names to indicate access restrictions
 Before we create an alien armada, we need to make a quick detour to talk about [naming conventions](https://peps.python.org/pep-0008) for attributes and names of classes. Unlike most other languages, Python does not have private attributes or methods, i.e., attributes or methods accessible only from inside the object. If you come from Java or C#/C++, a thought that you can call _any_ method and  modify _any_ attribute from outside should give you chills, as it becomes impossible to predict object's behavior. Python "solves" the access problem via a "gentlemen's agreement" that methods and attributes whose names start either with `__` or `_` should be _considered_ private. In other words, you should not use them directly. In case of `__`, you are also prevented from doing it in a straightforward way, as the name is [mangled](https://peps.python.org/pep-0008/#descriptive-naming-styles). In the example below, you cannot access the `__color` attribute directly:
 
-```{python, error=TRUE}
+
+```python
 class ExampleClass:
   def __init__(self):
     self.__color = "red"
@@ -98,11 +95,17 @@ example = ExampleClass()
 
 # raises AttributeError
 print(example.__color)
+#> Error in py_call_impl(callable, dots$args, dots$keywords): AttributeError: 'ExampleClass' object has no attribute '__color'
+#> 
+#> Detailed traceback:
+#>   File "<string>", line 1, in <module>
 ```
 
 But as Python does not have truly private attributes, you can still access it via its mangled name`object._<ClassName><hidden attribute name>`:
-```{python}
+
+```python
 example._ExampleClass__color
+#> 'red'
 ```
 However, this is a last resort sort of thing that you should use only if you absolutely must access that attribute or method and, hopefully, know what you doing.
   
@@ -134,9 +137,7 @@ _Constructor_: we will create and place aliens in a separate method `spawn()`, s
 
 In the `spawn()` create aliens on a grid based on your `"Grid size"` and `"Grid step [norm]"` settings, so they are centered at `AlienArmada`'s position (`__pos`). All aliens go to `aliens` attribute, of course. Remember that they need a list of file names for visuals but you have it covered as you have them in the settings. It should look like this:
 
-```{r echo=FALSE, fig.align='center'}
-knitr::include_graphics("images/alien-armada.png")
-```
+<img src="images/alien-armada.png" width="320" style="display: block; margin: auto;" />
 
 ::: {.rmdnote .program}
 Create the `AlienArmada` class.<br/>
@@ -183,26 +184,32 @@ Test it in _code08.py_.
 We do not need our lasers once they fly of the screen, so we should remove them. First, we need to know which `Laser` shot has `expired`": is off the screen (this section) or hit its target (the next section). For this, modify the `Laser` class by adding an `expired` attribute that is set initially to `False` (the shot is good). In addition, write a new method `check_screen_limits()` that would set `expired = True` if the shot is above the upper edge of the window but leaves `expired` as is (unmodified!) otherwise (the shot could be within the screen and get `expired` because it hit an alien).
 
 Next, add a `cleanup()` method to the `LaserGun` class that will call `check_screen_limits()` for all shots and then remove all `expired` ones. This is both simple and tricky! Conceptually simple: you loop over `lasershots` and delete any object that is `expired`. The easy way is to do it via [list comprehension](#list-comprehension) (deleting objects by not including them in the updated list) but for didactic reasons we will use [del](https://docs.python.org/3/tutorial/datastructures.html#the-del-statement) instead. If you have a list and you want to delete a second element, you write
-```{python}
+
+```python
 x = [1, 2, 3, 4, 5]
 del x[1]
 print(x)
+#> [1, 3, 4, 5]
 ```
 
 However, there is a catch. Imagine that you want to delete second and forth elements, so that the result should be `[1, 3, 5]`. If you just delete second and then forth elements, you won't get what you want:
-```{python}
+
+```python
 x = [1, 2, 3, 4, 5]
 del x[1]
 del x[3]
 print(x)
+#> [1, 3, 4]
 ```
 
 Do you see why? Solution: start deleting from the end, this way indexes of earlier elements won't be affected:
-```{python}
+
+```python
 x = [1, 2, 3, 4, 5]
 del x[3]
 del x[1]
 print(x)
+#> [1, 3, 5]
 ```
 
 Note that you must use `del list[index]` format, so you need to use indexing in the for loop of the `cleanup()` method:
@@ -336,22 +343,7 @@ $$x = x_{max} \cdot sin(2 \pi f \cdot (y-y_{origin})) $$
 where $x_{max}$ is maximal deviation of the _center_ of the armada from the middle of the screen (I've set it to $0.25$), the $f$ is the frequency, i.e., how fast is horizontal movement (I've set it to $3$ but you can see how much slower it would be for $1$ in the plot below), $y$ is the current vertical coordinate of the armada and $y_{origin}$ is the initial one ($0.5$ in my case). As with all other parameters, these should be part of the settings file plus `vertcal speed [norm/sec]` that defines how fast the armada will fly down (I would set it to 0.1, so it takes 15 seconds to fly down). 
 
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-library(tidyverse)
-y <- seq(0.5, -1.2, length.out = 100)
-bind_rows(
-  data.frame(y=y, 
-             f = 1, 
-             x = 0.25 * sin(2 * pi * 1 * (y - 0.5))),
-  data.frame(y=y, 
-             f = 3, 
-             x = 0.25 * sin(2 * pi * 3 * (y- 0.5)))) %>%
-  mutate(f = factor(f)) %>%
-ggplot(aes(x = x, y = y)) + 
-  geom_path(aes(color=f)) + 
-  ylim(-1, 1) + 
-  xlim(-1, 1)
-```
+<img src="14-space-invaders-duck-typing_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
 For the armada to fly, we need to add a timer (in the constructor) and define a `fly()` method that
 

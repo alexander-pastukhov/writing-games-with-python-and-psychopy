@@ -279,3 +279,5 @@ the-alien-armada-wins-missed-them
 mixin-teleport
 game-over-message
 we-want-more
+cover-image-path-to-the-social-sharing-image-like-imagescover.jpg
+getter-setter
