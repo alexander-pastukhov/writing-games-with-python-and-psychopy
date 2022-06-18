@@ -93,7 +93,7 @@ Finally, we are ready to create and show the image! Use the code from a Jupiter 
 Create a random grid and show it in _code02.py_.
 :::
 
-## A border problem
+## Slicing a border problem
 We have a grid-to-image conversion but we are not out of the woods yet. The problem is the cells that live next to the border. They are of no trouble now but will become one, once we start counting their neighbors. Again, recall that we need to count all the neighbors _around_ each cell and for cells at the border that means trouble with indexes.
 ```{r echo=FALSE, fig.align='center', out.width='36%'}
 knitr::include_graphics("images/game-of-life-border.png")
