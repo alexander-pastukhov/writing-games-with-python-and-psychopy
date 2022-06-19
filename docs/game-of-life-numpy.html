@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 17 Game of life (NumPy) | Writing games with Python and PsychoPy</title>
+<meta name="author" content="Alexander (Sasha) Pastukhov">
+<meta name="description" content="Today you will be programming the Game of Life created by the British mathematician John Horton Conway. This is not really a game but rather a simulation where you set initial conditions up and...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Chapter 17 Game of life (NumPy) | Writing games with Python and PsychoPy">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://alexander-pastukhov.github.io/writing-games-with-python-and-psychopy/game-of-life-numpy.html">
+<meta property="og:description" content="Today you will be programming the Game of Life created by the British mathematician John Horton Conway. This is not really a game but rather a simulation where you set initial conditions up and...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 17 Game of life (NumPy) | Writing games with Python and PsychoPy">
+<meta name="twitter:description" content="Today you will be programming the Game of Life created by the British mathematician John Horton Conway. This is not really a game but rather a simulation where you set initial conditions up and...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.13/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Writing games with Python and PsychoPy</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="" href="software.html"><span class="header-section-number">2</span> Software</a></li>
+<li><a class="" href="programming-tips.html"><span class="header-section-number">3</span> Programming tips and tricks</a></li>
+<li><a class="" href="python-basics.html"><span class="header-section-number">4</span> Python basics</a></li>
+<li><a class="" href="guess-the-number-single-round.html"><span class="header-section-number">5</span> Guess the Number: a single round edition</a></li>
+<li><a class="" href="guess-the-number-multi-round.html"><span class="header-section-number">6</span> Guess the Number: a multi round edition</a></li>
+<li><a class="" href="guess-the-number-ai.html"><span class="header-section-number">7</span> Guess the Number: AI takes a turn</a></li>
+<li><a class="" href="psychopy-basics.html"><span class="header-section-number">8</span> Gettings started with PsychoPy</a></li>
+<li><a class="" href="whack-a-mole.html"><span class="header-section-number">9</span> Whack-a-Mole</a></li>
+<li><a class="" href="memory-game.html"><span class="header-section-number">10</span> Memory game</a></li>
+<li><a class="" href="christmas-special.html"><span class="header-section-number">11</span> Christmas special</a></li>
+<li><a class="" href="flappy-bird.html"><span class="header-section-number">12</span> Flappy Bird</a></li>
+<li><a class="" href="seminar-02-06.html"><span class="header-section-number">13</span> Guitar Hero: staircase and iterator functions</a></li>
+<li><a class="" href="the-snake.html"><span class="header-section-number">14</span> The Snake</a></li>
+<li><a class="" href="moon-lander.html"><span class="header-section-number">15</span> Moon lander</a></li>
+<li><a class="" href="space-invaders.html"><span class="header-section-number">16</span> Space invaders: mixins and duck typing</a></li>
+<li><a class="active" href="game-of-life-numpy.html"><span class="header-section-number">17</span> Game of life (NumPy)</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/alexander-pastukhov/writing-games-with-python-and-psychopy">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="game-of-life-numpy" class="section level1" number="17">
+<h1>
+<span class="header-section-number">17</span> Game of life (NumPy)<a class="anchor" aria-label="anchor" href="#game-of-life-numpy"><i class="fas fa-link"></i></a>
+</h1>
+<p>Today you will be programming the <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Game of Life</a> created by the British mathematician John Horton Conway. This is not really a game but rather a simulation where you set initial conditions up and observe how the population evolves. The rules, <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">as described on Wikipedia</a>, are very simple:</p>
+<ol style="list-style-type: decimal">
+<li>Any live cell with two or three live neighbors survives.</li>
+<li>Any dead cell with three live neighbors becomes a live cell.</li>
+<li>All other live cells die in the next generation. Similarly, all other dead cells stay dead.</li>
+</ol>
+<p>Despite rules simplicity they produce remarkable evolution of a cell culture and give rise to many dynamic or static configurations. Here is an example simulation with a random starting state.</p>
+<div style="text-align:center;">
+<video controls><source src="videos/game-of-life.m4v" type="video/mp4"></source></video>
+</div>
+<div id="implementing-the-rules" class="section level2" number="17.1">
+<h2>
+<span class="header-section-number">17.1</span> Implementing the rules<a class="anchor" aria-label="anchor" href="#implementing-the-rules"><i class="fas fa-link"></i></a>
+</h2>
+<p>To program the game, you need to count live neighbors for every cell and use the rules above to decide whether it will be alive or dead on the <em>next</em> iteration. The latter bit is important, you need to evaluate all cells at their current state, you cannot change their status during that period. Accordingly, on each iteration you need to a create <em>new</em> cell culture and then overwrite the original one.</p>
+<p>Our cells will live in a rectangular world, so you need to count number of neighbors in the 8 cells around it, as shown in the left hand-side image below (index / location of the dot in question is assumed to be <em>i, j</em>).</p>
+<div class="inline-figure"><img src="images/game-of-life-grid.png" width="100%" style="display: block; margin: auto;"></div>
+<p>However, things become slightly trickier, if a cell lies on the border of the world, as depicted on the right hand-side. The same rules for living or dying still apply but when counting neighbors you need to make sure that we do not try to access cells <em>outside</em> of the world (marked in red). If we mess up our indexing, at best we will get an error, at worst we will access wrong elements. E.g., when our index is negative, Python will not issue a mistake but will simply count elements <em>from the end</em>.</p>
+</div>
+<div id="numpy" class="section level2" number="17.2">
+<h2>
+<span class="header-section-number">17.2</span> NumPy<a class="anchor" aria-label="anchor" href="#numpy"><i class="fas fa-link"></i></a>
+</h2>
+<p>Our cells live on a 2D grid which we can implement it as a list of lists. We will start with this implementation but you will see that using a matrix (a 2D array) is more natural. It also gives us opportunity to learn about <a href="https://numpy.org/">NumPy</a> that provides a powerful and fast implementation of multidimensional arrays and numerous mathematical tools. It is one of the core non-standard (i.e., not included into the base Python distribution) libraries that is so prominent that you are expected to use it via its alias rather than by its full name:</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb136-1"><a href="game-of-life-numpy.html#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code></pre></div>
+<p>I will not try to properly cover NumPy here, it is simply too vast. Rather, the purpose is to make you aware of opportunities that NumPy provides. The material below will contain just the bare minimum that we need for the game. I suggest that you read the <a href="https://numpy.org/doc/stable/user/quickstart.html">quickstart guide to NumPy</a> before continuing and you should be ready to consult <a href="https://numpy.org/doc/stable/user/absolute_beginners.html">the absolute basics for beginners</a> whenever you have questions about manipulating arrays.</p>
+</div>
+<div id="boilerplate-3" class="section level2" number="17.3">
+<h2>
+<span class="header-section-number">17.3</span> Boilerplate<a class="anchor" aria-label="anchor" href="#boilerplate-3"><i class="fas fa-link"></i></a>
+</h2>
+<p>Implement usual PsychoPy boilerplate with a external settings and context manager. The context manager should initialize PsychoPy window and a mouse, whic we will use it later to draw or erase individual cells. The size of the window that we need depends on the grid size that cells live at and the size of the individual cells. Define all three parameters - <code>grid width [cells]</code>, <code>grid height [cells]</code>, and <code>cell size [pix]</code> - in the settings file and compute window size on the fly. I’ve picked a 30 by 30 grid with each cell measuring 10 pixels (both widht and height, as cells are square).</p>
+<div class="rmdnote program">
+<p>Create <code>GameContext</code> and <code>GameAbort</code> classes.<br>
+Put your boilerplate code into <em>code01.py</em>.</p>
+</div>
+</div>
+<div id="visualizing-an-array" class="section level2" number="17.4">
+<h2>
+<span class="header-section-number">17.4</span> Visualizing an array<a class="anchor" aria-label="anchor" href="#visualizing-an-array"><i class="fas fa-link"></i></a>
+</h2>
+<p>We will use a 2D Numpy array to encode our cells: <span class="math inline">\(1\)</span> will mean a living cell and <span class="math inline">\(0\)</span> will mean an empty space. But before we create the array, we need to think about how we will visualize it. There are at least three ways you can do it in PsychoPy. First, you can create a <a href="https://psychopy.org/api/visual/rect.html#psychopy.visual.rect.Rect">Rect</a> (or some over visual primitive or even an image) for each cell and draw them one-by-one in a loop. However, that will be extremely inefficient and slow. Second, you can do effectively the same one-primitive-per-cell but via an efficiently implemented <a href="https://psychopy.org/api/visual/elementarraystim.html#psychopy.visual.ElementArrayStim">ElementArrayStim</a> class. Finally, you can use a cool feature of <a href="https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim">ImageStim</a> class. So far, we only used names of external files as its <code>image</code> input but it can also take a 2D NumPy array and display it as an image. We will use the latter approach, as it is the simplest.</p>
+<p>Let us start by 1) creating a 2D grid, 2) converting it to a 3D image (for an RGB color space, PsychoPy expects one 2D grid of values per channel), and 3) displaying it via <a href="https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim">ImageStim</a>.</p>
+</div>
+<div id="a-random-matrix" class="section level2" number="17.5">
+<h2>
+<span class="header-section-number">17.5</span> A random matrix<a class="anchor" aria-label="anchor" href="#a-random-matrix"><i class="fas fa-link"></i></a>
+</h2>
+<p>There are different ways to create a matrices (2D arrays) in NumPy, see <a href="https://numpy.org/doc/stable/user/absolute_beginners.html#creating-matrices">Creating matrices</a>. Here, we will generate a matrix via NumPy <a href="https://numpy.org/doc/stable/reference/random/generator.html">random generator</a> but you could also experiment with generating an empty grid via <a href="https://numpy.org/doc/stable/reference/generated/numpy.zeros.html">numpy.zeros()</a> or a fully crowded one via <a href="https://numpy.org/doc/stable/reference/generated/numpy.ones.html?highlight=ones">numpy.ones()</a>.</p>
+<p>Consult <a href="https://numpy.org/doc/stable/reference/random/generator.html">documentation</a> and figure out how to generate a grid of integers that range between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span> (hint, take a look at the second example that covers generating integer values) creating a matrix of the given size (hint, take a look at the third example). I suggest playing with the code in a Jupyter notebook starting with a small size of the grid (so you could easily see it in the output, as for a 3×4 grid below).</p>
+<pre><code>#&gt; Grid shape:  (3, 4)
+#&gt; [[0 1 1 0]
+#&gt;  [1 0 0 1]
+#&gt;  [1 0 1 0]]</code></pre>
+</div>
+<div id="from-2d-to-3d" class="section level2" number="17.6">
+<h2>
+<span class="header-section-number">17.6</span> From 2D to 3D<a class="anchor" aria-label="anchor" href="#from-2d-to-3d"><i class="fas fa-link"></i></a>
+</h2>
+<p>State of our cells is represented by a 2D NumPy array of size <code>[width, height]</code> but <a href="https://psychopy.org/api/visual/imagestim.html">ImageStim</a> expects a 3D array of size <code>[width, height, 3]</code> that defines the image in the <a href="https://psychopy.org/general/colours.html#rgb-color-space">RGB</a> or some other <a href="https://psychopy.org/general/colours.html">color space</a>. The simplest way to do this for our game is to <a href="https://numpy.org/doc/stable/reference/generated/numpy.stack.html?highlight=numpy%20stack#numpy-stack">stack</a> the same 2D array three times. Zeros at all channels will give us black (empty space), whereas ones for all channels (a mixture of maximal red, green, and blue) will add to white. Again, experiment in a Jupyter notebook making sure that output and the <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.shape.html">shape</a> of the 3D array are correct.</p>
+<pre><code>#&gt; 3D grid shape:  (3, 3, 4)
+#&gt; [[[0 1 1 0]
+#&gt;   [1 0 0 1]
+#&gt;   [1 0 1 0]]
+#&gt; 
+#&gt;  [[0 1 1 0]
+#&gt;   [1 0 0 1]
+#&gt;   [1 0 1 0]]
+#&gt; 
+#&gt;  [[0 1 1 0]
+#&gt;   [1 0 0 1]
+#&gt;   [1 0 1 0]]]</code></pre>
+</div>
+<div id="correct-values-range" class="section level2" number="17.7">
+<h2>
+<span class="header-section-number">17.7</span> Correct values range<a class="anchor" aria-label="anchor" href="#correct-values-range"><i class="fas fa-link"></i></a>
+</h2>
+<p>We are almost ready to use the 3D array as an image but our values go from <span class="math inline">\(0\)</span> to <span class="math inline">\(1\)</span>, whereas the default RGB color space in PsychoPy expects values to go from <span class="math inline">\(-1\)</span> (black) to <span class="math inline">\(1\)</span> (white). Thus, we need to rescale the entire array via basic algebra. The good news is that NumPy is build on the idea of vectorization of operations, i.e., you do not need to apply the same operation to one element at a time (as you would do with Python list) but to the entire array at once.</p>
+<div class="sourceCode" id="cb139"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb139-1"><a href="game-of-life-numpy.html#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb139-2"><a href="game-of-life-numpy.html#cb139-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>])</span>
+<span id="cb139-3"><a href="game-of-life-numpy.html#cb139-3" aria-hidden="true" tabindex="-1"></a>a <span class="op">+</span> <span class="dv">10</span></span>
+<span id="cb139-4"><a href="game-of-life-numpy.html#cb139-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([11, 12, 13, 14])</span></span>
+<span id="cb139-5"><a href="game-of-life-numpy.html#cb139-5" aria-hidden="true" tabindex="-1"></a>a <span class="op">*</span> <span class="dv">10</span></span>
+<span id="cb139-6"><a href="game-of-life-numpy.html#cb139-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([10, 20, 30, 40])</span></span></code></pre></div>
+<p>As per usual, experiment in a notebook and check that values turn out as expected:</p>
+<pre><code>#&gt; [[[-1  1  1 -1]
+#&gt;   [ 1 -1 -1  1]
+#&gt;   [ 1 -1  1 -1]]
+#&gt; 
+#&gt;  [[-1  1  1 -1]
+#&gt;   [ 1 -1 -1  1]
+#&gt;   [ 1 -1  1 -1]]
+#&gt; 
+#&gt;  [[-1  1  1 -1]
+#&gt;   [ 1 -1 -1  1]
+#&gt;   [ 1 -1  1 -1]]]</code></pre>
+</div>
+<div id="showing-an-image" class="section level2" number="17.8">
+<h2>
+<span class="header-section-number">17.8</span> Showing an image<a class="anchor" aria-label="anchor" href="#showing-an-image"><i class="fas fa-link"></i></a>
+</h2>
+<p>Finally, we are ready to create and show the image! Use the code from a Jupiter notebook to generate a random grid of size <code>[grid width, grid height]</code> (from the settings), stack it, and rescale it. Then, simply create an <a href="https://psychopy.org/api/visual/imagestim.html">ImageStim</a> passing the array as <code>image</code> and make sure that the image spans the entire window (what should it size be, given <code>"normal"</code> units?) and draw it in the main loop. Put a break point and use a debug console or watch tab to check whether image on the screen correspond to the original 2D grid.</p>
+<div class="rmdnote program">
+<p>Create a random grid and show it in <em>code02.py</em>.</p>
+</div>
+</div>
+<div id="slicing-a-border-problem" class="section level2" number="17.9">
+<h2>
+<span class="header-section-number">17.9</span> Slicing a border problem<a class="anchor" aria-label="anchor" href="#slicing-a-border-problem"><i class="fas fa-link"></i></a>
+</h2>
+<p>We have a grid-to-image conversion but we are not out of the woods yet. The problem is the cells that live next to the border. They are of no trouble now but will become one, once we start counting their neighbors. Again, recall that we need to count all the neighbors <em>around</em> each cell and for cells at the border that means trouble with indexes.
+<img src="images/game-of-life-border.png" width="36%" style="display: block; margin: auto;"></p>
+<p>We could be extra careful when indexing them, but there is a simpler solution: padding the grid with zeros. This way, we can use same rules for all <em>inner</em> cells and never check or modify the empty padding.
+<img src="images/game-of-life-padding.png" width="50%" style="display: block; margin: auto;"></p>
+<p>This solution still requires extra work. Namely, we need to generate an empty 2D grid that is 2 elements wide and taller than we need, fill the inner part with random <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>, and then use only that inner part when stacking a 3D array for an image. When using Python lists, we would need to use nested loops but NumPy’s <a href="https://numpy.org/doc/stable/user/absolute_beginners.html#indexing-and-slicing">indexing and slicing</a> makes it very easy.</p>
+<p>Here is how it works for a 3×3 array.</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb141-1"><a href="game-of-life-numpy.html#cb141-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>], [<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>], [<span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>]])</span>
+<span id="cb141-2"><a href="game-of-life-numpy.html#cb141-2" aria-hidden="true" tabindex="-1"></a>a</span>
+<span id="cb141-3"><a href="game-of-life-numpy.html#cb141-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([[1, 2, 3],</span></span>
+<span id="cb141-4"><a href="game-of-life-numpy.html#cb141-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [4, 5, 6],</span></span>
+<span id="cb141-5"><a href="game-of-life-numpy.html#cb141-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [7, 8, 9]])</span></span></code></pre></div>
+<p>The first index (called <a href="https://numpy.org/doc/stable/glossary.html#term-axis">axis</a> in NumPy) is for row and the second is for columns. You can get the second row by specifying its index alone (if no other indexes are given, NumPy assumes you want all elements along other axes).</p>
+<div class="sourceCode" id="cb142"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb142-1"><a href="game-of-life-numpy.html#cb142-1" aria-hidden="true" tabindex="-1"></a>a[<span class="dv">1</span>]</span>
+<span id="cb142-2"><a href="game-of-life-numpy.html#cb142-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([4, 5, 6])</span></span></code></pre></div>
+<p>Or, you can be more explicit via <code>:</code>, as <code>:</code> alone means “all elements along this axis”</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb143-1"><a href="game-of-life-numpy.html#cb143-1" aria-hidden="true" tabindex="-1"></a>a[<span class="dv">1</span>, :]</span>
+<span id="cb143-2"><a href="game-of-life-numpy.html#cb143-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([4, 5, 6])</span></span></code></pre></div>
+<p>Similarly, you can extract the entire <em>last</em> column (negative indexes work the same way as for Python lists) but notice that you need to explicitly mention the row axis in this case:</p>
+<div class="sourceCode" id="cb144"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb144-1"><a href="game-of-life-numpy.html#cb144-1" aria-hidden="true" tabindex="-1"></a>a[:, <span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb144-2"><a href="game-of-life-numpy.html#cb144-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([3, 6, 9])</span></span></code></pre></div>
+<p>Even better, you can easily extract a rectangular part of a 2D matrix by specifying both rows and columns. Note that omitting either a start or stop value means, respectively, from the first or till the last element.</p>
+<div class="sourceCode" id="cb145"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb145-1"><a href="game-of-life-numpy.html#cb145-1" aria-hidden="true" tabindex="-1"></a>a[:<span class="dv">2</span>, <span class="op">-</span><span class="dv">2</span>:]</span>
+<span id="cb145-2"><a href="game-of-life-numpy.html#cb145-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([[2, 3],</span></span>
+<span id="cb145-3"><a href="game-of-life-numpy.html#cb145-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [5, 6]])</span></span></code></pre></div>
+<p>Finally, this can be used not only to extract values from an array but also to modify them:</p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb146-1"><a href="game-of-life-numpy.html#cb146-1" aria-hidden="true" tabindex="-1"></a>a[<span class="op">-</span><span class="dv">2</span>:, <span class="dv">1</span>:] <span class="op">=</span> np.zeros((<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb146-2"><a href="game-of-life-numpy.html#cb146-2" aria-hidden="true" tabindex="-1"></a>a</span>
+<span id="cb146-3"><a href="game-of-life-numpy.html#cb146-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([[1, 2, 3],</span></span>
+<span id="cb146-4"><a href="game-of-life-numpy.html#cb146-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [4, 0, 0],</span></span>
+<span id="cb146-5"><a href="game-of-life-numpy.html#cb146-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [7, 0, 0]])</span></span></code></pre></div>
+<p>The information above is enough to get you going but NumPy’s documentation on <a href="https://numpy.org/doc/stable/user/basics.indexing.html">indexing</a> is definitely worth the read, if you need to use it frequently.</p>
+</div>
+<div id="padding-with-zeros" class="section level2" number="17.10">
+<h2>
+<span class="header-section-number">17.10</span> Padding with zeros<a class="anchor" aria-label="anchor" href="#padding-with-zeros"><i class="fas fa-link"></i></a>
+</h2>
+<p>Now that you know how to slice a 2D array, let us redo the sequence:</p>
+<ol style="list-style-type: decimal">
+<li>generate grid full of <a href="https://numpy.org/doc/stable/reference/generated/numpy.zeros.html?highlight=zeros#numpy.zeros">zeros</a> that is two elements wide and taller than we need.</li>
+<li>Fill the inner part (excluding that extra padding) with random <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>.</li>
+<li>Stack and rescale only the inner part for a 3D RGB array we need to an PsychoPy image.</li>
+<li>Create and display the image.</li>
+</ol>
+<div class="rmdnote program">
+<p>Generate a zero-padded random grid and show it in <em>code03.py</em>.</p>
+</div>
+</div>
+<div id="cell-culture" class="section level2" number="17.11">
+<h2>
+<span class="header-section-number">17.11</span> Cell culture<a class="anchor" aria-label="anchor" href="#cell-culture"><i class="fas fa-link"></i></a>
+</h2>
+<p>Now that you have all the required pieces, wrap it up nicely in a <code>CellCulture</code> class. As we are displaying cells as an image, it makes sense to make it a descendant of the <a href="https://psychopy.org/api/visual/imagestim.html">ImageStim</a>. In the constructor, you only need the PsychoPy window and a dictionary with settings (so you know the grid size). You could more or less copy-paste code from the <em>code03.py</em> into the constructor and use a parent constructor to initialize it once you generated a random grid. However, we need to perform <em>1) extract inner part, 2) stack to 3D, 3) assign to image</em> on every iteration (after we updated the cell culture), so it makes sense to spin it off as a separate method (e.g., <code>set_image_from_array()</code>). Thus, you can generate the zero-padded grid, initialize parent <em>without</em> an image argument (PsychoPy allows for that) but only with window and size, and then call <code>set_image_from_array()</code>).</p>
+<p>Replace your code in the main script with a new class. It should work as before.</p>
+<div class="rmdnote program">
+<p>Create <code>CellCulture</code> class<br>
+Use it in <em>code04.py</em>.</p>
+</div>
+</div>
+<div id="counting-neigbors-single-cell-nested-loops-edition" class="section level2" number="17.12">
+<h2>
+<span class="header-section-number">17.12</span> Counting neigbors, single cell nested-loops edition<a class="anchor" aria-label="anchor" href="#counting-neigbors-single-cell-nested-loops-edition"><i class="fas fa-link"></i></a>
+</h2>
+<p>Recall the rules, we need to count live neighbors for each cell and this is how we decide on whether it lives (or gets born) or dies (or the location remains empty). Let us implement this for a single cell first via nested loops and then via slicing. I suggest that you experiment and debug in a Jupiter notebook and we will transfer the code into the <code>CellCulture</code> class once it is ready. I will illustrate this using a zero-padded 5×5 grid.</p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb147-1"><a href="game-of-life-numpy.html#cb147-1" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">1423</span>)</span>
+<span id="cb147-2"><a href="game-of-life-numpy.html#cb147-2" aria-hidden="true" tabindex="-1"></a>grid <span class="op">=</span> np.zeros((<span class="dv">7</span>, <span class="dv">7</span>))</span>
+<span id="cb147-3"><a href="game-of-life-numpy.html#cb147-3" aria-hidden="true" tabindex="-1"></a>grid[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> rng.integers(low<span class="op">=</span><span class="dv">0</span>, high<span class="op">=</span><span class="dv">2</span>, size<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">5</span>))</span>
+<span id="cb147-4"><a href="game-of-life-numpy.html#cb147-4" aria-hidden="true" tabindex="-1"></a>grid.astype(<span class="bu">int</span>)</span>
+<span id="cb147-5"><a href="game-of-life-numpy.html#cb147-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([[0, 0, 0, 0, 0, 0, 0],</span></span>
+<span id="cb147-6"><a href="game-of-life-numpy.html#cb147-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [0, 0, 1, 1, 0, 1, 0],</span></span>
+<span id="cb147-7"><a href="game-of-life-numpy.html#cb147-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [0, 0, 0, 1, 1, 0, 0],</span></span>
+<span id="cb147-8"><a href="game-of-life-numpy.html#cb147-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [0, 1, 0, 0, 1, 1, 0],</span></span>
+<span id="cb147-9"><a href="game-of-life-numpy.html#cb147-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [0, 1, 1, 1, 0, 0, 0],</span></span>
+<span id="cb147-10"><a href="game-of-life-numpy.html#cb147-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [0, 1, 0, 0, 1, 1, 0],</span></span>
+<span id="cb147-11"><a href="game-of-life-numpy.html#cb147-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [0, 0, 0, 0, 0, 0, 0]])</span></span></code></pre></div>
+<p>Let us count the neighbors for a cell at location <span class="math inline">\((2, 2)\)</span> (so, <em>third</em> row and <em>third</em> column). For the example grid that I generated using <span class="math inline">\(1423\)</span> as a seed for the random generator, that should be <span class="math inline">\(4\)</span>.</p>
+<div class="inline-figure"><img src="images/game-of-life-neighbors.png" width="50%" style="display: block; margin: auto;"></div>
+<p>Assume that the cell is identified via <code>icell_row</code> and <code>icell_col</code> and use nested loops to count the neighbors (think about the values <em>relative</em> indexes you need to loop through). Note that the cell itself <em>does not count</em>. You can either use an <code>if-else</code> for this but an alternative solution would be to count everybody and <em>then</em> subtract the value of the cell itself. Implement the code and try it out with different <code>icell_row</code> and <code>icell_col</code>. Specifically test it for live cells, e.g., for <span class="math inline">\((2, 3)\)</span> you should get four neighbors not five.</p>
+</div>
+<div id="slicing-neigbors-of-a-single-cell" class="section level2" number="17.13">
+<h2>
+<span class="header-section-number">17.13</span> Slicing neigbors of a single cell<a class="anchor" aria-label="anchor" href="#slicing-neigbors-of-a-single-cell"><i class="fas fa-link"></i></a>
+</h2>
+<p>Nested loops are fun but slicing powers of NumPy make everything even easier. To count the neighbors, we need to extract a rectangular part of the matrix, very much the same way that we did when we dropped zero-padding. The only difference is that the rectangular part is defined relative to each cell. One the one hand, you can easily generate slicing on the fly relative to <code>icell_row</code> and <code>icell_col</code>: <code>grid[(compute start row):(compute end row), (compute start col):(compute end col)]</code>. Just start with cells in the row and column <em>before</em> the current one and end with one <em>after</em> the current one. Make sure that you put brackets around expression for start and stop values, this is not necessary in Python<a href="game-of-life-numpy.html#fn103" class="footnote-ref" id="fnref103"><sup>103</sup></a> but it will make is easier to read them. Also, remember that start index is inclusive but stop index is exclusive (just as in the rest of Python). Here is a nice array that I have extracted:</p>
+<pre><code>#&gt; [[0 1 1]
+#&gt;  [0 0 1]
+#&gt;  [1 0 0]]</code></pre>
+<p>For didactic purposes, let us learn a different way to build relative index via <a href="https://numpy.org/doc/stable/reference/generated/numpy.meshgrid.html?highlight=meshgrid">numpy.meshgrid()</a>. It allows you to create two matrices so that corresponding cell cover all possible combinations:</p>
+<div class="sourceCode" id="cb149"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb149-1"><a href="game-of-life-numpy.html#cb149-1" aria-hidden="true" tabindex="-1"></a>a, b <span class="op">=</span> np.meshgrid([<span class="dv">1</span>, <span class="dv">2</span>], [<span class="dv">3</span>, <span class="dv">4</span>])</span>
+<span id="cb149-2"><a href="game-of-life-numpy.html#cb149-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"a</span><span class="ch">\n</span><span class="st">"</span>, a)</span>
+<span id="cb149-3"><a href="game-of-life-numpy.html#cb149-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a</span></span>
+<span id="cb149-4"><a href="game-of-life-numpy.html#cb149-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [[1 2]</span></span>
+<span id="cb149-5"><a href="game-of-life-numpy.html#cb149-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1 2]]</span></span>
+<span id="cb149-6"><a href="game-of-life-numpy.html#cb149-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">b</span><span class="ch">\n</span><span class="st">"</span>, b)</span>
+<span id="cb149-7"><a href="game-of-life-numpy.html#cb149-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb149-8"><a href="game-of-life-numpy.html#cb149-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; b</span></span>
+<span id="cb149-9"><a href="game-of-life-numpy.html#cb149-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [[3 3]</span></span>
+<span id="cb149-10"><a href="game-of-life-numpy.html#cb149-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [4 4]]</span></span></code></pre></div>
+<p>Use this function to create 3×3 grids of <em>relative</em> indexes for rows and columns (I called it <code>irel_rows</code> and <code>irel_cols</code>). You can hard code relative indexes or (better) use <a href="https://numpy.org/doc/stable/reference/generated/numpy.arange.html?highlight=arange">numpy.arange()</a> to generate the sequence.
+and then compute <em>absolute</em> index using <code>icell_row</code> and <code>icell_col</code>.</p>
+<pre><code>#&gt; [[0 0 1]
+#&gt;  [1 0 0]
+#&gt;  [1 1 0]]</code></pre>
+<p>We sliced the neighbors out but now we need to <em>count</em> them via a <a href="https://numpy.org/doc/stable/reference/generated/numpy.sum.html">numpy.sum()</a> or, equivalently via a <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.sum.html">sum()</a> method of an array. I tend to use the function but this is purely a matter of taste (or, more likely, habit), so pick the one you like.</p>
+<div class="sourceCode" id="cb151"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb151-1"><a href="game-of-life-numpy.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">sum</span>(grid))</span>
+<span id="cb151-2"><a href="game-of-life-numpy.html#cb151-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14.0</span></span>
+<span id="cb151-3"><a href="game-of-life-numpy.html#cb151-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(grid.<span class="bu">sum</span>())</span>
+<span id="cb151-4"><a href="game-of-life-numpy.html#cb151-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14.0</span></span></code></pre></div>
+<p>For our example subset, we get</p>
+<pre><code>#&gt; Neighbor count for the example cell:  4.0</code></pre>
+</div>
+<div id="live-and-let-die" class="section level2" number="17.14">
+<h2>
+<span class="header-section-number">17.14</span> Live and let die<a class="anchor" aria-label="anchor" href="#live-and-let-die"><i class="fas fa-link"></i></a>
+</h2>
+<p>Now that you have the code to count the neighbors, let us count them for all the <em>inner</em> cells. Create a <em>new</em> zeros matrix that will hold neighbor counts (same size as the grid itself) and loop through every inner cell, computing its number of neighbors and storing it in the new matrix. Here is the answer for the random grid above. Use my code above to generate it, so you can check whether you get the same answer but it is also a good idea to just count it yourself for a few cells to check that the answer is indeed correct.</p>
+<pre><code>#&gt; [[0 0 0 0 0 0 0]
+#&gt;  [0 1 2 3 4 1 0]
+#&gt;  [0 2 4 4 5 4 0]
+#&gt;  [0 2 5 5 4 2 0]
+#&gt;  [0 3 4 3 5 4 0]
+#&gt;  [0 2 4 3 2 1 0]
+#&gt;  [0 0 0 0 0 0 0]]</code></pre>
+<p>We have information about whether a cell is alive or dead in our <code>grid</code> matrix and information about its neighbor count is <code>neighbors</code>. Now we can use comparison and logical operation to implement the rules. Comparisons are easy, they work the same way but are applied to the entire array:</p>
+<div class="sourceCode" id="cb154"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb154-1"><a href="game-of-life-numpy.html#cb154-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.arange(<span class="op">-</span><span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb154-2"><a href="game-of-life-numpy.html#cb154-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>
+<span id="cb154-3"><a href="game-of-life-numpy.html#cb154-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [-3 -2 -1  0  1  2  3]</span></span>
+<span id="cb154-4"><a href="game-of-life-numpy.html#cb154-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a <span class="op">&lt;</span> <span class="dv">0</span>)</span>
+<span id="cb154-5"><a href="game-of-life-numpy.html#cb154-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [ True  True  True False False False False]</span></span></code></pre></div>
+<p>The logical <code>and</code> and <code>or</code> are replaced with <a href="https://numpy.org/doc/stable/reference/generated/numpy.logical_and.html">&amp;</a> and <a href="https://numpy.org/doc/stable/reference/generated/numpy.logical_or.html">|</a> but work the same way. The only thing to keep in mind is that comparisons must be wrapped in brackets (otherwise you will get an error)</p>
+<div class="sourceCode" id="cb155"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb155-1"><a href="game-of-life-numpy.html#cb155-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.arange(<span class="op">-</span><span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb155-2"><a href="game-of-life-numpy.html#cb155-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>])</span>
+<span id="cb155-3"><a href="game-of-life-numpy.html#cb155-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb155-4"><a href="game-of-life-numpy.html#cb155-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>((a <span class="op">&lt;</span> <span class="dv">0</span> ) <span class="op">&amp;</span> (b <span class="op">==</span> <span class="dv">1</span>))</span>
+<span id="cb155-5"><a href="game-of-life-numpy.html#cb155-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [ True False  True False False False False]</span></span>
+<span id="cb155-6"><a href="game-of-life-numpy.html#cb155-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>((a <span class="op">&lt;</span> <span class="dv">0</span> ) <span class="op">|</span> (b <span class="op">==</span> <span class="dv">1</span>))</span>
+<span id="cb155-7"><a href="game-of-life-numpy.html#cb155-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [ True  True  True False  True False  True]</span></span></code></pre></div>
+<p>We want ones and zeros, so integers rather than logical values. We can easily convert the entire array via <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.astype.html?highlight=astype">.astype()</a> method:</p>
+<div class="sourceCode" id="cb156"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb156-1"><a href="game-of-life-numpy.html#cb156-1" aria-hidden="true" tabindex="-1"></a>(a <span class="op">&lt;</span> <span class="dv">0</span>)</span>
+<span id="cb156-2"><a href="game-of-life-numpy.html#cb156-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([ True,  True,  True, False, False, False, False])</span></span>
+<span id="cb156-3"><a href="game-of-life-numpy.html#cb156-3" aria-hidden="true" tabindex="-1"></a>(a <span class="op">&lt;</span> <span class="dv">0</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb156-4"><a href="game-of-life-numpy.html#cb156-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([1, 1, 1, 0, 0, 0, 0])</span></span></code></pre></div>
+<p>Now you have everything you need to implement the first rule: cell must be alive <em>and</em> have <span class="math inline">\(2\)</span> <em>or</em> <span class="math inline">\(3\)</span> neighbors. Here is the output matrix:</p>
+<pre><code>#&gt; [[0 0 0 0 0 0 0]
+#&gt;  [0 0 1 1 0 0 0]
+#&gt;  [0 0 0 0 0 0 0]
+#&gt;  [0 1 0 0 0 1 0]
+#&gt;  [0 1 0 1 0 0 0]
+#&gt;  [0 1 0 0 1 0 0]
+#&gt;  [0 0 0 0 0 0 0]]</code></pre>
+<p>Rule number two: cell must be dead <em>and</em> have <span class="math inline">\(3\)</span> neighbors.</p>
+<pre><code>#&gt; [[0 0 0 0 0 0 0]
+#&gt;  [0 0 0 0 0 0 0]
+#&gt;  [0 0 0 0 0 0 0]
+#&gt;  [0 0 0 0 0 0 0]
+#&gt;  [0 0 0 0 0 0 0]
+#&gt;  [0 0 0 1 0 0 0]
+#&gt;  [0 0 0 0 0 0 0]]</code></pre>
+<p>Finally, cell get to live because either rule #1 <em>or</em> rule #2 worked for them:</p>
+<pre><code>#&gt; [[0 0 0 0 0 0 0]
+#&gt;  [0 0 1 1 0 0 0]
+#&gt;  [0 0 0 0 0 0 0]
+#&gt;  [0 1 0 0 0 1 0]
+#&gt;  [0 1 0 1 0 0 0]
+#&gt;  [0 1 0 1 1 0 0]
+#&gt;  [0 0 0 0 0 0 0]]</code></pre>
+<p>This final output is the new cell culture that you can assign back to the grid. Implement all the steps carefully and double<a href="game-of-life-numpy.html#fn104" class="footnote-ref" id="fnref104"><sup>104</sup></a> check that all numbers match. Try different random grids and go through them by hand to make sure everything is correct (this is the boring but vital part of programming, I am afraid).</p>
+</div>
+<div id="update-cell-culture" class="section level2" number="17.15">
+<h2>
+<span class="header-section-number">17.15</span> Update cell culture<a class="anchor" aria-label="anchor" href="#update-cell-culture"><i class="fas fa-link"></i></a>
+</h2>
+<p>We have covered a lot of ground but now you have <em>everything</em> to implement an <code><a href="https://rdrr.io/r/stats/update.html">update()</a></code> method of <code>CellCulture</code> method:</p>
+<ol style="list-style-type: decimal">
+<li>Count the neighbors.</li>
+<li>Apply rules to generate new culture.</li>
+<li>Put the new culture into the <code>grid</code> attribute (or however you called it).</li>
+<li>Transfer the grid to the image (you have a method for this).</li>
+</ol>
+<p>In the main code, call update method on every frame and see the cells evolve!</p>
+<div class="rmdnote program">
+<p>Add <code>update</code> method to <code>CellCulture</code> class<br>
+Use it in <em>code05.py</em>.</p>
+</div>
+</div>
+<div id="pause" class="section level2" number="17.16">
+<h2>
+<span class="header-section-number">17.16</span> Pause<a class="anchor" aria-label="anchor" href="#pause"><i class="fas fa-link"></i></a>
+</h2>
+<p>In the main loop, you hopefully check for an <em>escape</em> key press to end the game (if not, you should!) Let’s also add a check for a press of <em>space</em> button that will “pause” or “continue” the simulation. I.e., space should toggle (invert) a state of a logical variable (you name it) that determines whether the <code><a href="https://rdrr.io/r/stats/update.html">update()</a></code> method is called.</p>
+<div class="rmdnote program">
+<p>Implement pause/continue via <em>space</em> in <em>code06.py</em>.</p>
+</div>
+</div>
+<div id="unleash-your-creativity" class="section level2" number="17.17">
+<h2>
+<span class="header-section-number">17.17</span> Unleash your creativity<a class="anchor" aria-label="anchor" href="#unleash-your-creativity"><i class="fas fa-link"></i></a>
+</h2>
+<p>Random cultures are fun but, perhaps, you have an idea to try out (e.g., see a <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Wikipedia article</a> on example patterns such as blinkers and gliders). Let us draw with the <a href="https://psychopy.org/api/event.html#psychopy.event.Mouse">mouse</a> (this is why I insisted on having it as an attribute of the context), with the left button <a href="https://psychopy.org/api/event.html#psychopy.event.Mouse">click</a> (index <span class="math inline">\(0\)</span>) adding a living cell and the right button click (index <span class="math inline">\(2\)</span>) erasing it.</p>
+<p>For this, create a new <code>CellCulture</code> method (I called it <code>change()</code>) that takes a new value (<span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>, depending on the button) and <a href="https://psychopy.org/api/event.html#psychopy.event.Mouse.getPos">mouse position</a> within the window. In the method, compute the row and column index of the cell keeping in mind that 1) the image spans the entire image, 2) only the inner cells are shown and can be clicked on. Once you have both indexes, assign new value to the grid. For testing, pause the game, draw a few patterns, restart and see them go!</p>
+<div class="rmdnote program">
+<p>Add <code>change()</code> method to <code>CellCulture</code><br>
+Use mouse inputs and <code>change()</code> in <em>code07.py</em>.</p>
+</div>
+</div>
+<div id="done-for-today" class="section level2" number="17.18">
+<h2>
+<span class="header-section-number">17.18</span> Done for today<a class="anchor" aria-label="anchor" href="#done-for-today"><i class="fas fa-link"></i></a>
+</h2>
+<p>You have learned quite a few things about <a href="https://numpy.org/">NumPy</a> and implemented a cool simulation. Next time, we will learn more about Numpy while combining it with a useful <a href="https://psychopy.org/api/visual/elementarraystim.html#psychopy.visual.ElementArrayStim">ElementArrayStim</a> I have teased about.</p>
+
+</div>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr>
+<ol>
+<li id="fn1"><p>Good habits! Form good habits! Thank you for reading this subliminal message.<a href="index.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>If you are part of the seminar, ask me whenever you have problems or are unsure about how to proceeed<a href="software.html#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>Happened to me more often than I dare to admit.<a href="programming-tips.html#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>“Boring is Good!”, see “The Hitman’s Bodyguard” movie.<a href="programming-tips.html#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>Seriously, 100%! If you have even a shadow of a doubt, check again. That shadow will grow and make you progressively uncertain about your code.<a href="programming-tips.html#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p>However, if you are doing the seminar, ask me first!<a href="programming-tips.html#fnref6" class="footnote-back">↩︎</a></p></li>
+<li id="fn7"><p>Tip: Read your text one sentence at a time starting from the back or read one random sentence at a time. This breaks the flow of the text and helps you concentrate on words rather than on the meaning and the story.<a href="programming-tips.html#fnref7" class="footnote-back">↩︎</a></p></li>
+<li id="fn8"><p>Hindsight is always 20/20!<a href="programming-tips.html#fnref8" class="footnote-back">↩︎</a></p></li>
+<li id="fn9"><p>not really<a href="python-basics.html#fnref9" class="footnote-back">↩︎</a></p></li>
+<li id="fn10"><p>You can “Save as…” the previous code to avoid copy-pasting things by hand.<a href="guess-the-number-single-round.html#fnref10" class="footnote-back">↩︎</a></p></li>
+<li id="fn11"><p>I recommend using <code>01</code> instead of <code>1</code>, as it will ensure consistent file sorting in your file manager<a href="guess-the-number-single-round.html#fnref11" class="footnote-back">↩︎</a></p></li>
+<li id="fn12"><p>Of course, we know it because we hard-coded it. But that won’t be the case when computer will generate it randomly, so let us plan for the future<a href="guess-the-number-single-round.html#fnref12" class="footnote-back">↩︎</a></p></li>
+<li id="fn13"><p>Or, at least, easier.<a href="guess-the-number-single-round.html#fnref13" class="footnote-back">↩︎</a></p></li>
+<li id="fn14"><p>This is because you can convert any value to a logical one via <a href="https://docs.python.org/3/library/functions.html#bool">bool()</a> function that you learned about the last time and so any value is (converted to) either <code>True</code> or <code>False</code>.<a href="guess-the-number-single-round.html#fnref14" class="footnote-back">↩︎</a></p></li>
+<li id="fn15"><p>pun intended<a href="guess-the-number-single-round.html#fnref15" class="footnote-back">↩︎</a></p></li>
+<li id="fn16"><p>Did I already say never? never!<a href="guess-the-number-single-round.html#fnref16" class="footnote-back">↩︎</a></p></li>
+<li id="fn17"><p>This is the last time, I promise!<a href="guess-the-number-ai.html#fnref17" class="footnote-back">↩︎</a></p></li>
+<li id="fn18"><p>You should imagine Dora the Explorer staring at you while you think.<a href="guess-the-number-ai.html#fnref18" class="footnote-back">↩︎</a></p></li>
+<li id="fn19"><p>The official magic number is <a href="https://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two">7±2</a> but reading the original paper tells you that this is more like four for most of us<a href="guess-the-number-ai.html#fnref19" class="footnote-back">↩︎</a></p></li>
+<li id="fn20"><p>This is similar to scientific writing, where a single paragraph conveys a single idea. For me, it helps to first write the idea of the paragraph in a single sentence before writing the paragraph itself. If one sentence is not enough, I need to split the text into more paragraphs.<a href="guess-the-number-ai.html#fnref20" class="footnote-back">↩︎</a></p></li>
+<li id="fn21"><p>This is not strictly true but that will concern us only once we get to so-called “mutable” objects like lists or dictionaries.<a href="guess-the-number-ai.html#fnref21" class="footnote-back">↩︎</a></p></li>
+<li id="fn22"><p>it is normal to have more code devoted to testing than to the actual program<a href="guess-the-number-ai.html#fnref22" class="footnote-back">↩︎</a></p></li>
+<li id="fn23"><p>You still need tests for the integrated system but testing individual functions is a clear prerequisite.<a href="guess-the-number-ai.html#fnref23" class="footnote-back">↩︎</a></p></li>
+<li id="fn24"><p>Again, this not strictly true but you will have to wait until you learn about named parameters and default values<a href="guess-the-number-ai.html#fnref24" class="footnote-back">↩︎</a></p></li>
+<li id="fn25"><p>Again, almost, as <em>mutable</em> objects like lists are more complicated, more on that later<a href="guess-the-number-ai.html#fnref25" class="footnote-back">↩︎</a></p></li>
+<li id="fn26"><p>Also called properties<a href="psychopy-basics.html#fnref26" class="footnote-back">↩︎</a></p></li>
+<li id="fn27"><p>Technically, we call a class constructor method called <code>__init__</code> but this is not important for now.<a href="psychopy-basics.html#fnref27" class="footnote-back">↩︎</a></p></li>
+<li id="fn28"><p>However, stick to original order for consistency otherwise.<a href="psychopy-basics.html#fnref28" class="footnote-back">↩︎</a></p></li>
+<li id="fn29"><p>This is called flipping because a window has two buffers: one that is currently displayed on the screen and the other one in which you can draw your stimuli. Once you are done with drawing, you “flip” the buffers so that they exchange their places. Now the one you drew in gets displayed and you have the other buffer to draw in.<a href="psychopy-basics.html#fnref29" class="footnote-back">↩︎</a></p></li>
+<li id="fn30"><p>my personal preference but in most cases it makes no difference<a href="psychopy-basics.html#fnref30" class="footnote-back">↩︎</a></p></li>
+<li id="fn31"><p>So specific that I cannot think of one, to be honest.<a href="psychopy-basics.html#fnref31" class="footnote-back">↩︎</a></p></li>
+<li id="fn32"><p>You need to import the random library for this, of course.<a href="psychopy-basics.html#fnref32" class="footnote-back">↩︎</a></p></li>
+<li id="fn33"><p>You can use <code>if..else</code>, because we only have two options but I would recommend to go for a more general solution <code>if..elif</code> <a href="psychopy-basics.html#fnref33" class="footnote-back">↩︎</a></p></li>
+<li id="fn34"><p>More on that and tuples (list’s immutable cousins) later.<a href="whack-a-mole.html#fnref34" class="footnote-back">↩︎</a></p></li>
+<li id="fn35"><p>This is typical for “classic” programming languages but less so for ones that are linear algebra / data science oriented. Both Matlab and R use one-based indexing, so you need to be careful and double-check whether you are using correct indexes.<a href="whack-a-mole.html#fnref35" class="footnote-back">↩︎</a></p></li>
+<li id="fn36"><p>There is a simpler way to do this, which you will learn in a little while.<a href="whack-a-mole.html#fnref36" class="footnote-back">↩︎</a></p></li>
+<li id="fn37"><p>Note, that this is almost but not quite the same thing as just writing <code>my_pretty_numbers</code>, the difference is subtle but important. We will return to it later when talking about mutable versus immutable types.<a href="whack-a-mole.html#fnref37" class="footnote-back">↩︎</a></p></li>
+<li id="fn38"><p>If you are familiar with R and its liberal attitude towards indexes, you will find this very satisfying.<a href="whack-a-mole.html#fnref38" class="footnote-back">↩︎</a></p></li>
+<li id="fn39"><p>and we barely scratched the surface!<a href="whack-a-mole.html#fnref39" class="footnote-back">↩︎</a></p></li>
+<li id="fn40"><p>Note, this is note a <em>better</em> way but an <em>alternative</em> way to do this.<a href="whack-a-mole.html#fnref40" class="footnote-back">↩︎</a></p></li>
+<li id="fn41"><p>Style hint: if a variable is an <em>index</em> of something, I tend to call it <code>isomething</code>. E.g., if it holds an index to a current mole, I would call it <code>imole</code>. This is <em>my</em> way of doing it. Others use <code>i_</code> prefix or an <code>_i</code> suffix. But either way, it is a useful naming convention. Remember, the easier it is to understand the meaning of a variable from its name, the easier it is for you to read and modify the code.<a href="whack-a-mole.html#fnref41" class="footnote-back">↩︎</a></p></li>
+<li id="fn42"><p><code>itarget</code>? <code>imole</code>?<a href="whack-a-mole.html#fnref42" class="footnote-back">↩︎</a></p></li>
+<li id="fn43"><p>I know it feels redundant but these are little checks that cost little time by themselves but help you avoid wasting lots of time on tracing weird mistakes. Here, you check that your expectations (if the middle target is shown, the index should be 1) match the reality. Once you check this, you do not <em>expect</em> it to be true, you <em>know</em> it to be true!<a href="whack-a-mole.html#fnref43" class="footnote-back">↩︎</a></p></li>
+<li id="fn44"><p>Confusingly, if no key was pressed, <a href="https://psychopy.org/api/event.html#psychopy.event.getKeys">getKeys()</a> returns an empty list but <a href="https://psychopy.org/api/event.html#psychopy.event.waitKeys">waitKeys()</a> returns <code>None</code> and <code>None</code> has no length.<a href="whack-a-mole.html#fnref44" class="footnote-back">↩︎</a></p></li>
+<li id="fn45"><p>Want to know key codes for sure? Write a small program that open a window and then repeatedly waits for any key press and prints out into console.<a href="whack-a-mole.html#fnref45" class="footnote-back">↩︎</a></p></li>
+<li id="fn46"><p>You will get more than one item in that list only if you set <code>clearEvents=False</code>. In this case, you will get the list of keys pressed before the call. However, if you opted for a default <code>clearEvents=True</code>, you will get only one key press in the list (at least I was never able to get more than one).<a href="whack-a-mole.html#fnref46" class="footnote-back">↩︎</a></p></li>
+<li id="fn47"><p>The images are courtesy of <a href="https://openclipart.org/artist/Firkin">Kevin David Pointon</a> and were downloaded
+from <a href="https://openclipart.org/">OpenClipart</a>. They are <a href="https://creativecommons.org/publicdomain/zero/1.0/">public domain</a> and can be used and distributed freely.<a href="memory-game.html#fnref47" class="footnote-back">↩︎</a></p></li>
+<li id="fn48"><p>Not really, but this makes it easier to understand.<a href="memory-game.html#fnref48" class="footnote-back">↩︎</a></p></li>
+<li id="fn49"><p>A metaphor attempt: You can wear different shirts, so your <em>look</em> (variable) changes but each individual shirt (potential values) remains the same (we ignore the wear and tear here) irrespective of whether your are wearing it (value is assigned to a variable) or not.<a href="memory-game.html#fnref49" class="footnote-back">↩︎</a></p></li>
+<li id="fn50"><p>Coming up shortly!<a href="memory-game.html#fnref50" class="footnote-back">↩︎</a></p></li>
+<li id="fn51"><p>Building on the looks metaphor: You can change your look by using a different (immutable) shirt or by <em>changing</em> your haircut. You hair is mutable, you do not wear a different one on different days to look different, you need to modify it to look different.<a href="memory-game.html#fnref51" class="footnote-back">↩︎</a></p></li>
+<li id="fn52"><p>Well, at least me!<a href="memory-game.html#fnref52" class="footnote-back">↩︎</a></p></li>
+<li id="fn53"><p>Immutable values are <a href="https://docs.python.org/3/glossary.html#term-hashable">hashable</a>, whereas mutable ones, like dictionaries and lists, are not. This is because mutable objects can <em>change</em> while the program is running and therefore are unusable as a key. I.e., it is hard to match by a key, if the key can be different by the time you need to access the dictionary.<a href="memory-game.html#fnref53" class="footnote-back">↩︎</a></p></li>
+<li id="fn54"><p>Use absolute path only if it is the only option, as it will almost certainly will break your code on another machine.<a href="memory-game.html#fnref54" class="footnote-back">↩︎</a></p></li>
+<li id="fn55"><p>A very arbitrary example!<a href="memory-game.html#fnref55" class="footnote-back">↩︎</a></p></li>
+<li id="fn56"><p>You will learn about practical implications of this later. For now, keep in mind that seemingly identical output might be fundamentally different underneath.<a href="memory-game.html#fnref56" class="footnote-back">↩︎</a></p></li>
+<li id="fn57"><p>A list you cannot change, more on this later.<a href="memory-game.html#fnref57" class="footnote-back">↩︎</a></p></li>
+<li id="fn58"><p>Pick the timing you like!<a href="memory-game.html#fnref58" class="footnote-back">↩︎</a></p></li>
+<li id="fn59"><p>More generally, never compare float values to exact numbers. They are <a href="http://www.lahey.com/float.htm">tricky</a>, as the underlying representation <a href="https://docs.python.org/3/tutorial/floatingpoint.html">does not guarantee</a> that the computation will produce <em>exactly</em> the number that it should: <code>.1 + .1 + .1 == .3</code> is surprisingly <code>False</code>, try it yourself<a href="memory-game.html#fnref59" class="footnote-back">↩︎</a></p></li>
+<li id="fn60"><p>Deck the Halls B by Kevin MacLeod <a href="http://incompetech.com" class="uri">http://incompetech.com</a>
+Creative Commons — Attribution 4.0 International — CC BY 4.0
+Free Download / Stream: <a href="https://bit.ly/deck-the-halls-b" class="uri">https://bit.ly/deck-the-halls-b</a>
+Music promoted by Audio Library <a href="https://youtu.be/RzjZ-WdVeyk" class="uri">https://youtu.be/RzjZ-WdVeyk</a><a href="christmas-special.html#fnref60" class="footnote-back">↩︎</a></p></li>
+<li id="fn61"><p><code>BaseVisualStim</code> does not actually define <code>draw()</code> method, only that it must be present.<a href="flappy-bird.html#fnref61" class="footnote-back">↩︎</a></p></li>
+<li id="fn62"><p>Yes, it is really called “duck typing”.<a href="flappy-bird.html#fnref62" class="footnote-back">↩︎</a></p></li>
+<li id="fn63"><p>There are more special methods that you will learn about later, they all follow <code>__methodname__()</code> convention.<a href="flappy-bird.html#fnref63" class="footnote-back">↩︎</a></p></li>
+<li id="fn64"><p>Again, you can use any name for that parameter but that will surely confuse everyone.<a href="flappy-bird.html#fnref64" class="footnote-back">↩︎</a></p></li>
+<li id="fn65"><p>This is actually how all properties and methods are stored, in a <code>__dict__</code> attribute, so you can write <code>number_sum.__dict__["total"]</code> to get it.<a href="flappy-bird.html#fnref65" class="footnote-back">↩︎</a></p></li>
+<li id="fn66"><p>If you use a linter, it will complain whenever it sees a property not defined in the constructor<a href="flappy-bird.html#fnref66" class="footnote-back">↩︎</a></p></li>
+<li id="fn67"><p>Created by <a href="https://openclipart.org/artist/Scout">Madison Kingsford</a>.<a href="flappy-bird.html#fnref67" class="footnote-back">↩︎</a></p></li>
+<li id="fn68"><p>Here, I assume that 50% is chance level performance.<a href="seminar-02-06.html#fnref68" class="footnote-back">↩︎</a></p></li>
+<li id="fn69"><p>It is the usual paradox that in order to optimally measure a threshold condition for a particular task, you should measure at or around the threshold. But if you already know where to measure, you don’t need to measure.<a href="seminar-02-06.html#fnref69" class="footnote-back">↩︎</a></p></li>
+<li id="fn70"><p>Inheriting from <code>visual.Rect</code> would’ve make things simpler but, at least in PsychoPy 2021.1.4, it does not work due to so technical glitch.<a href="seminar-02-06.html#fnref70" class="footnote-back">↩︎</a></p></li>
+<li id="fn71"><p>Again, inheriting from <code>visual.Rect()</code> would have taken care of this for you.<a href="seminar-02-06.html#fnref71" class="footnote-back">↩︎</a></p></li>
+<li id="fn72"><p>Not very exciting, I know. But one has to start somewhere!<a href="the-snake.html#fnref72" class="footnote-back">↩︎</a></p></li>
+<li id="fn73"><p>I always add units in square brackets as a reminder to my(future)self. One can deduce units from code itself but documenting them explicitly makes your life much easier.<a href="the-snake.html#fnref73" class="footnote-back">↩︎</a></p></li>
+<li id="fn74"><p>We will use a bitmap to make it look like an actual apple but it will need to be a square bitmap, so at the end the apple will still be square<a href="the-snake.html#fnref74" class="footnote-back">↩︎</a></p></li>
+<li id="fn75"><p>A single segment snake is a special case, as its head is also its tail!<a href="the-snake.html#fnref75" class="footnote-back">↩︎</a></p></li>
+<li id="fn76"><p>It would be much simpler to inherit from <a href="https://psychopy.org/api/visual/rect.html#psychopy.visual.rect.Rect">Rect</a> class directly but it does not work (raises an error), at least for the version 2021.1.4 that I use.<a href="the-snake.html#fnref76" class="footnote-back">↩︎</a></p></li>
+<li id="fn77"><p>We could also have used <a href="https://docs.python.org/3/library/collections.html#collections.deque">dqueue</a> class from <em>collections</em> library instead of the <code>list</code>. It is, essentially, a list that allows appending and popping from the left as well.<a href="the-snake.html#fnref77" class="footnote-back">↩︎</a></p></li>
+<li id="fn78"><p>To be honest, I have initially implemented it as a single <code>move()</code> function , wrote things up up to eating apples, realized the problem, returned and rewrote the notes. So, admittedly, it is a hindsight kind of strategic thinking.<a href="the-snake.html#fnref78" class="footnote-back">↩︎</a></p></li>
+<li id="fn79"><p>Note that speed does not need to be an integer number of squares per second. It can move at 1.5 squares per second, so 3 squares every two seconds.<a href="the-snake.html#fnref79" class="footnote-back">↩︎</a></p></li>
+<li id="fn80"><p>Do it in the constructor, always define all attributes in the constructor, even if they are set to <code>None</code>.<a href="the-snake.html#fnref80" class="footnote-back">↩︎</a></p></li>
+<li id="fn81"><p>Remember, they work the same they, it is just a question of whether you start from zero and check whether time is over <code>step_duration</code> (<a href="https://www.psychopy.org/api/clock.html#psychopy.clock.Clock">clock</a>) or you start at <code>step_duration</code> and check whether the time ran out/is already negative (<a href="https://www.psychopy.org/api/clock.html#psychopy.clock.CountdownTimer">timer</a>).<a href="the-snake.html#fnref81" class="footnote-back">↩︎</a></p></li>
+<li id="fn82"><p>Created by <a href="https://openclipart.org/artist/cyanidecupcake">Jess Wiechler</a>.<a href="the-snake.html#fnref82" class="footnote-back">↩︎</a></p></li>
+<li id="fn83"><p>Why at least five? Draw it on the grid and figure out whether it can eat itself with just four segments.<a href="the-snake.html#fnref83" class="footnote-back">↩︎</a></p></li>
+<li id="fn84"><p>This image was downloaded from <a href="https://openclipart.org/">openclipart.org</a> and was created by <a href="https://openclipart.org/artist/cliparteles">cliparteles</a><a href="the-snake.html#fnref84" class="footnote-back">↩︎</a></p></li>
+<li id="fn85"><p>Or, if you played Doom, between <em>I’m Too Young To Die</em>, <em>Hey, Not Too Rough</em>, <em>Hurt Me Plenty</em>, <em>Ultra-Violence</em>, and <em>Nightmare</em>.<a href="the-snake.html#fnref85" class="footnote-back">↩︎</a></p></li>
+<li id="fn86"><p>Downloaded from <a href="https://freesound.org/">freesound.org</a> and created by <a href="https://freesound.org/people/myfox14/">myfox14</a><a href="the-snake.html#fnref86" class="footnote-back">↩︎</a></p></li>
+<li id="fn87"><p>Also downloaded from <a href="https://freesound.org/">freesound.org</a> and created by <a href="https://freesound.org/people/EVRetro/">EVRetro</a><a href="the-snake.html#fnref87" class="footnote-back">↩︎</a></p></li>
+<li id="fn88"><p>Confusingly, if you do not pass any additional parameters, you can also create the object <em>without</em> round brackets: <code>raise ZeroDivisionError</code>. I find this mightily confusing but this is fairly common, so drop brackets if it feels more natural.<a href="moon-lander.html#fnref88" class="footnote-back">↩︎</a></p></li>
+<li id="fn89"><p>The constant itself does not mean anything, I adjusted it to be reasonable for the image and window size that we are using.<a href="moon-lander.html#fnref89" class="footnote-back">↩︎</a></p></li>
+<li id="fn90"><p>Pun intended.<a href="moon-lander.html#fnref90" class="footnote-back">↩︎</a></p></li>
+<li id="fn91"><p>boilerplate<a href="space-invaders.html#fnref91" class="footnote-back">↩︎</a></p></li>
+<li id="fn92"><p>A man is hailing a taxi on a sidewalk. A car stops next to him. The guy looks at it and says “But where is the taxi sign on the roof?”. The driver replies: “Do you need a taxi sign on the roof or a ride?”<a href="space-invaders.html#fnref92" class="footnote-back">↩︎</a></p></li>
+<li id="fn93"><p>Why not implement it as a method <code>object.len()</code> or, even better, as a read-only property <code>object.len</code>? Read <a href="https://mail.python.org/pipermail/python-3000/2006-November/004643.html">here</a> for the justification.<a href="space-invaders.html#fnref93" class="footnote-back">↩︎</a></p></li>
+<li id="fn94"><p>Lazy computation means that you compute or get only what is necessary right now, rather than computing or getting all items in one go.<a href="space-invaders.html#fnref94" class="footnote-back">↩︎</a></p></li>
+<li id="fn95"><p>Of course, if you <em>do</em> need it, you should implement it. The point is that quite often you do not.<a href="space-invaders.html#fnref95" class="footnote-back">↩︎</a></p></li>
+<li id="fn96"><p>No worries, it is safe. He says, you should understand. But I have no idea because, evidently, I am a dinosaur out of touch with modern trends.<a href="space-invaders.html#fnref96" class="footnote-back">↩︎</a></p></li>
+<li id="fn97"><p>On a side note of doing crazy things that you should not: You can replace a class method without inheritance with your own at run time, this is called a <a href="https://en.wikipedia.org/wiki/Monkey_patch">monkey patch</a>!<a href="space-invaders.html#fnref97" class="footnote-back">↩︎</a></p></li>
+<li id="fn98"><p>You can cheat and return the reference to the list attribute itself and it’ll do the rest but do not do it for didactic purposes.<a href="space-invaders.html#fnref98" class="footnote-back">↩︎</a></p></li>
+<li id="fn99"><p>Created by Sergenious and obtained from <a href="https://freesound.org/people/Sergenious/sounds/55853/">freesound.org</a><a href="space-invaders.html#fnref99" class="footnote-back">↩︎</a></p></li>
+<li id="fn100"><p>These are functions that “decorate” you function and are called <em>before</em> your function is called. They are like gatekeepers or face control, so they can alter whether or how your function is executed.<a href="space-invaders.html#fnref100" class="footnote-back">↩︎</a></p></li>
+<li id="fn101"><p>Just like there is no physical phenomenon called “color”!<a href="space-invaders.html#fnref101" class="footnote-back">↩︎</a></p></li>
+<li id="fn102"><p>Note that you cannot have write-only property, you must have either getter alone or both.<a href="space-invaders.html#fnref102" class="footnote-back">↩︎</a></p></li>
+<li id="fn103"><p>But <em>is</em> necessary in R, which is a common source of errors where.<a href="game-of-life-numpy.html#fnref103" class="footnote-back">↩︎</a></p></li>
+<li id="fn104"><p>triple!<a href="game-of-life-numpy.html#fnref104" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="space-invaders.html"><span class="header-section-number">16</span> Space invaders: mixins and duck typing</a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#game-of-life-numpy"><span class="header-section-number">17</span> Game of life (NumPy)</a></li>
+<li><a class="nav-link" href="#implementing-the-rules"><span class="header-section-number">17.1</span> Implementing the rules</a></li>
+<li><a class="nav-link" href="#numpy"><span class="header-section-number">17.2</span> NumPy</a></li>
+<li><a class="nav-link" href="#boilerplate-3"><span class="header-section-number">17.3</span> Boilerplate</a></li>
+<li><a class="nav-link" href="#visualizing-an-array"><span class="header-section-number">17.4</span> Visualizing an array</a></li>
+<li><a class="nav-link" href="#a-random-matrix"><span class="header-section-number">17.5</span> A random matrix</a></li>
+<li><a class="nav-link" href="#from-2d-to-3d"><span class="header-section-number">17.6</span> From 2D to 3D</a></li>
+<li><a class="nav-link" href="#correct-values-range"><span class="header-section-number">17.7</span> Correct values range</a></li>
+<li><a class="nav-link" href="#showing-an-image"><span class="header-section-number">17.8</span> Showing an image</a></li>
+<li><a class="nav-link" href="#slicing-a-border-problem"><span class="header-section-number">17.9</span> Slicing a border problem</a></li>
+<li><a class="nav-link" href="#padding-with-zeros"><span class="header-section-number">17.10</span> Padding with zeros</a></li>
+<li><a class="nav-link" href="#cell-culture"><span class="header-section-number">17.11</span> Cell culture</a></li>
+<li><a class="nav-link" href="#counting-neigbors-single-cell-nested-loops-edition"><span class="header-section-number">17.12</span> Counting neigbors, single cell nested-loops edition</a></li>
+<li><a class="nav-link" href="#slicing-neigbors-of-a-single-cell"><span class="header-section-number">17.13</span> Slicing neigbors of a single cell</a></li>
+<li><a class="nav-link" href="#live-and-let-die"><span class="header-section-number">17.14</span> Live and let die</a></li>
+<li><a class="nav-link" href="#update-cell-culture"><span class="header-section-number">17.15</span> Update cell culture</a></li>
+<li><a class="nav-link" href="#pause"><span class="header-section-number">17.16</span> Pause</a></li>
+<li><a class="nav-link" href="#unleash-your-creativity"><span class="header-section-number">17.17</span> Unleash your creativity</a></li>
+<li><a class="nav-link" href="#done-for-today"><span class="header-section-number">17.18</span> Done for today</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/alexander-pastukhov/writing-games-with-python-and-psychopy/blob/master/15-game-of-life.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/alexander-pastukhov/writing-games-with-python-and-psychopy/edit/master/15-game-of-life.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2022-06-19.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

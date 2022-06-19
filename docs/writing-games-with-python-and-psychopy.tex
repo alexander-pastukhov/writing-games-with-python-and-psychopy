@@ -117,7 +117,7 @@
 
 \title{Writing games with Python and PsychoPy}
 \author{Alexander (Sasha) Pastukhov}
-\date{2022-05-19}
+\date{2022-06-19}
 
 \begin{document}
 \maketitle
@@ -3613,7 +3613,7 @@ In the next section, we will create a \texttt{TimedResponseTask} class that will
 \BuiltInTok{print}\NormalTok{(iterator\_fun())}
 
 \CommentTok{\# iterating via for loop}
-\CommentTok{\#\textgreater{} \textless{}generator object iterator\_fun at 0x000001BD1CBDC6D0\textgreater{}}
+\CommentTok{\#\textgreater{} \textless{}generator object iterator\_fun at 0x000000002ACFC820\textgreater{}}
 \ControlFlowTok{for}\NormalTok{ elem }\KeywordTok{in}\NormalTok{ iterator\_fun():}
     \BuiltInTok{print}\NormalTok{(elem)}
     
@@ -4603,7 +4603,7 @@ Before we start, grab images that we will use for the game \href{material/space-
 \hypertarget{boilerplate-2}{%
 \section{Boilerplate}\label{boilerplate-2}}
 
-Create our usual boilerplate via a context manager with \texttt{GameAbort} exception handling. You can reuse the code from our last game but I strongly suggest checking that you understand every step. My suggestion for the window size is 640×480 because the sprites are 32×32 but chose whatever looks good on your screen.
+Create our usual boilerplate with an external settings file via a context manager with \texttt{GameAbort} exception handling. You can reuse the code from our last game but I strongly suggest checking that you understand every step. My suggestion for the window size is 640×480 because the sprites are 32×32 but chose whatever looks good on your screen.
 
 Create \texttt{GameContext} and \texttt{GameAbort} classes.
 Put your boilerplate code into \emph{code01.py}.
@@ -4616,12 +4616,12 @@ Create a new file for \texttt{Spaceship} class. It is remarkably boring as it ju
 In the main code, create an object and draw it in the main loop.
 
 Create \texttt{Spaceship} class in a separate file.
-Use it in \emph{code.py}.
+Use it in \emph{code02.py}.
 
 \hypertarget{the-spaceship-moves}{%
 \section{The spaceship moves}\label{the-spaceship-moves}}
 
-Now, let us use the \href{https://psychopy.org/api/event.html\#psychopy.event.Mouse}{mouse} to control the horizontal position of the ship and, later on, left button to shoot. First, initialize the mouse in the context manager, so that it is one its attributes. Then, in the main loop, use \href{https://psychopy.org/api/event.html\#psychopy.event.Mouse.getPos}{getPos()} method to get the position of the mouse and use the \emph{horizontal} component to alter the position of the ship. Note that you \emph{cannot} assign just a horizontal or vertical components to the position via \texttt{.pos{[}0{]}\ =\ ...}. In my PsychoPy 2020.2.10 it does not generate an error but does not change the actual position either. Thus, you need to assign a tuple of \texttt{(new\ horizontal\ component,\ original\ vertical\ component)} (the ship should stay at the same vertical position throughout the game). Test moving your spaceship around. You can make mouse invisible (see \href{https://psychopy.org/api/event.html\#psychopy.event.Mouse}{documentation} ) to make it more immersive.
+Now, let us use the \href{https://psychopy.org/api/event.html\#psychopy.event.Mouse}{mouse} to control the horizontal position of the ship and, later on, left button to shoot. First, initialize the mouse in the context manager, so that it is one its attributes (then you can use it as \texttt{ctx.mouse}). Then, in the main loop, use \href{https://psychopy.org/api/event.html\#psychopy.event.Mouse.getPos}{getPos()} method to get the position of the mouse and use the \emph{horizontal} component to alter the position of the ship. Note that you \emph{cannot} assign just a horizontal or vertical components to the position via \texttt{.pos{[}0{]}\ =\ ...}. In my PsychoPy 2021.1.4 it does not generate an error but does not change the actual position either. Thus, you need to assign a tuple of \texttt{(new\ horizontal\ component,\ original\ vertical\ component)} (the ship should stay at the same vertical position throughout the game). Test moving your spaceship around. You can make mouse invisible (see \href{https://psychopy.org/api/event.html\#psychopy.event.Mouse}{documentation}) to make it more immersive.
 
 Add mouse to \texttt{GameContext}
 Use mouse to move ship in \emph{code03.py}.
@@ -4629,7 +4629,7 @@ Use mouse to move ship in \emph{code03.py}.
 \hypertarget{an-alien-appears}{%
 \section{An alien appears}\label{an-alien-appears}}
 
-Before we create an alien armada, let us create a single alien. The class will be very basic, which is why, we will put both \texttt{Alien} and \texttt{AlienArmada} into the same file (so, think about its filename). The class itself will very similar to the \texttt{Spaceship}. The only differences are that it should take (and pass) \texttt{pos} parameter (unlike the spaceship that always appears at the same location) and that the image should be \href{https://docs.python.org/3/library/random.html\#random.choice}{randomly picked} from a tuple of filenames (\emph{alien-1.png} and \emph{alien-2.png}, should be define in the settings in an ``aliens'' group of settings). For testing, place a few alians at arbitrary locations on the screen to check that an alien image is randomly picked. Do not forget to draw them in the main loop.
+Before we create an alien armada, let us create a single alien. The class will be very basic, which is why, we will put both \texttt{Alien} and \texttt{AlienArmada} into the same file (so, think about its filename). The class itself is similar to the \texttt{Spaceship}. The only differences are that it should take (and pass) \texttt{pos} parameter (unlike the spaceship that always appears at the same location) and that the image should be \href{https://docs.python.org/3/library/random.html\#random.choice}{randomly picked} from a tuple of filenames (\emph{alien-1.png} and \emph{alien-2.png}, the names should be defined in the settings in an ``aliens'' group of settings). For testing, place a few aliens at arbitrary locations on the screen to check that an alien image is randomly picked. Do not forget to draw them in the main loop.
 
 Create an \texttt{Alien} class
 Use them in \emph{code04.py}.
@@ -4637,7 +4637,7 @@ Use them in \emph{code04.py}.
 \hypertarget{using-names-to-indicate-access-restrictions}{%
 \section{Using names to indicate access restrictions}\label{using-names-to-indicate-access-restrictions}}
 
-Before we create an alien armada, we need to make a quick detour to talk about \href{https://peps.python.org/pep-0008}{naming conventions} for attributes and names of classes. Unlike most other languages, Python does not have private attributes or methods, i.e., attributes or methods accessible only from inside the object. If you come from Java or C\#/C++, a thought that you can call \emph{any} method and modify \emph{any} attribute from outside should give you chills, as it becomes impossible to predict object's behavior. Python ``solves'' the access problem via a ``gentlemen's agreement'' that methods and attributes whose names start either with \texttt{\_\_} or \texttt{\_} should be \emph{considered} private. In other words, you should not use them directly. In case of \texttt{\_\_}, you are also prevented from doing it in a straightforward way, as the name is \href{https://peps.python.org/pep-0008/\#descriptive-naming-styles}{mangled}. In the example below you cannot you access the \texttt{\_\_color} attribute directly:
+Before we create an alien armada, we need to make a quick detour to talk about \href{https://peps.python.org/pep-0008}{naming conventions} for attributes and names of classes. Unlike most other languages, Python does not have private attributes or methods, i.e., attributes or methods accessible only from inside the object. If you come from Java or C\#/C++, a thought that you can call \emph{any} method and modify \emph{any} attribute from outside should give you chills, as it becomes impossible to predict object's behavior. Python ``solves'' the access problem via a ``gentlemen's agreement'' that methods and attributes whose names start either with \texttt{\_\_} or \texttt{\_} should be \emph{considered} private. In other words, you should not use them directly. In case of \texttt{\_\_}, you are also prevented from doing it in a straightforward way, as the name is \href{https://peps.python.org/pep-0008/\#descriptive-naming-styles}{mangled}. In the example below, you cannot access the \texttt{\_\_color} attribute directly:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4656,7 +4656,7 @@ Before we create an alien armada, we need to make a quick detour to talk about \
 \end{Highlighting}
 \end{Shaded}
 
-You can still access it via its mangled name\texttt{object.\_\textless{}ClassName\textgreater{}\textless{}hidden\ attribute\ name\textgreater{}}:
+But as Python does not have truly private attributes, you can still access it via its mangled name\texttt{object.\_\textless{}ClassName\textgreater{}\textless{}hidden\ attribute\ name\textgreater{}}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4672,17 +4672,49 @@ As noted above, you can also come across attributes with a \emph{single} leading
 \hypertarget{an-alien-armada-appears}{%
 \section{An alien armada appears}\label{an-alien-armada-appears}}
 
-One alien is neither scary, nor challenging enough. We want more! For this, we will create an \texttt{AlienArmada} class with a twist. It will be responsible for creating a grid of aliens, moving them around (our chance to learn about setter methods), allowing outside processes to iterate over them (iterator duck typing), and reporting the number of remaining aliens (length duck typing). As usual, we will do this one step at a time.
+One alien is neither scary, nor challenging enough. We want more! For this, we will create an \texttt{AlienArmada} class with a twist. It will be responsible for creating a grid of aliens, moving them around (our chance to learn about special setter methods), allowing outside processes to iterate over them (iterator duck typing), and reporting the number of remaining aliens (length duck typing). As usual, we will do this one step at a time.
 
-Start by creating an \texttt{AlienArmada} class, below the \texttt{Alien} class. Our initial version will have a compulsory constructor, \texttt{spawn()}, and \texttt{draw()} methods plus \texttt{win}, \texttt{\_\_pos} (a tuple with the position within the window) and \texttt{aliens} (a list with alien objects) attributes. Let us go through methods implementation.
+Start by creating an \texttt{AlienArmada} class, below the \texttt{Alien} class. Our initial version will the following methods
 
-We will create and place aliens in a separate method \texttt{spawn()}, so our constructor will be very simple. You need a \href{https://psychopy.org/api/visual/index.html}{Window} for creating \texttt{Alien} objects and a dictionary with armada-specific settings. You already specified filenames for aliens, so add an \texttt{"Initial\ position"} setting (center of the armada, I've picked \texttt{{[}0,\ 0.5{]}} but you can always optimize it later on), \texttt{"Grid\ size"} (number of aliens horizontally and vertically, I've used \texttt{{[}7,\ 3{]}}), and \texttt{Grid\ size\ {[}norm{]}} (distance between aliens in ``norm'' units, I've picked 0.2). Store \href{https://psychopy.org/api/visual/index.html}{Window} into a \texttt{win} attribute, settings into \texttt{settings} plus store the initial position of the armada in a \texttt{\_\_pos} attribute. Why the \texttt{\_\_} in front? Because we want it to be a private with a virtual \texttt{pos} attribute taking its place for public relations (more on that later). In addition, initialize \texttt{aliens} attribute to an empty list (again, all attributes must be initialized in the constructor, even if to an empty list or \texttt{None}), and call \texttt{spawn()} method.
+\begin{itemize}
+\tightlist
+\item
+  a compulsory constructor,
+\item
+  \texttt{spawn()} that creates and places individual aliens,
+\item
+  \texttt{draw()} that draws aliens,
+\end{itemize}
 
-In the \texttt{spawn()} create aliens on a grid based on your \texttt{"Grid\ size"} and \texttt{"Grid\ step\ {[}norm{]}"} settings, so they are centered at \texttt{AlienArmada}'s position (\texttt{\_\_pos}). All aliens go to \texttt{aliens} attribute, of course. Remember that they need a list of file names for visuals but you have it covered as you have them in the \texttt{settings} attribute. It should look like this:
+and attributes
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{win} a PsychoPy window,
+\item
+  \texttt{\_\_pos} that is a tuple with the position of the armada center within the window,
+\item
+  \texttt{aliens} which is a list with alien objects.
+\end{itemize}
+
+You must also expand your settings. By now you should already have an \texttt{Aliens} settings section with alien images' filenames. To define the armada, we need also need to add
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{"Initial\ position"}: center of the armada, I've picked \texttt{{[}0,\ 0.5{]}} but you can always optimize it later on.
+\item
+  \texttt{"Grid\ size"}: number of aliens horizontally and vertically, I've used `{[}7, 3{]}.
+\item
+  \texttt{"Grid\ step\ {[}norm{]}"}: distance between aliens in ``norm'' units, I've picked 0.2.
+\end{itemize}
+
+\emph{Constructor}: we will create and place aliens in a separate method \texttt{spawn()}, so our constructor will be very simple. As far as parameters are concerned, you need to pass a \href{https://psychopy.org/api/visual/index.html}{Window} for creating \texttt{Alien} objects and a dictionary with armada-specific settings. Store both of them as attributes for later use, initialize \texttt{\_\_pos} to the \texttt{"Initial\ position"}, initialize \texttt{aliens} to an empty list and \texttt{spawn()} them (again, all attributes must be initialized in the constructor, even if to an empty list or \texttt{None}).
+
+In the \texttt{spawn()} create aliens on a grid based on your \texttt{"Grid\ size"} and \texttt{"Grid\ step\ {[}norm{]}"} settings, so they are centered at \texttt{AlienArmada}'s position (\texttt{\_\_pos}). All aliens go to \texttt{aliens} attribute, of course. Remember that they need a list of file names for visuals but you have it covered as you have them in the settings. It should look like this:
 
 \begin{center}\includegraphics[width=8.89in]{images/alien-armada} \end{center}
-
-In the draw \texttt{draw()} method, you simply draw all aliens.
 
 Create the \texttt{AlienArmada} class.
 Use it in \emph{code05.py}.
@@ -4690,7 +4722,9 @@ Use it in \emph{code05.py}.
 \hypertarget{a-laser-shot-appears}{%
 \section{A laser shot appears}\label{a-laser-shot-appears}}
 
-Now we need to create \texttt{Laser} class (in a separate file). Eventually, when a player presses left mouse button, the laser should appear at the location just above the ship and fly up with a certain speed. Let us take care of the first step. Create \texttt{Laser} class as a descendant of \href{https://psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim}{ImageStim} (just like our \texttt{Spaceship} and \texttt{Alien} classes). It should take \texttt{win}, \texttt{pos} and \texttt{speed} as arguments and call the ancestor constructor. The \texttt{pos} argument will hold the position of the ship but the laser must appear \emph{above} it, so you need to adjust \texttt{pos{[}1{]}} for that. Hint, you can get window height from \texttt{win.size{[}1{]}} and you know that sprites are 32 pixels high. The algebra should be straightforward. The \texttt{speed} is in \emph{norm units per second} and be define in settings (I've picked 1 norm / second, so it takes 2 seconds for the shot to fly across the screen). You need to save the \texttt{speed} value in an attribute for later use.
+Now we need to create \texttt{Laser} class (in a separate file). Eventually, when a player presses left mouse button, the laser should appear at the location just above the ship and fly up with a certain speed. As per usual, all parameters for laser (and \texttt{LaserCannon}) should be stored in the settings file under a separate section (e.g., \texttt{laser}). For the moment, we only need to specify \texttt{speed\ {[}norm/sec{]}} (laser shot speed in norm units per second, I've picked 1 norm / second, so it takes 2 seconds for the shot to fly across the screen)) and, optionally, filename of the laser bitmap (but that could be also hardcoded, as we have only one image).
+
+Let us take care of the first step: creating a laser shot just above the sheep. Create \texttt{Laser} class as a descendant of \href{https://psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim}{ImageStim} (just like our \texttt{Spaceship} and \texttt{Alien} classes). It should take \texttt{win}, \texttt{pos}, and \texttt{speed} as arguments and call the ancestor constructor. The \texttt{pos} argument is the position of the ship (that fired it) but the laser must appear \emph{above} it, so you need to adjust \texttt{pos{[}1{]}} for that (hint, you can get window height from \texttt{win.size{[}1{]}} and you know that sprites are 32 pixels high). The \texttt{speed} is in \emph{norm units per second} from the settings. You need to save the \texttt{speed} value in an attribute for later use.
 
 For testing, create a laser object right after you create the ship itself and draw it in the main loop. It won't move but you will be able to see whether you've got the height right.
 
@@ -4700,7 +4734,7 @@ Use in \emph{code06.py}.
 \hypertarget{the-laser-shot-flies}{%
 \section{The laser shot flies}\label{the-laser-shot-flies}}
 
-Let us add \texttt{fly()} method to the laser. It will be very simple, every time it is called the laser should move upwards. As in a Moonlander game, we need a \href{https://psychopy.org/api/clock.html\#psychopy.clock.Clock}{clock} to measure the time elapsed between the updates, so create it as an attribute. In the \texttt{fly()} method, you need to figure out the time elapsed since the last call or since the shot was created (don't forget to reset the timer after that) and move the shot based on its \texttt{speed} and elapsed time.
+Let us add \texttt{fly()} method to the laser. It will be very simple, every time it is called the laser should move upwards. As in a Moonlander game, we need a \href{https://psychopy.org/api/clock.html\#psychopy.clock.Clock}{clock} to measure the time elapsed between the updates, so create it as an attribute in the constructor. In the \texttt{fly()} method, you need to figure out the time elapsed since the last call or since the shot was created (don't forget to reset the timer after that) and move the shot based on its \texttt{speed} and elapsed time.
 
 Remember to call \texttt{fly()} method in the main loop and see how the laser flies up and off the screen.
 
@@ -4710,23 +4744,23 @@ Use it in \emph{code07.py}.
 \hypertarget{we-want-more-lasers}{%
 \section{We want more lasers!}\label{we-want-more-lasers}}
 
-Now we will create a \texttt{LaserGun} class that will take care of individual laser shots. It will 1) create a new \texttt{Laser} object whenever we \texttt{fire()} from it, 2) ensure that it does not overheat by allowing only one shot every N seconds (let's say 0.3 s), 3) call \texttt{draw()} and \texttt{fly()} methods for all laser shots. We will create the class \texttt{LaserGun} in the same file as the \texttt{Laser}.
+Now we will create a \texttt{LaserGun} class that will take care of individual laser shots. It will 1) create a new \texttt{Laser} object whenever we \texttt{fire()} from it, 2) ensure that it does not overheat by allowing only one shot every N seconds (another parameter to be defined in the settings file, let's say 0.3 s), 3) call \texttt{draw()} and \texttt{fly()} methods for all laser shots. We will create the class \texttt{LaserGun} in the same file as the \texttt{Laser}.
 
 In the constructor, pass PsychoPy window variable and a dictionary with laser gun specific settings (these should include the \texttt{speed} that you specified earlier and the cool down period in seconds) and store both in attributes for later use. Initialize \texttt{lasershots} attribute with empty list, and create a cool down \href{https://psychopy.org/api/clock.html\#psychopy.clock.CountdownTimer}{timer}.
 
-The \texttt{fire()} method should take position of the ship as a single parameter. If enough time passed since the last shot (check the cool down timer for that), create a new \texttt{Laser} at the supplied position, add it to the \texttt{lasershots} list, and reset the cool down timer. In \texttt{draw()} and \texttt{fly()} simply draw or fly all \texttt{lasershots}.
+The \texttt{fire()} method should take position of the ship as a single parameter. If enough time passed since the last shot (check the cool down timer for that), create a new \texttt{Laser} at the supplied position, add it to the \texttt{lasershots} list, and reset the cool down timer. In \texttt{draw()}/\texttt{fly()} simply draw/fly all \texttt{lasershots}.
 
 For testing, use \texttt{LaserGun} in place of the \texttt{Laser}. Both have same \texttt{draw()} and \texttt{fly()} methods that you should be calling already. In the main loop, check if left mouse button is \href{https://psychopy.org/api/event.html\#psychopy.event.Mouse.getPressed}{pressed}. If it is, \texttt{fire()} the laser gun, passing current position of the ship to it.
 
 Create \texttt{LaserGun} class.
-Test it in \emph{code07.py}.
+Test it in \emph{code08.py}.
 
 \hypertarget{too-many-lasers}{%
 \section{Too many lasers!}\label{too-many-lasers}}
 
-We do not need our lasers once they fly of the screen, so we should remove them. First, we need to know which \texttt{Laser} shot has expired (is off the screen). For this, modify the \texttt{Laser} class by adding a \protect\hyperlink{computed-attribute-property}{computed property} \texttt{expired} that is \texttt{True} if the shot is above the upper edge of the window.
+We do not need our lasers once they fly of the screen, so we should remove them. First, we need to know which \texttt{Laser} shot has \texttt{expired}``: is off the screen (this section) or hit its target (the next section). For this, modify the \texttt{Laser} class by adding an \texttt{expired} attribute that is set initially to \texttt{False} (the shot is good). In addition, write a new method \texttt{check\_screen\_limits()} that would set \texttt{expired\ =\ True} if the shot is above the upper edge of the window but leaves \texttt{expired} as is (unmodified!) otherwise (the shot could be within the screen and get \texttt{expired} because it hit an alien).
 
-Next, add a \texttt{cleanup()} method to the \texttt{LaserGun} class that will remove all \texttt{expired} shots. This is both simple and tricky! Conceptually simple: you loop over \texttt{lasershots} and delete any object that is \texttt{expired}. You can do it via list comprehension (deleting objects by not including them in the updated list) but for didactic reasons we will use \href{https://docs.python.org/3/tutorial/datastructures.html\#the-del-statement}{del} instead. If you have a list and you want to delete a second element, you write
+Next, add a \texttt{cleanup()} method to the \texttt{LaserGun} class that will call \texttt{check\_screen\_limits()} for all shots and then remove all \texttt{expired} ones. This is both simple and tricky! Conceptually simple: you loop over \texttt{lasershots} and delete any object that is \texttt{expired}. The easy way is to do it via \protect\hyperlink{list-comprehension}{list comprehension} (deleting objects by not including them in the updated list) but for didactic reasons we will use \href{https://docs.python.org/3/tutorial/datastructures.html\#the-del-statement}{del} instead. If you have a list and you want to delete a second element, you write
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4761,116 +4795,203 @@ Do you see why? Solution: start deleting from the end, this way indexes of earli
 \end{Highlighting}
 \end{Shaded}
 
-Note that you must use \texttt{del\ list{[}index{]}} format, so you need to use indexing for loop for the \texttt{cleanup()} function:
+Note that you must use \texttt{del\ list{[}index{]}} format, so you need to use indexing in the for loop of the \texttt{cleanup()} method:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \ControlFlowTok{for}\NormalTok{ ishot }\KeywordTok{in}\NormalTok{ backwards}\OperatorTok{{-}}\NormalTok{index}\OperatorTok{{-}}\NormalTok{built}\OperatorTok{{-}}\NormalTok{via}\OperatorTok{{-}}\NormalTok{the}\OperatorTok{{-}}\BuiltInTok{range}\OperatorTok{{-}}\NormalTok{function:}
+\NormalTok{  check }\ControlFlowTok{if}\NormalTok{ lasershot has left the screen}
   \ControlFlowTok{if} \VariableTok{self}\NormalTok{.lasershots[ishot] needs to be deleted:}
 \NormalTok{    delete that }\VariableTok{self}\NormalTok{.lasershots[ishot]}
 \end{Highlighting}
 \end{Shaded}
 
-Add \texttt{cleanup()} call to the main loop right after the \texttt{fly()} to automatically delete expired shots. Once you fired a few shots and they are all off the screen, put a breakpoint and check that the \texttt{.lasershots} is empty (you \texttt{cleanup()} works as it should).
+Add \texttt{cleanup()} call to the main loop right after the \texttt{fly()} to automatically delete expired shots. Once you fired a few shots and they are all off the screen, put a breakpoint and check that the \texttt{.lasershots} is empty (your \texttt{cleanup()} works as it should).
 
 Add \texttt{expired} property to \texttt{Laser}.
 Add \texttt{cleanup()} method to \texttt{LaserShot}.
-Use \texttt{cleanup()} in \emph{code08.py}.
+Use \texttt{cleanup()} in \emph{code09.py}.
 
 \hypertarget{i-am-hit-i-am-hit}{%
 \section{I am hit! I am hit!}\label{i-am-hit-i-am-hit}}
 
-Now we need to check whether a lasershot hit an alien. In that case, all the relevant aliens and shots must be removed. It is easy for lasershots, we just set them as \texttt{expired} and \texttt{cleanup()} does the rest. Clearly, we need the same mechanism for the aliens.
+Now we need to check whether a lasershot hit an alien. In that case, all the relevant aliens and shots must be removed. Removing lasershots is easy: We just set them as \texttt{expired} and \texttt{cleanup()} does the rest. Clearly, we need the same mechanism for the aliens.
 
-Add \texttt{teleported} attribute to the \texttt{Alien} class and initialize to \texttt{False}. In \texttt{AlienArmade} class, implement a \texttt{cleanup()} method, analogous to one in \texttt{LaserGun} that will delete any \texttt{teleported} aliens. Add the call to it in the main loop at the same location as for the \texttt{LaserGun}. You can test it by setting \texttt{teleported} to \texttt{True} for one of the aliens and it should be missing.
+Add \texttt{hit} attribute to the \texttt{Alien} class and initialize to \texttt{False} (an alien is not initially hit). In \texttt{AlienArmada} class, implement a \texttt{cleanup()} method, analogous to one in \texttt{LaserGun} that will delete any alien that is \texttt{hit}. Add the call to it in the main loop at the same location as for the \texttt{LaserGun}. You can test it by setting \texttt{hit} to \texttt{True} for one of the aliens and it should be missing.
 
-Now for the actual check. You should loop over all aliens and laser shots checking whether whether they \href{https://psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim.overlaps}{overlap}. If they do, set laser shot to \texttt{expired} and the alien as \texttt{teleported}. Do this check \emph{before} the clean up but after the laser shots fly.
+Now for the actual check. You should loop over all aliens and laser shots attributes of \texttt{AlienArmada} and \texttt{LaserGun} checking \emph{every pair} on whether they \href{https://psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim.overlaps}{overlap}. If they do, set laser shot to \texttt{expired} and the alien as \texttt{hit}. Do this check \emph{before} the clean up but \emph{after} the laser shots fly.
 
 Test it!
 
-Put your updated code into \emph{exercise08.py}, update \texttt{Alien} and \texttt{AlienArmade} classes.
+Update \texttt{Alien} and \texttt{AlienArmada} classes
+Check for laser shots hitting aliens
+in \emph{code10.py}, .
 
 \hypertarget{duck-typiing-iterators}{%
 \section{Duck typiing iterators}\label{duck-typiing-iterators}}
 
-In the precious exercise, you used \texttt{aliens} and \texttt{lasershots} attributes directly in the loop. However, let us inject some coolness into our code and turn \texttt{AlienArmada} and \texttt{LaserGun} classes into iterators. Recall that you need to implement two special methods for this: \texttt{\_\_iter\_\_(self)} and \texttt{\_\_next\_\_(self)\_\_}. The first one, initializes the loop, the second one yields the next item. The actual implementation is very simple. You need to create a new attribute that will be used to track which item you need to yield, call it \texttt{iter}. Initialize it to \texttt{None} in the constructor.
+In the precious exercise, you used \texttt{aliens} and \texttt{lasershots} attributes directly in the loop. However, let us inject some coolness into our code and turn \texttt{AlienArmada} and \texttt{LaserGun} classes into iterators. Recall that you need to implement two special methods for this: \texttt{\_\_iter\_\_(self)} and \texttt{\_\_next\_\_(self)\_\_}. The first one, initializes the loop, the second one yields the next item. The actual implementation is very simple. You need to create a new attribute that will be used to track which item you need to yield, call it \texttt{iter} and initialize it to \texttt{None} in the constructor.
 
-In the \texttt{\_\_iter\_\_(self)}, initialize the counter to \texttt{0} and return \texttt{self}, returning the reference to the iterator, which is the object itself\footnote{You can cheat and return the reference to the list attribute itself and it'll do the rest. Don't do it for didactic purposes.}. In the \texttt{\_\_next\_\_(self)}, check if \texttt{iter} is within the list length. If it is not (i.e., you ran out aliens/shots to iterate over), \texttt{raise\ StopIteration()}. If it is, increase the iteration counter and return the element it was indexing \emph{before} that: Think about why you need to return \texttt{self.aliens{[}self.iter-1{]}} rather than \texttt{self.aliens{[}self.iter-1{]}} or how you can use a different starting value and range check to avoid this.
+In the \texttt{\_\_iter\_\_(self)}, initialize the counter to \texttt{0} and return \texttt{self}: a returning the reference to the iterator, which is the object itself\footnote{You can cheat and return the reference to the list attribute itself and it'll do the rest but do not do it for didactic purposes.}. In the \texttt{\_\_next\_\_(self)}, check if \texttt{iter} is within the (\texttt{aliens} or \texttt{lasershots}) list length. If it is not (i.e., you ran out aliens/shots to iterate over), \texttt{raise\ StopIteration}. If it is, increase the iteration counter and return the element it was indexing \emph{before} that: Think about why you need to return \texttt{self.aliens{[}self.iter\ -\ 1{]}} rather than \texttt{self.aliens{[}self.iter{]}} or how you can use a different starting value and range check to avoid this.
 
-Do this for both classes and use them in for loops directly, instead of \texttt{aliens.aliens} and \texttt{laser.lasershots}.
+Do this for both classes and use them in for loops directly, i.e.~looping over \texttt{aliens} and \texttt{laser} instead of \texttt{aliens.aliens} and \texttt{laser.lasershots}.
 
 Test it! It should work as before, of course, but with cooler duck typing inside!
 
-Put your updated code into \emph{exercise09.py}, update \texttt{LaserGun} and \texttt{AlienArmade} classes.
+Turn \texttt{LaserGun} and \texttt{AlienArmada} into iterators.
+Use them as iterators in \emph{code11.py}.
 
 \hypertarget{gotem-all}{%
 \section{Got'em all!}\label{gotem-all}}
 
-Now, implement \texttt{\_\_len()\_\_} method for \texttt{AlienArmada} class that so returns the number of remaining aliens. In the main loop, use it via \texttt{len()} function to check whether you won: no aliens left, the game is over. Use \texttt{len()} with the object, not with the list attribute!
+Now, implement \texttt{\_\_len\_\_()} method for \texttt{AlienArmada} class that returns the number of remaining aliens. In the main loop, use it via \texttt{len()} function to check whether you won: no aliens left, the game is over. Use \texttt{len()} with the object, not with its \texttt{aliens} list attribute!
 
-Put your updated code into \emph{exercise10.py}, update \texttt{LaserGun} and \texttt{AlienArmade} classes.
+Add \texttt{\_\_len\_\_()} special method to \texttt{AlienArmada} class.
+Use it to check whether all aliens are hit
+in \emph{code12.py}.
 
 \hypertarget{ping}{%
 \section{Ping!}\label{ping}}
 
-Now let us use a \texttt{TeleportSoundMixin} class that defines a single \texttt{teleport()} method that plays the \emph{teleport.wav} sound (created by Sergenious and obtained from \href{https://freesound.org/people/Sergenious/sounds/55853/}{freesound.org}) is in \href{material/space-invaders.zip}{materials}. Thus, it can be a single line method when you both create and play the sound in one go, no temporary variable or an attribute are required. Then, use it as an ancestor for the \texttt{Alien} class. Now it has that \texttt{teleport()} method. Call it when you set \emph{teleported} to \texttt{True}.
+Now let us use a \texttt{HitSoundMixin} class that defines a single \texttt{hit()} method (no constructor!) that plays the \emph{teleport.wav} sound\footnote{Created by Sergenious and obtained from \href{https://freesound.org/people/Sergenious/sounds/55853/}{freesound.org}} from \href{material/space-invaders.zip}{materials}. It can be a single line method when you both create and play the sound in one go, no temporary variable or an attribute are required. When you use it as an ancestor for the \texttt{Alien} class, it has that \texttt{hit()} method. Call it when you set \emph{hit} to \texttt{True}.
 
-Put your updated code into \emph{exercise11.py}, create \texttt{TeleportSoundMixin} class and update \texttt{Alien} class.
+Create \texttt{HitSoundMixin} class.
+Mix it into the \texttt{Alien} class.
+Use it in \emph{code11.py}.
+
+\hypertarget{getter-setter}{%
+\section{Virtual attributes via getters and setters}\label{getter-setter}}
+
+Our next detour is to learn how you can create a private attribute (within \protect\hyperlink{access-restrictions}{the limits of Python}, of course). Recall that we have a \texttt{\_\_pos} attribute of an \texttt{AlienArmada} class that defines its location. The catch is that changing the position of the armada means changing position of all the aliens that constitute the armada. This means that we need write a method that receive a new position for the armada and updates both the \texttt{\_\_pos} attribute and positions of individual aliens. And that is exactly what getter/setter methods are for. They are declared via special \emph{decorators}\footnote{These are functions that ``decorate'' you function and are called \emph{before} your function is called. They are like gatekeepers or face control, so they can alter whether or how your function is executed.}: \texttt{@property} and \texttt{@\textless{}name\textgreater{}.setter}. You already know the former one that we used to compute a value on-the-fly. But it also be used to get a value of a ``private'' attribute, which is why it is called a ``getter'' method. The latter decorator, is for a ``setter'' method that \emph{sets} a new value to a private attribute. The idea of using them together is to isolate an actual attribute value from the outside influence. It is particularly helpful, if you need to control whether a new value of an attribute is a valid one, needs to converted, additional processing, etc. For example, \texttt{color} attribute of the rectangle stimulus uses this approach, which is why it can take RGB triplets, hexadecimal codes, or plain color names as a value and set the color correctly.
+
+Here is a sketch of how it could work for a virtual attribute for \texttt{color}. One typically creates an \emph{internal} attribute with almost the same name, e.g., \texttt{\_color} or \texttt{\_\_color}. The value is stored and read from that internal attribute by getter and setter methods:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ ExampleClass:}
+
+  \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+    \VariableTok{self}\NormalTok{.\_\_color }\OperatorTok{=} \StringTok{"red"}
+
+  \AttributeTok{@property}
+  \KeywordTok{def}\NormalTok{ color(}\VariableTok{self}\NormalTok{):}
+    \CommentTok{"""}
+\CommentTok{    This is a getter method for virtual color}
+\CommentTok{    attribute.}
+\CommentTok{    """}
+    \CommentTok{\# Here, we simply return the value. But we could }
+    \CommentTok{\# compute it from some other attribute(s) instead.}
+    \ControlFlowTok{return} \VariableTok{self}\NormalTok{.\_\_color}
+    
+  \AttributeTok{@color.setter} \CommentTok{\# not the most elegant syntax, IMHO}
+  \KeywordTok{def}\NormalTok{ color(}\VariableTok{self}\NormalTok{, newvalue):}
+    \CommentTok{"""}
+\CommentTok{    Note that the setter name has THE SAME name as the getter!}
+\CommentTok{    It sets a new value and does not return anything.}
+\CommentTok{    """}
+  
+    \CommentTok{\# Here, you can have checks, conversion, }
+    \CommentTok{\# additional changes to other attributes, etc.}
+    \VariableTok{self}\NormalTok{.\_\_color }\OperatorTok{=}\NormalTok{ newvalue}
+    
+    
+\NormalTok{example }\OperatorTok{=}\NormalTok{ ExampleClass()}
+
+\CommentTok{\# get the value, note the lack of () after color}
+\BuiltInTok{print}\NormalTok{(example.color)}
+
+\CommentTok{\# set the value}
+\NormalTok{example.color }\OperatorTok{=} \StringTok{"blue"}
+\end{Highlighting}
+\end{Shaded}
+
+Note that there is no \emph{actual} attribute \texttt{color}\footnote{Just like there is no physical phenomenon called ``color''!}, yet, our code works as if it exists.
+
+There is another twist to the story. If you only define the getter \texttt{@property} method but no setter method, your hidden property is read-only\footnote{Note that you cannot have write-only property, you must have either getter alone or both.}!
 
 \hypertarget{the-alien-armada-jumps}{%
 \section{The alien armada jumps}\label{the-alien-armada-jumps}}
 
-Currently, our aliens are sitting ducks. No fun! They need to get a move on. But before we can move alien armada around, we need to be able to change its position. Recall that we have \texttt{\_\_pos} attribute in \texttt{AlienArmada} class. I've made it (kinda) private via \texttt{\_\_pos} on purpose, so we can define getter and setter methods for it and call the virtual attribute \texttt{pos} to make it consistent with the rest. If you forgot what getter/setter methods are, \protect\hyperlink{getter-setter}{read again}.
+Currently, our aliens are sitting ducks. No fun! They need to get a move on. But before we can move alien armada around, we need to be able to change its position. So let us write getter/setter methods for it. To start with, define a getter, as it only needs to return the value of the hidden position attribute.
 
-To start with, define a getter. It only needs to return the value of the hidden position attribute.
+Now to more complicated and, hence, fun bit! Remember, we need to move \emph{all} individual aliens relative to the center of the armada. For this,
 
-Now, to more complicated and, hence, fun bit! Remember, we need to move \emph{all} individual aliens relative to the center of the armada. For this, 1) compute the \emph{change} in position, 2) use it to alter position of individual aliens based on their current position, 3) store the new position in the hidden attribute.
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  compute the \emph{change} in its position based on current and new value,
+\item
+  use it to alter position of individual aliens based on their current position,
+\item
+  store the new position in the private attribute.
+\end{enumerate}
 
 Test it by making armada jump to a random location every time you press \emph{space} button. The armada should keep its formation!
 
-Put your updated code into \emph{exercise12.py}, update \texttt{AlienArmada} class.
+Implement getter/setter methods for \texttt{\_\_pos} in \texttt{AlienArmada}.
+Test it in \emph{code12.py}.
 
 \hypertarget{the-alien-armada-moves}{%
 \section{The alien armada moves}\label{the-alien-armada-moves}}
 
-Our alien armada will move downwards along a sine trajectory. Thus, we need to define a \texttt{fly()} method that will move it downwards by some small step (I've used 0.001, which is quite fast for 60 Hz, as it will move 0.06 units per second). And the horizontal position will be computed as a sine wave. The general formula is:
+Our alien armada will move downwards along a sine trajectory:
+
 \[x = x_{max} \cdot sin(2 \pi f \cdot (y-y_{origin})) \]
-where \(x_{max}\) is maximal deviation of the armada from the middle of the screen (I've set it to 0.25), the \(f\) is the frequency, i.e., how fast is horizontal movement (I've set to 3), \(y\) is the current vertical coordinate of the armada and \(y_{origin}\) is the initial one (0.5 in my case). Experiment with values to see how they affect the movement.
+where \(x_{max}\) is maximal deviation of the \emph{center} of the armada from the middle of the screen (I've set it to \(0.25\)), the \(f\) is the frequency, i.e., how fast is horizontal movement (I've set it to \(3\) but you can see how much slower it would be for \(1\) in the plot below), \(y\) is the current vertical coordinate of the armada and \(y_{origin}\) is the initial one (\(0.5\) in my case). As with all other parameters, these should be part of the settings file plus \texttt{vertcal\ speed\ {[}norm/sec{]}} that defines how fast the armada will fly down (I would set it to 0.1, so it takes 15 seconds to fly down).
 
-Once you computed both components, assign the tuple to the \texttt{pos} and it will move the entire armada. In the main loop, call \texttt{fly()} when you call it for laser gun.
+\includegraphics{14-space-invaders-duck-typing_files/figure-latex/unnamed-chunk-8-1.pdf}
 
-Put your updated code into \emph{exercise13.py}, update \texttt{AlienArmada} class.
+For the armada to fly, we need to add a timer (in the constructor) and define a \texttt{fly()} method that
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  computes the times since the armada creation
+\item
+  computes current vertical position based on the starting location, elapsed time (from the timer), vertical speed defined in settings
+\item
+  computes current horizontal position given the formula above and the relevant settings
+\item
+  updates current position via a simple \texttt{self.pos\ =\ (new\_x,\ new\_y)} (the setter method will take care of the rest)
+\end{enumerate}
+
+In the main loop, call \texttt{fly()} when you call it for laser gun.
+
+Add \texttt{fly()} method to \texttt{AlienArmada} class.
+Use it in \emph{code13.py}.
 
 \hypertarget{the-alien-armada-wins-crash}{%
 \section{The alien armada wins: crash!}\label{the-alien-armada-wins-crash}}
 
-So far, the player always wins. Let us make it more dangerous! They will lose if either an alien crashes into the spaceship or if the armada goes past the ship. Implement the former the same way as you checked whether laser shot hit an alien: loop of aliens and see if the overlap with the spaceship (game over if they do). Implement and test.
+So far, the player always wins. Let us make it more dangerous! They will lose if either an alien crashes into the spaceship or if the armada goes past the ship. Implement the former the same way as you checked whether laser shot hit an alien: loop over aliens and see if they overlap with the spaceship (game over if they do). Implement and test.
 
-Put your updated code into \emph{exercise14.py}.
+Implement crash-into-ship in \emph{code14.py}.
 
 \hypertarget{the-alien-armada-wins-missed-them}{%
 \section{The alien armada wins: missed them!}\label{the-alien-armada-wins-missed-them}}
 
-The second way to lose the game, is if at least one alien got past the ship. For this, we need to check the position of the \emph{lowest} alien and if it is lower than that of the spaceship, the game is over. You can do it in the same loop you are checking for the hit but, for didactic reasons, let us practice \texttt{@proprety} a bit more. Implement a new read-only property \texttt{lowest\_y} of the \texttt{AlienArmada} class that will return the y-coordinate of the lowest alien in the armada. You need to loop over individual aliens to find the lowest y and return it. There are different way to do it, come up with one yourself! In the main code, add the check and make sure the game is over, if aliens got past the player.
+The second way to lose the game, is if at least one alien got past the ship. For this, we need to check the position of the \emph{lowest} alien and if it is lower than that of the spaceship, the game is over. You can do it in the same loop you are checking for the hit but, for didactic reasons, let us practice \texttt{@proprety} a bit more. Implement a new computed (read-only) property \texttt{lowest\_y} of the \texttt{AlienArmada} class that will return the y-coordinate of the lowest alien in the armada. You need to loop over individual aliens to find the lowest y and return it. There are different ways to do it, come up with one yourself! In the main code, add the check and make sure the game is over, if aliens got past the player.
 
-Put your updated code into \emph{exercise15.py}, update \texttt{AlienArmada} class.
+Add \texttt{lowest\_y} computed property to \texttt{AlienArmada} class.
+Use it in \emph{code15.py}.
 
 \hypertarget{mixin-teleport}{%
 \section{Mixin teleport}\label{mixin-teleport}}
 
 Mix in the teleport sound method to the \texttt{Spaceship} and play it if alien crashed into it.
 
-Put your updated code into \emph{exercise16.py}, update \texttt{Spaceship} class.
+Mix in teleport to \texttt{Spaceship} class.
+Use it in \emph{code16.py}.
 
 \hypertarget{game-over-message}{%
 \section{Game over message}\label{game-over-message}}
 
-Create a game over message (a blinking one would be cool but this is up to you) that will reflect the outcome. Something like this but use your imagination:
+Create a blinking game over message that will reflect the outcome. Something like this but use your imagination:
 
 \begin{itemize}
 \tightlist
-\item
-  ``Coward!'', if the player pressed escape.
 \item
   ``Congrats!'', if the player won.
 \item
@@ -4879,14 +5000,466 @@ Create a game over message (a blinking one would be cool but this is up to you) 
   ``They got away!'', if the armada got past the player.
 \end{itemize}
 
-One way to simplify you life is to rename \texttt{gameover} variable into the \texttt{gamestate} variable. Initially, it could be \texttt{"playing"}, so your loop repeats \texttt{while\ gamestate\ ==\ "playing"}. Then, you can set it based on the type of the event, e.g., \texttt{"abort"} for \emph{escape} button press, \texttt{"victory"} when player wins, etc. and use it after the main loop to determine which message to show. Better still, use dictionary for this instead of if-else. Or ``cheat'' and store the message in the variable itself.
+One way to simplify you life is to rename \texttt{gameover} variable into the \texttt{gamestate} variable. Initially, it could be \texttt{"playing"}, so your loop repeats \texttt{while\ gamestate\ ==\ "playing"}. Then, you can set it based on the type of the event (\texttt{"victory"} when player wins, \texttt{"hit"} when they were hit by the armada, \texttt{"missed"} if aliens got away) and use it after the main loop to determine which message to show. Better still, use dictionary for this instead of if-else. Or ``cheat'' and store the message in the variable itself.
 
-Put your updated code into \emph{exercise17.py}.
+Put your updated code into \emph{code17.py}.
 
 \hypertarget{we-want-more}{%
 \section{We want more!}\label{we-want-more}}
 
-You have a solid game but it can be improved in many ways. Currently, we move all game object assuming constant frame rate. That might not be the case, so it would be wiser to use inter-frame timer and use time elapsed since the last update. And it can use more feature. Score? Difficulty? More levels? Aliens shooting back at you? Anything is possible!
+You have a solid game but it can be improved in many ways. Score? Difficulty? More levels? Aliens shooting back at you? Anything is possible!
+
+\hypertarget{game-of-life-numpy}{%
+\chapter{Game of life (NumPy)}\label{game-of-life-numpy}}
+
+Today you will be programming the \href{https://en.wikipedia.org/wiki/Conway\%27s_Game_of_Life}{Game of Life} created by the British mathematician John Horton Conway. This is not really a game but rather a simulation where you set initial conditions up and observe how the population evolves. The rules, \href{https://en.wikipedia.org/wiki/Conway\%27s_Game_of_Life}{as described on Wikipedia}, are very simple:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Any live cell with two or three live neighbors survives.
+\item
+  Any dead cell with three live neighbors becomes a live cell.
+\item
+  All other live cells die in the next generation. Similarly, all other dead cells stay dead.
+\end{enumerate}
+
+Despite rules simplicity they produce remarkable evolution of a cell culture and give rise to many dynamic or static configurations. Here is an example simulation with a random starting state.
+
+\hypertarget{implementing-the-rules}{%
+\section{Implementing the rules}\label{implementing-the-rules}}
+
+To program the game, you need to count live neighbors for every cell and use the rules above to decide whether it will be alive or dead on the \emph{next} iteration. The latter bit is important, you need to evaluate all cells at their current state, you cannot change their status during that period. Accordingly, on each iteration you need to a create \emph{new} cell culture and then overwrite the original one.
+
+Our cells will live in a rectangular world, so you need to count number of neighbors in the 8 cells around it, as shown in the left hand-side image below (index / location of the dot in question is assumed to be \emph{i, j}).
+
+\begin{center}\includegraphics[width=1\linewidth]{images/game-of-life-grid} \end{center}
+
+However, things become slightly trickier, if a cell lies on the border of the world, as depicted on the right hand-side. The same rules for living or dying still apply but when counting neighbors you need to make sure that we do not try to access cells \emph{outside} of the world (marked in red). If we mess up our indexing, at best we will get an error, at worst we will access wrong elements. E.g., when our index is negative, Python will not issue a mistake but will simply count elements \emph{from the end}.
+
+\hypertarget{numpy}{%
+\section{NumPy}\label{numpy}}
+
+Our cells live on a 2D grid which we can implement it as a list of lists. We will start with this implementation but you will see that using a matrix (a 2D array) is more natural. It also gives us opportunity to learn about \href{https://numpy.org/}{NumPy} that provides a powerful and fast implementation of multidimensional arrays and numerous mathematical tools. It is one of the core non-standard (i.e., not included into the base Python distribution) libraries that is so prominent that you are expected to use it via its alias rather than by its full name:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\end{Highlighting}
+\end{Shaded}
+
+I will not try to properly cover NumPy here, it is simply too vast. Rather, the purpose is to make you aware of opportunities that NumPy provides. The material below will contain just the bare minimum that we need for the game. I suggest that you read the \href{https://numpy.org/doc/stable/user/quickstart.html}{quickstart guide to NumPy} before continuing and you should be ready to consult \href{https://numpy.org/doc/stable/user/absolute_beginners.html}{the absolute basics for beginners} whenever you have questions about manipulating arrays.
+
+\hypertarget{boilerplate-3}{%
+\section{Boilerplate}\label{boilerplate-3}}
+
+Implement usual PsychoPy boilerplate with a external settings and context manager. The context manager should initialize PsychoPy window and a mouse, whic we will use it later to draw or erase individual cells. The size of the window that we need depends on the grid size that cells live at and the size of the individual cells. Define all three parameters - \texttt{grid\ width\ {[}cells{]}}, \texttt{grid\ height\ {[}cells{]}}, and \texttt{cell\ size\ {[}pix{]}} - in the settings file and compute window size on the fly. I've picked a 30 by 30 grid with each cell measuring 10 pixels (both widht and height, as cells are square).
+
+Create \texttt{GameContext} and \texttt{GameAbort} classes.
+Put your boilerplate code into \emph{code01.py}.
+
+\hypertarget{visualizing-an-array}{%
+\section{Visualizing an array}\label{visualizing-an-array}}
+
+We will use a 2D Numpy array to encode our cells: \(1\) will mean a living cell and \(0\) will mean an empty space. But before we create the array, we need to think about how we will visualize it. There are at least three ways you can do it in PsychoPy. First, you can create a \href{https://psychopy.org/api/visual/rect.html\#psychopy.visual.rect.Rect}{Rect} (or some over visual primitive or even an image) for each cell and draw them one-by-one in a loop. However, that will be extremely inefficient and slow. Second, you can do effectively the same one-primitive-per-cell but via an efficiently implemented \href{https://psychopy.org/api/visual/elementarraystim.html\#psychopy.visual.ElementArrayStim}{ElementArrayStim} class. Finally, you can use a cool feature of \href{https://psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim}{ImageStim} class. So far, we only used names of external files as its \texttt{image} input but it can also take a 2D NumPy array and display it as an image. We will use the latter approach, as it is the simplest.
+
+Let us start by 1) creating a 2D grid, 2) converting it to a 3D image (for an RGB color space, PsychoPy expects one 2D grid of values per channel), and 3) displaying it via \href{https://psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim}{ImageStim}.
+
+\hypertarget{a-random-matrix}{%
+\section{A random matrix}\label{a-random-matrix}}
+
+There are different ways to create a matrices (2D arrays) in NumPy, see \href{https://numpy.org/doc/stable/user/absolute_beginners.html\#creating-matrices}{Creating matrices}. Here, we will generate a matrix via NumPy \href{https://numpy.org/doc/stable/reference/random/generator.html}{random generator} but you could also experiment with generating an empty grid via \href{https://numpy.org/doc/stable/reference/generated/numpy.zeros.html}{numpy.zeros()} or a fully crowded one via \href{https://numpy.org/doc/stable/reference/generated/numpy.ones.html?highlight=ones}{numpy.ones()}.
+
+Consult \href{https://numpy.org/doc/stable/reference/random/generator.html}{documentation} and figure out how to generate a grid of integers that range between \(0\) and \(1\) (hint, take a look at the second example that covers generating integer values) creating a matrix of the given size (hint, take a look at the third example). I suggest playing with the code in a Jupyter notebook starting with a small size of the grid (so you could easily see it in the output, as for a 3×4 grid below).
+
+\begin{verbatim}
+#> Grid shape:  (3, 4)
+#> [[0 1 1 0]
+#>  [1 0 0 1]
+#>  [1 0 1 0]]
+\end{verbatim}
+
+\hypertarget{from-2d-to-3d}{%
+\section{From 2D to 3D}\label{from-2d-to-3d}}
+
+State of our cells is represented by a 2D NumPy array of size \texttt{{[}width,\ height{]}} but \href{https://psychopy.org/api/visual/imagestim.html}{ImageStim} expects a 3D array of size \texttt{{[}width,\ height,\ 3{]}} that defines the image in the \href{https://psychopy.org/general/colours.html\#rgb-color-space}{RGB} or some other \href{https://psychopy.org/general/colours.html}{color space}. The simplest way to do this for our game is to \href{https://numpy.org/doc/stable/reference/generated/numpy.stack.html?highlight=numpy\%20stack\#numpy-stack}{stack} the same 2D array three times. Zeros at all channels will give us black (empty space), whereas ones for all channels (a mixture of maximal red, green, and blue) will add to white. Again, experiment in a Jupyter notebook making sure that output and the \href{https://numpy.org/doc/stable/reference/generated/numpy.ndarray.shape.html}{shape} of the 3D array are correct.
+
+\begin{verbatim}
+#> 3D grid shape:  (3, 3, 4)
+#> [[[0 1 1 0]
+#>   [1 0 0 1]
+#>   [1 0 1 0]]
+#> 
+#>  [[0 1 1 0]
+#>   [1 0 0 1]
+#>   [1 0 1 0]]
+#> 
+#>  [[0 1 1 0]
+#>   [1 0 0 1]
+#>   [1 0 1 0]]]
+\end{verbatim}
+
+\hypertarget{correct-values-range}{%
+\section{Correct values range}\label{correct-values-range}}
+
+We are almost ready to use the 3D array as an image but our values go from \(0\) to \(1\), whereas the default RGB color space in PsychoPy expects values to go from \(-1\) (black) to \(1\) (white). Thus, we need to rescale the entire array via basic algebra. The good news is that NumPy is build on the idea of vectorization of operations, i.e., you do not need to apply the same operation to one element at a time (as you would do with Python list) but to the entire array at once.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\NormalTok{a }\OperatorTok{=}\NormalTok{ np.array([}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{])}
+\NormalTok{a }\OperatorTok{+} \DecValTok{10}
+\CommentTok{\#\textgreater{} array([11, 12, 13, 14])}
+\NormalTok{a }\OperatorTok{*} \DecValTok{10}
+\CommentTok{\#\textgreater{} array([10, 20, 30, 40])}
+\end{Highlighting}
+\end{Shaded}
+
+As per usual, experiment in a notebook and check that values turn out as expected:
+
+\begin{verbatim}
+#> [[[-1  1  1 -1]
+#>   [ 1 -1 -1  1]
+#>   [ 1 -1  1 -1]]
+#> 
+#>  [[-1  1  1 -1]
+#>   [ 1 -1 -1  1]
+#>   [ 1 -1  1 -1]]
+#> 
+#>  [[-1  1  1 -1]
+#>   [ 1 -1 -1  1]
+#>   [ 1 -1  1 -1]]]
+\end{verbatim}
+
+\hypertarget{showing-an-image}{%
+\section{Showing an image}\label{showing-an-image}}
+
+Finally, we are ready to create and show the image! Use the code from a Jupiter notebook to generate a random grid of size \texttt{{[}grid\ width,\ grid\ height{]}} (from the settings), stack it, and rescale it. Then, simply create an \href{https://psychopy.org/api/visual/imagestim.html}{ImageStim} passing the array as \texttt{image} and make sure that the image spans the entire window (what should it size be, given \texttt{"normal"} units?) and draw it in the main loop. Put a break point and use a debug console or watch tab to check whether image on the screen correspond to the original 2D grid.
+
+Create a random grid and show it in \emph{code02.py}.
+
+\hypertarget{slicing-a-border-problem}{%
+\section{Slicing a border problem}\label{slicing-a-border-problem}}
+
+We have a grid-to-image conversion but we are not out of the woods yet. The problem is the cells that live next to the border. They are of no trouble now but will become one, once we start counting their neighbors. Again, recall that we need to count all the neighbors \emph{around} each cell and for cells at the border that means trouble with indexes.
+
+\begin{center}\includegraphics[width=0.36\linewidth]{images/game-of-life-border} \end{center}
+
+We could be extra careful when indexing them, but there is a simpler solution: padding the grid with zeros. This way, we can use same rules for all \emph{inner} cells and never check or modify the empty padding.
+
+\begin{center}\includegraphics[width=0.5\linewidth]{images/game-of-life-padding} \end{center}
+
+This solution still requires extra work. Namely, we need to generate an empty 2D grid that is 2 elements wide and taller than we need, fill the inner part with random \(0\) and \(1\), and then use only that inner part when stacking a 3D array for an image. When using Python lists, we would need to use nested loops but NumPy's \href{https://numpy.org/doc/stable/user/absolute_beginners.html\#indexing-and-slicing}{indexing and slicing} makes it very easy.
+
+Here is how it works for a 3×3 array.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a }\OperatorTok{=}\NormalTok{ np.array([[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{], [}\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{], [}\DecValTok{7}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{9}\NormalTok{]])}
+\NormalTok{a}
+\CommentTok{\#\textgreater{} array([[1, 2, 3],}
+\CommentTok{\#\textgreater{}        [4, 5, 6],}
+\CommentTok{\#\textgreater{}        [7, 8, 9]])}
+\end{Highlighting}
+\end{Shaded}
+
+The first index (called \href{https://numpy.org/doc/stable/glossary.html\#term-axis}{axis} in NumPy) is for row and the second is for columns. You can get the second row by specifying its index alone (if no other indexes are given, NumPy assumes you want all elements along other axes).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a[}\DecValTok{1}\NormalTok{]}
+\CommentTok{\#\textgreater{} array([4, 5, 6])}
+\end{Highlighting}
+\end{Shaded}
+
+Or, you can be more explicit via \texttt{:}, as \texttt{:} alone means ``all elements along this axis''
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a[}\DecValTok{1}\NormalTok{, :]}
+\CommentTok{\#\textgreater{} array([4, 5, 6])}
+\end{Highlighting}
+\end{Shaded}
+
+Similarly, you can extract the entire \emph{last} column (negative indexes work the same way as for Python lists) but notice that you need to explicitly mention the row axis in this case:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a[:, }\OperatorTok{{-}}\DecValTok{1}\NormalTok{]}
+\CommentTok{\#\textgreater{} array([3, 6, 9])}
+\end{Highlighting}
+\end{Shaded}
+
+Even better, you can easily extract a rectangular part of a 2D matrix by specifying both rows and columns. Note that omitting either a start or stop value means, respectively, from the first or till the last element.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a[:}\DecValTok{2}\NormalTok{, }\OperatorTok{{-}}\DecValTok{2}\NormalTok{:]}
+\CommentTok{\#\textgreater{} array([[2, 3],}
+\CommentTok{\#\textgreater{}        [5, 6]])}
+\end{Highlighting}
+\end{Shaded}
+
+Finally, this can be used not only to extract values from an array but also to modify them:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a[}\OperatorTok{{-}}\DecValTok{2}\NormalTok{:, }\DecValTok{1}\NormalTok{:] }\OperatorTok{=}\NormalTok{ np.zeros((}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\NormalTok{a}
+\CommentTok{\#\textgreater{} array([[1, 2, 3],}
+\CommentTok{\#\textgreater{}        [4, 0, 0],}
+\CommentTok{\#\textgreater{}        [7, 0, 0]])}
+\end{Highlighting}
+\end{Shaded}
+
+The information above is enough to get you going but NumPy's documentation on \href{https://numpy.org/doc/stable/user/basics.indexing.html}{indexing} is definitely worth the read, if you need to use it frequently.
+
+\hypertarget{padding-with-zeros}{%
+\section{Padding with zeros}\label{padding-with-zeros}}
+
+Now that you know how to slice a 2D array, let us redo the sequence:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  generate grid full of \href{https://numpy.org/doc/stable/reference/generated/numpy.zeros.html?highlight=zeros\#numpy.zeros}{zeros} that is two elements wide and taller than we need.
+\item
+  Fill the inner part (excluding that extra padding) with random \(0\) and \(1\).
+\item
+  Stack and rescale only the inner part for a 3D RGB array we need to an PsychoPy image.
+\item
+  Create and display the image.
+\end{enumerate}
+
+Generate a zero-padded random grid and show it in \emph{code03.py}.
+
+\hypertarget{cell-culture}{%
+\section{Cell culture}\label{cell-culture}}
+
+Now that you have all the required pieces, wrap it up nicely in a \texttt{CellCulture} class. As we are displaying cells as an image, it makes sense to make it a descendant of the \href{https://psychopy.org/api/visual/imagestim.html}{ImageStim}. In the constructor, you only need the PsychoPy window and a dictionary with settings (so you know the grid size). You could more or less copy-paste code from the \emph{code03.py} into the constructor and use a parent constructor to initialize it once you generated a random grid. However, we need to perform \emph{1) extract inner part, 2) stack to 3D, 3) assign to image} on every iteration (after we updated the cell culture), so it makes sense to spin it off as a separate method (e.g., \texttt{set\_image\_from\_array()}). Thus, you can generate the zero-padded grid, initialize parent \emph{without} an image argument (PsychoPy allows for that) but only with window and size, and then call \texttt{set\_image\_from\_array()}).
+
+Replace your code in the main script with a new class. It should work as before.
+
+Create \texttt{CellCulture} class
+Use it in \emph{code04.py}.
+
+\hypertarget{counting-neigbors-single-cell-nested-loops-edition}{%
+\section{Counting neigbors, single cell nested-loops edition}\label{counting-neigbors-single-cell-nested-loops-edition}}
+
+Recall the rules, we need to count live neighbors for each cell and this is how we decide on whether it lives (or gets born) or dies (or the location remains empty). Let us implement this for a single cell first via nested loops and then via slicing. I suggest that you experiment and debug in a Jupiter notebook and we will transfer the code into the \texttt{CellCulture} class once it is ready. I will illustrate this using a zero-padded 5×5 grid.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rng }\OperatorTok{=}\NormalTok{ np.random.default\_rng(}\DecValTok{1423}\NormalTok{)}
+\NormalTok{grid }\OperatorTok{=}\NormalTok{ np.zeros((}\DecValTok{7}\NormalTok{, }\DecValTok{7}\NormalTok{))}
+\NormalTok{grid[}\DecValTok{1}\NormalTok{:}\OperatorTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{:}\OperatorTok{{-}}\DecValTok{1}\NormalTok{] }\OperatorTok{=}\NormalTok{ rng.integers(low}\OperatorTok{=}\DecValTok{0}\NormalTok{, high}\OperatorTok{=}\DecValTok{2}\NormalTok{, size}\OperatorTok{=}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{))}
+\NormalTok{grid.astype(}\BuiltInTok{int}\NormalTok{)}
+\CommentTok{\#\textgreater{} array([[0, 0, 0, 0, 0, 0, 0],}
+\CommentTok{\#\textgreater{}        [0, 0, 1, 1, 0, 1, 0],}
+\CommentTok{\#\textgreater{}        [0, 0, 0, 1, 1, 0, 0],}
+\CommentTok{\#\textgreater{}        [0, 1, 0, 0, 1, 1, 0],}
+\CommentTok{\#\textgreater{}        [0, 1, 1, 1, 0, 0, 0],}
+\CommentTok{\#\textgreater{}        [0, 1, 0, 0, 1, 1, 0],}
+\CommentTok{\#\textgreater{}        [0, 0, 0, 0, 0, 0, 0]])}
+\end{Highlighting}
+\end{Shaded}
+
+Let us count the neighbors for a cell at location \((2, 2)\) (so, \emph{third} row and \emph{third} column). For the example grid that I generated using \(1423\) as a seed for the random generator, that should be \(4\).
+
+\begin{center}\includegraphics[width=0.5\linewidth]{images/game-of-life-neighbors} \end{center}
+
+Assume that the cell is identified via \texttt{icell\_row} and \texttt{icell\_col} and use nested loops to count the neighbors (think about the values \emph{relative} indexes you need to loop through). Note that the cell itself \emph{does not count}. You can either use an \texttt{if-else} for this but an alternative solution would be to count everybody and \emph{then} subtract the value of the cell itself. Implement the code and try it out with different \texttt{icell\_row} and \texttt{icell\_col}. Specifically test it for live cells, e.g., for \((2, 3)\) you should get four neighbors not five.
+
+\hypertarget{slicing-neigbors-of-a-single-cell}{%
+\section{Slicing neigbors of a single cell}\label{slicing-neigbors-of-a-single-cell}}
+
+Nested loops are fun but slicing powers of NumPy make everything even easier. To count the neighbors, we need to extract a rectangular part of the matrix, very much the same way that we did when we dropped zero-padding. The only difference is that the rectangular part is defined relative to each cell. One the one hand, you can easily generate slicing on the fly relative to \texttt{icell\_row} and \texttt{icell\_col}: \texttt{grid{[}(compute\ start\ row):(compute\ end\ row),\ (compute\ start\ col):(compute\ end\ col){]}}. Just start with cells in the row and column \emph{before} the current one and end with one \emph{after} the current one. Make sure that you put brackets around expression for start and stop values, this is not necessary in Python\footnote{But \emph{is} necessary in R, which is a common source of errors where.} but it will make is easier to read them. Also, remember that start index is inclusive but stop index is exclusive (just as in the rest of Python). Here is a nice array that I have extracted:
+
+\begin{verbatim}
+#> [[0 1 1]
+#>  [0 0 1]
+#>  [1 0 0]]
+\end{verbatim}
+
+For didactic purposes, let us learn a different way to build relative index via \href{https://numpy.org/doc/stable/reference/generated/numpy.meshgrid.html?highlight=meshgrid}{numpy.meshgrid()}. It allows you to create two matrices so that corresponding cell cover all possible combinations:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a, b }\OperatorTok{=}\NormalTok{ np.meshgrid([}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{], [}\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{])}
+\BuiltInTok{print}\NormalTok{(}\StringTok{"a}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, a)}
+\CommentTok{\#\textgreater{} a}
+\CommentTok{\#\textgreater{}  [[1 2]}
+\CommentTok{\#\textgreater{}  [1 2]]}
+\BuiltInTok{print}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{b}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, b)}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} b}
+\CommentTok{\#\textgreater{}  [[3 3]}
+\CommentTok{\#\textgreater{}  [4 4]]}
+\end{Highlighting}
+\end{Shaded}
+
+Use this function to create 3×3 grids of \emph{relative} indexes for rows and columns (I called it \texttt{irel\_rows} and \texttt{irel\_cols}). You can hard code relative indexes or (better) use \href{https://numpy.org/doc/stable/reference/generated/numpy.arange.html?highlight=arange}{numpy.arange()} to generate the sequence.
+and then compute \emph{absolute} index using \texttt{icell\_row} and \texttt{icell\_col}.
+
+\begin{verbatim}
+#> [[0 0 1]
+#>  [1 0 0]
+#>  [1 1 0]]
+\end{verbatim}
+
+We sliced the neighbors out but now we need to \emph{count} them via a \href{https://numpy.org/doc/stable/reference/generated/numpy.sum.html}{numpy.sum()} or, equivalently via a \href{https://numpy.org/doc/stable/reference/generated/numpy.ndarray.sum.html}{sum()} method of an array. I tend to use the function but this is purely a matter of taste (or, more likely, habit), so pick the one you like.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{print}\NormalTok{(np.}\BuiltInTok{sum}\NormalTok{(grid))}
+\CommentTok{\#\textgreater{} 14.0}
+\BuiltInTok{print}\NormalTok{(grid.}\BuiltInTok{sum}\NormalTok{())}
+\CommentTok{\#\textgreater{} 14.0}
+\end{Highlighting}
+\end{Shaded}
+
+For our example subset, we get
+
+\begin{verbatim}
+#> Neighbor count for the example cell:  4.0
+\end{verbatim}
+
+\hypertarget{live-and-let-die}{%
+\section{Live and let die}\label{live-and-let-die}}
+
+Now that you have the code to count the neighbors, let us count them for all the \emph{inner} cells. Create a \emph{new} zeros matrix that will hold neighbor counts (same size as the grid itself) and loop through every inner cell, computing its number of neighbors and storing it in the new matrix. Here is the answer for the random grid above. Use my code above to generate it, so you can check whether you get the same answer but it is also a good idea to just count it yourself for a few cells to check that the answer is indeed correct.
+
+\begin{verbatim}
+#> [[0 0 0 0 0 0 0]
+#>  [0 1 2 3 4 1 0]
+#>  [0 2 4 4 5 4 0]
+#>  [0 2 5 5 4 2 0]
+#>  [0 3 4 3 5 4 0]
+#>  [0 2 4 3 2 1 0]
+#>  [0 0 0 0 0 0 0]]
+\end{verbatim}
+
+We have information about whether a cell is alive or dead in our \texttt{grid} matrix and information about its neighbor count is \texttt{neighbors}. Now we can use comparison and logical operation to implement the rules. Comparisons are easy, they work the same way but are applied to the entire array:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a }\OperatorTok{=}\NormalTok{ np.arange(}\OperatorTok{{-}}\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(a)}
+\CommentTok{\#\textgreater{} [{-}3 {-}2 {-}1  0  1  2  3]}
+\BuiltInTok{print}\NormalTok{(a }\OperatorTok{\textless{}} \DecValTok{0}\NormalTok{)}
+\CommentTok{\#\textgreater{} [ True  True  True False False False False]}
+\end{Highlighting}
+\end{Shaded}
+
+The logical \texttt{and} and \texttt{or} are replaced with \href{https://numpy.org/doc/stable/reference/generated/numpy.logical_and.html}{\&} and \href{https://numpy.org/doc/stable/reference/generated/numpy.logical_or.html}{\textbar{}} but work the same way. The only thing to keep in mind is that comparisons must be wrapped in brackets (otherwise you will get an error)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a }\OperatorTok{=}\NormalTok{ np.arange(}\OperatorTok{{-}}\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{)}
+\NormalTok{b }\OperatorTok{=}\NormalTok{ np.array([}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{])}
+
+\BuiltInTok{print}\NormalTok{((a }\OperatorTok{\textless{}} \DecValTok{0}\NormalTok{ ) }\OperatorTok{\&}\NormalTok{ (b }\OperatorTok{==} \DecValTok{1}\NormalTok{))}
+\CommentTok{\#\textgreater{} [ True False  True False False False False]}
+\BuiltInTok{print}\NormalTok{((a }\OperatorTok{\textless{}} \DecValTok{0}\NormalTok{ ) }\OperatorTok{|}\NormalTok{ (b }\OperatorTok{==} \DecValTok{1}\NormalTok{))}
+\CommentTok{\#\textgreater{} [ True  True  True False  True False  True]}
+\end{Highlighting}
+\end{Shaded}
+
+We want ones and zeros, so integers rather than logical values. We can easily convert the entire array via \href{https://numpy.org/doc/stable/reference/generated/numpy.ndarray.astype.html?highlight=astype}{.astype()} method:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(a }\OperatorTok{\textless{}} \DecValTok{0}\NormalTok{)}
+\CommentTok{\#\textgreater{} array([ True,  True,  True, False, False, False, False])}
+\NormalTok{(a }\OperatorTok{\textless{}} \DecValTok{0}\NormalTok{).astype(}\BuiltInTok{int}\NormalTok{)}
+\CommentTok{\#\textgreater{} array([1, 1, 1, 0, 0, 0, 0])}
+\end{Highlighting}
+\end{Shaded}
+
+Now you have everything you need to implement the first rule: cell must be alive \emph{and} have \(2\) \emph{or} \(3\) neighbors. Here is the output matrix:
+
+\begin{verbatim}
+#> [[0 0 0 0 0 0 0]
+#>  [0 0 1 1 0 0 0]
+#>  [0 0 0 0 0 0 0]
+#>  [0 1 0 0 0 1 0]
+#>  [0 1 0 1 0 0 0]
+#>  [0 1 0 0 1 0 0]
+#>  [0 0 0 0 0 0 0]]
+\end{verbatim}
+
+Rule number two: cell must be dead \emph{and} have \(3\) neighbors.
+
+\begin{verbatim}
+#> [[0 0 0 0 0 0 0]
+#>  [0 0 0 0 0 0 0]
+#>  [0 0 0 0 0 0 0]
+#>  [0 0 0 0 0 0 0]
+#>  [0 0 0 0 0 0 0]
+#>  [0 0 0 1 0 0 0]
+#>  [0 0 0 0 0 0 0]]
+\end{verbatim}
+
+Finally, cell get to live because either rule \#1 \emph{or} rule \#2 worked for them:
+
+\begin{verbatim}
+#> [[0 0 0 0 0 0 0]
+#>  [0 0 1 1 0 0 0]
+#>  [0 0 0 0 0 0 0]
+#>  [0 1 0 0 0 1 0]
+#>  [0 1 0 1 0 0 0]
+#>  [0 1 0 1 1 0 0]
+#>  [0 0 0 0 0 0 0]]
+\end{verbatim}
+
+This final output is the new cell culture that you can assign back to the grid. Implement all the steps carefully and double\footnote{triple!} check that all numbers match. Try different random grids and go through them by hand to make sure everything is correct (this is the boring but vital part of programming, I am afraid).
+
+\hypertarget{update-cell-culture}{%
+\section{Update cell culture}\label{update-cell-culture}}
+
+We have covered a lot of ground but now you have \emph{everything} to implement an \texttt{update()} method of \texttt{CellCulture} method:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Count the neighbors.
+\item
+  Apply rules to generate new culture.
+\item
+  Put the new culture into the \texttt{grid} attribute (or however you called it).
+\item
+  Transfer the grid to the image (you have a method for this).
+\end{enumerate}
+
+In the main code, call update method on every frame and see the cells evolve!
+
+Add \texttt{update} method to \texttt{CellCulture} class
+Use it in \emph{code05.py}.
+
+\hypertarget{pause}{%
+\section{Pause}\label{pause}}
+
+In the main loop, you hopefully check for an \emph{escape} key press to end the game (if not, you should!) Let's also add a check for a press of \emph{space} button that will ``pause'' or ``continue'' the simulation. I.e., space should toggle (invert) a state of a logical variable (you name it) that determines whether the \texttt{update()} method is called.
+
+Implement pause/continue via \emph{space} in \emph{code06.py}.
+
+\hypertarget{unleash-your-creativity}{%
+\section{Unleash your creativity}\label{unleash-your-creativity}}
+
+Random cultures are fun but, perhaps, you have an idea to try out (e.g., see a \href{https://en.wikipedia.org/wiki/Conway\%27s_Game_of_Life}{Wikipedia article} on example patterns such as blinkers and gliders). Let us draw with the \href{https://psychopy.org/api/event.html\#psychopy.event.Mouse}{mouse} (this is why I insisted on having it as an attribute of the context), with the left button \href{https://psychopy.org/api/event.html\#psychopy.event.Mouse}{click} (index \(0\)) adding a living cell and the right button click (index \(2\)) erasing it.
+
+For this, create a new \texttt{CellCulture} method (I called it \texttt{change()}) that takes a new value (\(0\) or \(1\), depending on the button) and \href{https://psychopy.org/api/event.html\#psychopy.event.Mouse.getPos}{mouse position} within the window. In the method, compute the row and column index of the cell keeping in mind that 1) the image spans the entire image, 2) only the inner cells are shown and can be clicked on. Once you have both indexes, assign new value to the grid. For testing, pause the game, draw a few patterns, restart and see them go!
+
+Add \texttt{change()} method to \texttt{CellCulture}
+Use mouse inputs and \texttt{change()} in \emph{code07.py}.
+
+\hypertarget{done-for-today}{%
+\section{Done for today}\label{done-for-today}}
+
+You have learned quite a few things about \href{https://numpy.org/}{NumPy} and implemented a cool simulation. Next time, we will learn more about Numpy while combining it with a useful \href{https://psychopy.org/api/visual/elementarraystim.html\#psychopy.visual.ElementArrayStim}{ElementArrayStim} I have teased about.
 
   \bibliography{book.bib}
 

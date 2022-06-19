@@ -28,9 +28,7 @@ Now you know _three_ methods to produce common behavior: proper inheritance, mix
 We will program a simple version of the game with a gradually descending alien armada. Your task is to capture all aliens by firing a teleport beam before one of them rams your ship or gets away. Below, you can see my version of the game.
 
 
-<div style="text-align:center;"><video controls>
-    <source src="videos/space-invaders.mp4" type="video/mp4"> 
-  </video></div>
+
 
 As per usual, the plan is to move slowly in small steps to keep complexity of changes low. Here are the steps:
 
@@ -137,7 +135,7 @@ _Constructor_: we will create and place aliens in a separate method `spawn()`, s
 
 In the `spawn()` create aliens on a grid based on your `"Grid size"` and `"Grid step [norm]"` settings, so they are centered at `AlienArmada`'s position (`__pos`). All aliens go to `aliens` attribute, of course. Remember that they need a list of file names for visuals but you have it covered as you have them in the settings. It should look like this:
 
-<img src="images/alien-armada.png" width="320" style="display: block; margin: auto;" />
+<img src="images/alien-armada.png" width="640" style="display: block; margin: auto;" />
 
 ::: {.rmdnote .program}
 Create the `AlienArmada` class.<br/>
@@ -343,7 +341,7 @@ $$x = x_{max} \cdot sin(2 \pi f \cdot (y-y_{origin})) $$
 where $x_{max}$ is maximal deviation of the _center_ of the armada from the middle of the screen (I've set it to $0.25$), the $f$ is the frequency, i.e., how fast is horizontal movement (I've set it to $3$ but you can see how much slower it would be for $1$ in the plot below), $y$ is the current vertical coordinate of the armada and $y_{origin}$ is the initial one ($0.5$ in my case). As with all other parameters, these should be part of the settings file plus `vertcal speed [norm/sec]` that defines how fast the armada will fly down (I would set it to 0.1, so it takes 15 seconds to fly down). 
 
 
-<img src="14-space-invaders-duck-typing_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+![](14-space-invaders-duck-typing_files/figure-epub3/unnamed-chunk-8-1.png)<!-- -->
 
 For the armada to fly, we need to add a timer (in the constructor) and define a `fly()` method that
 
