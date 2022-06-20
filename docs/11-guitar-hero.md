@@ -75,7 +75,7 @@ def iterator_fun():
 print(iterator_fun())
 
 # iterating via for loop
-#> <generator object iterator_fun at 0x000000002A63C820>
+#> <generator object iterator_fun at 0x000002449890C740>
 for elem in iterator_fun():
     print(elem)
     

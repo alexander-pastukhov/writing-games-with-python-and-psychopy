@@ -7,7 +7,7 @@
 <title>Chapter 17 Game of life (NumPy) | Writing games with Python and PsychoPy</title>
 <meta name="author" content="Alexander (Sasha) Pastukhov">
 <meta name="description" content="Today you will be programming the Game of Life created by the British mathematician John Horton Conway. This is not really a game but rather a simulation where you set initial conditions up and...">
-<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta name="generator" content="bookdown 0.26 with bs4_book()">
 <meta property="og:title" content="Chapter 17 Game of life (NumPy) | Writing games with Python and PsychoPy">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://alexander-pastukhov.github.io/writing-games-with-python-and-psychopy/game-of-life-numpy.html">
@@ -15,10 +15,14 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 17 Game of life (NumPy) | Writing games with Python and PsychoPy">
 <meta name="twitter:description" content="Today you will be programming the Game of Life created by the British mathematician John Horton Conway. This is not really a game but rather a simulation where you set initial conditions up and...">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.13/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="bs4_style.css">
 <link rel="stylesheet" href="style.css">
 </head>
 <body data-spy="scroll" data-target="#toc">
@@ -261,7 +265,7 @@ Use it in <em>code04.py</em>.</p>
 <h2>
 <span class="header-section-number">17.13</span> Slicing neigbors of a single cell<a class="anchor" aria-label="anchor" href="#slicing-neigbors-of-a-single-cell"><i class="fas fa-link"></i></a>
 </h2>
-<p>Nested loops are fun but slicing powers of NumPy make everything even easier. To count the neighbors, we need to extract a rectangular part of the matrix, very much the same way that we did when we dropped zero-padding. The only difference is that the rectangular part is defined relative to each cell. One the one hand, you can easily generate slicing on the fly relative to <code>icell_row</code> and <code>icell_col</code>: <code>grid[(compute start row):(compute end row), (compute start col):(compute end col)]</code>. Just start with cells in the row and column <em>before</em> the current one and end with one <em>after</em> the current one. Make sure that you put brackets around expression for start and stop values, this is not necessary in Python<a href="game-of-life-numpy.html#fn103" class="footnote-ref" id="fnref103"><sup>103</sup></a> but it will make is easier to read them. Also, remember that start index is inclusive but stop index is exclusive (just as in the rest of Python). Here is a nice array that I have extracted:</p>
+<p>Nested loops are fun but slicing powers of NumPy make everything even easier. To count the neighbors, we need to extract a rectangular part of the matrix, very much the same way that we did when we dropped zero-padding. The only difference is that the rectangular part is defined relative to each cell. One the one hand, you can easily generate slicing on the fly relative to <code>icell_row</code> and <code>icell_col</code>: <code>grid[(compute start row):(compute end row), (compute start col):(compute end col)]</code>. Just start with cells in the row and column <em>before</em> the current one and end with one <em>after</em> the current one. Make sure that you put brackets around expression for start and stop values, this is not necessary in Python<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;But &lt;em&gt;is&lt;/em&gt; necessary in R, which is a common source of errors where.&lt;/p&gt;"><sup>103</sup></a> but it will make is easier to read them. Also, remember that start index is inclusive but stop index is exclusive (just as in the rest of Python). Here is a nice array that I have extracted:</p>
 <pre><code>#&gt; [[0 1 1]
 #&gt;  [0 0 1]
 #&gt;  [1 0 0]]</code></pre>
@@ -344,7 +348,7 @@ and then compute <em>absolute</em> index using <code>icell_row</code> and <code>
 #&gt;  [0 1 0 1 0 0 0]
 #&gt;  [0 1 0 1 1 0 0]
 #&gt;  [0 0 0 0 0 0 0]]</code></pre>
-<p>This final output is the new cell culture that you can assign back to the grid. Implement all the steps carefully and double<a href="game-of-life-numpy.html#fn104" class="footnote-ref" id="fnref104"><sup>104</sup></a> check that all numbers match. Try different random grids and go through them by hand to make sure everything is correct (this is the boring but vital part of programming, I am afraid).</p>
+<p>This final output is the new cell culture that you can assign back to the grid. Implement all the steps carefully and double<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;triple!&lt;/p&gt;"><sup>104</sup></a> check that all numbers match. Try different random grids and go through them by hand to make sure everything is correct (this is the boring but vital part of programming, I am afraid).</p>
 </div>
 <div id="update-cell-culture" class="section level2" number="17.15">
 <h2>
@@ -391,119 +395,120 @@ Use mouse inputs and <code>change()</code> in <em>code07.py</em>.</p>
 
 </div>
 </div>
-<div class="footnotes footnotes-end-of-document">
-<hr>
-<ol>
-<li id="fn1"><p>Good habits! Form good habits! Thank you for reading this subliminal message.<a href="index.html#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>If you are part of the seminar, ask me whenever you have problems or are unsure about how to proceeed<a href="software.html#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p>Happened to me more often than I dare to admit.<a href="programming-tips.html#fnref3" class="footnote-back">↩︎</a></p></li>
-<li id="fn4"><p>“Boring is Good!”, see “The Hitman’s Bodyguard” movie.<a href="programming-tips.html#fnref4" class="footnote-back">↩︎</a></p></li>
-<li id="fn5"><p>Seriously, 100%! If you have even a shadow of a doubt, check again. That shadow will grow and make you progressively uncertain about your code.<a href="programming-tips.html#fnref5" class="footnote-back">↩︎</a></p></li>
-<li id="fn6"><p>However, if you are doing the seminar, ask me first!<a href="programming-tips.html#fnref6" class="footnote-back">↩︎</a></p></li>
-<li id="fn7"><p>Tip: Read your text one sentence at a time starting from the back or read one random sentence at a time. This breaks the flow of the text and helps you concentrate on words rather than on the meaning and the story.<a href="programming-tips.html#fnref7" class="footnote-back">↩︎</a></p></li>
-<li id="fn8"><p>Hindsight is always 20/20!<a href="programming-tips.html#fnref8" class="footnote-back">↩︎</a></p></li>
-<li id="fn9"><p>not really<a href="python-basics.html#fnref9" class="footnote-back">↩︎</a></p></li>
-<li id="fn10"><p>You can “Save as…” the previous code to avoid copy-pasting things by hand.<a href="guess-the-number-single-round.html#fnref10" class="footnote-back">↩︎</a></p></li>
-<li id="fn11"><p>I recommend using <code>01</code> instead of <code>1</code>, as it will ensure consistent file sorting in your file manager<a href="guess-the-number-single-round.html#fnref11" class="footnote-back">↩︎</a></p></li>
-<li id="fn12"><p>Of course, we know it because we hard-coded it. But that won’t be the case when computer will generate it randomly, so let us plan for the future<a href="guess-the-number-single-round.html#fnref12" class="footnote-back">↩︎</a></p></li>
-<li id="fn13"><p>Or, at least, easier.<a href="guess-the-number-single-round.html#fnref13" class="footnote-back">↩︎</a></p></li>
-<li id="fn14"><p>This is because you can convert any value to a logical one via <a href="https://docs.python.org/3/library/functions.html#bool">bool()</a> function that you learned about the last time and so any value is (converted to) either <code>True</code> or <code>False</code>.<a href="guess-the-number-single-round.html#fnref14" class="footnote-back">↩︎</a></p></li>
-<li id="fn15"><p>pun intended<a href="guess-the-number-single-round.html#fnref15" class="footnote-back">↩︎</a></p></li>
-<li id="fn16"><p>Did I already say never? never!<a href="guess-the-number-single-round.html#fnref16" class="footnote-back">↩︎</a></p></li>
-<li id="fn17"><p>This is the last time, I promise!<a href="guess-the-number-ai.html#fnref17" class="footnote-back">↩︎</a></p></li>
-<li id="fn18"><p>You should imagine Dora the Explorer staring at you while you think.<a href="guess-the-number-ai.html#fnref18" class="footnote-back">↩︎</a></p></li>
-<li id="fn19"><p>The official magic number is <a href="https://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two">7±2</a> but reading the original paper tells you that this is more like four for most of us<a href="guess-the-number-ai.html#fnref19" class="footnote-back">↩︎</a></p></li>
-<li id="fn20"><p>This is similar to scientific writing, where a single paragraph conveys a single idea. For me, it helps to first write the idea of the paragraph in a single sentence before writing the paragraph itself. If one sentence is not enough, I need to split the text into more paragraphs.<a href="guess-the-number-ai.html#fnref20" class="footnote-back">↩︎</a></p></li>
-<li id="fn21"><p>This is not strictly true but that will concern us only once we get to so-called “mutable” objects like lists or dictionaries.<a href="guess-the-number-ai.html#fnref21" class="footnote-back">↩︎</a></p></li>
-<li id="fn22"><p>it is normal to have more code devoted to testing than to the actual program<a href="guess-the-number-ai.html#fnref22" class="footnote-back">↩︎</a></p></li>
-<li id="fn23"><p>You still need tests for the integrated system but testing individual functions is a clear prerequisite.<a href="guess-the-number-ai.html#fnref23" class="footnote-back">↩︎</a></p></li>
-<li id="fn24"><p>Again, this not strictly true but you will have to wait until you learn about named parameters and default values<a href="guess-the-number-ai.html#fnref24" class="footnote-back">↩︎</a></p></li>
-<li id="fn25"><p>Again, almost, as <em>mutable</em> objects like lists are more complicated, more on that later<a href="guess-the-number-ai.html#fnref25" class="footnote-back">↩︎</a></p></li>
-<li id="fn26"><p>Also called properties<a href="psychopy-basics.html#fnref26" class="footnote-back">↩︎</a></p></li>
-<li id="fn27"><p>Technically, we call a class constructor method called <code>__init__</code> but this is not important for now.<a href="psychopy-basics.html#fnref27" class="footnote-back">↩︎</a></p></li>
-<li id="fn28"><p>However, stick to original order for consistency otherwise.<a href="psychopy-basics.html#fnref28" class="footnote-back">↩︎</a></p></li>
-<li id="fn29"><p>This is called flipping because a window has two buffers: one that is currently displayed on the screen and the other one in which you can draw your stimuli. Once you are done with drawing, you “flip” the buffers so that they exchange their places. Now the one you drew in gets displayed and you have the other buffer to draw in.<a href="psychopy-basics.html#fnref29" class="footnote-back">↩︎</a></p></li>
-<li id="fn30"><p>my personal preference but in most cases it makes no difference<a href="psychopy-basics.html#fnref30" class="footnote-back">↩︎</a></p></li>
-<li id="fn31"><p>So specific that I cannot think of one, to be honest.<a href="psychopy-basics.html#fnref31" class="footnote-back">↩︎</a></p></li>
-<li id="fn32"><p>You need to import the random library for this, of course.<a href="psychopy-basics.html#fnref32" class="footnote-back">↩︎</a></p></li>
-<li id="fn33"><p>You can use <code>if..else</code>, because we only have two options but I would recommend to go for a more general solution <code>if..elif</code> <a href="psychopy-basics.html#fnref33" class="footnote-back">↩︎</a></p></li>
-<li id="fn34"><p>More on that and tuples (list’s immutable cousins) later.<a href="whack-a-mole.html#fnref34" class="footnote-back">↩︎</a></p></li>
-<li id="fn35"><p>This is typical for “classic” programming languages but less so for ones that are linear algebra / data science oriented. Both Matlab and R use one-based indexing, so you need to be careful and double-check whether you are using correct indexes.<a href="whack-a-mole.html#fnref35" class="footnote-back">↩︎</a></p></li>
-<li id="fn36"><p>There is a simpler way to do this, which you will learn in a little while.<a href="whack-a-mole.html#fnref36" class="footnote-back">↩︎</a></p></li>
-<li id="fn37"><p>Note, that this is almost but not quite the same thing as just writing <code>my_pretty_numbers</code>, the difference is subtle but important. We will return to it later when talking about mutable versus immutable types.<a href="whack-a-mole.html#fnref37" class="footnote-back">↩︎</a></p></li>
-<li id="fn38"><p>If you are familiar with R and its liberal attitude towards indexes, you will find this very satisfying.<a href="whack-a-mole.html#fnref38" class="footnote-back">↩︎</a></p></li>
-<li id="fn39"><p>and we barely scratched the surface!<a href="whack-a-mole.html#fnref39" class="footnote-back">↩︎</a></p></li>
-<li id="fn40"><p>Note, this is note a <em>better</em> way but an <em>alternative</em> way to do this.<a href="whack-a-mole.html#fnref40" class="footnote-back">↩︎</a></p></li>
-<li id="fn41"><p>Style hint: if a variable is an <em>index</em> of something, I tend to call it <code>isomething</code>. E.g., if it holds an index to a current mole, I would call it <code>imole</code>. This is <em>my</em> way of doing it. Others use <code>i_</code> prefix or an <code>_i</code> suffix. But either way, it is a useful naming convention. Remember, the easier it is to understand the meaning of a variable from its name, the easier it is for you to read and modify the code.<a href="whack-a-mole.html#fnref41" class="footnote-back">↩︎</a></p></li>
-<li id="fn42"><p><code>itarget</code>? <code>imole</code>?<a href="whack-a-mole.html#fnref42" class="footnote-back">↩︎</a></p></li>
-<li id="fn43"><p>I know it feels redundant but these are little checks that cost little time by themselves but help you avoid wasting lots of time on tracing weird mistakes. Here, you check that your expectations (if the middle target is shown, the index should be 1) match the reality. Once you check this, you do not <em>expect</em> it to be true, you <em>know</em> it to be true!<a href="whack-a-mole.html#fnref43" class="footnote-back">↩︎</a></p></li>
-<li id="fn44"><p>Confusingly, if no key was pressed, <a href="https://psychopy.org/api/event.html#psychopy.event.getKeys">getKeys()</a> returns an empty list but <a href="https://psychopy.org/api/event.html#psychopy.event.waitKeys">waitKeys()</a> returns <code>None</code> and <code>None</code> has no length.<a href="whack-a-mole.html#fnref44" class="footnote-back">↩︎</a></p></li>
-<li id="fn45"><p>Want to know key codes for sure? Write a small program that open a window and then repeatedly waits for any key press and prints out into console.<a href="whack-a-mole.html#fnref45" class="footnote-back">↩︎</a></p></li>
-<li id="fn46"><p>You will get more than one item in that list only if you set <code>clearEvents=False</code>. In this case, you will get the list of keys pressed before the call. However, if you opted for a default <code>clearEvents=True</code>, you will get only one key press in the list (at least I was never able to get more than one).<a href="whack-a-mole.html#fnref46" class="footnote-back">↩︎</a></p></li>
-<li id="fn47"><p>The images are courtesy of <a href="https://openclipart.org/artist/Firkin">Kevin David Pointon</a> and were downloaded
-from <a href="https://openclipart.org/">OpenClipart</a>. They are <a href="https://creativecommons.org/publicdomain/zero/1.0/">public domain</a> and can be used and distributed freely.<a href="memory-game.html#fnref47" class="footnote-back">↩︎</a></p></li>
-<li id="fn48"><p>Not really, but this makes it easier to understand.<a href="memory-game.html#fnref48" class="footnote-back">↩︎</a></p></li>
-<li id="fn49"><p>A metaphor attempt: You can wear different shirts, so your <em>look</em> (variable) changes but each individual shirt (potential values) remains the same (we ignore the wear and tear here) irrespective of whether your are wearing it (value is assigned to a variable) or not.<a href="memory-game.html#fnref49" class="footnote-back">↩︎</a></p></li>
-<li id="fn50"><p>Coming up shortly!<a href="memory-game.html#fnref50" class="footnote-back">↩︎</a></p></li>
-<li id="fn51"><p>Building on the looks metaphor: You can change your look by using a different (immutable) shirt or by <em>changing</em> your haircut. You hair is mutable, you do not wear a different one on different days to look different, you need to modify it to look different.<a href="memory-game.html#fnref51" class="footnote-back">↩︎</a></p></li>
-<li id="fn52"><p>Well, at least me!<a href="memory-game.html#fnref52" class="footnote-back">↩︎</a></p></li>
-<li id="fn53"><p>Immutable values are <a href="https://docs.python.org/3/glossary.html#term-hashable">hashable</a>, whereas mutable ones, like dictionaries and lists, are not. This is because mutable objects can <em>change</em> while the program is running and therefore are unusable as a key. I.e., it is hard to match by a key, if the key can be different by the time you need to access the dictionary.<a href="memory-game.html#fnref53" class="footnote-back">↩︎</a></p></li>
-<li id="fn54"><p>Use absolute path only if it is the only option, as it will almost certainly will break your code on another machine.<a href="memory-game.html#fnref54" class="footnote-back">↩︎</a></p></li>
-<li id="fn55"><p>A very arbitrary example!<a href="memory-game.html#fnref55" class="footnote-back">↩︎</a></p></li>
-<li id="fn56"><p>You will learn about practical implications of this later. For now, keep in mind that seemingly identical output might be fundamentally different underneath.<a href="memory-game.html#fnref56" class="footnote-back">↩︎</a></p></li>
-<li id="fn57"><p>A list you cannot change, more on this later.<a href="memory-game.html#fnref57" class="footnote-back">↩︎</a></p></li>
-<li id="fn58"><p>Pick the timing you like!<a href="memory-game.html#fnref58" class="footnote-back">↩︎</a></p></li>
-<li id="fn59"><p>More generally, never compare float values to exact numbers. They are <a href="http://www.lahey.com/float.htm">tricky</a>, as the underlying representation <a href="https://docs.python.org/3/tutorial/floatingpoint.html">does not guarantee</a> that the computation will produce <em>exactly</em> the number that it should: <code>.1 + .1 + .1 == .3</code> is surprisingly <code>False</code>, try it yourself<a href="memory-game.html#fnref59" class="footnote-back">↩︎</a></p></li>
-<li id="fn60"><p>Deck the Halls B by Kevin MacLeod <a href="http://incompetech.com" class="uri">http://incompetech.com</a>
-Creative Commons — Attribution 4.0 International — CC BY 4.0
-Free Download / Stream: <a href="https://bit.ly/deck-the-halls-b" class="uri">https://bit.ly/deck-the-halls-b</a>
-Music promoted by Audio Library <a href="https://youtu.be/RzjZ-WdVeyk" class="uri">https://youtu.be/RzjZ-WdVeyk</a><a href="christmas-special.html#fnref60" class="footnote-back">↩︎</a></p></li>
-<li id="fn61"><p><code>BaseVisualStim</code> does not actually define <code>draw()</code> method, only that it must be present.<a href="flappy-bird.html#fnref61" class="footnote-back">↩︎</a></p></li>
-<li id="fn62"><p>Yes, it is really called “duck typing”.<a href="flappy-bird.html#fnref62" class="footnote-back">↩︎</a></p></li>
-<li id="fn63"><p>There are more special methods that you will learn about later, they all follow <code>__methodname__()</code> convention.<a href="flappy-bird.html#fnref63" class="footnote-back">↩︎</a></p></li>
-<li id="fn64"><p>Again, you can use any name for that parameter but that will surely confuse everyone.<a href="flappy-bird.html#fnref64" class="footnote-back">↩︎</a></p></li>
-<li id="fn65"><p>This is actually how all properties and methods are stored, in a <code>__dict__</code> attribute, so you can write <code>number_sum.__dict__["total"]</code> to get it.<a href="flappy-bird.html#fnref65" class="footnote-back">↩︎</a></p></li>
-<li id="fn66"><p>If you use a linter, it will complain whenever it sees a property not defined in the constructor<a href="flappy-bird.html#fnref66" class="footnote-back">↩︎</a></p></li>
-<li id="fn67"><p>Created by <a href="https://openclipart.org/artist/Scout">Madison Kingsford</a>.<a href="flappy-bird.html#fnref67" class="footnote-back">↩︎</a></p></li>
-<li id="fn68"><p>Here, I assume that 50% is chance level performance.<a href="seminar-02-06.html#fnref68" class="footnote-back">↩︎</a></p></li>
-<li id="fn69"><p>It is the usual paradox that in order to optimally measure a threshold condition for a particular task, you should measure at or around the threshold. But if you already know where to measure, you don’t need to measure.<a href="seminar-02-06.html#fnref69" class="footnote-back">↩︎</a></p></li>
-<li id="fn70"><p>Inheriting from <code>visual.Rect</code> would’ve make things simpler but, at least in PsychoPy 2021.1.4, it does not work due to so technical glitch.<a href="seminar-02-06.html#fnref70" class="footnote-back">↩︎</a></p></li>
-<li id="fn71"><p>Again, inheriting from <code>visual.Rect()</code> would have taken care of this for you.<a href="seminar-02-06.html#fnref71" class="footnote-back">↩︎</a></p></li>
-<li id="fn72"><p>Not very exciting, I know. But one has to start somewhere!<a href="the-snake.html#fnref72" class="footnote-back">↩︎</a></p></li>
-<li id="fn73"><p>I always add units in square brackets as a reminder to my(future)self. One can deduce units from code itself but documenting them explicitly makes your life much easier.<a href="the-snake.html#fnref73" class="footnote-back">↩︎</a></p></li>
-<li id="fn74"><p>We will use a bitmap to make it look like an actual apple but it will need to be a square bitmap, so at the end the apple will still be square<a href="the-snake.html#fnref74" class="footnote-back">↩︎</a></p></li>
-<li id="fn75"><p>A single segment snake is a special case, as its head is also its tail!<a href="the-snake.html#fnref75" class="footnote-back">↩︎</a></p></li>
-<li id="fn76"><p>It would be much simpler to inherit from <a href="https://psychopy.org/api/visual/rect.html#psychopy.visual.rect.Rect">Rect</a> class directly but it does not work (raises an error), at least for the version 2021.1.4 that I use.<a href="the-snake.html#fnref76" class="footnote-back">↩︎</a></p></li>
-<li id="fn77"><p>We could also have used <a href="https://docs.python.org/3/library/collections.html#collections.deque">dqueue</a> class from <em>collections</em> library instead of the <code>list</code>. It is, essentially, a list that allows appending and popping from the left as well.<a href="the-snake.html#fnref77" class="footnote-back">↩︎</a></p></li>
-<li id="fn78"><p>To be honest, I have initially implemented it as a single <code>move()</code> function , wrote things up up to eating apples, realized the problem, returned and rewrote the notes. So, admittedly, it is a hindsight kind of strategic thinking.<a href="the-snake.html#fnref78" class="footnote-back">↩︎</a></p></li>
-<li id="fn79"><p>Note that speed does not need to be an integer number of squares per second. It can move at 1.5 squares per second, so 3 squares every two seconds.<a href="the-snake.html#fnref79" class="footnote-back">↩︎</a></p></li>
-<li id="fn80"><p>Do it in the constructor, always define all attributes in the constructor, even if they are set to <code>None</code>.<a href="the-snake.html#fnref80" class="footnote-back">↩︎</a></p></li>
-<li id="fn81"><p>Remember, they work the same they, it is just a question of whether you start from zero and check whether time is over <code>step_duration</code> (<a href="https://www.psychopy.org/api/clock.html#psychopy.clock.Clock">clock</a>) or you start at <code>step_duration</code> and check whether the time ran out/is already negative (<a href="https://www.psychopy.org/api/clock.html#psychopy.clock.CountdownTimer">timer</a>).<a href="the-snake.html#fnref81" class="footnote-back">↩︎</a></p></li>
-<li id="fn82"><p>Created by <a href="https://openclipart.org/artist/cyanidecupcake">Jess Wiechler</a>.<a href="the-snake.html#fnref82" class="footnote-back">↩︎</a></p></li>
-<li id="fn83"><p>Why at least five? Draw it on the grid and figure out whether it can eat itself with just four segments.<a href="the-snake.html#fnref83" class="footnote-back">↩︎</a></p></li>
-<li id="fn84"><p>This image was downloaded from <a href="https://openclipart.org/">openclipart.org</a> and was created by <a href="https://openclipart.org/artist/cliparteles">cliparteles</a><a href="the-snake.html#fnref84" class="footnote-back">↩︎</a></p></li>
-<li id="fn85"><p>Or, if you played Doom, between <em>I’m Too Young To Die</em>, <em>Hey, Not Too Rough</em>, <em>Hurt Me Plenty</em>, <em>Ultra-Violence</em>, and <em>Nightmare</em>.<a href="the-snake.html#fnref85" class="footnote-back">↩︎</a></p></li>
-<li id="fn86"><p>Downloaded from <a href="https://freesound.org/">freesound.org</a> and created by <a href="https://freesound.org/people/myfox14/">myfox14</a><a href="the-snake.html#fnref86" class="footnote-back">↩︎</a></p></li>
-<li id="fn87"><p>Also downloaded from <a href="https://freesound.org/">freesound.org</a> and created by <a href="https://freesound.org/people/EVRetro/">EVRetro</a><a href="the-snake.html#fnref87" class="footnote-back">↩︎</a></p></li>
-<li id="fn88"><p>Confusingly, if you do not pass any additional parameters, you can also create the object <em>without</em> round brackets: <code>raise ZeroDivisionError</code>. I find this mightily confusing but this is fairly common, so drop brackets if it feels more natural.<a href="moon-lander.html#fnref88" class="footnote-back">↩︎</a></p></li>
-<li id="fn89"><p>The constant itself does not mean anything, I adjusted it to be reasonable for the image and window size that we are using.<a href="moon-lander.html#fnref89" class="footnote-back">↩︎</a></p></li>
-<li id="fn90"><p>Pun intended.<a href="moon-lander.html#fnref90" class="footnote-back">↩︎</a></p></li>
-<li id="fn91"><p>boilerplate<a href="space-invaders.html#fnref91" class="footnote-back">↩︎</a></p></li>
-<li id="fn92"><p>A man is hailing a taxi on a sidewalk. A car stops next to him. The guy looks at it and says “But where is the taxi sign on the roof?”. The driver replies: “Do you need a taxi sign on the roof or a ride?”<a href="space-invaders.html#fnref92" class="footnote-back">↩︎</a></p></li>
-<li id="fn93"><p>Why not implement it as a method <code>object.len()</code> or, even better, as a read-only property <code>object.len</code>? Read <a href="https://mail.python.org/pipermail/python-3000/2006-November/004643.html">here</a> for the justification.<a href="space-invaders.html#fnref93" class="footnote-back">↩︎</a></p></li>
-<li id="fn94"><p>Lazy computation means that you compute or get only what is necessary right now, rather than computing or getting all items in one go.<a href="space-invaders.html#fnref94" class="footnote-back">↩︎</a></p></li>
-<li id="fn95"><p>Of course, if you <em>do</em> need it, you should implement it. The point is that quite often you do not.<a href="space-invaders.html#fnref95" class="footnote-back">↩︎</a></p></li>
-<li id="fn96"><p>No worries, it is safe. He says, you should understand. But I have no idea because, evidently, I am a dinosaur out of touch with modern trends.<a href="space-invaders.html#fnref96" class="footnote-back">↩︎</a></p></li>
-<li id="fn97"><p>On a side note of doing crazy things that you should not: You can replace a class method without inheritance with your own at run time, this is called a <a href="https://en.wikipedia.org/wiki/Monkey_patch">monkey patch</a>!<a href="space-invaders.html#fnref97" class="footnote-back">↩︎</a></p></li>
-<li id="fn98"><p>You can cheat and return the reference to the list attribute itself and it’ll do the rest but do not do it for didactic purposes.<a href="space-invaders.html#fnref98" class="footnote-back">↩︎</a></p></li>
-<li id="fn99"><p>Created by Sergenious and obtained from <a href="https://freesound.org/people/Sergenious/sounds/55853/">freesound.org</a><a href="space-invaders.html#fnref99" class="footnote-back">↩︎</a></p></li>
-<li id="fn100"><p>These are functions that “decorate” you function and are called <em>before</em> your function is called. They are like gatekeepers or face control, so they can alter whether or how your function is executed.<a href="space-invaders.html#fnref100" class="footnote-back">↩︎</a></p></li>
-<li id="fn101"><p>Just like there is no physical phenomenon called “color”!<a href="space-invaders.html#fnref101" class="footnote-back">↩︎</a></p></li>
-<li id="fn102"><p>Note that you cannot have write-only property, you must have either getter alone or both.<a href="space-invaders.html#fnref102" class="footnote-back">↩︎</a></p></li>
-<li id="fn103"><p>But <em>is</em> necessary in R, which is a common source of errors where.<a href="game-of-life-numpy.html#fnref103" class="footnote-back">↩︎</a></p></li>
-<li id="fn104"><p>triple!<a href="game-of-life-numpy.html#fnref104" class="footnote-back">↩︎</a></p></li>
-</ol>
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <div class="chapter-nav">
 <div class="prev"><a href="space-invaders.html"><span class="header-section-number">16</span> Space invaders: mixins and duck typing</a></div>
 <div class="empty"></div>
@@ -546,7 +551,7 @@ Music promoted by Audio Library <a href="https://youtu.be/RzjZ-WdVeyk" class="ur
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2022-06-19.</p>
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2022-06-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
