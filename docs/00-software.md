@@ -8,7 +8,7 @@ For this book and seminar, we will need to install
 I will not give detailed instructions on how to install the necessary software but rather point you to official manuals. This makes this text more future-proof as specific details might easily change^[If you are part of the seminar, ask me whenever you have problems or are unsure about how to proceeed].
 
 ## PsychoPy {#install-psychopy}
-Download and install [Standalone PsychoPy](https://www.psychopy.org/download.html) version. Use whatever the latest (and greatest) PsychoPy version is suggested to you (PsychoPy 2021.2.3 using Python3.6 as of time of writing) and follow instructions.
+Download and install [Standalone PsychoPy](https://www.psychopy.org/download.html) version. Use whatever the latest (and greatest) PsychoPy version is suggested to you (PsychoPy 2022.2.4 using Python 3.8 as of time of writing) and follow instructions.
 
 Note that you can also install PsychoPy as a anaconda package or install an official Python distribution and add PsychoPy via pip. However, I find the standalone easier to use as it has all necessary additional libraries. Plus, it has additional tools for GUI-based experiment programming and integration with [Pavlovia.org](https://pavlovia.org/).
 

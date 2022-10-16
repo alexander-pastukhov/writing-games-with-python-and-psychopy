@@ -33,14 +33,6 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\hypersetup{
-  pdftitle={Writing games with Python and PsychoPy},
-  pdfauthor={Alexander (Sasha) Pastukhov},
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
-\urlstyle{same} % disable monospaced font for URLs
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -114,10 +106,18 @@
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Writing games with Python and PsychoPy},
+  pdfauthor={Alexander (Sasha) Pastukhov},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
 
 \title{Writing games with Python and PsychoPy}
 \author{Alexander (Sasha) Pastukhov}
-\date{2022-06-20}
+\date{2022-10-16}
 
 \begin{document}
 \maketitle
@@ -129,7 +129,7 @@
 \hypertarget{intro}{%
 \chapter{Introduction}\label{intro}}
 
-This book will teach you programming. Hopefully, it will do so in a fun way because if there is something more satisfying than playing a video game then it is creating one. Although it is written for the course called \emph{``Python for social and experimental psychology''}, my main aim is not to teach you Python per se. Python is a fantastic tool (more on this later) but it is just one of many programming languages that exist. My ultimate goal is to help you to develop general programming skills, which do not depend on a specific-programming language, and make sure that you form good habits that will make your code clear, easy to read, and easy to maintain. That last part is crucial. Programming is not about writing code that works. That, obviously, must be true but it is only the minimal requirement. Programming is about writing a clear and easy-to-read code that others and, even more importantly, you-two-weeks later can understand.
+This book will teach you programming. Hopefully, it will do so in a fun way because if there is something more satisfying than playing a video game then it is creating one. Although it is written for the course called \emph{``Python for social and experimental psychology''}, my main aim is not to teach you Python per se. Python is a fantastic tool (more on this later) but it is just one of many programming languages that exist. My ultimate goal is to help you to develop general programming skills, which do not depend on a specific programming language, and make sure that you form good habits that will make your code clear, easy to read, and easy to maintain. That last part is crucial. Programming is not about writing code that works. That, obviously, must be true but it is only the minimal requirement. Programming is about writing a clear and easy-to-read code that others and, even more importantly, you-two-weeks later can understand.
 
 \hypertarget{prerequisites}{%
 \section{Prerequisites}\label{prerequisites}}
@@ -146,15 +146,14 @@ The actual purpose of this course is to teach psychology and social studies stud
 
 Why should a psychologist, who is interested in people, learn how to program computers? The most obvious answer is that this is a useful skill. Being able to program gives you freedom to create an experiment that answers your research question, not an experiment that can be implemented given constraints of your software.
 
-More importantly, at least from my point of view, learning how to program changes the way you think in general. People are smart but computers are dumb. When you explain your experiment or travel plans to somebody, you can be fairly vague, make a minor mistake, even skip certain parts. People are smart so they will fill the missing information in with their knowledge, spot and correct a mistake, ask you for more information, and can improvise on their own once they encounter something that you have not covered. Computers are dumb, so you must be precise, you cannot have gray areas, you cannot leave anything to ``it will figure it out once it happens'' (it won't). My personal experience, corroborated by psychologists who learned programming, is that it makes you realize just how vague and imprecise people can be without realizing it. Programming forces you to be precise and thorough, to plan ahead for any eventuality there might be. And this is a very useful skill by itself as it can be applied to any activity that requires planning be that an experimental design or travel arrangements.
+More importantly, at least from my point of view, learning how to program changes the way you think in general. People are smart but computers are dumb. When you explain your experiment or travel plans to somebody, you can be fairly vague, make a minor mistake, even skip certain parts. People are smart so they will fill in the missing information with their knowledge, spot and correct a mistake, ask you for more information, and can improvise on their own once they encounter something that you have not covered. Computers are dumb, so you must be precise, you cannot have gray areas, you cannot leave anything to ``it will figure it out once it happens'' (it won't). My personal experience, corroborated by psychologists who learned programming, is that it makes you realize just how vague and imprecise people can be without realizing it (and without you realizing this as well). Programming forces you to be precise and thorough, to plan ahead for any eventuality there might be. And this is a very useful skill by itself as it can be applied to any activity that requires planning be that an experimental design or travel arrangements.
 
 \hypertarget{why-python}{%
 \section{Why Python?}\label{why-python}}
 
-There are many ways to create an experiment for psychological research. You can use drag-and-drop systems either commercial like \href{https://www.neurobs.com/}{Presentation}, \href{https://www.sr-research.com/experiment-builder/}{Experiment Builder} or free like \href{https://psychopy.org/builder}{PsychoPy Bulder interface}. They have a much shallower learning curve, so you can start creating and running your experiments faster. However, the simplicity of their use has a price: They are fairly limited in which stimuli you can use and how you can control the presentation schedule, conditions, feedback, etc. Typically, they allow you to extend them by programming the desired behavior but you do need to know how to program to do this (knowing Python supercharges your PsychoPy experiments). Thus, I think that while these systems, in particular \href{https://psychopy.org/}{PsychoPy}, are great tools to quickly bang a simple experiment together, they are most useful if you understand
-\emph{how} they create the underlying code and how you would program it yourself. Then, you will not be limited by the software, as you know you can program something the default drag-and-drop won't allow. At the same time, you can always opt in, if drag-and-drop is sufficient but faster. Or use a mix of the two approaches. At the end, it is about having options and creative freedom to program an experiment that will answer your research question, not an experiment that your software allows you to program.
+There are many ways to create an experiment for psychological research. You can use drag-and-drop systems either commercial like \href{https://www.neurobs.com/}{Presentation}, \href{https://www.sr-research.com/experiment-builder/}{Experiment Builder} or free like \href{https://psychopy.org/builder}{PsychoPy Bulder interface}. They have a much shallower learning curve, so you can start creating and running your experiments faster. However, the simplicity of their use has a price: They are fairly limited in which stimuli you can use and how you can control the presentation schedule, conditions, feedback, etc. Typically, they allow you to extend them by programming the desired behavior but you do need to know how to program to do this (knowing Python supercharges your PsychoPy experiments). Thus, I think that while these systems, in particular \href{https://psychopy.org/}{PsychoPy}, are great tools to quickly bang a simple experiment together, they are most useful if you understand \emph{how} they create the underlying code and how you would program it yourself. Then, you will not be limited by the software, as you know you can program something the default drag-and-drop won't allow. At the same time, you can always opt in, if drag-and-drop is sufficient but faster or use a mix of the two approaches. At the end, it is about having options and creative freedom to program an experiment that will answer your research question, not an experiment that your software allows you to program.
 
-We will learn programming in Python, which is a great language that combines simple and clear syntax with power and ability to tackle almost any problem. In this seminar, we will concentrate on desktop experiments but you can use it for online experiments (\href{https://otree.readthedocs.io/en/latest/}{oTree} and \href{https://psychopy.org/}{PsychoPy}), scientific programming (\href{https://numpy.org/}{NumPy} and \href{https://www.scipy.org/}{SciPy}), data analysis (\href{https://pandas.pydata.org/}{pandas}), machine learning (\href{https://keras.io/}{keras}), website programming (\href{https://www.djangoproject.com/}{django}), computer vision (\href{https://opencv.org/}{OpenCV}), etc. Thus, Python is one of the most versatile programming tools that you can use for all stages of your research or work. And, Python is free, so you do not need to worry whether you or your future employer will be able to afford license fees (a very real problem, if you use Matlab).
+We will learn programming in Python, which is a great language that combines simple and clear syntax with power and ability to tackle almost any problem. In this seminar, we will concentrate on desktop experiments but you can use it for online experiments (\href{https://otree.readthedocs.io/en/latest/}{oTree} and \href{https://psychopy.org/}{PsychoPy}), scientific programming (\href{https://numpy.org/}{NumPy} and \href{https://www.scipy.org/}{SciPy}), data analysis (\href{https://pandas.pydata.org/}{pandas}), machine learning (\href{https://scikit-learn.org/}{scikit-learn}), deep learning (\href{https://keras.io/}{keras}), website programming (\href{https://www.djangoproject.com/}{django}), computer vision (\href{https://opencv.org/}{OpenCV}), etc. Thus, Python is one of the most versatile programming tools that you can use for all stages of your research or work. And, Python is free, so you do not need to worry whether you or your future employer will be able to afford license fees (a very real problem, if you use Matlab).
 
 \hypertarget{seminar-specific-information}{%
 \section{Seminar-specific information}\label{seminar-specific-information}}
@@ -190,7 +189,7 @@ I will not give detailed instructions on how to install the necessary software b
 \hypertarget{install-psychopy}{%
 \section{PsychoPy}\label{install-psychopy}}
 
-Download and install \href{https://www.psychopy.org/download.html}{Standalone PsychoPy} version. Use whatever the latest (and greatest) PsychoPy version is suggested to you (PsychoPy 2021.2.3 using Python3.6 as of time of writing) and follow instructions.
+Download and install \href{https://www.psychopy.org/download.html}{Standalone PsychoPy} version. Use whatever the latest (and greatest) PsychoPy version is suggested to you (PsychoPy 2022.2.4 using Python 3.8 as of time of writing) and follow instructions.
 
 Note that you can also install PsychoPy as a anaconda package or install an official Python distribution and add PsychoPy via pip. However, I find the standalone easier to use as it has all necessary additional libraries. Plus, it has additional tools for GUI-based experiment programming and integration with \href{https://pavlovia.org/}{Pavlovia.org}.
 
@@ -228,7 +227,7 @@ Before we start, I suggest that you create a folder called \emph{games-with-pyth
 \hypertarget{programming-tips}{%
 \chapter{Programming tips and tricks}\label{programming-tips}}
 
-Below are some tips about writing and reading the code. Some may sound cryptic when you read them for the first time (they will become clear once we cover the necessary material). Some will feel like an overkill for simple projects that we will be implementing. I suggest that you read this section casually the very first time but return to it frequently once we start to program in earnest. Unfortunately, these tricks won't work it you do not use them! So you should \emph{always} use them and they should become your \emph{good habits}, like using a seat belt. The seat belt does nothing useful on most (hopefully, all) days but you wear it because it might suddenly and very urgently become extremely useful and you can never be sure when this will happen. Same with coding. Quite often you will be tempted to write ``quick-n-dirty'' code because this is just a ``simple test'', temporary solution, a prototype, a pilot experiment, etc. But, as they say in Russia ``There is nothing more permanent than a temporary solution''. More often than not, you will find that your toy code grew into a full blown experiment and it is a mess. Or you want to come back to that pilot experiment you did a few months ago but realize that it is easier to start from scratch than to understand how that monster works\footnote{Happened to me more often than I dare to admit.}. Thus, resist the temptation! Form the good habits and you future-you will be very grateful!
+Below are some tips about writing and reading the code. Some may sound cryptic when you read them for the first time (they will become clear once we cover the necessary material). Some will feel like an overkill for simple projects that we will be implementing. I suggest that you read this section casually the very first time but return to it frequently once we start to program in earnest. Unfortunately, these tricks won't work it you do not use them! So you should \emph{always} use them and they should become your \emph{good habits}, like using a seat belt. The seat belt does nothing useful on most (hopefully, all) days but you wear it because it might suddenly and very urgently become extremely useful and you can never be sure when this will happen. Same with coding. Quite often you will be tempted to write ``quick-n-dirty'' code because this is just a ``simple test'', temporary solution, a prototype, a pilot experiment, etc. But, as they say ``There is nothing more permanent than a temporary solution''. More often than not, you will find that your toy code grew into a full blown experiment and it is a mess. Or you want to come back to that pilot experiment you did a few months ago but realize that it is easier to start from scratch than to understand how that monster works\footnote{Happened to me more often than I dare to admit.}. Thus, resist the temptation! Form the good habits and you future-you will be very grateful!
 
 \hypertarget{writing-tips}{%
 \section{Writing the code}\label{writing-tips}}
@@ -260,10 +259,12 @@ Your motto should be ``slow but steady''. This is the way I will guide you throu
 
 Yes, you can always try to find a solution to your problem on StackOverflow\footnote{However, if you are doing the seminar, ask me first!}. I do it all the time! However, you should use the provided solution \emph{only if you understand it}! Do not copy-paste the code that \emph{seems} to solve a problem like yours. If you do that and you are lucky, it might work. Or, again if you are lucky, it won't work in an obvious manner. But if you are not so lucky, it will (sometimes) work incorrectly in a subtle way. And, since you did not really know what the code was doing when you pasted it, you will be even more confused. So use StackOverflow as a source of knowledge, not as a source of copy-pastable code!
 
-\#\# Reading the code \{\#reading-tips\}
+\hypertarget{reading-tips}{%
+\section{Reading the code}\label{reading-tips}}
+
 Reading code is easy because computers are dumb and you are smart. This means that instructions you give the computer must necessarily be very simple and, therefore, are very easy to understand for a human. Unfortunately, reading code is also hard because computers are dumb and you are smart. Your are so smart that you don't even need to read the entire code to understand what it is doing, you just read the key bits and fill in the gaps. Unfortunately, this means that you will tend to read over mistakes. This is not unique to programming, if you ever proofraed a text, you now how hard it is to find tipos. Your brain corrects them on the fly using the context and you read the word as it should be, not as it is actually written\footnote{Tip: Read your text one sentence at a time starting from the back or read one random sentence at a time. This breaks the flow of the text and helps you concentrate on words rather than on the meaning and the story.}.
 
-My experience with programming in general and on this seminar in particular is that most problems you get stuck with are simple to be point of being dumb and obvious in retrospect\footnote{Hindsight is always 20/20!}. Do not despair! It is not you, but just a consequence of how wonderfully your brain is wired for pattern-recognition. Below are several suggestions that could help you to make reading code more robust.
+My experience with programming in general and on this seminar in particular is that most problems you get stuck with are simple to the point of being dumb and obvious in retrospect\footnote{Hindsight is always 20/20!}. Do not despair! It is not you, but just a consequence of how wonderfully your brain is wired for pattern-recognition. Below are several suggestions that could help you to make reading code more robust.
 
 \hypertarget{think-like-a-computer}{%
 \subsection{Think like a computer}\label{think-like-a-computer}}
@@ -273,7 +274,7 @@ Read the code line-by-line and ``execute'' it the way the compute would. Use pen
 \hypertarget{pretend-that-youve-never-seen-this-code-in-your-life}{%
 \subsection{Pretend that you've never seen this code in your life}\label{pretend-that-youve-never-seen-this-code-in-your-life}}
 
-Assume that you have no idea what the code is doing. As I wrote, quite often you \emph{literally} do not see a mistake because your brain fills-in details and bends the reality to match your expectations. You \emph{know} what this chunk of code should be doing, so instead of reading it you skim through it and, unless it looks obviously terribly wrong, assume that it does what it should. Turning your expectations off is hard but is immensely helpful.
+Assume that you have no idea what the code is doing. As I wrote, quite often you \emph{literally} do not see a mistake because your brain fills-in details and bends the reality to match your expectations\footnote{Recently, I spent half-an-hour trying to understand why two identical chunks of code give me different results. My son almost instantly found a difference (a missing comma in of the them) because for him it was just bunch of letters and numbers.}. You \emph{know} what this chunk of code should be doing, so instead of reading it you skim through it and, unless it looks obviously terribly wrong, assume that it does what it should. Turning your expectations off is hard but is immensely helpful.
 
 \hypertarget{do-not-search-only-under-the-street-lamp}{%
 \subsection{Do not search only under the street lamp}\label{do-not-search-only-under-the-street-lamp}}
@@ -1645,12 +1646,12 @@ First, put a break point on the line in the main script that calls function \tex
 Now, put the breakpoint inside of \texttt{f1()} function and run the code via \textbf{F5}. Take a look at the left pane, you will see a \emph{Call Stack} tab. While yellow highlighted line in the editor shows you where you currently are (should be inside the \texttt{f1()} function), the \emph{Call Stack} shows you how did you get where. In this case it should show:
 
 \begin{longtable}[]{@{}lll@{}}
-\toprule
+\toprule()
 \endhead
 f1 & test01.py & 2:1 \\
 f2 & test01.py & 7:1 \\
 \textless module\textgreater{} & test01.py & 9:1 \\
-\bottomrule
+\bottomrule()
 \end{longtable}
 
 The calls are stacked from bottom to top, so this means that a function was called in the main module in line 9, you ended up in function \texttt{f2} in line 7, and then in function \texttt{f1} and in line 2. Experiment with stepping in and out of functions while keeping an eye on this. You might not need this information frequently but could be useful in out later projects with multiple nested function calls.
@@ -2414,9 +2415,6 @@ but, as I said, appending will throw a mistake (try this code in a Jupyter Noteb
 \CommentTok{\# throws AttributeError: \textquotesingle{}tuple\textquotesingle{} object has no attribute \textquotesingle{}append\textquotesingle{}}
 \NormalTok{i\_am\_a\_tuple.append(}\DecValTok{4}\NormalTok{)}
 \CommentTok{\#\textgreater{} Error in py\_call\_impl(callable, dots$args, dots$keywords): AttributeError: \textquotesingle{}tuple\textquotesingle{} object has no attribute \textquotesingle{}append\textquotesingle{}}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Detailed traceback:}
-\CommentTok{\#\textgreater{}   File "\textless{}string\textgreater{}", line 1, in \textless{}module\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2429,9 +2427,6 @@ Same goes for trying to change it
 \CommentTok{\# throws TypeError: \textquotesingle{}tuple\textquotesingle{} object does not support item assignment}
 \NormalTok{i\_am\_a\_tuple[}\DecValTok{1}\NormalTok{] }\OperatorTok{=} \DecValTok{1} 
 \CommentTok{\#\textgreater{} Error in py\_call\_impl(callable, dots$args, dots$keywords): TypeError: \textquotesingle{}tuple\textquotesingle{} object does not support item assignment}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Detailed traceback:}
-\CommentTok{\#\textgreater{}   File "\textless{}string\textgreater{}", line 1, in \textless{}module\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3613,7 +3608,7 @@ In the next section, we will create a \texttt{TimedResponseTask} class that will
 \BuiltInTok{print}\NormalTok{(iterator\_fun())}
 
 \CommentTok{\# iterating via for loop}
-\CommentTok{\#\textgreater{} \textless{}generator object iterator\_fun at 0x000002158D78C740\textgreater{}}
+\CommentTok{\#\textgreater{} \textless{}generator object iterator\_fun at 0x00000220B43BB890\textgreater{}}
 \ControlFlowTok{for}\NormalTok{ elem }\KeywordTok{in}\NormalTok{ iterator\_fun():}
     \BuiltInTok{print}\NormalTok{(elem)}
     
@@ -4311,9 +4306,6 @@ Whenever an error occurs at a run time, it \href{https://docs.python.org/3/refer
 \NormalTok{a\_dict }\OperatorTok{=}\NormalTok{ \{}\StringTok{"a\_key"}\NormalTok{ : }\DecValTok{1}\NormalTok{\}}
 \NormalTok{a\_dict[}\StringTok{"b\_key"}\NormalTok{]}
 \CommentTok{\#\textgreater{} Error in py\_call\_impl(callable, dots$args, dots$keywords): KeyError: \textquotesingle{}b\_key\textquotesingle{}}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Detailed traceback:}
-\CommentTok{\#\textgreater{}   File "\textless{}string\textgreater{}", line 1, in \textless{}module\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4650,9 +4642,6 @@ Before we create an alien armada, we need to make a quick detour to talk about \
 \CommentTok{\# raises AttributeError}
 \BuiltInTok{print}\NormalTok{(example.\_\_color)}
 \CommentTok{\#\textgreater{} Error in py\_call\_impl(callable, dots$args, dots$keywords): AttributeError: \textquotesingle{}ExampleClass\textquotesingle{} object has no attribute \textquotesingle{}\_\_color\textquotesingle{}}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Detailed traceback:}
-\CommentTok{\#\textgreater{}   File "\textless{}string\textgreater{}", line 1, in \textless{}module\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 

@@ -7,7 +7,7 @@
 <title>Chapter 3 Programming tips and tricks | Writing games with Python and PsychoPy</title>
 <meta name="author" content="Alexander (Sasha) Pastukhov">
 <meta name="description" content="Below are some tips about writing and reading the code. Some may sound cryptic when you read them for the first time (they will become clear once we cover the necessary material). Some will feel...">
-<meta name="generator" content="bookdown 0.26 with bs4_book()">
+<meta name="generator" content="bookdown 0.29 with bs4_book()">
 <meta property="og:title" content="Chapter 3 Programming tips and tricks | Writing games with Python and PsychoPy">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://alexander-pastukhov.github.io/writing-games-with-python-and-psychopy/programming-tips.html">
@@ -17,7 +17,7 @@
 <meta name="twitter:description" content="Below are some tips about writing and reading the code. Some may sound cryptic when you read them for the first time (they will become clear once we cover the necessary material). Some will feel...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -73,7 +73,7 @@
 <h1>
 <span class="header-section-number">3</span> Programming tips and tricks<a class="anchor" aria-label="anchor" href="#programming-tips"><i class="fas fa-link"></i></a>
 </h1>
-<p>Below are some tips about writing and reading the code. Some may sound cryptic when you read them for the first time (they will become clear once we cover the necessary material). Some will feel like an overkill for simple projects that we will be implementing. I suggest that you read this section casually the very first time but return to it frequently once we start to program in earnest. Unfortunately, these tricks won’t work it you do not use them! So you should <em>always</em> use them and they should become your <em>good habits</em>, like using a seat belt. The seat belt does nothing useful on most (hopefully, all) days but you wear it because it might suddenly and very urgently become extremely useful and you can never be sure when this will happen. Same with coding. Quite often you will be tempted to write “quick-n-dirty” code because this is just a “simple test”, temporary solution, a prototype, a pilot experiment, etc. But, as they say in Russia “There is nothing more permanent than a temporary solution”. More often than not, you will find that your toy code grew into a full blown experiment and it is a mess. Or you want to come back to that pilot experiment you did a few months ago but realize that it is easier to start from scratch than to understand how that monster works<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Happened to me more often than I dare to admit.&lt;/p&gt;"><sup>3</sup></a>. Thus, resist the temptation! Form the good habits and you future-you will be very grateful!</p>
+<p>Below are some tips about writing and reading the code. Some may sound cryptic when you read them for the first time (they will become clear once we cover the necessary material). Some will feel like an overkill for simple projects that we will be implementing. I suggest that you read this section casually the very first time but return to it frequently once we start to program in earnest. Unfortunately, these tricks won’t work it you do not use them! So you should <em>always</em> use them and they should become your <em>good habits</em>, like using a seat belt. The seat belt does nothing useful on most (hopefully, all) days but you wear it because it might suddenly and very urgently become extremely useful and you can never be sure when this will happen. Same with coding. Quite often you will be tempted to write “quick-n-dirty” code because this is just a “simple test”, temporary solution, a prototype, a pilot experiment, etc. But, as they say “There is nothing more permanent than a temporary solution”. More often than not, you will find that your toy code grew into a full blown experiment and it is a mess. Or you want to come back to that pilot experiment you did a few months ago but realize that it is easier to start from scratch than to understand how that monster works<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Happened to me more often than I dare to admit.&lt;/p&gt;"><sup>3</sup></a>. Thus, resist the temptation! Form the good habits and you future-you will be very grateful!</p>
 <div id="writing-tips" class="section level2" number="3.1">
 <h2>
 <span class="header-section-number">3.1</span> Writing the code<a class="anchor" aria-label="anchor" href="#writing-tips"><i class="fas fa-link"></i></a>
@@ -108,38 +108,42 @@
 <span class="header-section-number">3.1.5</span> There is nothing wrong with StackOverflow<a class="anchor" aria-label="anchor" href="#there-is-nothing-wrong-with-stackoverflow"><i class="fas fa-link"></i></a>
 </h3>
 <p>Yes, you can always try to find a solution to your problem on StackOverflow<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;However, if you are doing the seminar, ask me first!&lt;/p&gt;"><sup>6</sup></a>. I do it all the time! However, you should use the provided solution <em>only if you understand it</em>! Do not copy-paste the code that <em>seems</em> to solve a problem like yours. If you do that and you are lucky, it might work. Or, again if you are lucky, it won’t work in an obvious manner. But if you are not so lucky, it will (sometimes) work incorrectly in a subtle way. And, since you did not really know what the code was doing when you pasted it, you will be even more confused. So use StackOverflow as a source of knowledge, not as a source of copy-pastable code!</p>
-<p>## Reading the code {#reading-tips}
-Reading code is easy because computers are dumb and you are smart. This means that instructions you give the computer must necessarily be very simple and, therefore, are very easy to understand for a human. Unfortunately, reading code is also hard because computers are dumb and you are smart. Your are so smart that you don’t even need to read the entire code to understand what it is doing, you just read the key bits and fill in the gaps. Unfortunately, this means that you will tend to read over mistakes. This is not unique to programming, if you ever proofraed a text, you now how hard it is to find tipos. Your brain corrects them on the fly using the context and you read the word as it should be, not as it is actually written<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Tip: Read your text one sentence at a time starting from the back or read one random sentence at a time. This breaks the flow of the text and helps you concentrate on words rather than on the meaning and the story.&lt;/p&gt;"><sup>7</sup></a>.</p>
-<p>My experience with programming in general and on this seminar in particular is that most problems you get stuck with are simple to be point of being dumb and obvious in retrospect<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Hindsight is always 20/20!&lt;/p&gt;"><sup>8</sup></a>. Do not despair! It is not you, but just a consequence of how wonderfully your brain is wired for pattern-recognition. Below are several suggestions that could help you to make reading code more robust.</p>
 </div>
-<div id="think-like-a-computer" class="section level3" number="3.1.6">
+</div>
+<div id="reading-tips" class="section level2" number="3.2">
+<h2>
+<span class="header-section-number">3.2</span> Reading the code<a class="anchor" aria-label="anchor" href="#reading-tips"><i class="fas fa-link"></i></a>
+</h2>
+<p>Reading code is easy because computers are dumb and you are smart. This means that instructions you give the computer must necessarily be very simple and, therefore, are very easy to understand for a human. Unfortunately, reading code is also hard because computers are dumb and you are smart. Your are so smart that you don’t even need to read the entire code to understand what it is doing, you just read the key bits and fill in the gaps. Unfortunately, this means that you will tend to read over mistakes. This is not unique to programming, if you ever proofraed a text, you now how hard it is to find tipos. Your brain corrects them on the fly using the context and you read the word as it should be, not as it is actually written<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Tip: Read your text one sentence at a time starting from the back or read one random sentence at a time. This breaks the flow of the text and helps you concentrate on words rather than on the meaning and the story.&lt;/p&gt;"><sup>7</sup></a>.</p>
+<p>My experience with programming in general and on this seminar in particular is that most problems you get stuck with are simple to the point of being dumb and obvious in retrospect<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Hindsight is always 20/20!&lt;/p&gt;"><sup>8</sup></a>. Do not despair! It is not you, but just a consequence of how wonderfully your brain is wired for pattern-recognition. Below are several suggestions that could help you to make reading code more robust.</p>
+<div id="think-like-a-computer" class="section level3" number="3.2.1">
 <h3>
-<span class="header-section-number">3.1.6</span> Think like a computer<a class="anchor" aria-label="anchor" href="#think-like-a-computer"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.2.1</span> Think like a computer<a class="anchor" aria-label="anchor" href="#think-like-a-computer"><i class="fas fa-link"></i></a>
 </h3>
 <p>Read the code line-by-line and “execute” it the way the compute would. Use pen-and-paper to keep the track of variables. Trace which chunks of code can be reached and when. Slow yourself down and make sure you understand each line and are able to keep track of the variables. Once you do that it will be easy to spot a mistake.</p>
 </div>
-<div id="pretend-that-youve-never-seen-this-code-in-your-life" class="section level3" number="3.1.7">
+<div id="pretend-that-youve-never-seen-this-code-in-your-life" class="section level3" number="3.2.2">
 <h3>
-<span class="header-section-number">3.1.7</span> Pretend that you’ve never seen this code in your life<a class="anchor" aria-label="anchor" href="#pretend-that-youve-never-seen-this-code-in-your-life"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.2.2</span> Pretend that you’ve never seen this code in your life<a class="anchor" aria-label="anchor" href="#pretend-that-youve-never-seen-this-code-in-your-life"><i class="fas fa-link"></i></a>
 </h3>
-<p>Assume that you have no idea what the code is doing. As I wrote, quite often you <em>literally</em> do not see a mistake because your brain fills-in details and bends the reality to match your expectations. You <em>know</em> what this chunk of code should be doing, so instead of reading it you skim through it and, unless it looks obviously terribly wrong, assume that it does what it should. Turning your expectations off is hard but is immensely helpful.</p>
+<p>Assume that you have no idea what the code is doing. As I wrote, quite often you <em>literally</em> do not see a mistake because your brain fills-in details and bends the reality to match your expectations<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Recently, I spent half-an-hour trying to understand why two identical chunks of code give me different results. My son almost instantly found a difference (a missing comma in of the them) because for him it was just bunch of letters and numbers.&lt;/p&gt;"><sup>9</sup></a>. You <em>know</em> what this chunk of code should be doing, so instead of reading it you skim through it and, unless it looks obviously terribly wrong, assume that it does what it should. Turning your expectations off is hard but is immensely helpful.</p>
 </div>
-<div id="do-not-search-only-under-the-street-lamp" class="section level3" number="3.1.8">
+<div id="do-not-search-only-under-the-street-lamp" class="section level3" number="3.2.3">
 <h3>
-<span class="header-section-number">3.1.8</span> Do not search only under the street lamp<a class="anchor" aria-label="anchor" href="#do-not-search-only-under-the-street-lamp"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.2.3</span> Do not search only under the street lamp<a class="anchor" aria-label="anchor" href="#do-not-search-only-under-the-street-lamp"><i class="fas fa-link"></i></a>
 </h3>
 <p>Whenever you are using some new code or need to implement something that feels complicated and your code does not work as it should, you will tend to assume that a problem is with the new fancy code. Simply because it is new, fancy, and complicated. But, in my experience, the error will typically hide in plain sight in the simpler “trivial” code nearby which you never properly look at, because it is simple and trivial. Check everything, not just the places where you would expect to have made a mistake.</p>
 </div>
-<div id="use-the-debugger" class="section level3" number="3.1.9">
+<div id="use-the-debugger" class="section level3" number="3.2.4">
 <h3>
-<span class="header-section-number">3.1.9</span> Use the debugger<a class="anchor" aria-label="anchor" href="#use-the-debugger"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.2.4</span> Use the debugger<a class="anchor" aria-label="anchor" href="#use-the-debugger"><i class="fas fa-link"></i></a>
 </h3>
 <p>In the book, you will learn how to pause an execution of your game, so you can investigate its state. Use this knowledge! Put breakpoints and execute the code step-by-step. Check values of variables using “Watch” tab. Use debug console to check whether functions return results that they should. For complex conditions or mathematical formulas, split them into small bits, copy and execute these bits in the debug console and check whether numbers add up. Make sure that a code chunk checks out and then proceed to analyze the next one. Debugging is particularly helpful to identify the code that is not reached or reached at the wrong moment.</p>
 </div>
 </div>
-<div id="zen-of-python" class="section level2" number="3.2">
+<div id="zen-of-python" class="section level2" number="3.3">
 <h2>
-<span class="header-section-number">3.2</span> Zen of Python<a class="anchor" aria-label="anchor" href="#zen-of-python"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.3</span> Zen of Python<a class="anchor" aria-label="anchor" href="#zen-of-python"><i class="fas fa-link"></i></a>
 </h2>
 <p>I found <a href="https://www.python.org/dev/peps/pep-0020/">Zen of Python</a> to be good inspiration on how to approach programming.</p>
 
@@ -160,13 +164,17 @@ Reading code is easy because computers are dumb and you are smart. This means th
 <li><a class="nav-link" href="#add-some-air"><span class="header-section-number">3.1.3</span> Add some air</a></li>
 <li><a class="nav-link" href="#write-your-code-one-teeny-tiny-step-a-time"><span class="header-section-number">3.1.4</span> Write your code one teeny-tiny step a time</a></li>
 <li><a class="nav-link" href="#there-is-nothing-wrong-with-stackoverflow"><span class="header-section-number">3.1.5</span> There is nothing wrong with StackOverflow</a></li>
-<li><a class="nav-link" href="#think-like-a-computer"><span class="header-section-number">3.1.6</span> Think like a computer</a></li>
-<li><a class="nav-link" href="#pretend-that-youve-never-seen-this-code-in-your-life"><span class="header-section-number">3.1.7</span> Pretend that you’ve never seen this code in your life</a></li>
-<li><a class="nav-link" href="#do-not-search-only-under-the-street-lamp"><span class="header-section-number">3.1.8</span> Do not search only under the street lamp</a></li>
-<li><a class="nav-link" href="#use-the-debugger"><span class="header-section-number">3.1.9</span> Use the debugger</a></li>
 </ul>
 </li>
-<li><a class="nav-link" href="#zen-of-python"><span class="header-section-number">3.2</span> Zen of Python</a></li>
+<li>
+<a class="nav-link" href="#reading-tips"><span class="header-section-number">3.2</span> Reading the code</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#think-like-a-computer"><span class="header-section-number">3.2.1</span> Think like a computer</a></li>
+<li><a class="nav-link" href="#pretend-that-youve-never-seen-this-code-in-your-life"><span class="header-section-number">3.2.2</span> Pretend that you’ve never seen this code in your life</a></li>
+<li><a class="nav-link" href="#do-not-search-only-under-the-street-lamp"><span class="header-section-number">3.2.3</span> Do not search only under the street lamp</a></li>
+<li><a class="nav-link" href="#use-the-debugger"><span class="header-section-number">3.2.4</span> Use the debugger</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#zen-of-python"><span class="header-section-number">3.3</span> Zen of Python</a></li>
 </ul>
 
       <div class="book-extra">
@@ -184,7 +192,7 @@ Reading code is easy because computers are dumb and you are smart. This means th
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2022-06-20.</p>
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2022-10-16.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -197,7 +205,7 @@ Reading code is easy because computers are dumb and you are smart. This means th
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

@@ -89,9 +89,6 @@ i_am_a_tuple = (1, 2, 3)
 # throws AttributeError: 'tuple' object has no attribute 'append'
 i_am_a_tuple.append(4)
 #> Error in py_call_impl(callable, dots$args, dots$keywords): AttributeError: 'tuple' object has no attribute 'append'
-#> 
-#> Detailed traceback:
-#>   File "<string>", line 1, in <module>
 ```
 
 Same goes for trying to change it
@@ -102,9 +99,6 @@ i_am_a_tuple = (1, 2, 3)
 # throws TypeError: 'tuple' object does not support item assignment
 i_am_a_tuple[1] = 1 
 #> Error in py_call_impl(callable, dots$args, dots$keywords): TypeError: 'tuple' object does not support item assignment
-#> 
-#> Detailed traceback:
-#>   File "<string>", line 1, in <module>
 ```
 
 This means that when you need to pass a list of values to a function and you want them to have no link to the original variable, you should instead pass _a tuple of values_ to the function. The function still has a list of values but the link to the original list object is now broken. You can turn a list into a tuple using `tuple()`. Keeping in mind that `tuple()` creates a frozen copy of the list, what will happen below?

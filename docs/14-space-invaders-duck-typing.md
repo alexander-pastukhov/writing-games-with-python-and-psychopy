@@ -94,9 +94,6 @@ example = ExampleClass()
 # raises AttributeError
 print(example.__color)
 #> Error in py_call_impl(callable, dots$args, dots$keywords): AttributeError: 'ExampleClass' object has no attribute '__color'
-#> 
-#> Detailed traceback:
-#>   File "<string>", line 1, in <module>
 ```
 
 But as Python does not have truly private attributes, you can still access it via its mangled name`object._<ClassName><hidden attribute name>`:

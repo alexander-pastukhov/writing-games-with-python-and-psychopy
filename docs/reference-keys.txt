@@ -20,6 +20,7 @@ document-your-code
 add-some-air
 write-your-code-one-teeny-tiny-step-a-time
 there-is-nothing-wrong-with-stackoverflow
+reading-tips
 think-like-a-computer
 pretend-that-youve-never-seen-this-code-in-your-life
 do-not-search-only-under-the-street-lamp
