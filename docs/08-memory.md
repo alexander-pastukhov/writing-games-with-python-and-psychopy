@@ -5,7 +5,7 @@ Today, you will write a good old _Memory_ game: Eight cards are lying "face down
 
 
 Before we start, create a new folder for the game and create a subfolder _Images_ in it. Then, download [images of chicken](material/chicken.zip)^[The images are courtesy of [Kevin David Pointon](https://openclipart.org/artist/Firkin) and were downloaded
-from [OpenClipart](https://openclipart.org/). They are [public domain](https://creativecommons.org/publicdomain/zero/1.0/) and can be used and distributed freely.] that we will use for the game and unzip them into _Images_ subfolder. Also, grab the [exercise notebook](notebooks/08. Memory game.ipynb)!
+from [OpenClipart](https://openclipart.org/). They are [public domain](https://creativecommons.org/publicdomain/zero/1.0/) and can be used and distributed freely.] that we will use for the game and unzip them into _Images_ subfolder. Also, grab the [exercise notebook](notebooks/Memory game.ipynb)!
 
 ## Chapter concepts
 

@@ -1,5 +1,5 @@
 # Python basics {#python-basics}
-Hopefully, you already [created a special folder](#files-folder) for this book. Download the [exercise notebook](notebooks/Seminar 01. Basics.ipynb) (Alt+Click should download rather than open it), put it in a chapter's folder, and open it (see [relevant instructions](#jupyter-notebooks). You will need to switch between explanations here and the exercises in the notebook, so keep them both open.
+Hopefully, you already [created a special folder](#files-folder) for this book. Download the [exercise notebook](notebooks/Basics.ipynb) (Alt+Click should download rather than open it), put it in a chapter's folder, and open it (see [relevant instructions](#jupyter-notebooks). You will need to switch between explanations here and the exercises in the notebook, so keep them both open.
 
 ## Chapter concepts
 

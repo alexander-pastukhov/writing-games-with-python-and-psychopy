@@ -5,7 +5,7 @@ Today you will create your first _video_ game Whack-a-Mole. The game itself is v
 
 
 
-Grab the [exercise notebook](notebooks/07. Whack-a-mole.ipynb) before we start!
+Grab the [exercise notebook](notebooks/Whack-a-mole.ipynb) before we start!
 
 ## Chapter concepts
 

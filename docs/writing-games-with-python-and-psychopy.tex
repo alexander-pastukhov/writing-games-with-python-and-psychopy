@@ -117,7 +117,7 @@
 
 \title{Writing games with Python and PsychoPy}
 \author{Alexander (Sasha) Pastukhov}
-\date{2022-10-16}
+\date{2022-10-19}
 
 \begin{document}
 \maketitle
@@ -294,7 +294,7 @@ I found \href{https://www.python.org/dev/peps/pep-0020/}{Zen of Python} to be go
 \hypertarget{python-basics}{%
 \chapter{Python basics}\label{python-basics}}
 
-Hopefully, you already \protect\hyperlink{files-folder}{created a special folder} for this book. Download the \href{notebooks/Seminar\%2001.\%20Basics.ipynb}{exercise notebook} (Alt+Click should download rather than open it), put it in a chapter's folder, and open it (see \protect\hyperlink{jupyter-notebooks}{relevant instructions}. You will need to switch between explanations here and the exercises in the notebook, so keep them both open.
+Hopefully, you already \protect\hyperlink{files-folder}{created a special folder} for this book. Download the \href{notebooks/Basics.ipynb}{exercise notebook} (Alt+Click should download rather than open it), put it in a chapter's folder, and open it (see \protect\hyperlink{jupyter-notebooks}{relevant instructions}. You will need to switch between explanations here and the exercises in the notebook, so keep them both open.
 
 \hypertarget{chapter-concepts}{%
 \section{Chapter concepts}\label{chapter-concepts}}
@@ -663,7 +663,7 @@ These is much more to formatting and you can read about it at \href{https://pyfo
 
 The previous chapter covered Python basics, so now you are ready to start developing you first game! We will build it step by step as there will be a lot to learn about input, libraries, conditional statements, and indentation.
 
-Before you start, create a new folder (inside your \protect\hyperlink{files-folder}{course folder}) called, for example, ``guess-the-number'', download \href{notebooks/Seminar\%2002.\%20Guess\%20the\%20number\%20-\%20single\%20round.ipynb}{exercise notebook}, copy it in the newly created folder, and open it in \protect\hyperlink{jupyter-notebooks}{Jupyter Notebook}. As in the chapter before, it will contain exercises on reading and understanding the code.
+Before you start, create a new folder (inside your \protect\hyperlink{files-folder}{course folder}) called, for example, ``guess-the-number'', download \href{notebooks/Guess\%20the\%20number\%20-\%20single\%20round.ipynb}{exercise notebook}, copy it in the newly created folder, and open it in \protect\hyperlink{jupyter-notebooks}{Jupyter Notebook}. As in the chapter before, it will contain exercises on reading and understanding the code.
 
 However, we will be using \protect\hyperlink{install-vs-code}{VS Code} to program scripts with the actual game. You will need to create a separate file for each code practice\footnote{You can ``Save as\ldots{}'' the previous code to avoid copy-pasting things by hand.} (e.g., \emph{code01.py}\footnote{I recommend using \texttt{01} instead of \texttt{1}, as it will ensure consistent file sorting in your file manager}, \emph{code02.py}, etc.) This is not the most efficient implementation of a version control and it will certainly clutter the folder. But it would allow me to see your solutions for every step, which will make it easier for me to give feedback. For submitting the assignment, just zip the folder and submit the zip-file.
 
@@ -1107,7 +1107,7 @@ For the seminar, submit a zipped folder with exercise notebook and all three pro
 \hypertarget{guess-the-number-multi-round}{%
 \chapter{Guess the Number: a multi round edition}\label{guess-the-number-multi-round}}
 
-In previous chapter, you programmed a single-attempt-only ``Guess the Number'' game. Now, we will expand to allow multiple attempts and will add other bells-and-whistles to make it more fun. Create a new subfolder and download the \href{notebooks/Seminar\%2003.\%20Guess\%20the\%20number\%20-\%20multi\%20round.ipynb}{exercise notebook} before we start!
+In previous chapter, you programmed a single-attempt-only ``Guess the Number'' game. Now, we will expand to allow multiple attempts and will add other bells-and-whistles to make it more fun. Create a new subfolder and download the \href{notebooks/Guess\%20the\%20number\%20-\%20multi\%20round.ipynb}{exercise notebook} before we start!
 
 \hypertarget{chapter-concepts-2}{%
 \section{Chapter concepts}\label{chapter-concepts-2}}
@@ -1295,7 +1295,7 @@ Let us program Guess the Number game again\footnote{This is the last time, I pro
 
 The optimal way to do this is to use the middle of the interval for a guess. This way you rule out \emph{half} the numbers that are either greater or smaller than your guess (or you guess the number correctly, of course). So, if you know that the number is between 1 and 10, you should split things in the middle, that is picking 5 or 6, as you cannot pick 5.5 (we assume that you can use only integers). If your opponent tells that their number is greater than your pick, you know that it must be somewhere between your guess and the original upper limit, e.g., between 5 and 10. Conversely, if the opponent responds ``lower'', the number is the lower limit and you guess, e.g., between 1 and 5. On your next attempt, you pick split the interval again until you either guess the number correctly or end up with an interval that contains just one number. Then you do not need to guess anymore.
 
-To implement this program, you will need to learn about functions, how to document them like a pro, and how to use your own libraries. Grab the \href{notebooks/05.\%20Guess\%20the\%20number\%20-\%20AI.ipynb}{exercise notebook} before we start!
+To implement this program, you will need to learn about functions, how to document them like a pro, and how to use your own libraries. Grab the \href{notebooks/Guess\%20the\%20number\%20-\%20AI.ipynb}{exercise notebook} before we start!
 
 \hypertarget{chapter-concepts.}{%
 \section{Chapter concepts.}\label{chapter-concepts.}}
@@ -2010,7 +2010,7 @@ There is plenty more to learn about PsychoPy but we've got the basics covered. S
 
 Today you will create your first \emph{video} game Whack-a-Mole. The game itself is very much a reaction time experiment: moles/targets appear after a random delay at one of the predefined locations, the player's task is to whack (press a corresponding button) the mole/target before it disappears. Your final game should look approximately like the one in the video: Circles (moles) turn white, if I hit the correct button in time.
 
-Grab the \href{notebooks/07.\%20Whack-a-mole.ipynb}{exercise notebook} before we start!
+Grab the \href{notebooks/Whack-a-mole.ipynb}{exercise notebook} before we start!
 
 \hypertarget{chapter-concepts-4}{%
 \section{Chapter concepts}\label{chapter-concepts-4}}
@@ -2309,7 +2309,7 @@ Congratulations on your first video game! It could use some bells-and-whistles l
 Today, you will write a good old \emph{Memory} game: Eight cards are lying ``face down'', you can turn any two of them and, if they are identical, they are taken off the table. If they are different, the cards turn ``face down'' again.
 
 Before we start, create a new folder for the game and create a subfolder \emph{Images} in it. Then, download \href{material/chicken.zip}{images of chicken}\footnote{The images are courtesy of \href{https://openclipart.org/artist/Firkin}{Kevin David Pointon} and were downloaded
-  from \href{https://openclipart.org/}{OpenClipart}. They are \href{https://creativecommons.org/publicdomain/zero/1.0/}{public domain} and can be used and distributed freely.} that we will use for the game and unzip them into \emph{Images} subfolder. Also, grab the \href{notebooks/08.\%20Memory\%20game.ipynb}{exercise notebook}!
+  from \href{https://openclipart.org/}{OpenClipart}. They are \href{https://creativecommons.org/publicdomain/zero/1.0/}{public domain} and can be used and distributed freely.} that we will use for the game and unzip them into \emph{Images} subfolder. Also, grab the \href{notebooks/Memory\%20game.ipynb}{exercise notebook}!
 
 \hypertarget{chapter-concepts-5}{%
 \section{Chapter concepts}\label{chapter-concepts-5}}
@@ -3608,7 +3608,7 @@ In the next section, we will create a \texttt{TimedResponseTask} class that will
 \BuiltInTok{print}\NormalTok{(iterator\_fun())}
 
 \CommentTok{\# iterating via for loop}
-\CommentTok{\#\textgreater{} \textless{}generator object iterator\_fun at 0x00000220B43BB890\textgreater{}}
+\CommentTok{\#\textgreater{} \textless{}generator object iterator\_fun at 0x00000222FDE5C740\textgreater{}}
 \ControlFlowTok{for}\NormalTok{ elem }\KeywordTok{in}\NormalTok{ iterator\_fun():}
     \BuiltInTok{print}\NormalTok{(elem)}
     
