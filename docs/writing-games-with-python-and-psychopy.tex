@@ -117,7 +117,7 @@
 
 \title{Writing games with Python and PsychoPy}
 \author{Alexander (Sasha) Pastukhov}
-\date{2022-10-19}
+\date{2022-10-23}
 
 \begin{document}
 \maketitle
@@ -701,7 +701,7 @@ Our first version will allow just one attempt and the overall game algorithm wil
 \item
   computer generates a random number between 1 and 10
 \item
-  prints it out for debug purposes
+  prints it out for debugging purposes
 \item
   prompts user to enter a guess
 \item
@@ -711,7 +711,7 @@ Our first version will allow just one attempt and the overall game algorithm wil
 \hypertarget{lets-pick-a-number}{%
 \section{Let's pick a number}\label{lets-pick-a-number}}
 
-Let us start by implementing just the first two steps of the program. First, create a variable holding a number that computer ``picked''. We will name it \texttt{number\_picked} (you can use some other meaningful name as well but it might be easier if we all stick to the same name). To make things a simpler at the beginning, we will hard-code an arbitrary number between 1 and 10 (pick the one you like). Then, let us print it out, so that we know the number ourselves \footnote{Of course, we know it because we hard-coded it. But that won't be the case when computer will generate it randomly, so let us plan for the future}. Use string formatting to make things user-friendly, e.g., print out something like ``The number I've picked is \ldots{}''. You should be able to do this using the knowledge from the previous chapter. Your code should be a two-liner:
+Let us start by implementing just the first two steps of the program. First, create a variable holding a number that computer ``picked''. We will name it \texttt{number\_picked} (you can use some other meaningful name as well but it might be easier if we all stick to the same name). To make things simpler at the beginning, we will hard-code an arbitrary number between 1 and 10 (pick the one you like). Then, let us print it out, so that we know the number ourselves\footnote{Of course, we know it because we hard-coded it. But that won't be the case when computer will generate it randomly, so let us plan for the future}. Use string formatting to make things user-friendly, e.g., print out something like ``The number I've picked is \ldots{}''. You should be able to do this using the knowledge from the previous chapter. Your code should be a two-liner:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -836,7 +836,7 @@ Update your \texttt{code01.py}.
 \hypertarget{if-statement}{%
 \section{\texorpdfstring{Conditional \emph{if} statement}{Conditional if statement}}\label{if-statement}}
 
-Now we have two numbers: One that computer picked (\texttt{number\_picked}) and one that is player entered (\texttt{guess}). We need to compare them to provide correct output message. For this, we will use conditional \href{https://docs.python.org/3/tutorial/controlflow.html\#if-statements}{if statement}:
+Now we have two numbers: One that computer picked (\texttt{number\_picked}) and one that the has player entered (\texttt{guess}). We need to compare them to provide correct output message. For this, we will use conditional \href{https://docs.python.org/3/tutorial/controlflow.html\#if-statements}{if statement}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -869,7 +869,7 @@ Before we can use conditional statements in our game, you need to understand (1)
 \hypertarget{comparisons}{%
 \section{Conditions and comparisons}\label{comparisons}}
 
-Condition is any expression that can be evaluated to see whether it is \texttt{True} or \texttt{False}. A straightforward example of such expression are comparisons expressed in human language as: \emph{Is today Thursday?} \emph{Is the answer (equal to) 42?} \emph{Is it raining and I have an umbrella?}. We will concentrate on comparisons like that for a moment but later you will see that in Python \emph{any} expression is either \texttt{True} or \texttt{False}, even when it does not look like a comparison\footnote{This is because you can convert any value to a logical one via \href{https://docs.python.org/3/library/functions.html\#bool}{bool()} function that you learned about the last time and so any value is (converted to) either \texttt{True} or \texttt{False}.}.
+Condition is any expression that can be evaluated to see whether it is \texttt{True} or \texttt{False}. A straightforward example of such expression are comparisons expressed in human language as: \emph{Is today Thursday?} \emph{Is the answer (equal to) 42?} \emph{Is it raining and I have an umbrella?} We will concentrate on comparisons like that for a moment but later you will see that in Python \emph{any} expression is either \texttt{True} or \texttt{False}, even when it does not look like a comparison\footnote{This is because you can convert any value to a logical one via \href{https://docs.python.org/3/library/functions.html\#bool}{bool()} function that you learned about the last time and so any value is (converted to) either \texttt{True} or \texttt{False}.}.
 
 For the comparison, you can use the following operators:
 
@@ -887,7 +887,7 @@ For the comparison, you can use the following operators:
 
 Go to exercise \#1 to solve some comparisons.
 
-Note that Python also has an \href{https://docs.python.org/3/library/operator.html\#operator.is_}{is} operator that may \emph{look} identical to \texttt{==} (e.g., \texttt{x\ ==\ 2} looks equivalent to \texttt{x\ is\ 2}). Moreover, is \emph{some} cases it also works the same way. However, there is a subtle difference: \texttt{==} checks whether \emph{values} are identical, whereas \texttt{is} checks whether \emph{objects} (that ``hold'' values) are identical. You need to understand classes and objects before you can appreciate this difference, so for now just keep in mind that you should only use \texttt{==} (I will explicitly mentioned when \texttt{is} is needed).
+Note that Python also has an \href{https://docs.python.org/3/library/operator.html\#operator.is_}{is} operator that may \emph{look} identical to \texttt{==} (e.g., \texttt{x\ ==\ 2} looks equivalent to \texttt{x\ is\ 2}). Moreover, in \emph{some} cases it also works the same way. However, there is a subtle difference: \texttt{==} checks whether \emph{values} are identical, whereas \texttt{is} checks whether \emph{objects} (that ``hold'' values) are identical. You need to understand classes and objects before you can appreciate this difference, so for now just keep in mind that you should only use \texttt{==} (I will explicitly mentioned when \texttt{is} is needed).
 
 You can \emph{invert} the logical value using \texttt{not} operator, as \texttt{not\ True} is \texttt{False} and \texttt{not\ False} is \texttt{True}. This means that \texttt{A\ !=\ B} is the same as \texttt{not\ A\ ==\ B} and, correspondingly, \texttt{A\ ==\ B} is \texttt{not\ A\ !=\ B}. To see how that works, consider both cases when \texttt{A} is indeed equal \texttt{B} and when it is not.
 
@@ -901,7 +901,7 @@ You can \emph{invert} the logical value using \texttt{not} operator, as \texttt{
 
 Go to exercise \#2 to explore this inversion yourself.
 
-You can also combine several comparisons using \texttt{and} and/or\footnote{pun intended} \texttt{or} operators. As in human language, \texttt{and} means that both parts must be true: \texttt{True\ and\ True} → \texttt{True} but \texttt{True\ and\ False} → \texttt{False}, \texttt{False\ and\ True} → \texttt{False}, and \texttt{False\ and\ False} → \texttt{False}. Same holds if you have more have than two conditions/comparisons linked via \texttt{and}: \textbf{All} of them must be true. In case of \texttt{or} only one of the statements must be true, e.g.~\texttt{True\ and\ True} → \texttt{True}, \texttt{True\ and\ False} → \texttt{True}, \texttt{False\ and\ True} → \texttt{True}, but \texttt{False\ and\ False} → \texttt{False}. Again, for more than two comparisons/conditions at least one of them should be true for the entire expression to be true.
+You can also combine several comparisons using \texttt{and} and/or\footnote{pun intended} \texttt{or} operators. As in human language, \texttt{and} means that both parts must be true: \texttt{True\ and\ True} → \texttt{True} but \texttt{True\ and\ False} → \texttt{False}, \texttt{False\ and\ True} → \texttt{False}, and \texttt{False\ and\ False} → \texttt{False}. Same holds if you have more have than two conditions/comparisons linked via \texttt{and}: \textbf{All} of them must be true. In case of \texttt{or} only one of the statements must be true, e.g.~\texttt{True\ or\ True} → \texttt{True}, \texttt{True\ or\ False} → \texttt{True}, \texttt{False\ or\ True} → \texttt{True}, but \texttt{False\ or\ False} → \texttt{False}. Again, for more than two comparisons/conditions at least one of them should be true for the entire expression to be true.
 
 Do exercises \#3 and \#4.
 
@@ -1015,7 +1015,7 @@ Test that your code works. Again, use breakpoints if you need to better understa
 
 Our game is ``feature-complete'': computer picks a number, player makes a guess, computer responds appropriately. However, currently we are playing for both sides. Lets make computer pick a random number itself. For this we need to use \href{https://docs.python.org/3/library/random.html\#random.randint}{randint(a, b)}. It is a part of any Python distribution, so you would have it even if you would install a vanilla Python distribution instead of using one from PsychoPy. However, you cannot use it straightaway like you did with \texttt{print()} or \texttt{input()}. Type \texttt{randint(1,\ 3)} in your Jupyter Notebook and observe \emph{NameError: name `randint' is not defined}.
 
-The reason for this is that Python has an awful lot of functions and loading them all at the same time would clog the memory with things you never intended to use. Instead, they are packaged into \emph{libraries}, so that you can import only functions (or libraries) that you actually need for your program. You \emph{import} them via an \texttt{import} statement that should go to the top of your file (but below the comment about the file content). There are several ways you can import libraries. First, you can import an \emph{entire} library (such as \emph{random} library that has function \texttt{randint()} that we need) and then use its functions as \texttt{\textless{}library\textgreater{}.\textless{}function\textgreater{}}. For \texttt{randint} this would be
+The reason for this is that Python has an awful lot of functions and loading them all at the same time would clog the memory with things you never intended to use. Instead, they are packaged into \emph{libraries}, so that you can import only functions (or libraries) that you actually need for your program. You \href{https://docs.python.org/3/reference/import.html}{import} them via an \texttt{import} statement that should go to the top of your file (but below the comment about the file content). There are several ways you can import libraries. First, you can import an \emph{entire} library (such as \emph{random} library that has function \texttt{randint()} that we need) and then use its functions as \texttt{\textless{}library\textgreater{}.\textless{}function\textgreater{}}. For \texttt{randint} this would be
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1054,7 +1054,7 @@ You can also \emph{rename} a library or a function while importing it via \textt
 \end{Highlighting}
 \end{Shaded}
 
-Finally, there is a \textbf{very bad way} to import functions from a library: \texttt{from\ random\ import\ *}. The asterisk means that you want to import \emph{all} functions from the library and you want to call them by their names without \texttt{random.} prefix. Never, never, never\footnote{Did I already say never? never!} do this! This fills your environment with functions that you may not be aware of, potentially overwriting some other functions, creating conflicts, etc. Never ever! I am showing you this only because you will, at some point, see a code that uses this approach and you might think that this is a good idea. It is a terrible idea! Import the library, not the functions, so you can explicitly show which library you are relying on when calling a function. Always remember the \href{https://www.python.org/dev/peps/pep-0020/}{Zen of Python}: ``Explicit is better than implicit.''
+Finally, there is a \textbf{very bad way} to import functions from a library: \texttt{from\ random\ import\ *}. The asterisk means that you want to import \emph{all} functions from the library and you want to call them by their names without \texttt{random.} prefix. Never, never, never\footnote{Did I already say never? Never!} do this! This fills your environment with functions that you may not be aware of, potentially overwriting some other functions, creating conflicts, etc. Never ever! I am showing you this only because you will, at some point, see a code that uses this approach and you might think that this is a good idea. It is a terrible idea! Import the library, not the functions, so you can explicitly show which library you are relying on when calling a function. Always remember the \href{https://www.python.org/dev/peps/pep-0020/}{Zen of Python}: ``Explicit is better than implicit.''
 
 \hypertarget{picking-a-number-randomly}{%
 \section{Picking a number randomly}\label{picking-a-number-randomly}}
@@ -1091,11 +1091,11 @@ You know everything you need to program a simple version of an ``one-armed bandi
   \item
     If only two numbers match, print \texttt{"Pair!"}.
   \item
-    Do not print anyting, if all numbers are different.
+    Do not print anything, if all numbers are different.
   \end{itemize}
 \end{enumerate}
 
-Do not forget to document the new \texttt{code03.py} file and feel three to use breakpoints to debug it.
+Do not forget to document the new \texttt{code03.py} file and feel free to use breakpoints to debug it.
 
 Put your code into \texttt{code03.py}.
 
@@ -3608,7 +3608,7 @@ In the next section, we will create a \texttt{TimedResponseTask} class that will
 \BuiltInTok{print}\NormalTok{(iterator\_fun())}
 
 \CommentTok{\# iterating via for loop}
-\CommentTok{\#\textgreater{} \textless{}generator object iterator\_fun at 0x00000222FDE5C740\textgreater{}}
+\CommentTok{\#\textgreater{} \textless{}generator object iterator\_fun at 0x000002006B8BC740\textgreater{}}
 \ControlFlowTok{for}\NormalTok{ elem }\KeywordTok{in}\NormalTok{ iterator\_fun():}
     \BuiltInTok{print}\NormalTok{(elem)}
     

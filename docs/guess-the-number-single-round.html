@@ -100,7 +100,7 @@
 <p>Our first version will allow just one attempt and the overall game algorithm will look like this:</p>
 <ol style="list-style-type: decimal">
 <li>computer generates a random number between 1 and 10</li>
-<li>prints it out for debug purposes</li>
+<li>prints it out for debugging purposes</li>
 <li>prompts user to enter a guess</li>
 <li>compares two numbers and print outs the outcome: “My number is lower”, “My number is higher”, or “Spot on!”</li>
 </ol>
@@ -109,7 +109,7 @@
 <h2>
 <span class="header-section-number">5.3</span> Let’s pick a number<a class="anchor" aria-label="anchor" href="#lets-pick-a-number"><i class="fas fa-link"></i></a>
 </h2>
-<p>Let us start by implementing just the first two steps of the program. First, create a variable holding a number that computer “picked”. We will name it <code>number_picked</code> (you can use some other meaningful name as well but it might be easier if we all stick to the same name). To make things a simpler at the beginning, we will hard-code an arbitrary number between 1 and 10 (pick the one you like). Then, let us print it out, so that we know the number ourselves <a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Of course, we know it because we hard-coded it. But that won’t be the case when computer will generate it randomly, so let us plan for the future&lt;/p&gt;"><sup>13</sup></a>. Use string formatting to make things user-friendly, e.g., print out something like “The number I’ve picked is …”. You should be able to do this using the knowledge from the previous chapter. Your code should be a two-liner:</p>
+<p>Let us start by implementing just the first two steps of the program. First, create a variable holding a number that computer “picked”. We will name it <code>number_picked</code> (you can use some other meaningful name as well but it might be easier if we all stick to the same name). To make things simpler at the beginning, we will hard-code an arbitrary number between 1 and 10 (pick the one you like). Then, let us print it out, so that we know the number ourselves<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Of course, we know it because we hard-coded it. But that won’t be the case when computer will generate it randomly, so let us plan for the future&lt;/p&gt;"><sup>13</sup></a>. Use string formatting to make things user-friendly, e.g., print out something like “The number I’ve picked is …”. You should be able to do this using the knowledge from the previous chapter. Your code should be a two-liner:</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="guess-the-number-single-round.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. create variable and set its value</span></span>
 <span id="cb26-2"><a href="guess-the-number-single-round.html#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. print out the value</span></span></code></pre></div>
 <p>Try out this two-liner in a Jupyter Notebook (create an empty notebook just for that). Once you are happy with it, copy-paste the code into <code>code01.py</code> and read on to learn how to run it.</p>
@@ -191,7 +191,7 @@
 <h2>
 <span class="header-section-number">5.7</span> Conditional <em>if</em> statement<a class="anchor" aria-label="anchor" href="#if-statement"><i class="fas fa-link"></i></a>
 </h2>
-<p>Now we have two numbers: One that computer picked (<code>number_picked</code>) and one that is player entered (<code>guess</code>). We need to compare them to provide correct output message. For this, we will use conditional <a href="https://docs.python.org/3/tutorial/controlflow.html#if-statements">if statement</a>:</p>
+<p>Now we have two numbers: One that computer picked (<code>number_picked</code>) and one that the has player entered (<code>guess</code>). We need to compare them to provide correct output message. For this, we will use conditional <a href="https://docs.python.org/3/tutorial/controlflow.html#if-statements">if statement</a>:</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="guess-the-number-single-round.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> some_condition_is_true:</span>
 <span id="cb28-2"><a href="guess-the-number-single-round.html#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># do something</span></span>
 <span id="cb28-3"><a href="guess-the-number-single-round.html#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> some_other_condition_is_true:</span>
@@ -213,7 +213,7 @@
 <h2>
 <span class="header-section-number">5.8</span> Conditions and comparisons<a class="anchor" aria-label="anchor" href="#comparisons"><i class="fas fa-link"></i></a>
 </h2>
-<p>Condition is any expression that can be evaluated to see whether it is <code>True</code> or <code>False</code>. A straightforward example of such expression are comparisons expressed in human language as: <em>Is today Thursday?</em> <em>Is the answer (equal to) 42?</em> <em>Is it raining and I have an umbrella?</em>. We will concentrate on comparisons like that for a moment but later you will see that in Python <em>any</em> expression is either <code>True</code> or <code>False</code>, even when it does not look like a comparison<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;This is because you can convert any value to a logical one via &lt;a href="https://docs.python.org/3/library/functions.html#bool"&gt;bool()&lt;/a&gt; function that you learned about the last time and so any value is (converted to) either &lt;code&gt;True&lt;/code&gt; or &lt;code&gt;False&lt;/code&gt;.&lt;/p&gt;'><sup>15</sup></a>.</p>
+<p>Condition is any expression that can be evaluated to see whether it is <code>True</code> or <code>False</code>. A straightforward example of such expression are comparisons expressed in human language as: <em>Is today Thursday?</em> <em>Is the answer (equal to) 42?</em> <em>Is it raining and I have an umbrella?</em> We will concentrate on comparisons like that for a moment but later you will see that in Python <em>any</em> expression is either <code>True</code> or <code>False</code>, even when it does not look like a comparison<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;This is because you can convert any value to a logical one via &lt;a href="https://docs.python.org/3/library/functions.html#bool"&gt;bool()&lt;/a&gt; function that you learned about the last time and so any value is (converted to) either &lt;code&gt;True&lt;/code&gt; or &lt;code&gt;False&lt;/code&gt;.&lt;/p&gt;'><sup>15</sup></a>.</p>
 <p>For the comparison, you can use the following operators:</p>
 <ul>
 <li>
@@ -228,7 +228,7 @@
 <div class="rmdnote practice">
 <p>Go to exercise #1 to solve some comparisons.</p>
 </div>
-<p>Note that Python also has an <a href="https://docs.python.org/3/library/operator.html#operator.is_">is</a> operator that may <em>look</em> identical to <code>==</code> (e.g., <code>x == 2</code> looks equivalent to <code>x is 2</code>). Moreover, is <em>some</em> cases it also works the same way. However, there is a subtle difference: <code>==</code> checks whether <em>values</em> are identical, whereas <code>is</code> checks whether <em>objects</em> (that “hold” values) are identical. You need to understand classes and objects before you can appreciate this difference, so for now just keep in mind that you should only use <code>==</code> (I will explicitly mentioned when <code>is</code> is needed).</p>
+<p>Note that Python also has an <a href="https://docs.python.org/3/library/operator.html#operator.is_">is</a> operator that may <em>look</em> identical to <code>==</code> (e.g., <code>x == 2</code> looks equivalent to <code>x is 2</code>). Moreover, in <em>some</em> cases it also works the same way. However, there is a subtle difference: <code>==</code> checks whether <em>values</em> are identical, whereas <code>is</code> checks whether <em>objects</em> (that “hold” values) are identical. You need to understand classes and objects before you can appreciate this difference, so for now just keep in mind that you should only use <code>==</code> (I will explicitly mentioned when <code>is</code> is needed).</p>
 <p>You can <em>invert</em> the logical value using <code>not</code> operator, as <code>not True</code> is <code>False</code> and <code>not False</code> is <code>True</code>. This means that <code>A != B</code> is the same as <code>not A == B</code> and, correspondingly, <code>A == B</code> is <code>not A != B</code>. To see how that works, consider both cases when <code>A</code> is indeed equal <code>B</code> and when it is not.</p>
 <ul>
 <li>If A is equal B then <code>A == B</code> evaluates to <code>True</code>. The <code>A != B</code> is then <code>False</code>, so <code>not A != B</code> → <code>not False</code> → <code>True</code>.</li>
@@ -237,7 +237,7 @@
 <div class="rmdnote practice">
 <p>Go to exercise #2 to explore this inversion yourself.</p>
 </div>
-<p>You can also combine several comparisons using <code>and</code> and/or<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;pun intended&lt;/p&gt;"><sup>16</sup></a> <code>or</code> operators. As in human language, <code>and</code> means that both parts must be true: <code>True and True</code> → <code>True</code> but <code>True and False</code> → <code>False</code>, <code>False and True</code> → <code>False</code>, and <code>False and False</code> → <code>False</code>. Same holds if you have more have than two conditions/comparisons linked via <code>and</code>: <strong>All</strong> of them must be true. In case of <code>or</code> only one of the statements must be true, e.g. <code>True and True</code> → <code>True</code>, <code>True and False</code> → <code>True</code>, <code>False and True</code> → <code>True</code>, but <code>False and False</code> → <code>False</code>. Again, for more than two comparisons/conditions at least one of them should be true for the entire expression to be true.</p>
+<p>You can also combine several comparisons using <code>and</code> and/or<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;pun intended&lt;/p&gt;"><sup>16</sup></a> <code>or</code> operators. As in human language, <code>and</code> means that both parts must be true: <code>True and True</code> → <code>True</code> but <code>True and False</code> → <code>False</code>, <code>False and True</code> → <code>False</code>, and <code>False and False</code> → <code>False</code>. Same holds if you have more have than two conditions/comparisons linked via <code>and</code>: <strong>All</strong> of them must be true. In case of <code>or</code> only one of the statements must be true, e.g. <code>True or True</code> → <code>True</code>, <code>True or False</code> → <code>True</code>, <code>False or True</code> → <code>True</code>, but <code>False or False</code> → <code>False</code>. Again, for more than two comparisons/conditions at least one of them should be true for the entire expression to be true.</p>
 <div class="rmdnote practice">
 <p>Do exercises #3 and #4.</p>
 </div>
@@ -317,7 +317,7 @@
 <span class="header-section-number">5.11</span> Using libraries<a class="anchor" aria-label="anchor" href="#using-libraries"><i class="fas fa-link"></i></a>
 </h2>
 <p>Our game is “feature-complete”: computer picks a number, player makes a guess, computer responds appropriately. However, currently we are playing for both sides. Lets make computer pick a random number itself. For this we need to use <a href="https://docs.python.org/3/library/random.html#random.randint">randint(a, b)</a>. It is a part of any Python distribution, so you would have it even if you would install a vanilla Python distribution instead of using one from PsychoPy. However, you cannot use it straightaway like you did with <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> or <code>input()</code>. Type <code>randint(1, 3)</code> in your Jupyter Notebook and observe <em>NameError: name ‘randint’ is not defined</em>.</p>
-<p>The reason for this is that Python has an awful lot of functions and loading them all at the same time would clog the memory with things you never intended to use. Instead, they are packaged into <em>libraries</em>, so that you can import only functions (or libraries) that you actually need for your program. You <em>import</em> them via an <code>import</code> statement that should go to the top of your file (but below the comment about the file content). There are several ways you can import libraries. First, you can import an <em>entire</em> library (such as <em>random</em> library that has function <code>randint()</code> that we need) and then use its functions as <code>&lt;library&gt;.&lt;function&gt;</code>. For <code>randint</code> this would be</p>
+<p>The reason for this is that Python has an awful lot of functions and loading them all at the same time would clog the memory with things you never intended to use. Instead, they are packaged into <em>libraries</em>, so that you can import only functions (or libraries) that you actually need for your program. You <a href="https://docs.python.org/3/reference/import.html">import</a> them via an <code>import</code> statement that should go to the top of your file (but below the comment about the file content). There are several ways you can import libraries. First, you can import an <em>entire</em> library (such as <em>random</em> library that has function <code>randint()</code> that we need) and then use its functions as <code>&lt;library&gt;.&lt;function&gt;</code>. For <code>randint</code> this would be</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb36-1"><a href="guess-the-number-single-round.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
 <span id="cb36-2"><a href="guess-the-number-single-round.html#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-3"><a href="guess-the-number-single-round.html#cb36-3" aria-hidden="true" tabindex="-1"></a>computer_pick <span class="op">=</span> random.randint(<span class="dv">1</span>, <span class="dv">5</span>)</span></code></pre></div>
@@ -337,7 +337,7 @@
 <span id="cb38-8"><a href="guess-the-number-single-round.html#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> random <span class="im">import</span> randint <span class="im">as</span> random_integer</span>
 <span id="cb38-9"><a href="guess-the-number-single-round.html#cb38-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-10"><a href="guess-the-number-single-round.html#cb38-10" aria-hidden="true" tabindex="-1"></a>computer_pick <span class="op">=</span> random_integer(<span class="dv">1</span>, <span class="dv">5</span>)</span></code></pre></div>
-<p>Finally, there is a <strong>very bad way</strong> to import functions from a library: <code>from random import *</code>. The asterisk means that you want to import <em>all</em> functions from the library and you want to call them by their names without <code>random.</code> prefix. Never, never, never<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Did I already say never? never!&lt;/p&gt;"><sup>17</sup></a> do this! This fills your environment with functions that you may not be aware of, potentially overwriting some other functions, creating conflicts, etc. Never ever! I am showing you this only because you will, at some point, see a code that uses this approach and you might think that this is a good idea. It is a terrible idea! Import the library, not the functions, so you can explicitly show which library you are relying on when calling a function. Always remember the <a href="https://www.python.org/dev/peps/pep-0020/">Zen of Python</a>: “Explicit is better than implicit.”</p>
+<p>Finally, there is a <strong>very bad way</strong> to import functions from a library: <code>from random import *</code>. The asterisk means that you want to import <em>all</em> functions from the library and you want to call them by their names without <code>random.</code> prefix. Never, never, never<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Did I already say never? Never!&lt;/p&gt;"><sup>17</sup></a> do this! This fills your environment with functions that you may not be aware of, potentially overwriting some other functions, creating conflicts, etc. Never ever! I am showing you this only because you will, at some point, see a code that uses this approach and you might think that this is a good idea. It is a terrible idea! Import the library, not the functions, so you can explicitly show which library you are relying on when calling a function. Always remember the <a href="https://www.python.org/dev/peps/pep-0020/">Zen of Python</a>: “Explicit is better than implicit.”</p>
 </div>
 <div id="picking-a-number-randomly" class="section level2" number="5.12">
 <h2>
@@ -363,11 +363,11 @@
 <ul>
 <li>if all three values are the same, print <code>"Three of a kind!"</code>.</li>
 <li>If only two numbers match, print <code>"Pair!"</code>.</li>
-<li>Do not print anyting, if all numbers are different.</li>
+<li>Do not print anything, if all numbers are different.</li>
 </ul>
 </li>
 </ol>
-<p>Do not forget to document the new <code>code03.py</code> file and feel three to use breakpoints to debug it.</p>
+<p>Do not forget to document the new <code>code03.py</code> file and feel free to use breakpoints to debug it.</p>
 <div class="rmdnote program">
 <p>Put your code into <code>code03.py</code>.</p>
 </div>
@@ -419,7 +419,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2022-10-19.</p>
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2022-10-23.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
