@@ -20,21 +20,21 @@ Put your code into `code01.py`.
 :::
 
 ## Functions {#function}
-You already now how to use function, now it is turn for you to learn more about why you should care. The purpose of a function is to isolate certain code that performs a single computation making it testable and reusable. Let us go through the first sentence bit by bit using examples.
+You already now how to use function, now it is turn for you to learn more about why you should care. The purpose of a function is to isolate certain code that performs a single computation making it testable and reusable. Let us go through the last sentence bit by bit using examples.
 
 ### Function performs a single computation
 I already [told you](#programming-tips) that reading code is easy because every action has to be spelled-out for computers in a simple and clear way. However, _a lot_ of simple things can be very overwhelming and confusing. Think about the final code for the previous seminar: we had two loops with conditional statements nested inside. Add a few more of those and you have so many branches to trace, you never be quite sure what will happen. This is because our cognition and working memory, which you use to trace all branches, are limited to just about four items^[The official magic number is [7±2](https://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two) but reading the original paper tells you that this is more like four for most of us].
 
-Thus, a function should perform _one_ computation / action that is conceptually clear and those purpose should be understood directly from its name or, at most, from a single sentence that describes it^[This is similar to scientific writing, where a single paragraph conveys a single idea. For me, it helps to first write the idea of the paragraph in a single sentence before writing the paragraph itself. If one sentence is not enough, I need to split the text into more paragraphs.]. The name of a function should typically be a _verb_ because function is about doing an action. If you need more than once sentence to explain what function does, you should consider splitting the code further. This does not mean that entire description / documentation must fit into a single sentence. The full description can be lengthy, particularly if underlying computation is complex and there are many parameters to consider. However, these are optional details that tell the reader _how_ the function is doing its job or how the its behavior can be modified. Still, they should be able to understand _what_ the job is just from the name or from a single sentence. I am repeating myself and stressing this so much because conceptually simple single-job functions are a foundation of a clear robust reusable code. And future-you will be very grateful that it has to work with easy-to-understand isolated reliable code you wrote.
+Thus, a function should perform _one_ computation / action that is conceptually clear and those purpose should be understood directly from its name or, at most, from a single sentence that describes it^[This is similar to scientific writing, where a single paragraph conveys a single idea. For me, it helps to first write the idea of the paragraph in a single sentence before writing the paragraph itself. If one sentence is not enough, I need to split the text into more paragraphs.]. The name of a function should typically be a _verb_ because function is about performing an action. If you need more than once sentence to explain what function does, you should consider splitting the code further. This does not mean that entire description / documentation must fit into a single sentence. The full description can be lengthy, particularly if underlying computation is complex and there are many parameters to consider. However, these are optional details that tell the reader _how_ the function is doing its job or how its behavior can be modified. Still, they should be able to understand _what_ the job is just from the name or from a single sentence. I am repeating myself and stressing this so much because conceptually simple single-job functions are a foundation of a clear robust reusable code. And future-you will be very grateful that it has to work with easy-to-understand isolated reliable code you wrote.
 
 ### Function isolates code from the rest of the program
 Isolation means that your code runs in a separate scope where the only things that exist are function arguments (limited number of values you pass to it from outside with fixed meaning) and local variables that you define inside the function. You have no access to variables defined in the outside script^[This is not strictly true but that will concern us only once we get to so-called "mutable" objects like lists or dictionaries.] or to variables defined inside of other functions. Conversely, neither global script nor other functions have access to variables and values that you use inside. This means that you only need to study the code _inside_ the function to understand how it works. Accordingly, when you write the code it should be _independent_ of any global context the function can be used in. The isolation is both practical (no run-time access to variables from outside means fewer chance that things go terribly wrong) and conceptual (no further context is required to understand the code).
 
 ### Function makes code easier to test
-You can build even moderately complex programs only if you can be certain what individual chunks of code are doing under every possible condition. Do they produce the correct results? Do the fail clearly and raise a correct error, if the inputs are wrong? Do they use defaults when required? However, testing all chunks together means running extreme number of runs as you need to test all possible combinations of conditions for one chunk given all possible conditions for other chunk, etc. Functions make your life much easier. Because they have a single point of entry, fixed number of parameters, a single return value, and are isolated (see above), you can test them one at a time independent of other functions of the rest of the code. This is called _unit testing_ and it is heavy use of [automatic unit testing](https://docs.python.org/3/library/unittest.html)^[it is normal to have more code devoted to testing than to the actual program] that ensures reliable code for absolute majority of programs and apps that you use^[You still need tests for the integrated system but testing individual functions is a clear prerequisite.].
+You can build even moderately complex programs only if you can be certain what individual chunks of code are doing under every possible condition. Do they produce the correct results? Do the fail clearly and raise a correct error, if the inputs are wrong? Do they use defaults when required? However, testing all chunks together means running extreme number of runs as you need to test all possible combinations of conditions for one chunk given all possible conditions for other chunk, etc. Functions make your life much easier. Because they have a single point of entry, fixed number of parameters, a single return value, and are isolated (see above), you can test them one at a time independent of other functions of the rest of the code. This is called _unit testing_ and it is a heavy usage of [automatic unit testing](https://docs.python.org/3/library/unittest.html)^[It is normal to have more code devoted to testing than to the actual program] that ensures reliable code for absolute majority of programs and apps that you use^[You still need tests for the integrated system but testing individual functions is a clear prerequisite.].
 
 ### Function makes code reusable
-Sometimes, this is given as a primary reason to use functions. Turning code into a function means that you can call the function instead of copy-pasting the code. The latter approach is a terrible idea as it means that you have to maintain the same code at many places and you might not be even sure in just how many. This is a problem even if a code is extremely simple. Here, we define a _standard_ way to compute an initial by taking the first symbol from a string (you will learn about indexing and slicing in details later). The code is as simple as it gets.
+Sometimes, this is given as a primary reason to use functions. Turning code into a function means that you can call the function instead of copy-pasting the code. The latter approach is a terrible idea as it means that you have to maintain the same code at many places and you might not be even sure in just how many. This is a problem even if a code is extremely simple. Here, we define a _standard_ way to compute an initial by taking the first symbol from a string (you will learn about indexing and slicing later). The code is as simple as it gets.
 ```python
 ...
 initial = "test"[0]
@@ -92,7 +92,7 @@ initial_for_website = generate_initial(first_name)
 ...
 ```
 
-Thus, turning the code into function is particularly useful when the reused code is complex but it pays off even if computation is as simple and trivial as in example above. With a function you have a single code chunk to worry about and you can be sure that the same computation is performed whenever you call the function (and that these are not several copies of the code that might or might not be identical).
+Thus, turning the code into a function is particularly useful when the reused code is complex but it pays off even if computation is as simple and trivial as in example above. With a function you have a single code chunk to worry about and you can be sure that the same computation is performed whenever you call the function (and that these are not several copies of the code that might or might not be identical).
 
 Note that I put reusable code as the last and the least reason to use functions. This is because the other three reasons are far more important. Having a conceptually clear isolated and testable code is advantageous even if you call this function only once. It still makes code easier to understand and to test and helps you to reduce its complexity by replacing chunks of code with its meaning. Take a look at the example below. The first code takes the first symbol but this action (taking the first symbol) does not _mean_ anything by itself, it is just a mechanical computation. It is only the original context `initial_for_file = filename[0]` or additional comments that give it its meaning. In contrast, calling a function called _compute_initial_ tells you what is happening, as it disambiguates the purpose. I suspect that future-you is very pro-disambiguation and anti-confusion.
 ```python
@@ -158,7 +158,7 @@ Do exercise #2.
 Although example in the exercise makes the problem easy to spot, in a large code that spans multiple files and uses various libraries, solving the same problem may not be so straightforward!
 
 ### Function arguments
-Some function may not need arguments (also called parameters), as they perform a fixed action:
+Some functions may not need arguments (also called parameters), as they perform a fixed action:
 ```python
 def ping():
     """
@@ -187,7 +187,7 @@ def x(a, b):
     print(b - a)
 ```
 
-When calling a function, you must pass the correct number of parameters and pass them in a _correct order_, another reason for a function arguments to have meaningful names^[Again, this not strictly true but you will have to wait until you learn about named parameters and default values].
+When calling a function, you must pass the correct number of parameters and pass them in a _correct order_, another reason for a function arguments to have meaningful names^[This is also not strictly true but you will have to wait until you learn about named parameters and default values].
 
 ::: {.rmdnote .practice}
 Do exercise #3.
@@ -249,7 +249,7 @@ def f1():
   # This is variable `x` in the scope of function f1
   # It has the same name as the global variable but
   # has no relation to it: many people are called Sasha 
-  # but they are still different people. Whatever you
+  # but they are still different people. Whatever
   # happens to `x` in f1, stays in f1's scope.
   x = 3
   
@@ -267,7 +267,7 @@ Do exercise #5.
 :::
 
 ## Player's response as a function
-Let us put all that theory about functions into practice. Use the code that you created to acquire [player's response](#guess-the-number-players-response) and turn it into function. I suggest that you call it `input_response` (or something along these lines). Test that the code works by calling this function for the main script. 
+Let us put all that theory about functions into practice. Use the code that you created to acquire [player's response](#guess-the-number-players-response) and turn it into function. It should have no parameters (for now) and should return player's response. I suggest that you call it `input_response` (or something along these lines). Test that the code works by calling this function for the main script. 
 
 ::: {.rmdnote .program}
 Put your code into `code02.py`.
@@ -298,7 +298,7 @@ Now, put the breakpoint inside of `f1()` function and run the code via **F5**. T
 | f2 | test01.py | 7:1 |
 | \<module\> | test01.py | 9:1 |
 
-The calls are stacked from bottom to top, so this means that a function was called in the main module in line 9, you ended up in function `f2` in line 7, and then in function `f1` and in line 2. Experiment with stepping in and out of functions while keeping an eye on this. You might not need this information frequently but could be useful in out later projects with multiple nested function calls.
+The calls are stacked from bottom to top, so this means that a function was called in the main module in line 9, you ended up in function `f2` in line 7, and then in function `f1` and in line 2. Experiment with stepping in and out of functions while keeping an eye on this. You might not need this information frequently but could be useful in our later projects with multiple nested function calls.
 
 ## Documenting your function{#numpy-docstring}
 Writing a function is only half the job. You need to document it! [Remember](#programming-tips), this is a good habit that makes your code easy to use and reuse. There are different ways to document the code but we will use [NumPy docstring convention](https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard). Here is an example of such documented function
@@ -340,7 +340,7 @@ Put you `split_interval()` function and the testing code into `code04.py`.
 :::
 
 ## Single round
-You have both functions that you need, so let us write the code to initialize the game and play a single round. The initialization boils down to creating two variables that correspond to the lower and upper limits of the game range (we used 1 to 10 so far, but you can always change that). Next, the computer should generate a guess (you have your `split_interval()` function for that) and ask the player about the guess (that is the `input_response()` function). Once you have the response (stored in a separate variable, think of the name yourself), you can update your upper or lower limit using an [if..elif..else](#if-statement) statement. Print out a joyous message, if computer's guess was correct.
+You have both functions that you need, so let us write the code to initialize the game and play a single round. The initialization boils down to creating two variables that correspond to the lower and upper limits of the game range (we used 1 to 10 so far, but you can always change that). Next, the computer should generate a guess (you have your `split_interval()` function for that) and ask the player about the guess (that is the `input_response()` function). Once you have the response (stored in a separate variable, think of the name yourself), you can update your upper or lower limit using an [if..elif..else](#if-statement) statement based on player's response. Print out a joyous message, if computer's guess was correct.
 
 :::{.rmdnote .program}
 Put both functions and the script code into `code05.py`.

@@ -59,7 +59,7 @@ Put your code into `code02.py`.
 :::
 
 ## Breaking (and exiting){#break}
-Code inside the _while_ loop is executed repeatedly while the condition is `True` and, importantly, all of code the inside is executed before the condition is evaluated again. However, sometimes you may need to abort sooner without executing the remaining code. For this, Python  has a [break](https://docs.python.org/3/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops) statement that causes the program to exit the loop immediately without executing the rest of the code inside the loop, so that the program continues with the code _after_ the loop.
+Code inside the _while_ loop is executed repeatedly while the condition is `True` and, importantly, all of code inside is executed before the condition is evaluated again. However, sometimes you may need to abort sooner without executing the remaining code. For this, Python  has a [break](https://docs.python.org/3/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops) statement that causes the program to exit the loop immediately without executing the rest of the code inside the loop, so that the program continues with the code _after_ the loop.
 
 
 ```python
@@ -117,7 +117,7 @@ Put your code into `code06.py`.
 :::
 
 ## Repeating the game {#guess-the-number-repeat-game}
-Let us give an option for the player to play again. This means putting _all_ the current code inside of another `while` loop (this is called _nested loops_) that is repeated for as long as the player wants to keep playing. The code should look following:
+Let us give an option for the player to play again. This means putting _all_ the current code inside of another `while` loop (this is called _nested loops_) that is repeated for as long as the player wants to keep playing. The code should look as follows:
 
 ```python
 # import random library so you can use randint function
