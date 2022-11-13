@@ -41,7 +41,7 @@ Put your code into _code01.py_.
 The code is simple but packs quite a few novel bits. First line is easy, we simply import [visual](https://psychopy.org/api/visual/index.html) and [event](https://psychopy.org/api/event.html) modules from _psychopy_ library (a library can be itself organized into sublibraries to make things even more modular). Then, we create an _object_ `win` using a _class_ [Window](https://psychopy.org/api/visual/window.html#psychopy.visual.Window) with custom size. Third line uses function [waitKeys()](https://psychopy.org/api/event.html#psychopy.event.waitKeys) from _event_ module to wait for a key press. The last one closes the window by calling its `close` _method_. You should have little trouble with lines #1 and #3 but you need to learn about object-oriented programming to understand #2 and #4.
 
 ## Classes and objects
-The PsychoPy library is collection of _classes_ that you use to create _objects_, an approach called _object-oriented programming_. The core idea is in the name: Instead of keeping variables (data) separate from functions (actions), you combine them in an object that has attributes^[Also called properties] (its own variables) and methods (its own functions). This approach utilizes our natural tendency to perceive the world as a collection of interacting objects.
+The PsychoPy library is a collection of _classes_ that you use to create _objects_, an approach called _object-oriented programming_. The core idea is in the name: Instead of keeping variables (data) separate from functions (actions), you combine them in an object that has attributes^[Also called properties] (its own variables) and methods (its own functions). This approach utilizes our natural tendency to perceive the world as a collection of interacting objects.
 
 First, you need to understand an important distinction between _classes_ and _objects_. A _class_ is a "blueprint" that describes properties and behavior of _all_ objects of that class. This "blueprint" is used  to create an _instance_ of that class, which is called an _object_. For example, Homo sapiens is a _class_ that describes species that have certain properties, such as height, and can do certain things, such as running. However, Homo sapiens as a class has only a _concept_ of height but no specific height itself. E.g., you cannot ask "What is height of Homo sapiens?" only what is an average (mean, median, etc.) height of individuals of that class. Similarly, you cannot say "Run, Homo sapiens! Run!" as abstract concepts have trouble performing real actions like that. Instead, it is Alexander Pastukhov who is an _instance_ of Homo sapiens class with a specific height and a specific (not particularly good) ability to run. Other instances of Homo sapiens (other people) have different height and a different (typically better) ability to run. Thus, a class describes all common properties and methods that all _instances_ of the class (all objects) will have. But individual object will behave differently because of different values of their properties. This means that whenever you meet a Homo sapien, you could be sure that they have height per se but will need to look at an individual _instance_ to figure what height they have. 
 
@@ -53,7 +53,7 @@ To understand both properties and class/object distinction better, put a breakpo
 
 Methods, such as `Window.close()` are, essentially, functions that belong to the class/object and perform certain actions on the object. For example, method [close()](https://psychopy.org/api/visual/window.html#psychopy.visual.Window.close) closes the window, [flip()](https://psychopy.org/api/visual/window.html#psychopy.visual.Window.flip) updates it after we finished drawing in it, etc. What is important is to remember is that each method will act only on the object _it belongs to_ and not on other instances of the same class. This means that you can create two windows (`win1` and `win2`) and calling `win1.close()` will close the first but not the second window (try this out!). Same goes for attributes, changing them in one object will not affect any other objects of the same class, just like changing a value in one variable will not affect the other ones.
 
-Although we barely scratch the surface of object-oriented programming, it will be enough for us to be able to use classes defined for us in PsychoPy library.
+Although we barely scratched the surface of object-oriented programming, it will be enough for us to be able to use classes defined for us in PsychoPy library.
 
 ## Function parameters: default values, passing by position or by name{#arguments-by-position-or-name}
 There are a few more curious bits in the `visual.Window(size=(800, 600))` call above that we need to discuss. These curiosities are related to functions (and, therefore, methods) not classes per se. First, constructor method of the Window class has [a lot of arguments](https://psychopy.org/api/visual/window.html#psychopy.visual.Window) (when we construct an object, we call a constructor _method_ of the class, which is why we are talking about functions). And yet, we only passed one of them. This is because you can specify [default values](https://docs.python.org/3/tutorial/controlflow.html#default-argument-values) for individual parameters. In this case, if a parameter is omitted, a default value is used instead
@@ -75,7 +75,7 @@ def divide(x1, x2=2):
 print(divide(2))
 print(divide(2, 4))
 ```
-If you look at [documentation](https://psychopy.org/api/visual/window.html#psychopy.visual.Window), you will see that for the Window class constructor _all_ parameters have a default value. This is part of PsychoPy's philosophy of combining rich customization (just look at the sheer number of parameters!) with simplicity of use through sensible defaults (specify nothing and the window will still work).
+If you look at [documentation](https://psychopy.org/api/visual/window.html#psychopy.visual.Window), you will see that for the Window class constructor _all_ parameters have a default value. This is a part of PsychoPy's philosophy of combining rich customization (just look at the sheer number of parameters!) with simplicity of use through sensible defaults (specify nothing and the window will still work).
 
 Second, we did not just pass the value but specified which parameter this value is for via `size=(800, 600)`. This notation is called [keyword arguments](https://docs.python.org/3/tutorial/controlflow.html#keyword-arguments). The advantage is in making it more explicit which parameter you are passing a value through. Plus, it allows you to put parameters any order, if that is more relevant given the context^[However, stick to original order for consistency otherwise.]. If you do not use names, the values are assigned to individual parameters based on their _position_ (a.k.a. positional parameters). You can even mix the two, but positional parameters must come first, see [documentation](https://docs.python.org/3/tutorial/controlflow.html#more-on-defining-functions) if you want to know more.
 ```{python}
@@ -122,7 +122,7 @@ press_escape_text = visual.TextStim(win, "Press escape to exit")
 
 To show the visuals in PsychoPy, you first _draw_ each element by calling its [draw()](https://psychopy.org/api/visual/textstim.html#psychopy.visual.TextStim.draw) method and then update the window by _flipping_^[This is called flipping because a window has two buffers: one that is currently displayed on the screen and the other one in which you can draw your stimuli. Once you are done with drawing, you "flip" the buffers so that they exchange their places. Now the one you drew in gets displayed and you have the other buffer to draw in.] it. Note that you call [flip()](https://psychopy.org/api/visual/window.html#psychopy.visual.Window.flip) only _once_ after _all_ stimuli are drawn. I typically organize this code into a separate chunk and prepend it with a comment line `# drawing stimuli`.
 
-The `# drawing stimuli` chunk goes inside the main loop either before^[my personal preference but in most cases it makes no difference] or after the keyboard check. Organize the latter also as a separate code chunk with its own brief comment.
+The `# drawing stimuli` chunk goes inside the main loop either before^[My personal preference is to draw first but in most cases it makes no difference.] or after the keyboard check. Organize the latter also as a separate code chunk with its own brief comment.
 
 ::: {.rmdnote .program}
 Put your code into _code03.py_.
@@ -141,9 +141,9 @@ You draw the square just like you drew the text stimulus, via its [draw()](https
 Put your code into _code04.py_.
 :::
 
-What? Your square is not really a square? Well, I've warned you: [**Five** units systems](https://psychopy.org/general/units.html#units)!
+What? Your square is not really a square? Well, I've warned you: [Five unit systems](https://psychopy.org/general/units.html#units)!
 
-## Five units systems {#psychopy-units}
+## Five unit systems {#psychopy-units}
 
 ### Height units {#psychopy-units-height}
 With [height units](https://psychopy.org/general/units.html#height-units) everything is specified in the units of window height. The center of the window is at `(0,0)` and the window goes vertically from `-0.5` to `0.5`. However, horizontal limits depend on the aspect ratio. For our 800×600 window (4:3 aspect ratio), it will go from -0.666 to 0.666 (the window is 1.3333 window heights wide). For a 600×800 window (3:4 aspect ratio) from -0.375 to 0.375 (the window is 0.75 window heights wide), for a square window 600×600 (aspect ratio 1:1) from -0.5 to 0.5 (again, in all these cases it goes from -0.5 to 0.5 vertically). This means that the actual on-screen distance for the units is the same for both axes. So that a square of `size=(0.5, 0.5)` is actually a square (it spans the same distance vertically and horizontally). Thus, height units make _sizing_ objects easier but _placing them on horizontal axis correctly_ harder (as you need to know the aspect ratio).
@@ -154,7 +154,7 @@ Modify your code by specifying the unit system when you create the window: `win 
 Put your code into _code05.py_.
 :::
 
-By the way, which way is up: When y is below or above zero? Unfortunately, unlike x-axis, the y-axis can go both ways. For PsychoPy y-axis points up (so negative values move the square down and positive up). However, if you would use an Eyelink eye tracker to record where participants looked _on the screen_, it assumes that y-axis starts at the top of the screen and points down (this could be very confusing, if you forget about this when overlaying gaze data on an image you used in the study and wondering what on Earth the participants were doing).
+By the way, which way is up when y is below or above zero? Unfortunately, unlike x-axis, the y-axis can go both ways. For PsychoPy y-axis points up (so negative values move the square down and positive up). However, if you would use an Eyelink eye tracker to record where participants looked _on the screen_, it assumes that y-axis starts at the top of the screen and points down^[This could be very confusing, if you forget about this when overlaying gaze data on an image you used in the study and wondering what on Earth the participants were doing].
 
 Now, modify the size of the square (and turn it into a non-square rectangle) by passing `width=<some-width-value>` and `height=<some-height-value>`.
 
@@ -172,7 +172,7 @@ Put your code into _code07.py_.
 :::
 
 ### Pixels on screen
-For pixels on screen (https://psychopy.org/general/units.html#pixels-on-screen) units, the window center is still at `(0,0)` but it goes from `-<width-in-pixels>/2` to `<width-in-pixels>/2` horizontally (from -400 to 400 in our case) and `-<height-in-pixels>/2` to `<height-in-pixels>/2` vertically (from -300 to 300). These units could be more intuitive when you are working with a fixed sized window, as the span is the same along the both axes (like for the height units). However, they spell trouble if your window size has changed or you are using a full screen window on a monitor with an unknown resolution. In short, you should use them only if they dramatically simplify your code.
+For [pixels on screen](https://psychopy.org/general/units.html#pixels-on-screen) units, the window center is still at `(0,0)` but it goes from `-<width-in-pixels>/2` to `<width-in-pixels>/2` horizontally (from -400 to 400 in our case) and `-<height-in-pixels>/2` to `<height-in-pixels>/2` vertically (from -300 to 300). These units could be more intuitive when you are working with a fixed sized window, as the span is the same along the both axes (like for the height units). However, they spell trouble if your window size has changed or you are using a full screen window on a monitor with an unknown resolution. In short, you should use them only if they dramatically simplify your code.
 
 Modify your code to use `"pix"` units and briefly test sizing and placing your square within the window.
 

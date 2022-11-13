@@ -147,7 +147,7 @@ Put your code into `code01.py`.
 :::
 
 ## Drawing an image{#imagestim}
-We used (abstracta and boring) circles to represent moles but today we will use actual images of chicken (see instructions above on downloading them). Using an [image stimulus](https://psychopy.org/api/visual/imagestim.html) in PsychoPy is very straightforward because it behaves very mcu like other visual stimuli you already know. First, you need to create an new object by calling `visual.ImageStim(...)`. You can find the complete list of parameters in the [documentation]((https://psychopy.org/api/visual/imagestim.html)) but for our initial intents and purposes, we only need to pass three of them:
+We used (abstract and boring) circles to represent moles but today we will use actual images of chicken (see instructions above on downloading them). Using an [image stimulus](https://psychopy.org/api/visual/imagestim.html) in PsychoPy is very straightforward because it behaves very much like other visual stimuli you already know. First, you need to create an new object by calling `visual.ImageStim(...)`. You can find the complete list of parameters in the [documentation]((https://psychopy.org/api/visual/imagestim.html)) but for our initial intents and purposes, we only need to pass three of them:
 
 * our window variable: `win`.
 * image file name:  `image="Images/r01.png"` (images are in a subfolder and therefore we need to use a relative path).
