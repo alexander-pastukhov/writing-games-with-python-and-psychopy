@@ -117,7 +117,7 @@
 
 \title{Writing games with Python and PsychoPy}
 \author{Alexander (Sasha) Pastukhov}
-\date{2022-11-06}
+\date{2022-11-13}
 
 \begin{document}
 \maketitle
@@ -825,11 +825,11 @@ This debugging exercise may not have been necessary to solve problems with your 
 \hypertarget{input-function}{%
 \section{Asking a player for a guess}\label{input-function}}
 
-It takes two to play the \emph{Guess the Number} game. The computer did its part by picking a number, now we need to ask a player to enter their guess. For this, we will use \href{https://docs.python.org/3/library/functions.html\#input}{input({[}prompt{]})} \emph{function}.
+It takes two to play the \emph{Guess the Number} game. The computer did its part by picking a number, now we need to ask a player to enter their guess. For this, we will use \href{https://docs.python.org/3/library/functions.html\#input}{input()} \emph{function}.
 
 A function is an isolated code that accepts (optional) \emph{inputs}, performs an \emph{action}, and, optionally, returns a value (\emph{output}). This allows both to split the code into smaller chunks that are easier to maintain and to reuse the same code. You already used \href{https://docs.python.org/3/library/functions.html\#print}{print()} function to print things out, and \href{https://docs.python.org/3/library/functions.html\#func-str}{str()}, \href{https://docs.python.org/3/library/functions.html\#bool}{bool()}, \href{https://docs.python.org/3/library/functions.html\#int}{int()} and \href{https://docs.python.org/3/library/functions.html\#float}{float()} functions to convert values. For \href{https://docs.python.org/3/library/functions.html\#print}{print()} \emph{input} is an arbitrary number of values (even none, try this in Jupiter Notebook!), its \emph{action} is to print things out, but it returns nothing (no \emph{output}). \href{https://docs.python.org/3/library/functions.html\#float}{float()} function takes (somewhat surprisingly) zero or one value as \emph{input} (try giving it none or more than one in Jupiter Notebook as see the difference), attempts to convert given value to float (throwing an error, if it cannot do it), and returns a float value as an \emph{output}.
 
-Similar \emph{input} → \emph{action} → \emph{output} scheme holds for the \href{https://docs.python.org/3/library/functions.html\#input}{input({[}prompt{]})}. It takes optional \texttt{prompt} string as input. Then it prints the \texttt{prompt} message and waits for a user to enter a \emph{string} until they press \textbf{Enter}. It then returns this \emph{string} value. The latter bit about \emph{string} is important, because in our game we need a player to enter an \emph{integer} not a string. For a moment, let us assume that the input is always a valid integer number, so type only valid integers when testing the program! This way we can convert it to an integer without extra checks (will add them in the future) and assign this value to a new variable called \texttt{guess}. Thus, you need to add a single line assignment statement with \texttt{guess} variable on the left side and call to \href{https://docs.python.org/3/library/functions.html\#input}{input()} function on the right side (think of a nice prompt message) wrapped by (inside of) the type-conversion to integer via \href{https://docs.python.org/3/library/functions.html\#int}{int()}. Test this code but, again, only enter valid integers, so that the conversion works without an error.
+Similar \emph{input} → \emph{action} → \emph{output} scheme holds for the \href{https://docs.python.org/3/library/functions.html\#input}{input(prompt)}. It takes an optional \texttt{prompt} string as input. Then it prints the \texttt{prompt} message and waits for a user to enter a \emph{string} until they press \textbf{Enter}. It then returns this \emph{string} value. The latter bit about \emph{string} is important, because in our game we need a player to enter an \emph{integer} not a string. For a moment, let us assume that the input is always a valid integer number, so type only valid integers when testing the program! This way we can convert it to an integer without extra checks (will add them in the future) and assign this value to a new variable called \texttt{guess}. Thus, you need to add a single line assignment statement with \texttt{guess} variable on the left side and call to \href{https://docs.python.org/3/library/functions.html\#input}{input()} function on the right side (think of a nice prompt message) wrapped by (inside of) the type-conversion to integer via \href{https://docs.python.org/3/library/functions.html\#int}{int()}. Test this code but, again, only enter valid integers, so that the conversion works without an error.
 
 Update your \texttt{code01.py}.
 
@@ -1810,7 +1810,7 @@ The code is simple but packs quite a few novel bits. First line is easy, we simp
 \hypertarget{classes-and-objects}{%
 \section{Classes and objects}\label{classes-and-objects}}
 
-The PsychoPy library is collection of \emph{classes} that you use to create \emph{objects}, an approach called \emph{object-oriented programming}. The core idea is in the name: Instead of keeping variables (data) separate from functions (actions), you combine them in an object that has attributes\footnote{Also called properties} (its own variables) and methods (its own functions). This approach utilizes our natural tendency to perceive the world as a collection of interacting objects.
+The PsychoPy library is a collection of \emph{classes} that you use to create \emph{objects}, an approach called \emph{object-oriented programming}. The core idea is in the name: Instead of keeping variables (data) separate from functions (actions), you combine them in an object that has attributes\footnote{Also called properties} (its own variables) and methods (its own functions). This approach utilizes our natural tendency to perceive the world as a collection of interacting objects.
 
 First, you need to understand an important distinction between \emph{classes} and \emph{objects}. A \emph{class} is a ``blueprint'' that describes properties and behavior of \emph{all} objects of that class. This ``blueprint'' is used to create an \emph{instance} of that class, which is called an \emph{object}. For example, Homo sapiens is a \emph{class} that describes species that have certain properties, such as height, and can do certain things, such as running. However, Homo sapiens as a class has only a \emph{concept} of height but no specific height itself. E.g., you cannot ask ``What is height of Homo sapiens?'' only what is an average (mean, median, etc.) height of individuals of that class. Similarly, you cannot say ``Run, Homo sapiens! Run!'' as abstract concepts have trouble performing real actions like that. Instead, it is Alexander Pastukhov who is an \emph{instance} of Homo sapiens class with a specific height and a specific (not particularly good) ability to run. Other instances of Homo sapiens (other people) have different height and a different (typically better) ability to run. Thus, a class describes all common properties and methods that all \emph{instances} of the class (all objects) will have. But individual object will behave differently because of different values of their properties. This means that whenever you meet a Homo sapien, you could be sure that they have height per se but will need to look at an individual \emph{instance} to figure what height they have.
 
@@ -1822,7 +1822,7 @@ To understand both properties and class/object distinction better, put a breakpo
 
 Methods, such as \texttt{Window.close()} are, essentially, functions that belong to the class/object and perform certain actions on the object. For example, method \href{https://psychopy.org/api/visual/window.html\#psychopy.visual.Window.close}{close()} closes the window, \href{https://psychopy.org/api/visual/window.html\#psychopy.visual.Window.flip}{flip()} updates it after we finished drawing in it, etc. What is important is to remember is that each method will act only on the object \emph{it belongs to} and not on other instances of the same class. This means that you can create two windows (\texttt{win1} and \texttt{win2}) and calling \texttt{win1.close()} will close the first but not the second window (try this out!). Same goes for attributes, changing them in one object will not affect any other objects of the same class, just like changing a value in one variable will not affect the other ones.
 
-Although we barely scratch the surface of object-oriented programming, it will be enough for us to be able to use classes defined for us in PsychoPy library.
+Although we barely scratched the surface of object-oriented programming, it will be enough for us to be able to use classes defined for us in PsychoPy library.
 
 \hypertarget{arguments-by-position-or-name}{%
 \section{Function parameters: default values, passing by position or by name}\label{arguments-by-position-or-name}}
@@ -1852,7 +1852,7 @@ There are a few more curious bits in the \texttt{visual.Window(size=(800,\ 600))
 \end{Highlighting}
 \end{Shaded}
 
-If you look at \href{https://psychopy.org/api/visual/window.html\#psychopy.visual.Window}{documentation}, you will see that for the Window class constructor \emph{all} parameters have a default value. This is part of PsychoPy's philosophy of combining rich customization (just look at the sheer number of parameters!) with simplicity of use through sensible defaults (specify nothing and the window will still work).
+If you look at \href{https://psychopy.org/api/visual/window.html\#psychopy.visual.Window}{documentation}, you will see that for the Window class constructor \emph{all} parameters have a default value. This is a part of PsychoPy's philosophy of combining rich customization (just look at the sheer number of parameters!) with simplicity of use through sensible defaults (specify nothing and the window will still work).
 
 Second, we did not just pass the value but specified which parameter this value is for via \texttt{size=(800,\ 600)}. This notation is called \href{https://docs.python.org/3/tutorial/controlflow.html\#keyword-arguments}{keyword arguments}. The advantage is in making it more explicit which parameter you are passing a value through. Plus, it allows you to put parameters any order, if that is more relevant given the context\footnote{However, stick to original order for consistency otherwise.}. If you do not use names, the values are assigned to individual parameters based on their \emph{position} (a.k.a. positional parameters). You can even mix the two, but positional parameters must come first, see \href{https://docs.python.org/3/tutorial/controlflow.html\#more-on-defining-functions}{documentation} if you want to know more.
 
@@ -1917,7 +1917,7 @@ First, you need to create the \texttt{press\_escape\_text} object (instance of t
 
 To show the visuals in PsychoPy, you first \emph{draw} each element by calling its \href{https://psychopy.org/api/visual/textstim.html\#psychopy.visual.TextStim.draw}{draw()} method and then update the window by \emph{flipping}\footnote{This is called flipping because a window has two buffers: one that is currently displayed on the screen and the other one in which you can draw your stimuli. Once you are done with drawing, you ``flip'' the buffers so that they exchange their places. Now the one you drew in gets displayed and you have the other buffer to draw in.} it. Note that you call \href{https://psychopy.org/api/visual/window.html\#psychopy.visual.Window.flip}{flip()} only \emph{once} after \emph{all} stimuli are drawn. I typically organize this code into a separate chunk and prepend it with a comment line \texttt{\#\ drawing\ stimuli}.
 
-The \texttt{\#\ drawing\ stimuli} chunk goes inside the main loop either before\footnote{my personal preference but in most cases it makes no difference} or after the keyboard check. Organize the latter also as a separate code chunk with its own brief comment.
+The \texttt{\#\ drawing\ stimuli} chunk goes inside the main loop either before\footnote{My personal preference is to draw first but in most cases it makes no difference.} or after the keyboard check. Organize the latter also as a separate code chunk with its own brief comment.
 
 Put your code into \emph{code03.py}.
 
@@ -1934,10 +1934,10 @@ You draw the square just like you drew the text stimulus, via its \href{https://
 
 Put your code into \emph{code04.py}.
 
-What? Your square is not really a square? Well, I've warned you: \href{https://psychopy.org/general/units.html\#units}{\textbf{Five} units systems}!
+What? Your square is not really a square? Well, I've warned you: \href{https://psychopy.org/general/units.html\#units}{Five unit systems}!
 
 \hypertarget{psychopy-units}{%
-\section{Five units systems}\label{psychopy-units}}
+\section{Five unit systems}\label{psychopy-units}}
 
 \hypertarget{psychopy-units-height}{%
 \subsection{Height units}\label{psychopy-units-height}}
@@ -1948,7 +1948,7 @@ Modify your code by specifying the unit system when you create the window: \text
 
 Put your code into \emph{code05.py}.
 
-By the way, which way is up: When y is below or above zero? Unfortunately, unlike x-axis, the y-axis can go both ways. For PsychoPy y-axis points up (so negative values move the square down and positive up). However, if you would use an Eyelink eye tracker to record where participants looked \emph{on the screen}, it assumes that y-axis starts at the top of the screen and points down (this could be very confusing, if you forget about this when overlaying gaze data on an image you used in the study and wondering what on Earth the participants were doing).
+By the way, which way is up when y is below or above zero? Unfortunately, unlike x-axis, the y-axis can go both ways. For PsychoPy y-axis points up (so negative values move the square down and positive up). However, if you would use an Eyelink eye tracker to record where participants looked \emph{on the screen}, it assumes that y-axis starts at the top of the screen and points down\footnote{This could be very confusing, if you forget about this when overlaying gaze data on an image you used in the study and wondering what on Earth the participants were doing}.
 
 Now, modify the size of the square (and turn it into a non-square rectangle) by passing \texttt{width=\textless{}some-width-value\textgreater{}} and \texttt{height=\textless{}some-height-value\textgreater{}}.
 
@@ -1966,7 +1966,7 @@ Put your code into \emph{code07.py}.
 \hypertarget{pixels-on-screen}{%
 \subsection{Pixels on screen}\label{pixels-on-screen}}
 
-For pixels on screen (\url{https://psychopy.org/general/units.html\#pixels-on-screen}) units, the window center is still at \texttt{(0,0)} but it goes from \texttt{-\textless{}width-in-pixels\textgreater{}/2} to \texttt{\textless{}width-in-pixels\textgreater{}/2} horizontally (from -400 to 400 in our case) and \texttt{-\textless{}height-in-pixels\textgreater{}/2} to \texttt{\textless{}height-in-pixels\textgreater{}/2} vertically (from -300 to 300). These units could be more intuitive when you are working with a fixed sized window, as the span is the same along the both axes (like for the height units). However, they spell trouble if your window size has changed or you are using a full screen window on a monitor with an unknown resolution. In short, you should use them only if they dramatically simplify your code.
+For \href{https://psychopy.org/general/units.html\#pixels-on-screen}{pixels on screen} units, the window center is still at \texttt{(0,0)} but it goes from \texttt{-\textless{}width-in-pixels\textgreater{}/2} to \texttt{\textless{}width-in-pixels\textgreater{}/2} horizontally (from -400 to 400 in our case) and \texttt{-\textless{}height-in-pixels\textgreater{}/2} to \texttt{\textless{}height-in-pixels\textgreater{}/2} vertically (from -300 to 300). These units could be more intuitive when you are working with a fixed sized window, as the span is the same along the both axes (like for the height units). However, they spell trouble if your window size has changed or you are using a full screen window on a monitor with an unknown resolution. In short, you should use them only if they dramatically simplify your code.
 
 Modify your code to use \texttt{"pix"} units and briefly test sizing and placing your square within the window.
 
@@ -2038,15 +2038,15 @@ A list is defined via square brackets \texttt{\textless{}variable\textgreater{}\
 
 Do exercise \#1 see how lists are defined and indexed.
 
-Lists also allow you access more than one slot/index at a time via \emph{slicing}. You can specify index of elements via \texttt{\textless{}start\textgreater{}:\textless{}stop\textgreater{}} notation. For example, \texttt{x{[}1:3{]}} will give you access to two items with indexes 1 and 2. Yes, \emph{two} items: Slicing index goes from the \texttt{start} up to \textbf{but not including} the \texttt{stop}. Thus, if you want to get \emph{all} the items of a list, you will need to write \texttt{x{[}0:length(x){]}} and, yet, to get the last item alone you still write \texttt{x{[}len(x)-1{]}}. Confusing? I think so. I understand the logic but I find this stop-is-not-included to be counterintuitive and I still have to consciously remind myself about this. Unfortunately, this is a standard way to define sequences of numbers in Python, so you need to memorize this.
+Lists also allow you access more than one slot/index at a time via \href{https://docs.python.org/3/library/functions.html\#slice}{slicing}. You can specify index of elements via \texttt{\textless{}start\textgreater{}:\textless{}stop\textgreater{}} notation. For example, \texttt{x{[}1:3{]}} will give you access to two items with indexes 1 and 2. Yes, \emph{two} items: Slicing index goes from the \texttt{start} up to \textbf{but not including} the \texttt{stop}. Thus, if you want to get \emph{all} the items of a list, you will need to write \texttt{x{[}0:length(x){]}} and, yet, to get the last item alone you still write \texttt{x{[}len(x)-1{]}}. Confusing? I think so. I understand the logic but I find this stop-is-not-included to be counterintuitive and I still have to consciously remind myself about this. Unfortunately, this is a standard way to define sequences of numbers in Python, so you need to memorize this.
 
 Do exercise \#2 to build the intuition.
 
-When slicing, you can omit either \texttt{start} or \texttt{stop}. In this case, Python will assume that a missing \texttt{start} means \texttt{0} (the index of the first element) and missing \texttt{stop} means \texttt{len(\textless{}list\textgreater{})} (so, last item is included). If you omit \emph{both}, e.g., \texttt{my\_pretty\_numbers{[}:{]}} it will return all values, as this is equivalent to \texttt{my\_pretty\_numbers{[}0:len(my\_pretty\_numbers){]}}.\footnote{Note, that this is almost but not quite the same thing as just writing \texttt{my\_pretty\_numbers}, the difference is subtle but important. We will return to it later when talking about mutable versus immutable types.}
+When slicing, you can omit either \texttt{start} or \texttt{stop}. In this case, Python will assume that a missing \texttt{start} means \texttt{0} (the index of the first element) and missing \texttt{stop} means \texttt{len(\textless{}list\textgreater{})} (so, last item is included). If you omit \emph{both}, e.g., \texttt{my\_pretty\_numbers{[}:{]}} it will return all values, as this is equivalent to \texttt{my\_pretty\_numbers{[}0:len(my\_pretty\_numbers){]}}.\footnote{Note, that this is almost but not quite the same thing as just writing \texttt{my\_pretty\_numbers}, as \texttt{my\_pretty\_numbers{[}:{]}} returns a \emph{different} list with \emph{identical} content. The difference is subtle but important and we will return to it later when talking about mutable versus immutable types.}
 
 Do exercise \#3.
 
-You can also use \emph{negative} indexes that are computed relative to length of the list. For example, if you want to get the \emph{last} element of the list, you can say \texttt{my\_pretty\_numbers{[}len(my\_pretty\_numbers)-1{]}} or just \texttt{my\_pretty\_numbers{[}-1{]}}. The last-but-one element would be \texttt{my\_pretty\_numbers{[}-2{]}}, etc. You can use negative indexes for slicing but keep in mind the \emph{including the start but excluding the stop} catch: \texttt{my\_pretty\_numbers{[}:-1{]}} will return all but last element of the list not the entire list!
+You can also use \emph{negative} indexes that are computed relative to length of the list\footnote{If you are coming from R, negative indexing is completely different in Python.}. For example, if you want to get the \emph{last} element of the list, you can say \texttt{my\_pretty\_numbers{[}len(my\_pretty\_numbers)-1{]}} or just \texttt{my\_pretty\_numbers{[}-1{]}}. The last-but-one element would be \texttt{my\_pretty\_numbers{[}-2{]}}, etc. You can use negative indexes for slicing but keep in mind the \emph{including-the-start-but-excluding-the-stop} catch: \texttt{my\_pretty\_numbers{[}:-1{]}} will return all but last element of the list not the entire list!
 
 Do exercise \#4.
 
@@ -2086,7 +2086,7 @@ If you try to to access indexes \emph{outside} of a valid range, Python will rai
 
 Do exercise \#6.
 
-In Python lists are dynamic, so you can always add or remove elements to it, see {[}the list of methods {]}{]}(\url{https://docs.python.org/3/tutorial/datastructures.html\#more-on-lists}). You can add a new item to the of the end of the list via \texttt{append(\textless{}new\_value\textgreater{})} method
+In Python lists are dynamic, so you can always add or remove elements to it, see \href{https://docs.python.org/3/tutorial/datastructures.html\#more-on-lists}{the list of methods}. You can add a new item to the of the end of the list via \texttt{.append(\textless{}new\_value\textgreater{})} method
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2128,7 +2128,7 @@ Do exercise \#7.
 \hypertarget{basic-game-scaffolding}{%
 \section{Basic game scaffolding}\label{basic-game-scaffolding}}
 
-Phew that was \emph{a lot} about lists\footnote{and we barely scratched the surface!}. However, \href{https://en.wikipedia.org/wiki/All_work_and_no_play_makes_Jack_a_dull_boy}{all work and no play makes Jack a dull boy}! So let us start with a basic PsychoPy scaffolding. Here the code structure:
+Phew that was \emph{a lot} about lists\footnote{And we barely scratched the surface!}. However, \href{https://en.wikipedia.org/wiki/All_work_and_no_play_makes_Jack_a_dull_boy}{All work and no play makes Jack a dull boy}! So let us start with a basic PsychoPy scaffolding. Here the code structure:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2147,9 +2147,9 @@ Put your code into \emph{code01.py}.
 \hypertarget{three-moles}{%
 \section{Three moles}\label{three-moles}}
 
-Let us create three moles that will be represented by \href{https://psychopy.org/api/visual/circle.html\#psychopy.visual.circle.Circle}{circles}. Create a new list variable \texttt{moles} and put three circles into it. One should go to the left, one dead center, and one to the right. Watch a video above to see what I mean. Think of a reasonable size (which \protect\hyperlink{psychopy-units}{units} make keeping circle a circle easier?) and position. You can also use different colors for them, as I did).
+Let us create three moles that will be represented by \href{https://psychopy.org/api/visual/circle.html\#psychopy.visual.circle.Circle}{circles}. Create a new list variable \texttt{moles} and put three circles into it. One should go to the left, one dead center, and one to the right. Watch a video above to see what I mean. Think of a reasonable size (which \protect\hyperlink{psychopy-units}{units} make keeping circle a circle easier?) and position. You can also use different colors for them, as I did.
 
-You can either create an empty list and then \texttt{append()} circles one at a time. Or you can use square brackets to put all three of them into the list in one go. Then \href{https://psychopy.org/api/visual/circle.html\#psychopy.visual.circle.Circle.draw}{draw()} circles before you flip the window and wait for a key press. Note that you have to draw them one at a time. Therefore, you will need to add three lines for this but the next section will show you an easier way.
+You can either create an empty list and then \texttt{.append()} circles one at a time or you can use square brackets to put all three of them into the list in one go. Then \href{https://psychopy.org/api/visual/circle.html\#psychopy.visual.circle.Circle.draw}{draw()} circles before you \href{https://psychopy.org/api/visual/window.html\#psychopy.visual.Window.flip}{flip} the window and wait for a key press. Note that you have to draw them one at a time. Therefore, you will need to add three lines for this but the next section will show you an easier way.
 
 Put your code into \emph{code02.py}.
 
@@ -2281,7 +2281,7 @@ Put your code into \emph{code07.py}.
 \hypertarget{waitKeys-maxwait}{%
 \section{Exit strategy}\label{waitKeys-maxwait}}
 
-I hope that you used a small number of trials because (on my advice, yes!) we did not program a possibility to exit the game via the \textbf{escape} key. To put it in, we will replace \emph{both} \href{https://psychopy.org/api/clock.html\#psychopy.clock.wait}{wait()} calls with \href{https://psychopy.org/api/event.html\#psychopy.event.waitKeys}{waitKeys()} function. It has \texttt{maxWait} parameter that by default is set to infinity but can be set to the duration we require. If a player does not press a key, it will work just like \href{https://psychopy.org/api/clock.html\#psychopy.clock.wait}{wait()} did. If a player presses a key (allow only \texttt{"escape"} for now), it means that they want to abort the game (the only possible action at the moment). Thus, assign the returned value to a temporary variable (\texttt{keys}?) and check whether it is equal to \texttt{None}\footnote{Confusingly, if no key was pressed, \href{https://psychopy.org/api/event.html\#psychopy.event.getKeys}{getKeys()} returns an empty list but \href{https://psychopy.org/api/event.html\#psychopy.event.waitKeys}{waitKeys()} returns \texttt{None} and \texttt{None} has no length.}. If it is not equal to \texttt{None}, \protect\hyperlink{break}{break} out of the loop!
+I hope that you used a small number of trials because (on my advice, yes!) we did not program a possibility to exit the game via the \textbf{escape} key. To put it in, we will replace \emph{both} \href{https://psychopy.org/api/clock.html\#psychopy.clock.wait}{wait()} calls with \href{https://psychopy.org/api/event.html\#psychopy.event.waitKeys}{waitKeys()} function. It has \texttt{maxWait} parameter that by default is set to infinity but can be set to the duration we require. If a player does not press a key, it will work just like \href{https://psychopy.org/api/clock.html\#psychopy.clock.wait}{wait()} did. If a player presses a key (allow only \texttt{"escape"} for now), it means that they want to abort the game (the only possible action at the moment). Thus, assign the returned value to a temporary variable (\texttt{keys}?) and check whether it is equal to \texttt{None}\footnote{Confusingly, if no key was pressed, \href{https://psychopy.org/api/event.html\#psychopy.event.getKeys}{getKeys()} returns an empty list that has length of zero but \href{https://psychopy.org/api/event.html\#psychopy.event.waitKeys}{waitKeys()} returns \texttt{None} and \texttt{None} has no length.}. If it is not equal to \texttt{None}, \protect\hyperlink{break}{break} out of the loop!
 
 Put your code into \emph{code08.py}.
 
@@ -2290,18 +2290,18 @@ Put your code into \emph{code08.py}.
 
 We have moles that appear at a random location after a random delay for a random period of time. Now we just need to add an ability to whack 'em! You whack a mole only when it is present. Thus, we only need to modify and handle the \href{https://psychopy.org/api/event.html\#psychopy.event.waitKeys}{waitKeys()} call for the presentation interval.
 
-First, create a new constant with three keys that correspond to three locations. I would suggest using \texttt{{[}"left",\ "down",\ "right"{]}}, which are cursor keys\footnote{Want to know key codes for sure? Write a small program that open a window and then repeatedly waits for any key press and prints out into console.}. Next, you need to use them for the \texttt{keyList} parameter. However, we cannot use this list directly, as we also need the \textbf{escape} key. The simplest way is to put ``escape'' into its own list and concatenate the two lists via \texttt{+}: \texttt{{[}"escape"{]}\ +\ YOUR\_CONSTANT\_WITH\_KEYS}. Do this concatenation directly when you set a value to the \texttt{keyList} in the function call. Before we continue, run the code and test that you can abort the program during the presentation (but not during the blank interval) by pressing any of these three keys. Also check that \textbf{escape} still works!
+First, create a new constant with three keys that correspond to three locations. I would suggest using \texttt{{[}"left",\ "down",\ "right"{]}}, which are cursor keys\footnote{Want to know key codes for sure? Write a small program that opens a window and then repeatedly waits for any key press and prints out into console.}. Next, you need to use them for the \texttt{keyList} parameter. However, we cannot use this list directly, as we also need the \textbf{escape} key. The simplest way is to put ``escape'' into its own list and concatenate the two lists via \texttt{+}: \texttt{{[}"escape"{]}\ +\ YOUR\_CONSTANT\_WITH\_KEYS}. Do this concatenation directly when you set a value to the \texttt{keyList} in the function call. Before we continue, run the code and test that you can abort the program during the presentation (but not during the blank interval) by pressing any of these three keys. Also check that \textbf{escape} still works!
 
 Now that we have keys to press, we need more sophisticated processing (we gonna have quite a few nested conditional statements). We still need to check whether \href{https://psychopy.org/api/event.html\#psychopy.event.waitKeys}{waitKeys()} returned \texttt{None} first. If it did not, it must have returned a list of pressed keys. Actually, it will be a list with just a single item\footnote{You will get more than one item in that list only if you set \texttt{clearEvents=False}. In this case, you will get the list of keys pressed before the call. However, if you opted for a default \texttt{clearEvents=True}, you will get only one key press in the list (at least I was never able to get more than one).}, so we can work with it directly via \texttt{keys{[}0{]}}. Use conditional \protect\hyperlink{if-statement}{if-else statement} to break out of the loop if the player pressed \textbf{escape}. Otherwise, it was one of the three ``whack'' keys.
 
-Our next step is to establish which index the key corresponds to. Python makes it extremely easy as lists have \texttt{.index(value)} method that returns the index of the value within the list. You have the (CONSTANT) list with the keys, you have the pressed key: Figure out the index and check whether it matches the index of the target (\texttt{imole} variable in my code). If it does, let us provide a visual feedback of success: change mole (circle) \texttt{fillColor} to white, draw it, and \href{https://psychopy.org/api/clock.html\#psychopy.clock.wait}{wait} for 300 ms (setup a constant for feedback duration). This way, the mole will turn white and remain briefly on the screen when hit but will disappear immediately, if you missed.
+Our next step is to establish which index the key corresponds to. Python makes it extremely easy as lists have \href{https://docs.python.org/3/tutorial/datastructures.html\#more-on-lists}{.index(value)} method that returns the index of the value within the list. You have the (CONSTANT) list with the keys and you have the pressed key: Figure out the index and check whether it matches the index of the target (\texttt{imole} variable in my code). If it does, let us provide a visual feedback of success: change mole (circle) \texttt{fillColor} to white, draw it, and \href{https://psychopy.org/api/clock.html\#psychopy.clock.wait}{wait} for 300 ms (setup a constant for feedback duration). This way, the mole will turn white and remain briefly on the screen when hit but will disappear immediately, if you missed.
 
 Put your code into \emph{code09.py}.
 
 \hypertarget{you-did-it}{%
 \section{You did it!}\label{you-did-it}}
 
-Congratulations on your first video game! It could use some bells-and-whistles like having a score, combos would be cool, proper mole images instead circle, etc. but it works and it is fun (if you do not feel challenged, reduce the presentation time)! Submit your files and next time we will ditch the keyboard and learn how to handle the mouse for the Memory game.
+Congratulations on your first video game! It could use some bells-and-whistles like having a score, combos would be cool, proper mole images instead circle, etc. but it works and it is fun (if you do not feel challenged, reduce the presentation time)! Submit your files and next time we will ditch the keyboard and learn how to handle the mouse in the Memory game.
 
 \hypertarget{memory-game}{%
 \chapter{Memory game}\label{memory-game}}
@@ -2333,7 +2333,7 @@ Before we start, create a new folder for the game and create a subfolder \emph{I
 \hypertarget{variables-as-boxes-immutable-objects}{%
 \section{Variables as Boxes (immutable objects)}\label{variables-as-boxes-immutable-objects}}
 
-In this game, you will use \protect\hyperlink{dictionaries}{dictionaries}. These are \emph{mutable}, like \protect\hyperlink{lists}{lists} in constrant to ``normal'' \emph{immutable} values (integers, floats, strings). You need to learn about this distinction as these two kinds of objects (values) behave very differently under some circumstances, which is both good (power!) and bad (weird unexpected behavior!) news.
+In this game, you will use \protect\hyperlink{dictionaries}{dictionaries}. These are \emph{mutable}, like \protect\hyperlink{lists}{lists} in contrast to ``normal'' \emph{immutable} values (integers, floats, strings). You need to learn about this distinction as these two kinds of objects (values) behave very differently under some circumstances, which is both good (power!) and bad (weird unexpected behavior!) news.
 
 You may remember the \emph{variable-as-a-box} metaphor that I used it to introduce \protect\hyperlink{variables}{variables}. In short, a variable can be thought of as a ``box'' with a variable name written on it and a value being stored ``inside''. When you use this value or assign it to a different variable, you can assume that Python \emph{makes a copy} of it\footnote{Not really, but this makes it easier to understand.} and puts that \emph{copy} into a different variable ``box''. When you \emph{replace} value of a variable, you take out the old value, destroy it (by throwing it into a nearest black hole, I assume), create a new one, and put it into the variable ``box''. When you \emph{change} a variable based on its current state, the same thing happens. You take out the value, create a new value (by adding to the original one or doing some other operation), destroy the old one, and put the new one back into the variable ``box''. The important point is that although a \emph{variable} can have different immutable values (we \protect\hyperlink{random-mole}{changed} \texttt{imole} variable on every round), the immutable \emph{value} itself never changes. It gets \emph{replaced} with another immutable value but \emph{never changes}\footnote{A metaphor attempt: You can wear different shirts, so your \emph{look} (variable) changes but each individual shirt (potential values) remains the same (we ignore the wear and tear here) irrespective of whether your are wearing it (value is assigned to a variable) or not.}.
 
@@ -2481,7 +2481,7 @@ Put your code into \texttt{code01.py}.
 \hypertarget{imagestim}{%
 \section{Drawing an image}\label{imagestim}}
 
-We used (abstracta and boring) circles to represent moles but today we will use actual images of chicken (see instructions above on downloading them). Using an \href{https://psychopy.org/api/visual/imagestim.html}{image stimulus} in PsychoPy is very straightforward because it behaves very mcu like other visual stimuli you already know. First, you need to create an new object by calling \texttt{visual.ImageStim(...)}. You can find the complete list of parameters in the \href{(https://psychopy.org/api/visual/imagestim.html)}{documentation} but for our initial intents and purposes, we only need to pass three of them:
+We used (abstract and boring) circles to represent moles but today we will use actual images of chicken (see instructions above on downloading them). Using an \href{https://psychopy.org/api/visual/imagestim.html}{image stimulus} in PsychoPy is very straightforward because it behaves very much like other visual stimuli you already know. First, you need to create an new object by calling \texttt{visual.ImageStim(...)}. You can find the complete list of parameters in the \href{(https://psychopy.org/api/visual/imagestim.html)}{documentation} but for our initial intents and purposes, we only need to pass three of them:
 
 \begin{itemize}
 \tightlist
@@ -2522,14 +2522,14 @@ Put update code into \texttt{code03.py}
 \hypertarget{backside-of-the-card}{%
 \section{Backside of the card}\label{backside-of-the-card}}
 
-A chicken image is a card \emph{face} but the game starts with the cards face down, so the player should see their backs. We will use a plain \href{https://psychopy.org/api/visual/rect.html}{rectangle} for as a backside. Pick a nice looking combination of \texttt{fillColor} (inside) and \texttt{lineColor} (contour) colors. Modify your code, to draw image (face of the card) and rectangle (back of the card) side-by-side (\emph{e.g.}, if face is at position with index 0, rectangle should be at position 1 or 4). This way you can check that sizes match and that they are positioned correctly.
+A chicken image is a card \emph{face} but the game starts with the cards face down, so the player should see their backs. We will use a plain \href{https://psychopy.org/api/visual/rect.html}{rectangle} as a backside. Pick a nice looking combination of \texttt{fillColor} (inside) and \texttt{lineColor} (contour) colors. Modify your code, to draw image (face of the card) and rectangle (back of the card) side-by-side (\emph{e.g.}, if face is at position with index 0, rectangle should be at position 1 or 4). This way you can check that sizes match and that they are positioned correctly.
 
 Put your code into \texttt{code04.py}.
 
 \hypertarget{dictionaries}{%
 \section{Dictionaries}\label{dictionaries}}
 
-Each card that we use has plenty of properties: A front (image), a backside (rectangle), and will have other properties such as which side should be shown or whether card is already taken off the screen. This calls for a container, so we could put all these relevant bits into a single variable. We \emph{could} put into a list and use numerical indexes to access individual elements (e.g., \texttt{card{[}0{]}} would be front image but \texttt{card{[}2{]}} would indicate the active side) but indexes do not have meaning per se, so figuring out how \texttt{card{[}0{]}} is different from \texttt{card{[}2{]}} would be tricky. Python has a solution for cases like this: \href{https://docs.python.org/3/library/stdtypes.html\#dict}{dictionaries}.
+Each card that we use has plenty of properties: A front (image), a back (rectangle), and will have other properties such as which side should be shown or whether card is already taken off the screen. This calls for a container, so we could put all these relevant bits into a single variable. We \emph{could} put these values into a list and use numerical indexes to access individual elements (e.g., \texttt{card{[}0{]}} would be front image but \texttt{card{[}2{]}} would indicate the active side) but indexes do not have meaning per se, so figuring out how \texttt{card{[}0{]}} is different from \texttt{card{[}2{]}} would be tricky. Python has a solution for cases like this: \href{https://docs.python.org/3/library/stdtypes.html\#dict}{dictionaries}.
 
 A dictionary is a container that stores information using \emph{key : value} pairs. This is similar to how you look up a meaning or a translation (value) of a word (key) in a real dictionary, hence the name. To create a dictionary, you use \emph{curly} brackets \texttt{\{\textless{}key1\textgreater{}\ :\ \textless{}value1\textgreater{}\},\ \{\textless{}key2\textgreater{}\ :\ \textless{}value2\textgreater{},\ ...\}} or create it via \texttt{dict(\textless{}key1\textgreater{}=\textless{}value1\textgreater{},\ \textless{}key2\textgreater{}=\textless{}value2\textgreater{},\ ...)}.
 
@@ -2562,7 +2562,7 @@ Our card has the following properties, so these will be key-value entries in a d
   \texttt{"show"}: a logical value, set it to \texttt{True}. We will use it later to mark out cards that are off the table and are, therefore, not shown. Initially, all cards are shown, so all cards should be created with \texttt{"show"} being equal to \texttt{True}.
 \end{enumerate}
 
-Create a dictionary variable (name it \texttt{card}) and fill it with relevant values (use either \texttt{"front"} and ``\texttt{back"} for \texttt{"side"} key) and stimuli (you can put PsychoPy stimuli into a dictionary just like we put them into a list earlier). Modify you code so that it draws the correct image based on the value of the \texttt{"side"} entry. Note that you \textbf{do not need an if-statement for this}! Think about a key you need to access these two sides and the value that you have in for the \texttt{"side"} key.
+Create a dictionary variable (name it \texttt{card}) and fill it with relevant values (use either \texttt{"front"} and ``\texttt{back"} for \texttt{"side"} key) and stimuli (you can put PsychoPy stimuli into a dictionary just like we put them into a list earlier). Modify your code so that it draws the correct image based on the value of the \texttt{"side"} entry. Note that you \textbf{do not need an if-statement for this}! Think about a key you need to access these two sides and the value that you have in for the \texttt{"side"} key.
 
 Put your code into \texttt{code05.py}.
 
@@ -2582,7 +2582,7 @@ You have the code to create one card but we need eight of them. This definitely 
   card position index,
 \end{enumerate}
 
-and returns a dictionary, just like the one you created. You very much have the code, you only need to wrap it into a function and document it. Call function \texttt{create\_card} and use it in the main script to create \texttt{card} dictionary. Think about libraries you will now need import in \emph{utilities.py}.
+and returns a dictionary, just like the one you created. You very much have the code, you only need to wrap it into a function and document it. Call function \texttt{create\_card} and use it in the main script to create \texttt{card} dictionary. Think about libraries you will now need to import in \emph{utilities.py}.
 
 Put \texttt{create\_card} into \texttt{utilities.py}.
 Put code into \texttt{code06.py}.
@@ -2681,7 +2681,7 @@ Do exercise \#9 in Jupyter notebook.
 Use list comprehension to create a list of files of chicken looking left, \emph{i.e.} with filenames that start with ``l''. Use \href{https://docs.python.org/3/library/stdtypes.html\#str.startswith}{.startswith()} to check whether it starts with ``l'', store the list in \texttt{filenames} variable. Test you code in a Jupyter Notebook. You should get a list of four files.
 
 \hypertarget{list-operations}{%
-\subsection{List operations}\label{list-operations}}
+\section{List operations}\label{list-operations}}
 
 Our list consists of four unique filenames but in the game each card should appear twice. There are several ways of duplicating lists. Here, We will use this as a opportunity to learn about list operations. Python lists implement two operations:
 
@@ -2722,7 +2722,7 @@ Use either operation or \texttt{.extend()} method to create the list where each 
 \hypertarget{enumerate}{%
 \section{Looping over both index and item via list enumeration}\label{enumerate}}
 
-Now that we have a list of filenames, we can create a list of cards out of it. Our dictionary function requires both index and filename. The latter is the \emph{item} of the list, the former is the \emph{index} of that item. You could for a for loop by build the index using \protect\hyperlink{range}{range()} function but Python has a better solution for this: a \href{https://docs.python.org/3/library/functions.html\#enumerate}{enumerate()} function! If, instead of iterating over a list, you iterate over \href{https://docs.python.org/3/library/functions.html\#enumerate}{enumerate()}, you get a tuple\footnote{A list you cannot change, more on this later.} with both \texttt{(index,\ value)}. Here is an example:
+Now that we have a list of filenames, we can create a list of cards out of it. Our dictionary function requires both index and filename. The latter is the \emph{item} of the list, the former is the \emph{index} of that item. You could build the index using \protect\hyperlink{range}{range()} function but Python has a better solution for this: a \href{https://docs.python.org/3/library/functions.html\#enumerate}{enumerate()} function! If, instead of iterating over a list, you iterate over \href{https://docs.python.org/3/library/functions.html\#enumerate}{enumerate()}, you get a tuple with both \texttt{(index,\ value)}. Here is an example:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2783,7 +2783,7 @@ We covered a lot of ground, so it might be a good point to take a break and subm
 \hypertarget{adding-main-game-loop}{%
 \section{Adding main game loop}\label{adding-main-game-loop}}
 
-At this point, we have a shuffle deck of cards that we show until a player presses a key. Modify the code to have the main presentation loop, similar to one we had when we experimented with \protect\hyperlink{psychopy-basics}{PsychoPy} stimuli. Previously, we used a logical \texttt{gameover} variable to control the \protect\hyperlink{ux5cux23while-loop}{while} loop. Here, we will have two reasons to exit the loop: the player pressed an \textbf{escape} key or they won the game. Therefore, let us use a \emph{string} \texttt{game\_state} variable that is initialized to \texttt{"running"}. Repeat the loop while the \texttt{game\_state} is equal to \texttt{"running"} but change it \texttt{"abort"} if a player pressed \textbf{escape}. You also need to replace \href{https://psychopy.org/api/event.html\#psychopy.event.waitKeys}{waitKeys}) with (\href{https://psychopy.org/api/event.html\#psychopy.event.getKeys}{getKeys}.
+At this point, we have a shuffle deck of cards that we show until a player presses a key. Modify the code to have the main presentation loop, similar to one we had when we experimented with \protect\hyperlink{psychopy-basics}{PsychoPy} stimuli. Previously, we used a logical \texttt{gameover} variable to control the \protect\hyperlink{ux5cux23while-loop}{while} loop. Here, we will have two reasons to exit the loop: the player pressed an \textbf{escape} key or they won the game. Therefore, let us use a \emph{string} \texttt{game\_state} variable that is initialized to \texttt{"running"}. Repeat the loop while the \texttt{game\_state} is equal to \texttt{"running"} but change it \texttt{"abort"} if a player pressed \textbf{escape}. You also need to replace \href{https://psychopy.org/api/event.html\#psychopy.event.waitKeys}{waitKeys()} with \href{https://psychopy.org/api/event.html\#psychopy.event.getKeys}{getKeys()}.
 
 Put your code into \texttt{code10.py}.
 
@@ -2803,21 +2803,21 @@ Put your code into \texttt{code11.py}.
 
 Currently, the first card is flipped if you click \emph{anywhere}. But the card you flip should be the card the player clicked on. For this we need to implement a function \texttt{index\_from\_position} that is an inverse of \texttt{position\_from\_index}. It should take an argument \texttt{pos}, which is a tuple of \texttt{(\textless{}x\textgreater{},\ \textless{}y\textgreater{})} values (a mouse position within the window), and return an \emph{integer card index}. You have float values (with decimal points) in the \texttt{pos} argument (because it ranges from -1 to 1 for \protect\hyperlink{psychopy-units-norm}{norm} units) and by default the values you compute from them will also be float. However, an index \emph{must} be integer, so you will need to wrap it in \href{https://docs.python.org/3/library/functions.html\#int}{int()} function call, before returning it.
 
-Going backwards --- from position to index --- is (IMHO) easier. First, you need to think how you can convert an \emph{x} coordinate (goes from -1 to 1) to a column index (goes from 0 to 3) given that you have 4 columns (draw a sketch on paper as it will make figuring out math simpler). Similarly, you translate \emph{y} (from -1 to 1) into raw index given that there are only two rows. Once you know row and column index, you can compute the index itself, keeping in mind that there are four card in a row. As with \texttt{position\_from\_index}, I think it is easier to first play with formulas in a Jupyter Notebook, before turning the code into a function, documenting it, and putting it into \texttt{utilities.py}.
+Going backwards --- from position to index --- is (IMHO) easier. First, you need to think how you can convert an \emph{x} coordinate (goes from -1 to 1) to a column index (goes from 0 to 3) given that you have 4 columns (draw a sketch on paper as it will make figuring out math simpler). Similarly, you translate \emph{y} (from -1 to 1) into row index given that there are only two rows. Once you know row and column index, you can compute the index itself, keeping in mind that there are four card in a row. As with \texttt{position\_from\_index}, I think it is easier to first play with formulas in a Jupyter Notebook, before turning the code into a function, documenting it, and putting it into \texttt{utilities.py}.
 
 Put \texttt{index\_from\_position} into \texttt{utilities.py}.
 
 \hypertarget{flip-a-selected-card-on-click}{%
 \section{Flip a selected card on click}\label{flip-a-selected-card-on-click}}
 
-Now that you have function that returns an index from position (don't forget to import it), you can flip the card that the player did clicked on. For this, you need to extend the card-flipping code inside the \emph{if left-mouse button was pressed} code. Get the position of the mouse within the window by calling \href{https://psychopy.org/api/event.html\#psychopy.event.Mouse.getPos}{mouse.getPos()}. This will return a pair of \texttt{(x,\ y)} values, which you can pass to your \texttt{index\_from\_position()} function. This, in turn will return the index of the card the player click on. Change the \texttt{"side"} of a card with that index to \texttt{"front"}. Test the code by turning different cards over, make sure that it is the card that you clicked on that gets turned. And a usual reminder, do not hesitate to put a breakpoint inside the if-statement to check the actual mouse position values and how they are translated into index, if things do not work.
+Now that you have function that returns an index from position (don't forget to import it), you can flip the card that the player clicked on. For this, you need to extend the card-flipping code inside the \emph{if left-mouse button was pressed} code. Get the position of the mouse within the window by calling \href{https://psychopy.org/api/event.html\#psychopy.event.Mouse.getPos}{mouse.getPos()}. This will return a pair of \texttt{(x,\ y)} values, which you can pass to your \texttt{index\_from\_position()} function. This, in turn will return the index of the card the player click on. Change the \texttt{"side"} of a card with that index to \texttt{"front"}. Test the code by turning different cards over, make sure that it is the card that you clicked on that gets turned. And a usual reminder, do not hesitate to put a breakpoint inside the if-statement to check the actual mouse position values and how they are translated into index, if things do not work.
 
 Put your code into \texttt{code12.py}.
 
 \hypertarget{keeping-track-of-open-cards}{%
 \section{Keeping track of open cards}\label{keeping-track-of-open-cards}}
 
-In the actual game, a player is allowed to flop only \emph{two} cards at a time. If they match, they are removed. If not, they are flipped to their backs again. This means we need to keep track of which and how many cards are face up. We can always figure this out by doing a list comprehension scanning for cards that have their \texttt{"side"} as \texttt{"face"}. But, mutable nature of dictionaries presents us with a simpler solution. We create a new list (let us call it \texttt{face\_up}) and add cards to it. Mutable dictionary will not be copied but rather a reference to it will be present in both lists (same card dictionary will have two stickers on it, one from the \texttt{cards} list, one from \texttt{face\_up} list). This way we know \emph{which} cards are face up (those that are in the list) and we know how many (length of the \texttt{face\_up} list).
+In the actual game, a player is allowed to flip only \emph{two} cards at a time. If they match, they are removed. If not, they are flipped to their backs again. This means we need to keep track of which and how many cards are face up. We can always figure this out by doing a list comprehension scanning for cards that have their \texttt{"side"} as \texttt{"face"}. But, mutable nature of dictionaries presents us with a simpler solution. We create a new list (let us call it \texttt{face\_up}) and add cards to it. Mutable dictionary will not be copied but rather a reference to it will be present in both lists (same card dictionary will have two stickers on it, one from the \texttt{cards} list, one from \texttt{face\_up} list). This way we know \emph{which} cards are face up (those that are in the list) and we know how many (length of the \texttt{face\_up} list).
 
 However, you need to be careful not do add a card more than once (this will mess up our ``how many cards are face up'' number). There are two ways to do this. Assuming that \texttt{icard} is the index of the card, which you computed via \texttt{position\_to\_index()} from mouse position, you can simply check whether this card \texttt{"side"} is \texttt{"front"}. Alternatively, you can check whether this card is already \href{https://docs.python.org/3/reference/expressions.html?highlight=list\%20dictionary\#in}{in} the \texttt{face\_up} list. Either way will tell you whether the card is face up. If it is not, you should set its \texttt{"side"} to \texttt{"front"} and add it to \texttt{face\_up} list.
 
@@ -2828,7 +2828,7 @@ Put your code into \texttt{code13.py}.
 \hypertarget{opening-only-two-cards}{%
 \section{Opening only two cards}\label{opening-only-two-cards}}
 
-Now we need to check whether a player open already two cards. In your code, mouse checks should be \emph{before} the drawing code. This means that cards are drawn face up immediately after a click. Once they are drawn, check the length of \texttt{face\_up}, if it equal to 2:
+Now we need to check whether a player opened exactly two cards. In your code, mouse checks should be \emph{before} the drawing code. This means that cards are drawn face up immediately after a click. Once they are drawn, check the length of \texttt{face\_up}, if it equal to 2:
 
 \begin{itemize}
 \tightlist
@@ -2854,7 +2854,7 @@ Put your code into \texttt{code15.py}.
 \hypertarget{game-over-once-all-the-cards-are-off-the-table}{%
 \section{Game over once all the cards are off the table}\label{game-over-once-all-the-cards-are-off-the-table}}
 
-When your code works correctly, you can take all the card off the table, so that only the gray screen remains. However, that should be the point when the game finishes and congratulates you in your success. Write a function \texttt{remaining\_cards} that will take the list with cards (i.e., our \texttt{cards} list) and will return how many cards are still shown (their \texttt{"show"} field is \texttt{True}). You definitely need a \protect\hyperlink{for-loop}{for} for this but implementation can be very different. You could use an extra counter variable that you initialize to 0 and then increment by one (see \href{https://docs.python.org/3/reference/simple_stmts.html\#augmented-assignment-statements}{+=} for a shortcut). Alternatively, you can use \href{l\#list-comprehension}{list comprehensions} to filter out all cards that not shown and return the length of that list (a single line solution). Implement this function in \emph{utilities.py} and use exit the loop by setting \texttt{game\_state} to \texttt{"victory"}. After the loop, you can check the \texttt{game\_state} variable and if the player was victorious, show a congratulatory message (\href{https://psychopy.org/api/visual/textstim.html\#psychopy.visual.TextStim}{TextStim}, note that you don't even need to create a variable for it, you can create an object and call \texttt{.draw()} on it, i.e., \texttt{visual.TextStim(...).draw()}) and wait for a key press before you close the window.
+When your code works correctly, you can take all the card off the table, so that only the gray screen remains. However, that should be the point when the game finishes and congratulates you on your success. Write a function \texttt{remaining\_cards} that will take the list with cards (i.e., our \texttt{cards} list) and will return how many cards are still shown (their \texttt{"show"} field is \texttt{True}). You definitely need a \protect\hyperlink{for-loop}{for} for this but implementation can be very different. You could use an extra counter variable that you initialize to 0 and then increment by one (see \href{https://docs.python.org/3/reference/simple_stmts.html\#augmented-assignment-statements}{+=} for a shortcut). Alternatively, you can use \href{l\#list-comprehension}{list comprehensions} to filter out all cards that are not shown and return the length of that list (a single line solution). Implement this function in \emph{utilities.py} and use exit the loop by setting \texttt{game\_state} to \texttt{"victory"}. After the loop, you can check the \texttt{game\_state} variable and if the player was victorious, show a congratulatory message (\href{https://psychopy.org/api/visual/textstim.html\#psychopy.visual.TextStim}{TextStim}, note that you don't even need to create a variable for it, you can create an object and call \texttt{.draw()} on it, i.e., \texttt{visual.TextStim(...).draw()}) and wait for a key press before you close the window.
 
 Put your code into \texttt{code16.py}.
 
@@ -3608,7 +3608,7 @@ In the next section, we will create a \texttt{TimedResponseTask} class that will
 \BuiltInTok{print}\NormalTok{(iterator\_fun())}
 
 \CommentTok{\# iterating via for loop}
-\CommentTok{\#\textgreater{} \textless{}generator object iterator\_fun at 0x000001A350B0D740\textgreater{}}
+\CommentTok{\#\textgreater{} \textless{}generator object iterator\_fun at 0x000001BA5D8CD740\textgreater{}}
 \ControlFlowTok{for}\NormalTok{ elem }\KeywordTok{in}\NormalTok{ iterator\_fun():}
     \BuiltInTok{print}\NormalTok{(elem)}
     

@@ -25,19 +25,19 @@ A list is defined via square brackets `<variable> = [<value1>, <value2>, ... <va
 Do exercise #1 see how lists are defined and indexed.
 :::
 
-Lists also allow you access more than one slot/index at a time via _slicing_. You can specify index of elements via `<start>:<stop>` notation. For example, `x[1:3]` will give you access to two items with indexes 1 and 2. Yes, _two_ items: Slicing index goes from the `start` up to **but not including** the `stop`. Thus, if you want to get _all_ the items of a list, you will need to write `x[0:length(x)]` and, yet, to get the last item alone you still write `x[len(x)-1]`. Confusing? I think so. I understand the logic but I find this stop-is-not-included to be counterintuitive and I still have to consciously remind myself about this. Unfortunately, this is a standard way to define sequences of numbers in Python, so you need to memorize this.
+Lists also allow you access more than one slot/index at a time via [slicing](https://docs.python.org/3/library/functions.html#slice). You can specify index of elements via `<start>:<stop>` notation. For example, `x[1:3]` will give you access to two items with indexes 1 and 2. Yes, _two_ items: Slicing index goes from the `start` up to **but not including** the `stop`. Thus, if you want to get _all_ the items of a list, you will need to write `x[0:length(x)]` and, yet, to get the last item alone you still write `x[len(x)-1]`. Confusing? I think so. I understand the logic but I find this stop-is-not-included to be counterintuitive and I still have to consciously remind myself about this. Unfortunately, this is a standard way to define sequences of numbers in Python, so you need to memorize this.
 
 ::: {.rmdnote .practice}
 Do exercise #2 to build the intuition.
 :::
 
-When slicing, you can omit either `start` or `stop`. In this case, Python will assume that a missing `start` means `0` (the index of the first element) and missing `stop` means `len(<list>)` (so, last item is included). If you omit _both_, e.g., `my_pretty_numbers[:]` it will return all values, as this is equivalent to `my_pretty_numbers[0:len(my_pretty_numbers)]`.^[Note, that this is almost but not quite the same thing as just writing `my_pretty_numbers`, the difference is subtle but important. We will return to it later when talking about mutable versus immutable types.]
+When slicing, you can omit either `start` or `stop`. In this case, Python will assume that a missing `start` means `0` (the index of the first element) and missing `stop` means `len(<list>)` (so, last item is included). If you omit _both_, e.g., `my_pretty_numbers[:]` it will return all values, as this is equivalent to `my_pretty_numbers[0:len(my_pretty_numbers)]`.^[Note, that this is almost but not quite the same thing as just writing `my_pretty_numbers`, as `my_pretty_numbers[:]` returns a _different_ list with _identical_ content. The difference is subtle but important and we will return to it later when talking about mutable versus immutable types.]
 
 ::: {.rmdnote .practice}
 Do exercise #3.
 :::
 
-You can also use _negative_ indexes that are computed relative to length of the list. For example, if you want to get the _last_ element of the list, you can say `my_pretty_numbers[len(my_pretty_numbers)-1]` or just `my_pretty_numbers[-1]`. The last-but-one element would be `my_pretty_numbers[-2]`, etc. You can use negative indexes for slicing but keep in mind the _including the start but excluding the stop_ catch: `my_pretty_numbers[:-1]` will return all but last element of the list not the entire list!
+You can also use _negative_ indexes that are computed relative to length of the list^[If you are coming from R, negative indexing is completely different in Python.]. For example, if you want to get the _last_ element of the list, you can say `my_pretty_numbers[len(my_pretty_numbers)-1]` or just `my_pretty_numbers[-1]`. The last-but-one element would be `my_pretty_numbers[-2]`, etc. You can use negative indexes for slicing but keep in mind the _including-the-start-but-excluding-the-stop_ catch: `my_pretty_numbers[:-1]` will return all but last element of the list not the entire list!
 
 ::: {.rmdnote .practice}
 Do exercise #4.
@@ -76,7 +76,7 @@ If you try to to access indexes _outside_ of a valid range, Python will raise an
 Do exercise #6.
 :::
 
-In Python lists are dynamic, so you can always add or remove elements to it, see [the list of methods ]](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists). You can add a new item to the of the end of the list via `append(<new_value>)` method
+In Python lists are dynamic, so you can always add or remove elements to it, see [the list of methods ](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists). You can add a new item to the of the end of the list via `.append(<new_value>)` method
 
 ```python
 my_pretty_numbers = [1, 2, 3, 4, 5, 6, 7]
@@ -111,7 +111,7 @@ Do exercise #7.
 :::
 
 ## Basic game scaffolding
-Phew that was _a lot_ about lists^[and we barely scratched the surface!]. However, [all work and no play makes Jack a dull boy](https://en.wikipedia.org/wiki/All_work_and_no_play_makes_Jack_a_dull_boy)! So let us start with a basic PsychoPy scaffolding. Here the code structure:
+Phew that was _a lot_ about lists^[And we barely scratched the surface!]. However, [All work and no play makes Jack a dull boy](https://en.wikipedia.org/wiki/All_work_and_no_play_makes_Jack_a_dull_boy)! So let us start with a basic PsychoPy scaffolding. Here the code structure:
 ```python
 import libraries from [psychopy]
 create the PsychoPy window (visual.Window())
@@ -127,9 +127,9 @@ Put your code into _code01.py_.
 :::
 
 ## Three moles
-Let us create three moles that will be represented by [circles](https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle). Create a new list variable `moles` and put three circles into it. One should go to the left, one dead center, and one to the right. Watch a video above to see what I mean. Think of a reasonable size (which [units](#psychopy-units) make keeping circle a circle easier?) and position. You can also use different colors for them, as I did). 
+Let us create three moles that will be represented by [circles](https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle). Create a new list variable `moles` and put three circles into it. One should go to the left, one dead center, and one to the right. Watch a video above to see what I mean. Think of a reasonable size (which [units](#psychopy-units) make keeping circle a circle easier?) and position. You can also use different colors for them, as I did.
 
-You can either create an empty list and then `append()` circles one at a time. Or you can use square brackets to put all three of them into the list in one go. Then [draw()](https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle.draw) circles before you flip the window and wait for a key press. Note that you have to draw them one at a time. Therefore, you will need to add three lines for this but the next section will show you an easier way.
+You can either create an empty list and then `.append()` circles one at a time or you can use square brackets to put all three of them into the list in one go. Then [draw()](https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle.draw) circles before you [flip](https://psychopy.org/api/visual/window.html#psychopy.visual.Window.flip) the window and wait for a key press. Note that you have to draw them one at a time. Therefore, you will need to add three lines for this but the next section will show you an easier way.
 
 ::: {.rmdnote .program}
 Put your code into _code02.py_.
@@ -252,7 +252,7 @@ Put your code into _code07.py_.
 :::
 
 ## Exit strategy{#waitKeys-maxwait}
-I hope that you used a small number of trials because (on my advice, yes!) we did not program a possibility to exit the game via the **escape** key. To put it in, we will replace _both_ [wait()](https://psychopy.org/api/clock.html#psychopy.clock.wait)  calls with [waitKeys()](https://psychopy.org/api/event.html#psychopy.event.waitKeys) function. It has `maxWait` parameter that by default is set to infinity but can be set to the duration we require. If a player does not press a key, it will work just like [wait()](https://psychopy.org/api/clock.html#psychopy.clock.wait) did. If a player presses a key (allow only `"escape"` for now), it means that they want to abort the game (the only possible action at the moment). Thus, assign the returned value to a temporary variable (`keys`?) and check whether it is equal to `None`^[Confusingly, if no key was pressed, [getKeys()](https://psychopy.org/api/event.html#psychopy.event.getKeys) returns an empty list but [waitKeys()](https://psychopy.org/api/event.html#psychopy.event.waitKeys) returns `None` and `None` has no length.]. If it is not equal to `None`, [break](#break) out of the loop!
+I hope that you used a small number of trials because (on my advice, yes!) we did not program a possibility to exit the game via the **escape** key. To put it in, we will replace _both_ [wait()](https://psychopy.org/api/clock.html#psychopy.clock.wait)  calls with [waitKeys()](https://psychopy.org/api/event.html#psychopy.event.waitKeys) function. It has `maxWait` parameter that by default is set to infinity but can be set to the duration we require. If a player does not press a key, it will work just like [wait()](https://psychopy.org/api/clock.html#psychopy.clock.wait) did. If a player presses a key (allow only `"escape"` for now), it means that they want to abort the game (the only possible action at the moment). Thus, assign the returned value to a temporary variable (`keys`?) and check whether it is equal to `None`^[Confusingly, if no key was pressed, [getKeys()](https://psychopy.org/api/event.html#psychopy.event.getKeys) returns an empty list that has length of zero but [waitKeys()](https://psychopy.org/api/event.html#psychopy.event.waitKeys) returns `None` and `None` has no length.]. If it is not equal to `None`, [break](#break) out of the loop!
 
 ::: {.rmdnote .program}
 Put your code into _code08.py_.
@@ -261,15 +261,15 @@ Put your code into _code08.py_.
 ## Whacking that mole
 We have moles that appear at a random location after a random delay for a random period of time. Now we just need to add an ability to whack 'em! You whack a mole only when it is present. Thus, we only need to modify and handle the [waitKeys()](https://psychopy.org/api/event.html#psychopy.event.waitKeys) call for the presentation interval. 
 
-First, create a new constant with three keys that correspond to three locations. I would suggest using `["left", "down", "right"]`, which are cursor keys^[Want to know key codes for sure? Write a small program that open a window and then repeatedly waits for any key press and prints out into console.]. Next, you need to use them for the `keyList` parameter. However, we cannot use this list directly, as we also need the **escape** key. The simplest way is to put "escape" into its own list and concatenate the two lists via `+`: `["escape"] + YOUR_CONSTANT_WITH_KEYS`. Do this concatenation directly when you set a value to the `keyList` in the function call. Before we continue, run the code and test that you can abort the program during the presentation (but not during the blank interval) by pressing any of these three keys. Also check that **escape** still works!
+First, create a new constant with three keys that correspond to three locations. I would suggest using `["left", "down", "right"]`, which are cursor keys^[Want to know key codes for sure? Write a small program that opens a window and then repeatedly waits for any key press and prints out into console.]. Next, you need to use them for the `keyList` parameter. However, we cannot use this list directly, as we also need the **escape** key. The simplest way is to put "escape" into its own list and concatenate the two lists via `+`: `["escape"] + YOUR_CONSTANT_WITH_KEYS`. Do this concatenation directly when you set a value to the `keyList` in the function call. Before we continue, run the code and test that you can abort the program during the presentation (but not during the blank interval) by pressing any of these three keys. Also check that **escape** still works!
 
 Now that we have keys to press, we need more sophisticated processing (we gonna have quite a few nested conditional statements). We still need to check whether [waitKeys()](https://psychopy.org/api/event.html#psychopy.event.waitKeys) returned `None` first. If it did not, it must have returned a list of pressed keys. Actually, it will be a list with just a single item^[You will get more than one item in that list only if you set `clearEvents=False`. In this case, you will get the list of keys pressed before the call. However, if you opted for a default `clearEvents=True`, you will get only one key press in the list (at least I was never able to get more than one).], so we can work with it directly via `keys[0]`. Use conditional [if-else statement](#if-statement) to break out of the loop if the player pressed **escape**. Otherwise, it was one of the three "whack" keys.
 
-Our next step is to establish which index the key corresponds to. Python makes it extremely easy as lists have `.index(value)` method that returns the index of the value within the list. You have the (CONSTANT) list with the keys, you have the pressed key: Figure out the index and check whether it matches the index of the target (`imole` variable in my code). If it does, let us provide a visual feedback of success: change mole (circle) `fillColor` to white, draw it, and [wait](https://psychopy.org/api/clock.html#psychopy.clock.wait) for 300 ms (setup a constant for feedback duration). This way, the mole will turn white and remain briefly on the screen when hit but will disappear immediately, if you missed.
+Our next step is to establish which index the key corresponds to. Python makes it extremely easy as lists have [.index(value)](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists) method that returns the index of the value within the list. You have the (CONSTANT) list with the keys and you have the pressed key: Figure out the index and check whether it matches the index of the target (`imole` variable in my code). If it does, let us provide a visual feedback of success: change mole (circle) `fillColor` to white, draw it, and [wait](https://psychopy.org/api/clock.html#psychopy.clock.wait) for 300 ms (setup a constant for feedback duration). This way, the mole will turn white and remain briefly on the screen when hit but will disappear immediately, if you missed.
 
 ::: {.rmdnote .program}
 Put your code into _code09.py_.
 :::
 
 ## You did it!
-Congratulations on your first video game! It could use some bells-and-whistles like having a score, combos would be cool, proper mole images instead circle, etc. but it works and it is fun (if you do not feel challenged, reduce the presentation time)! Submit your files and next time we will ditch the keyboard and learn how to handle the mouse for the Memory game.
+Congratulations on your first video game! It could use some bells-and-whistles like having a score, combos would be cool, proper mole images instead circle, etc. but it works and it is fun (if you do not feel challenged, reduce the presentation time)! Submit your files and next time we will ditch the keyboard and learn how to handle the mouse in the Memory game.

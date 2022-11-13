@@ -23,7 +23,7 @@ from [OpenClipart](https://openclipart.org/). They are [public domain](https://c
 * Looping over both index and item via list [enumeration](#enumerate).
 
 ## Variables as Boxes (immutable objects)
-In this game, you will use [dictionaries](#dictionaries). These are _mutable_, like [lists](#lists) in constrant to "normal" _immutable_ values (integers, floats, strings). You need to learn about this distinction as these two kinds of objects (values) behave very differently under some circumstances, which is both good (power!) and bad (weird unexpected behavior!) news.
+In this game, you will use [dictionaries](#dictionaries). These are _mutable_, like [lists](#lists) in contrast to "normal" _immutable_ values (integers, floats, strings). You need to learn about this distinction as these two kinds of objects (values) behave very differently under some circumstances, which is both good (power!) and bad (weird unexpected behavior!) news.
 
 You may remember the _variable-as-a-box_ metaphor that I used it to introduce [variables](#variables). In short, a variable can be thought of as a "box" with a variable name written on it and a value being stored "inside". When you use this value or assign it to a different variable, you can assume that Python _makes a copy_ of it^[Not really, but this makes it easier to understand.] and puts that _copy_ into a different variable "box". When you _replace_ value of a variable, you take out the old value, destroy it (by throwing it into a nearest black hole, I assume), create a new one, and put it into the variable "box". When you _change_ a variable based on its current state, the same thing happens. You take out the value, create a new value (by adding to the original one or doing some other operation), destroy the old one, and put the new one back into the variable "box". The important point is that although a _variable_ can have different immutable values (we [changed](#random-mole) `imole` variable on every round), the immutable _value_ itself never changes. It gets _replaced_ with another immutable value but _never changes_^[A metaphor attempt: You can wear different shirts, so your _look_ (variable) changes but each individual shirt (potential values) remains the same (we ignore the wear and tear here) irrespective of whether your are wearing it (value is assigned to a variable) or not.].
 
@@ -178,14 +178,14 @@ Put update code into `code03.py`
 :::
 
 ## Backside of the card
-A chicken image is a card _face_ but the game starts with the cards face down, so the player should see their backs. We will use a plain [rectangle](https://psychopy.org/api/visual/rect.html) for as a backside. Pick a nice looking combination of `fillColor` (inside) and `lineColor` (contour) colors. Modify your code, to draw image (face of the card) and rectangle (back of the card) side-by-side (_e.g._, if face is at position with index 0, rectangle should be at position 1 or 4). This way you can check that sizes match and that they are positioned correctly.
+A chicken image is a card _face_ but the game starts with the cards face down, so the player should see their backs. We will use a plain [rectangle](https://psychopy.org/api/visual/rect.html) as a backside. Pick a nice looking combination of `fillColor` (inside) and `lineColor` (contour) colors. Modify your code, to draw image (face of the card) and rectangle (back of the card) side-by-side (_e.g._, if face is at position with index 0, rectangle should be at position 1 or 4). This way you can check that sizes match and that they are positioned correctly.
 
 ::: {.rmdnote .program}
 Put your code into `code04.py`.
 :::
 
 ## Dictionaries {#dictionaries}
-Each card that we use has plenty of properties: A front (image), a backside (rectangle), and will have other properties such as which side should be shown or whether card is already taken off the screen. This calls for a container, so we could put all these relevant bits into a single variable. We _could_ put into a list and use numerical indexes to access individual elements (e.g., `card[0]` would be front image but `card[2]` would indicate the active side) but indexes do not have meaning per se, so figuring out how `card[0]` is different from `card[2]` would be tricky. Python has a solution for cases like this: [dictionaries](https://docs.python.org/3/library/stdtypes.html#dict).
+Each card that we use has plenty of properties: A front (image), a back (rectangle), and will have other properties such as which side should be shown or whether card is already taken off the screen. This calls for a container, so we could put all these relevant bits into a single variable. We _could_ put these values into a list and use numerical indexes to access individual elements (e.g., `card[0]` would be front image but `card[2]` would indicate the active side) but indexes do not have meaning per se, so figuring out how `card[0]` is different from `card[2]` would be tricky. Python has a solution for cases like this: [dictionaries](https://docs.python.org/3/library/stdtypes.html#dict).
 
 A dictionary is a container that stores information using _key : value_ pairs. This is similar to how you look up a meaning or a translation (value) of a word (key) in a real dictionary, hence the name. To create a dictionary, you use _curly_ brackets `{<key1> : <value1>}, {<key2> : <value2>, ...}` or create it via `dict(<key1>=<value1>, <key2>=<value2>, ...)`.
 ```python
@@ -203,7 +203,7 @@ Our card has the following properties, so these will be key-value entries in a d
 4. `"side"`: can be either `"front"` or `"back"`, information about which side is up (drawn on the screen). Set it to `"back"` because, initially, all cards are face down. However, you can always set it temporarily to `"front"` to see how the cards are distributed.
 5. `"show"`: a logical value, set it to `True`. We will use it later to mark out cards that are off the table and are, therefore, not shown. Initially, all cards are shown, so all cards should be created with `"show"` being equal to `True`. 
 
-Create a dictionary variable (name it `card`) and fill it with relevant values (use either `"front"` and "`back"` for `"side"` key) and stimuli (you can put PsychoPy stimuli into a dictionary just like we put them into a list earlier). Modify you code so that it draws the correct image based on the value of the `"side"` entry. Note that you **do not need an if-statement for this**! Think about a key you need to access these two sides and the value that you have in for the `"side"` key.
+Create a dictionary variable (name it `card`) and fill it with relevant values (use either `"front"` and "`back"` for `"side"` key) and stimuli (you can put PsychoPy stimuli into a dictionary just like we put them into a list earlier). Modify your code so that it draws the correct image based on the value of the `"side"` entry. Note that you **do not need an if-statement for this**! Think about a key you need to access these two sides and the value that you have in for the `"side"` key.
 
 ::: {.rmdnote .program}
 Put your code into `code05.py`.
@@ -216,7 +216,7 @@ You have the code to create one card but we need eight of them. This definitely 
 2. a filename,
 3. card position index,
 
-and returns a dictionary, just like the one you created. You very much have the code, you only need to wrap it into a function and document it. Call function `create_card` and use it in the main script to create `card` dictionary. Think about libraries you will now need import in _utilities.py_.
+and returns a dictionary, just like the one you created. You very much have the code, you only need to wrap it into a function and document it. Call function `create_card` and use it in the main script to create `card` dictionary. Think about libraries you will now need to import in _utilities.py_.
 
 ::: {.rmdnote .program}
 Put `create_card` into `utilities.py`. <br/>
@@ -294,7 +294,7 @@ Do exercise #9 in Jupyter notebook.
 ## Getting list of relevant files
 Use list comprehension to create a list of files of chicken looking left, _i.e._ with filenames that start with "l". Use [<your-string>.startswith()](https://docs.python.org/3/library/stdtypes.html#str.startswith) to check whether it starts with "l", store the list in `filenames` variable. Test you code in a Jupyter Notebook. You should get a list of four files.
 
-### List operations {#list-operations}
+## List operations {#list-operations}
 Our list consists of four unique filenames but in the game each card should appear twice. There are several ways of duplicating lists. Here, We will use this as a opportunity to learn about list operations. Python lists implement two operations:
 
 * Adding two lists together: `<list1> + <list2>`.
@@ -316,7 +316,7 @@ a * b
 Use either operation or `.extend()` method to create the list where each filename is repeated twice. Hint, you can apply list multiplication directly to the filenames list you created via list comprehension (so, replicate it in that same line). Try this code out in a Jupyter Notebook.
 
 ## Looping over both index and item via  list enumeration  {#enumerate}
-Now that we have a list of filenames, we can create a list of cards out of it. Our dictionary function requires both index and filename. The latter is the _item_ of the list, the former is the _index_ of that item. You could for a for loop by build the index using [range()](#range) function but Python has a better solution for this: a [enumerate()](https://docs.python.org/3/library/functions.html#enumerate) function! If, instead of iterating over a list, you iterate over [enumerate(<list>)](https://docs.python.org/3/library/functions.html#enumerate), you get a tuple^[A list you cannot change, more on this later.] with both `(index, value)`. Here is an example:
+Now that we have a list of filenames, we can create a list of cards out of it. Our dictionary function requires both index and filename. The latter is the _item_ of the list, the former is the _index_ of that item. You could build the index using [range()](#range) function but Python has a better solution for this: a [enumerate()](https://docs.python.org/3/library/functions.html#enumerate) function! If, instead of iterating over a list, you iterate over [enumerate(<list>)](https://docs.python.org/3/library/functions.html#enumerate), you get a tuple with both `(index, value)`. Here is an example:
 ```{python}
 letters = ['a', 'b', 'c']
 for index, letter in enumerate(letters):
@@ -363,7 +363,7 @@ We covered a lot of ground, so it might be a good point to take a break and subm
 ---
 
 ## Adding main game loop
-At this point, we have a shuffle deck of cards that we show until a player presses a key. Modify the code to have the main presentation loop, similar to one we had when we experimented with [PsychoPy](#psychopy-basics) stimuli. Previously, we used a logical `gameover` variable to control the [while](##while-loop) loop. Here, we will have two reasons to exit the loop: the player pressed an **escape** key or they won the game. Therefore, let us use a _string_ `game_state` variable that is initialized to `"running"`. Repeat the loop while the `game_state` is equal to `"running"` but change it `"abort"` if a player pressed **escape**. You also need to replace [waitKeys](https://psychopy.org/api/event.html#psychopy.event.waitKeys)) with  ([getKeys](https://psychopy.org/api/event.html#psychopy.event.getKeys).
+At this point, we have a shuffle deck of cards that we show until a player presses a key. Modify the code to have the main presentation loop, similar to one we had when we experimented with [PsychoPy](#psychopy-basics) stimuli. Previously, we used a logical `gameover` variable to control the [while](##while-loop) loop. Here, we will have two reasons to exit the loop: the player pressed an **escape** key or they won the game. Therefore, let us use a _string_ `game_state` variable that is initialized to `"running"`. Repeat the loop while the `game_state` is equal to `"running"` but change it `"abort"` if a player pressed **escape**. You also need to replace [waitKeys()](https://psychopy.org/api/event.html#psychopy.event.waitKeys) with  [getKeys()](https://psychopy.org/api/event.html#psychopy.event.getKeys).
 
 ::: {.rmdnote .program}
 Put your code into `code10.py`.
@@ -383,21 +383,21 @@ Put your code into `code11.py`.
 ## Position to index
 Currently, the first card is flipped if you click _anywhere_. But the card you flip should be the card the player clicked on. For this we need to implement a function `index_from_position` that is an inverse of `position_from_index`. It should take an argument `pos`, which is a tuple of `(<x>, <y>)` values (a mouse position within the window), and return an _integer card index_. You have float values (with decimal points) in the `pos` argument (because it ranges from -1 to 1 for [norm](#psychopy-units-norm) units) and by default the values you compute from them will also be float. However, an index _must_ be integer, so you will need to wrap it in [int()](https://docs.python.org/3/library/functions.html#int) function call, before returning it.
 
-Going backwards --- from position to index --- is (IMHO) easier. First, you need to think how you can convert an _x_ coordinate (goes from -1 to 1) to a column index (goes from 0 to 3) given that you have 4 columns (draw a sketch on paper as it will make figuring out math simpler). Similarly, you translate _y_ (from -1 to 1) into raw index given that there are only two rows. Once you know row and column index, you can compute the index itself, keeping in mind that there are four card in a row. As with `position_from_index`, I think it is easier to first play with formulas in a Jupyter Notebook, before turning the code into a function, documenting it, and putting it into `utilities.py`.
+Going backwards --- from position to index --- is (IMHO) easier. First, you need to think how you can convert an _x_ coordinate (goes from -1 to 1) to a column index (goes from 0 to 3) given that you have 4 columns (draw a sketch on paper as it will make figuring out math simpler). Similarly, you translate _y_ (from -1 to 1) into row index given that there are only two rows. Once you know row and column index, you can compute the index itself, keeping in mind that there are four card in a row. As with `position_from_index`, I think it is easier to first play with formulas in a Jupyter Notebook, before turning the code into a function, documenting it, and putting it into `utilities.py`.
 
 ::: {.rmdnote .program}
 Put `index_from_position` into `utilities.py`.
 :::
 
 ## Flip a selected card on click
-Now that you have function that returns an index from position (don't forget to import it), you can flip the card that the player did clicked on. For this, you need to extend the card-flipping code inside the _if left-mouse button was pressed_ code. Get the position of the mouse within the window by calling [mouse.getPos()](https://psychopy.org/api/event.html#psychopy.event.Mouse.getPos). This will return a pair of `(x, y)` values, which you can pass to your `index_from_position()` function. This, in turn will return the index of the card the player click on. Change the `"side"` of a card with that index to `"front"`. Test the code by turning different cards over, make sure that it is the card that you clicked on that gets turned. And a usual reminder, do not hesitate to put a breakpoint inside the if-statement to check the actual mouse position values and how they are translated into index, if things do not work.
+Now that you have function that returns an index from position (don't forget to import it), you can flip the card that the player clicked on. For this, you need to extend the card-flipping code inside the _if left-mouse button was pressed_ code. Get the position of the mouse within the window by calling [mouse.getPos()](https://psychopy.org/api/event.html#psychopy.event.Mouse.getPos). This will return a pair of `(x, y)` values, which you can pass to your `index_from_position()` function. This, in turn will return the index of the card the player click on. Change the `"side"` of a card with that index to `"front"`. Test the code by turning different cards over, make sure that it is the card that you clicked on that gets turned. And a usual reminder, do not hesitate to put a breakpoint inside the if-statement to check the actual mouse position values and how they are translated into index, if things do not work.
 
 ::: {.rmdnote .program}
 Put your code into `code12.py`.
 :::
 
 ## Keeping track of open cards
-In the actual game, a player is allowed to flop only _two_ cards at a time. If they match, they are removed. If not, they are flipped to their backs again. This means we need to keep track of which and how many cards are face up. We can always figure this out by doing a list comprehension scanning for cards that have their `"side"` as `"face"`. But, mutable nature of dictionaries presents us with a simpler solution. We create a new list (let us call it `face_up`) and add cards to it. Mutable dictionary will not be copied but rather a reference to it will be present in both lists (same card dictionary will have two stickers on it, one from the `cards` list, one from `face_up` list). This way we know _which_ cards are face up (those that are in the list) and we know how many (length of the `face_up` list). 
+In the actual game, a player is allowed to flip only _two_ cards at a time. If they match, they are removed. If not, they are flipped to their backs again. This means we need to keep track of which and how many cards are face up. We can always figure this out by doing a list comprehension scanning for cards that have their `"side"` as `"face"`. But, mutable nature of dictionaries presents us with a simpler solution. We create a new list (let us call it `face_up`) and add cards to it. Mutable dictionary will not be copied but rather a reference to it will be present in both lists (same card dictionary will have two stickers on it, one from the `cards` list, one from `face_up` list). This way we know _which_ cards are face up (those that are in the list) and we know how many (length of the `face_up` list). 
 
 However, you need to be careful not do add a card more than once (this will mess up our "how many cards are face up" number). There are two ways to do this. Assuming that `icard` is the index of the card, which you computed via `position_to_index()` from mouse position, you can simply check whether this card `"side"` is `"front"`. Alternatively, you can check whether this card is already [in](https://docs.python.org/3/reference/expressions.html?highlight=list%20dictionary#in) the `face_up` list. Either way will tell you whether the card is face up. If it is not, you should set its `"side"` to `"front"` and add it to `face_up` list.
 
@@ -408,7 +408,7 @@ Put your code into `code13.py`.
 :::
 
 ## Opening only two cards
-Now we need to check whether a player open already two cards. In your code, mouse checks should be _before_ the drawing code. This means that cards are drawn face up immediately after a click. Once they are drawn, check the length of `face_up`, if it equal to 2:
+Now we need to check whether a player opened exactly two cards. In your code, mouse checks should be _before_ the drawing code. This means that cards are drawn face up immediately after a click. Once they are drawn, check the length of `face_up`, if it equal to 2:
 
 * pause the program for ~0.5 s^[Pick the timing you like!] via [wait](https://psychopy.org/api/clock.html#psychopy.clock.wait), so that the player can see both cards.
 * flip both cards back (i.e., set their `"side"` to `"back"`).
@@ -428,7 +428,7 @@ Put your code into `code15.py`.
 :::
 
 ## Game over once all the cards are off the table
-When your code works correctly, you can take all the card off the table, so that only the gray screen remains. However, that should be the point when the game finishes and congratulates you in your success. Write a function `remaining_cards` that will take the list with cards (i.e., our `cards` list) and will return how many cards are still shown (their `"show"` field is `True`). You definitely need a [for](#for-loop) for this but implementation can be very different. You could use an extra counter variable that you initialize to 0 and then increment by one (see [+=](https://docs.python.org/3/reference/simple_stmts.html#augmented-assignment-statements) for a shortcut). Alternatively, you can use [list comprehensions](l#list-comprehension) to filter out all cards that not shown and return the length of that list (a single line solution). Implement this function in _utilities.py_ and use exit the loop by setting `game_state` to `"victory"`. After the loop, you can check the `game_state` variable and if the player was victorious, show a congratulatory message ([TextStim](https://psychopy.org/api/visual/textstim.html#psychopy.visual.TextStim), note that you don't even need to create a variable for it, you can create an object and call `.draw()` on it, i.e., `visual.TextStim(...).draw()`) and wait for a key press before you close the window.
+When your code works correctly, you can take all the card off the table, so that only the gray screen remains. However, that should be the point when the game finishes and congratulates you on your success. Write a function `remaining_cards` that will take the list with cards (i.e., our `cards` list) and will return how many cards are still shown (their `"show"` field is `True`). You definitely need a [for](#for-loop) for this but implementation can be very different. You could use an extra counter variable that you initialize to 0 and then increment by one (see [+=](https://docs.python.org/3/reference/simple_stmts.html#augmented-assignment-statements) for a shortcut). Alternatively, you can use [list comprehensions](l#list-comprehension) to filter out all cards that are not shown and return the length of that list (a single line solution). Implement this function in _utilities.py_ and use exit the loop by setting `game_state` to `"victory"`. After the loop, you can check the `game_state` variable and if the player was victorious, show a congratulatory message ([TextStim](https://psychopy.org/api/visual/textstim.html#psychopy.visual.TextStim), note that you don't even need to create a variable for it, you can create an object and call `.draw()` on it, i.e., `visual.TextStim(...).draw()`) and wait for a key press before you close the window.
 
 ::: {.rmdnote .program}
 Put your code into `code16.py`.

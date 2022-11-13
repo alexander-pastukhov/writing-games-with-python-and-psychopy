@@ -133,7 +133,7 @@
 <p>Let add some Christmas music! Download <a href="material/Deck%20the%20Halls%20B.ogg">Deck the Halls version by Kevin MacLeod</a><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Deck the Halls B by Kevin MacLeod &lt;a href="http://incompetech.com" class="uri"&gt;http://incompetech.com&lt;/a&gt;
 Creative Commons — Attribution 4.0 International — CC BY 4.0
 Free Download / Stream: &lt;a href="https://bit.ly/deck-the-halls-b" class="uri"&gt;https://bit.ly/deck-the-halls-b&lt;/a&gt;
-Music promoted by Audio Library &lt;a href="https://youtu.be/RzjZ-WdVeyk" class="uri"&gt;https://youtu.be/RzjZ-WdVeyk&lt;/a&gt;&lt;/p&gt;'><sup>61</sup></a>. For this, we will use <a href="https://psychopy.org/api/sound.html">sound</a> module of PsychoPy library that generate sounds on the fly and also play audio files in various format such as wav or ogg (but not mp3!). Unfortunately, sound it surprisingly tricky, there are many libraries that might be used by PsychoPy (as of end of 2021 PsychoPy lists four backends that it might use), and things sometimes break. Thus, if the music does not play for you, ask me and we will try to set your sound libraries up.</p>
+Music promoted by Audio Library &lt;a href="https://youtu.be/RzjZ-WdVeyk" class="uri"&gt;https://youtu.be/RzjZ-WdVeyk&lt;/a&gt;&lt;/p&gt;'><sup>62</sup></a>. For this, we will use <a href="https://psychopy.org/api/sound.html">sound</a> module of PsychoPy library that generate sounds on the fly and also play audio files in various format such as wav or ogg (but not mp3!). Unfortunately, sound it surprisingly tricky, there are many libraries that might be used by PsychoPy (as of end of 2021 PsychoPy lists four backends that it might use), and things sometimes break. Thus, if the music does not play for you, ask me and we will try to set your sound libraries up.</p>
 <p>Using sound is very simple. First, you need to import the <code>Sound</code> class as suggested in the manual:</p>
 <div class="sourceCode" id="cb98"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb98-1"><a href="christmas-special.html#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> psychopy.sound <span class="im">import</span> Sound</span></code></pre></div>
 <p>Then, you need a new object of <code>Sound</code> class supplying the file name as the first parameter (I called the variable <code>song</code>). Right before start the loop, you <code>.play()</code> the sound. Note, if you want to play the same sound again, you need to “rewind” it by explicitly calling its <code>.stop()</code> method (for some reason, the sound stops at the end but does not gets “rewind”, so when you try to play it again and notices that it is already at the end and stops without playing anything).</p>
@@ -298,7 +298,7 @@ Music promoted by Audio Library &lt;a href="https://youtu.be/RzjZ-WdVeyk" class=
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2022-11-06.</p>
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2022-11-13.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
