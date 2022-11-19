@@ -149,6 +149,7 @@ opening-only-two-cards
 taking-a-matching-pair-off-the-table
 game-over-once-all-the-cards-are-off-the-table
 do-it-fast
+how-can-you-improve-it
 christmas-special
 chapter-concepts-6
 christmas-tree

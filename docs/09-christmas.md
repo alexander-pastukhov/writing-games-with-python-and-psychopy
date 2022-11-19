@@ -12,7 +12,7 @@ Today we are going to program a Christmas-special. However, this is still an opp
 
 
 ## Christmas tree
-Let us start our Christmas decoration with a Christmas tree. You can download [the one I've found](material/pine-tree.png) (created by [isaiah658](https://openclipart.org/artist/isaiah658)) or find an image that you like. Create your basic PsychoPy code to create a window (we will be using [Circle](https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle) later, so think about suitable units), an [ImageStim](https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim) with a tree, draw it and wait for any key press.
+Let us start our Christmas decoration with a Christmas tree. You can download [the one I've found](material/pine-tree.png)^[Created by [isaiah658](https://openclipart.org/artist/isaiah658).] or find an image that you like. Create your basic PsychoPy code to create a window (we will be using [Circle](https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle) later, so think about suitable units), an [ImageStim](https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim) with a tree, draw it and wait for any key press.
 
 ::: {.rmdnote .program}
 Put your code into `code01.py`.
@@ -65,7 +65,7 @@ Using sound is very simple. First, you need to import the `Sound` class as sugge
 from psychopy.sound import Sound
 ```
 
-Then, you need a new object of `Sound` class supplying the file  name as the first parameter (I called the variable `song`). Right before start the loop, you `.play()` the sound. Note, if you want to play the same sound again, you need to "rewind" it by explicitly calling its `.stop()` method (for some reason, the sound stops at the end but does not gets "rewind", so when you try to play it again and notices that it is already at the end and stops without playing anything).
+Then, you need a new object of `Sound` class supplying the file  name as the first parameter (I called the variable `song`). Right before start the loop, you `.play()` the sound. Note, if you want to play the same sound again, you need to "rewind" it by explicitly calling its `.stop()` method. For some reason, the sound stops at the end but does not gets "rewind", so when you try to play it again and notices that it is already at the end and stops without playing anything.
 
 ::: {.rmdnote .program}
 Put your code into `code04.py`.
@@ -74,7 +74,7 @@ Put your code into `code04.py`.
 ## Settings file formats {#settings-files}
 So far, we either hard-coded specific values or defined them as constants (a better of these two approaches). However, this means that if you want to run your game with different settings, you need to modify the program itself. And if you want to have two versions of the game (two experimental conditions), you would need to have two programs with all the problems of maintaining virtually identical code in several places at once.
 
-A better approach is to have separate files with settings, so you can keep the code constant and alter specific parameters by specifying which settings file the program should use. This is helpful even you plan to have a single set of setting as it separates code from constants, puts the latter all in one place and makes it easier to edit and check them. There are multiple formats for settings files: XML, INI, JSON, YAML, etc. Our format of the choice for today will be JSON. However, this is a question of taste. Personally, I like YAML for subjective reasons (fewer curly brackets and quotation marks), but you are free to use any format you like. As you will see, this makes little difference for the actual Python code.
+A better approach is to have separate files with settings, so you can keep the code constant and alter specific parameters by specifying which settings file the program should use. This is helpful even if you plan to have a single set of setting as it separates code from constants, puts the latter all in one place and makes it easier to edit and check them. There are multiple formats for settings files: XML, INI, JSON, YAML, etc. Our format of the choice for today will be JSON. However, this is a question of taste. Personally, I like YAML for subjective reasons (fewer curly brackets and quotation marks), but you are free to use any format you like. As you will see, this makes little difference for the actual Python code.
 
 ### XML
 [XML](https://en.wikipedia.org/wiki/XML) --- an Extensible Markup Language --- looks similar to HTML (HyperText Markup Language). Experiments designed using PsychoPy Builder interface are stored using XML files but with [.psyexp extension](https://www.psychopy.org/psyexp.html). A settings file for our Christmas programin XML could look like this
