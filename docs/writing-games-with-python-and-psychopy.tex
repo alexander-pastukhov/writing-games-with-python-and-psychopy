@@ -117,7 +117,7 @@
 
 \title{Writing games with Python and PsychoPy}
 \author{Alexander (Sasha) Pastukhov}
-\date{2022-11-19}
+\date{2023-01-10}
 
 \begin{document}
 \maketitle
@@ -2218,7 +2218,7 @@ You can modify \href{https://docs.python.org/3/library/stdtypes.html\#range}{ran
 \end{Highlighting}
 \end{Shaded}
 
-Alternatively, you can use \texttt{range()} to loop through indexes of a list (remember, you can always access an individual list item via \texttt{var{[}index{]}}). Do exactly that\footnote{Note, this is note a \emph{better} way but an \emph{alternative} way to do this.}! Modify your code to use \href{(https://docs.python.org/3/library/stdtypes.html\#range)}{range()} function in the for loop (how can you compute the number of iterations from the length of the list?), use temporary variable as an index for the list to draw each item\footnote{Style hint: if a variable is an \emph{index} of something, I tend to call it \texttt{isomething}. E.g., if it holds an index to a current mole, I would call it \texttt{imole}. This is \emph{my} way of doing it. Others use \texttt{i\_} prefix or an \texttt{\_i} suffix. But either way, it is a useful naming convention. Remember, the easier it is to understand the meaning of a variable from its name, the easier it is for you to read and modify the code.}. When in doubt, put a breakpoint inside (or just before) the loop and step through your code to understand what values a temporary loop variable gets and how it is used.
+Alternatively, you can use \texttt{range()} to loop through indexes of a list (remember, you can always access an individual list item via \texttt{var{[}index{]}}). Do exactly that\footnote{Note, this is not a \emph{better} way but an \emph{alternative} way to do this.}! Modify your code to use \href{(https://docs.python.org/3/library/stdtypes.html\#range)}{range()} function in the for loop (how can you compute the number of iterations from the length of the list?), use temporary variable as an index for the list to draw each item\footnote{Style hint: if a variable is an \emph{index} of something, I tend to call it \texttt{isomething}. E.g., if it holds an index to a current mole, I would call it \texttt{imole}. This is \emph{my} way of doing it. Others use \texttt{i\_} prefix or an \texttt{\_i} suffix. But either way, it is a useful naming convention. Remember, the easier it is to understand the meaning of a variable from its name, the easier it is for you to read and modify the code.}. When in doubt, put a breakpoint inside (or just before) the loop and step through your code to understand what values a temporary loop variable gets and how it is used.
 
 Put your modified code into \emph{code04.py}.
 
@@ -2678,7 +2678,7 @@ Do exercise \#9 in Jupyter notebook.
 \hypertarget{getting-list-of-relevant-files}{%
 \section{Getting list of relevant files}\label{getting-list-of-relevant-files}}
 
-Use list comprehension to create a list of files of chicken looking left, \emph{i.e.} with filenames that start with ``l''. Use \href{https://docs.python.org/3/library/stdtypes.html\#str.startswith}{.startswith()} to check whether it starts with ``l'', store the list in \texttt{filenames} variable. Test you code in a Jupyter Notebook. You should get a list of four files.
+Use list comprehension to create a list of files of chicken looking left, \emph{i.e.} with filenames that start with ``l''. Use \href{https://docs.python.org/3/library/stdtypes.html\#str.startswith}{.startswith()} to check whether it starts with ``l'', store the list in \texttt{filenames} variable. Test your code in a Jupyter Notebook. You should get a list of four files.
 
 \hypertarget{list-operations}{%
 \section{List operations}\label{list-operations}}
@@ -3613,7 +3613,7 @@ In the next section, we will create a \texttt{TimedResponseTask} class that will
 \BuiltInTok{print}\NormalTok{(iterator\_fun())}
 
 \CommentTok{\# iterating via for loop}
-\CommentTok{\#\textgreater{} \textless{}generator object iterator\_fun at 0x0000020E6C23D740\textgreater{}}
+\CommentTok{\#\textgreater{} \textless{}generator object iterator\_fun at 0x000002787EDFD310\textgreater{}}
 \ControlFlowTok{for}\NormalTok{ elem }\KeywordTok{in}\NormalTok{ iterator\_fun():}
     \BuiltInTok{print}\NormalTok{(elem)}
     

@@ -294,7 +294,7 @@ Do exercise #9 in Jupyter notebook.
 :::
 
 ## Getting list of relevant files
-Use list comprehension to create a list of files of chicken looking left, _i.e._ with filenames that start with "l". Use [<your-string>.startswith()](https://docs.python.org/3/library/stdtypes.html#str.startswith) to check whether it starts with "l", store the list in `filenames` variable. Test you code in a Jupyter Notebook. You should get a list of four files.
+Use list comprehension to create a list of files of chicken looking left, _i.e._ with filenames that start with "l". Use [<your-string>.startswith()](https://docs.python.org/3/library/stdtypes.html#str.startswith) to check whether it starts with "l", store the list in `filenames` variable. Test your code in a Jupyter Notebook. You should get a list of four files.
 
 ## List operations {#list-operations}
 Our list consists of four unique filenames but in the game each card should appear twice. There are several ways of duplicating lists. Here, We will use this as a opportunity to learn about list operations. Python lists implement two operations:
