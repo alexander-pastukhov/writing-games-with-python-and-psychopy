@@ -83,7 +83,7 @@ for number in i_am_a_tuple:
     print(number)
 ```
 
-but, as I said, appending will throw a mistake (try this code in a Jupyter Notebook)
+but, as I said, appending will throw a mistake
 ```{python error = TRUE}
 i_am_a_tuple = (1, 2, 3)
 
