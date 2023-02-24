@@ -1,0 +1,21 @@
+"""
+Guess-the-number game. Computer pick a number, player guesses it.
+Single round edition.
+"""
+
+# hard-code computer's pick
+number_picked = 5
+
+# tell user what the answer is
+print("The number I've picked is %d"%(number_picked))
+
+# get a guess from the player
+guess = int(input("What is your guess? "))
+
+# evaluate the guess
+if number_picked < guess:
+    print("My number is lower")
+elif number_picked > guess:
+    print("My number is higher")
+else:
+    print("Spot on!")
