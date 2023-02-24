@@ -161,7 +161,7 @@ We will start with a basic scaffolding for our program. Download the [bird image
     "Image" : "Blue-Bird.png"
   },
   "Window": {
-    "Size": [800, 600],
+    "Size": [800, 600]
   }
 }
 ```
