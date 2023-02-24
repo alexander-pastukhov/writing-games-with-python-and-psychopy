@@ -1,0 +1,10 @@
+{
+  "Balls": {
+    "position": [[0, 0], [-0.08, 0.17], [-0.12, -0.12], [0.1, 0.1], [-0.1, 0.08], [0.1, -0.1]],
+    "color": ["red", "red", "blue", "blue", "yellow", "yellow"],
+    "size": [0.01, 0.015, 0.015, 0.02, 0.02, 0.025]
+  },
+  "Tree" : "pine-tree.png",
+  "Song" : "Deck the Halls B.ogg",
+  "Twinkle duration [sec]" : 0.5
+}
