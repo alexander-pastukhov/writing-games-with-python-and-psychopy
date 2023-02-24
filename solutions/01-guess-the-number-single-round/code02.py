@@ -1,5 +1,5 @@
 """
-Guess-the-number game. Computer pick a number, player guesses it.
+Guess-the-number game. Computer picks a number, player guesses it.
 Single round edition.
 """
 
