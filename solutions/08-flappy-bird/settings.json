@@ -1,0 +1,22 @@
+{
+  "Bird": {
+    "Image" : "Blue-Bird.png",
+    "Size" : 0.1,
+    "Initial vertical speed" : -0.5,
+    "Gravity" : -0.5,
+    "Flap speed" : 0.4
+  },
+  "Obstacles": {
+    "Lower margin" : 0.2,
+    "Upper margin" : 0.2,
+    "Minimal size" : 0.2,
+    "Maximal size" : 0.4,
+    "Width" : 0.1,
+    "Color" : "green",
+    "Speed" : 0.5,
+    "Spawn time" : [1.5, 2.5]
+  },
+  "Window": {
+    "Size": [800, 600]
+  }
+}
