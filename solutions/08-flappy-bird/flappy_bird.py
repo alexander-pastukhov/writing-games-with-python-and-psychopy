@@ -6,7 +6,21 @@ from psychopy import clock, visual
 
 class FlappyBird(visual.image.ImageStim):
     """
-    FlappyBird class based on ImageStim
+    FlappyBird class based on ImageStim.
+
+    Properties
+    ----------
+    settings : dict
+    vspeed : float
+        Vertical speed
+    frame_timer : psychopy.clock.Clock
+    is_airborne : logical
+        Whether bird touches the ground.
+
+    Methods
+    ----------
+    update() : Update bird vertical position.
+    flap() : Flap wings to fly upwards.
     """
     def __init__(self, win, settings):
         """
