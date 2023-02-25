@@ -209,7 +209,7 @@ Update `TimedTaskResponse` class.
 Let us add a competitive edge by limiting the run time to 20 seconds (you can pick your own duration, of course, and you definitely want to be a setting). Create an additional outer loop, so that the game can be played many times over. Once the round is over, show the latest state (redrawing all game objects) plus the "Round over" sign and wait for the player to press either _escape_ (then you exit the game) or _space_ (to start the next round). Remember to recreate all game objects anew for the next round (or create a `reset` method for all of them).
 
 ::: {.rmdnote .program}
-Put updated code in `code07.py`, create `ScoreText` class.
+Put updated code in `code07.py`.
 :::
 
 ## Using PsychoPy's StairHandler
