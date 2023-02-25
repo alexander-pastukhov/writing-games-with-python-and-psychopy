@@ -1,0 +1,13 @@
+{
+  "Target": {
+    "Speed" : 1,
+    "Width" : 0.4,
+    "Height" : 0.1,
+    "Position" : [-0.5, 0, 0.5],
+    "Color" : ["red", "green", "blue"]
+  },
+
+  "Window": {
+    "Size": [800, 600]
+  }
+}
