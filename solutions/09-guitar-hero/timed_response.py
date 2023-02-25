@@ -2,9 +2,9 @@
 Timer response task classes.
 """
 
-import random
-
 from psychopy import clock, visual
+
+from generators import next_target_generator, time_to_next_target_generator
 
 class Target:
     """
@@ -40,4 +40,24 @@ class Target:
         self.rect.pos = (self.rect.pos[0], self.rect.pos[1] - self.speed * self.frame_timer.getTime())
         self.frame_timer.reset()
 
+class TimedResponseTask:
+    """
+    Timed response task.
+    """
+    def __init__(self, win, settings):
+        """
+        Parameters
+            ----------
+            win : psychopy.visual.Window
+            setttings : dict        
+         """
+        self.win = win
+        self.settings = settings
 
+        # difficulty
+        self.speed_factor = 1
+
+        # timing
+        self.time_to_next_target = time_to_next_target_generator()
+        self.next_target_pos = next_target_generator()
+        self.new_target_timer = clock.Clock()
