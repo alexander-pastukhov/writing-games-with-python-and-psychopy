@@ -288,7 +288,7 @@ Create `Score` class in _scoring.py_.
 Use it in _code18.py_.
 :::
 
-## Bells and whistels: three lives
+## Bells and whistles: three lives
 Let us give the player three attempts to achieve the top score. They have three lives, every time the snake dies, the game _but not the score_ resets: A single segment snake appears at the center and a new random apple appears elsewhere (where should you put the code to create them?). Once the snake dies three times, the game is over. Think how you can implement this three repetitions.
 
 The score should be cumulative, so at the beginning of round two it should be equal to the final score of round one. Think how you can achieve this. _Another important point_: now you have two nested loop, one is for the game, one is for the round. When the snake dies, the round is over and, if you run out of lives, the game as well. When the player presses _escape_ both round **and** the game are over. Think about how you can implement it.
@@ -297,14 +297,14 @@ The score should be cumulative, so at the beginning of round two it should be eq
 Put your updated code into _code19.py_.
 :::
 
-## Bells and whistels: press space to start the round
+## Bells and whistles: press space to start the round
 At the moment, our round starts immediately. It would be friendlier, if the player would start it themselves. Before each round, draw _all_ visuals (snake, apple, score) plus a text "Press SPACE to start" and wait until either a _space_ or _escape_ key is pressed. In the former case, the trial should start. In the latter case, the player should exit the game.
 
 ::: {.rmdnote .program}
 Put your updated code into _code20.py_.
 :::
 
-## Bells and whistels: showing remaining lives
+## Bells and whistles: showing remaining lives
 Let us not just repeat the game three times but show the player how many lives they still have. Download the [heart.png](material/heart.png)^[This image was downloaded from [openclipart.org](https://openclipart.org/) and was created by [cliparteles](https://openclipart.org/artist/cliparteles)] and use it show remaining lives at the top-left corner of the screen: three hearts in round one, two hearts in round two, and just a single heart in round three. You will need to use (ImageStim)[https://www.psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim] for this. Think about the size of images and their location. Hint: I created a list of heart images using list comprehension and drawing hearts definitely requires a for loop.
 
 ::: {.rmdnote .program}
