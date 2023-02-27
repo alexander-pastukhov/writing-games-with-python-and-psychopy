@@ -1,0 +1,15 @@
+{
+    "Window": {
+        "grid size [in squares]" : [30, 20],
+        "square size [in pixels]" : 20
+    },
+    "Snake" : {
+        "color" : "green",
+        "speed [squares per second]" : 4
+    },
+    "Difficulty" : {
+        "Easy" : 2,
+        "Medium" : 4,
+        "Hard" : 8
+    }
+} 
