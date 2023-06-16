@@ -1,7 +1,7 @@
 --- 
 title: "Writing games with Python and PsychoPy"
 author: "Alexander (Sasha) Pastukhov"
-date: "2023-01-10"
+date: "2023-06-16"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib]

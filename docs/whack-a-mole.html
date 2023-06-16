@@ -7,7 +7,7 @@
 <title>Chapter 9 Whack-a-Mole | Writing games with Python and PsychoPy</title>
 <meta name="author" content="Alexander (Sasha) Pastukhov">
 <meta name="description" content="Today you will create your first video game Whack-a-Mole. The game itself is very much a reaction time experiment: moles/targets appear after a random delay at one of the predefined locations, the...">
-<meta name="generator" content="bookdown 0.31 with bs4_book()">
+<meta name="generator" content="bookdown 0.34 with bs4_book()">
 <meta property="og:title" content="Chapter 9 Whack-a-Mole | Writing games with Python and PsychoPy">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://alexander-pastukhov.github.io/writing-games-with-python-and-psychopy/whack-a-mole.html">
@@ -18,7 +18,13 @@
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-NBXRG6YB3R"></script><script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-NBXRG6YB3R');
+      </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -112,17 +118,17 @@
 <p>Do exercise #4.</p>
 </div>
 <p>Slicing can be extended by specifying a <code>step</code> via <code>start:stop:step</code> notation. <code>step</code> can be negative, allowing you to build indexes in the reverse order:</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb66-1"><a href="whack-a-mole.html#cb66-1" aria-hidden="true" tabindex="-1"></a>my_pretty_numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>]</span>
-<span id="cb66-2"><a href="whack-a-mole.html#cb66-2" aria-hidden="true" tabindex="-1"></a>my_pretty_numbers[<span class="dv">4</span>:<span class="dv">0</span>:<span class="op">-</span><span class="dv">1</span>]</span>
-<span id="cb66-3"><a href="whack-a-mole.html#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [5, 4, 3, 2]</span></span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb66-1"><a href="whack-a-mole.html#cb66-1" tabindex="-1"></a>my_pretty_numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>]</span>
+<span id="cb66-2"><a href="whack-a-mole.html#cb66-2" tabindex="-1"></a>my_pretty_numbers[<span class="dv">4</span>:<span class="dv">0</span>:<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb66-3"><a href="whack-a-mole.html#cb66-3" tabindex="-1"></a><span class="co">#&gt; [5, 4, 3, 2]</span></span></code></pre></div>
 <p>However, you must pay attention to the sign of the step. If it goes in the wrong direction then <code>stop</code> cannot be reached, Python will return an empty list.</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb67-1"><a href="whack-a-mole.html#cb67-1" aria-hidden="true" tabindex="-1"></a>my_pretty_numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>]</span>
-<span id="cb67-2"><a href="whack-a-mole.html#cb67-2" aria-hidden="true" tabindex="-1"></a>my_pretty_numbers[<span class="dv">4</span>:<span class="dv">0</span>:<span class="dv">1</span>]</span>
-<span id="cb67-3"><a href="whack-a-mole.html#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; []</span></span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb67-1"><a href="whack-a-mole.html#cb67-1" tabindex="-1"></a>my_pretty_numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>]</span>
+<span id="cb67-2"><a href="whack-a-mole.html#cb67-2" tabindex="-1"></a>my_pretty_numbers[<span class="dv">4</span>:<span class="dv">0</span>:<span class="dv">1</span>]</span>
+<span id="cb67-3"><a href="whack-a-mole.html#cb67-3" tabindex="-1"></a><span class="co">#&gt; []</span></span></code></pre></div>
 <p>Steps can be combined with omitted and negative indexes. To get every <em>odd</em> element of the list, you write <code>my_pretty_numbers[::2]</code>:</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb68-1"><a href="whack-a-mole.html#cb68-1" aria-hidden="true" tabindex="-1"></a>my_pretty_numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>]</span>
-<span id="cb68-2"><a href="whack-a-mole.html#cb68-2" aria-hidden="true" tabindex="-1"></a>my_pretty_numbers[::<span class="dv">2</span>]</span>
-<span id="cb68-3"><a href="whack-a-mole.html#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1, 3, 5, 7]</span></span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb68-1"><a href="whack-a-mole.html#cb68-1" tabindex="-1"></a>my_pretty_numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>]</span>
+<span id="cb68-2"><a href="whack-a-mole.html#cb68-2" tabindex="-1"></a>my_pretty_numbers[::<span class="dv">2</span>]</span>
+<span id="cb68-3"><a href="whack-a-mole.html#cb68-3" tabindex="-1"></a><span class="co">#&gt; [1, 3, 5, 7]</span></span></code></pre></div>
 <div class="rmdnote practice">
 <p>Do exercise #5.</p>
 </div>
@@ -131,24 +137,24 @@
 <p>Do exercise #6.</p>
 </div>
 <p>In Python lists are dynamic, so you can always add or remove elements to it, see <a href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists">the list of methods</a>. You can add a new item to the of the end of the list via <code>.append(&lt;new_value&gt;)</code> method</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb69-1"><a href="whack-a-mole.html#cb69-1" aria-hidden="true" tabindex="-1"></a>my_pretty_numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>]</span>
-<span id="cb69-2"><a href="whack-a-mole.html#cb69-2" aria-hidden="true" tabindex="-1"></a>my_pretty_numbers.append(<span class="dv">10</span>)</span>
-<span id="cb69-3"><a href="whack-a-mole.html#cb69-3" aria-hidden="true" tabindex="-1"></a>my_pretty_numbers</span>
-<span id="cb69-4"><a href="whack-a-mole.html#cb69-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1, 2, 3, 4, 5, 6, 7, 10]</span></span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb69-1"><a href="whack-a-mole.html#cb69-1" tabindex="-1"></a>my_pretty_numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>]</span>
+<span id="cb69-2"><a href="whack-a-mole.html#cb69-2" tabindex="-1"></a>my_pretty_numbers.append(<span class="dv">10</span>)</span>
+<span id="cb69-3"><a href="whack-a-mole.html#cb69-3" tabindex="-1"></a>my_pretty_numbers</span>
+<span id="cb69-4"><a href="whack-a-mole.html#cb69-4" tabindex="-1"></a><span class="co">#&gt; [1, 2, 3, 4, 5, 6, 7, 10]</span></span></code></pre></div>
 <p>Or, you can <code>insert(&lt;index&gt;, &lt;new_value&gt;)</code> <em>before</em> an element with that index. Unfortunately, this means that you can use an arbitrary large index and it will insert a new value as a <em>last</em> element without generating an error.</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb70-1"><a href="whack-a-mole.html#cb70-1" aria-hidden="true" tabindex="-1"></a>my_pretty_numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>]</span>
-<span id="cb70-2"><a href="whack-a-mole.html#cb70-2" aria-hidden="true" tabindex="-1"></a>my_pretty_numbers.insert(<span class="dv">2</span>, <span class="dv">10</span>)</span>
-<span id="cb70-3"><a href="whack-a-mole.html#cb70-3" aria-hidden="true" tabindex="-1"></a>my_pretty_numbers.insert(<span class="dv">500</span>, <span class="dv">20</span>)</span>
-<span id="cb70-4"><a href="whack-a-mole.html#cb70-4" aria-hidden="true" tabindex="-1"></a>my_pretty_numbers</span>
-<span id="cb70-5"><a href="whack-a-mole.html#cb70-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1, 2, 10, 3, 4, 5, 6, 7, 20]</span></span></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb70-1"><a href="whack-a-mole.html#cb70-1" tabindex="-1"></a>my_pretty_numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>]</span>
+<span id="cb70-2"><a href="whack-a-mole.html#cb70-2" tabindex="-1"></a>my_pretty_numbers.insert(<span class="dv">2</span>, <span class="dv">10</span>)</span>
+<span id="cb70-3"><a href="whack-a-mole.html#cb70-3" tabindex="-1"></a>my_pretty_numbers.insert(<span class="dv">500</span>, <span class="dv">20</span>)</span>
+<span id="cb70-4"><a href="whack-a-mole.html#cb70-4" tabindex="-1"></a>my_pretty_numbers</span>
+<span id="cb70-5"><a href="whack-a-mole.html#cb70-5" tabindex="-1"></a><span class="co">#&gt; [1, 2, 10, 3, 4, 5, 6, 7, 20]</span></span></code></pre></div>
 <p>You can remove an item using its index via <code>pop(&lt;index&gt;)</code>, note that the item is <em>returned</em> as well. If you omit the index, <code>pop()</code> removes the <em>last</em> element of the list. Here, you can only use valid indexes.</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb71-1"><a href="whack-a-mole.html#cb71-1" aria-hidden="true" tabindex="-1"></a>my_pretty_numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>]</span>
-<span id="cb71-2"><a href="whack-a-mole.html#cb71-2" aria-hidden="true" tabindex="-1"></a>my_pretty_numbers.pop(<span class="op">-</span><span class="dv">1</span>)</span>
-<span id="cb71-3"><a href="whack-a-mole.html#cb71-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7</span></span>
-<span id="cb71-4"><a href="whack-a-mole.html#cb71-4" aria-hidden="true" tabindex="-1"></a>my_pretty_numbers.pop(<span class="dv">3</span>)</span>
-<span id="cb71-5"><a href="whack-a-mole.html#cb71-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4</span></span>
-<span id="cb71-6"><a href="whack-a-mole.html#cb71-6" aria-hidden="true" tabindex="-1"></a>my_pretty_numbers</span>
-<span id="cb71-7"><a href="whack-a-mole.html#cb71-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1, 2, 3, 5, 6]</span></span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb71-1"><a href="whack-a-mole.html#cb71-1" tabindex="-1"></a>my_pretty_numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>]</span>
+<span id="cb71-2"><a href="whack-a-mole.html#cb71-2" tabindex="-1"></a>my_pretty_numbers.pop(<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb71-3"><a href="whack-a-mole.html#cb71-3" tabindex="-1"></a><span class="co">#&gt; 7</span></span>
+<span id="cb71-4"><a href="whack-a-mole.html#cb71-4" tabindex="-1"></a>my_pretty_numbers.pop(<span class="dv">3</span>)</span>
+<span id="cb71-5"><a href="whack-a-mole.html#cb71-5" tabindex="-1"></a><span class="co">#&gt; 4</span></span>
+<span id="cb71-6"><a href="whack-a-mole.html#cb71-6" tabindex="-1"></a>my_pretty_numbers</span>
+<span id="cb71-7"><a href="whack-a-mole.html#cb71-7" tabindex="-1"></a><span class="co">#&gt; [1, 2, 3, 5, 6]</span></span></code></pre></div>
 <div class="rmdnote practice">
 <p>Do exercise #7.</p>
 </div>
@@ -158,11 +164,11 @@
 <span class="header-section-number">9.3</span> Basic game scaffolding<a class="anchor" aria-label="anchor" href="#basic-game-scaffolding"><i class="fas fa-link"></i></a>
 </h2>
 <p>Phew that was <em>a lot</em> about lists<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;And we barely scratched the surface!&lt;/p&gt;"><sup>42</sup></a>. However, <a href="https://en.wikipedia.org/wiki/All_work_and_no_play_makes_Jack_a_dull_boy">All work and no play makes Jack a dull boy</a>! So let us start with a basic PsychoPy scaffolding. Here the code structure:</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb72-1"><a href="whack-a-mole.html#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> libraries <span class="im">from</span> [psychopy]</span>
-<span id="cb72-2"><a href="whack-a-mole.html#cb72-2" aria-hidden="true" tabindex="-1"></a>create the PsychoPy window (visual.Window())</span>
-<span id="cb72-3"><a href="whack-a-mole.html#cb72-3" aria-hidden="true" tabindex="-1"></a>flip the window (.flip())</span>
-<span id="cb72-4"><a href="whack-a-mole.html#cb72-4" aria-hidden="true" tabindex="-1"></a>wait <span class="cf">for</span> a player to press the escape key (event.waitKeys())</span>
-<span id="cb72-5"><a href="whack-a-mole.html#cb72-5" aria-hidden="true" tabindex="-1"></a>close the window (.close())</span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb72-1"><a href="whack-a-mole.html#cb72-1" tabindex="-1"></a><span class="im">import</span> libraries <span class="im">from</span> [psychopy]</span>
+<span id="cb72-2"><a href="whack-a-mole.html#cb72-2" tabindex="-1"></a>create the PsychoPy window (visual.Window())</span>
+<span id="cb72-3"><a href="whack-a-mole.html#cb72-3" tabindex="-1"></a>flip the window (.flip())</span>
+<span id="cb72-4"><a href="whack-a-mole.html#cb72-4" tabindex="-1"></a>wait <span class="cf">for</span> a player to press the escape key (event.waitKeys())</span>
+<span id="cb72-5"><a href="whack-a-mole.html#cb72-5" tabindex="-1"></a>close the window (.close())</span></code></pre></div>
 <p>Try doing it from scratch. I have left hints to help you with this and you can always consult the <a href="https://psychopy.org/api/index.html">online documentation</a>. Do not forget to document the file and to split your code into meaningful chunks with comments (if needed).</p>
 <div class="rmdnote program">
 <p>Put your code into <em>code01.py</em>.</p>
@@ -184,21 +190,21 @@
 </h2>
 <p>In the code above, we needed to iterate over three moles (circles) that we had in a list. Python has a tool just for that: a
 <a href="https://docs.python.org/3/tutorial/controlflow.html?highlight=loop#for-statements">for loop</a> that iterates over the items in any sequence (our list is a sequence!). Here is an example:</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb73-1"><a href="whack-a-mole.html#cb73-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">42</span>]</span>
-<span id="cb73-2"><a href="whack-a-mole.html#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> a_number <span class="kw">in</span> numbers:</span>
-<span id="cb73-3"><a href="whack-a-mole.html#cb73-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Value of a_number variable on this iteration is </span><span class="sc">%d</span><span class="st">"</span><span class="op">%</span>(a_number))</span>
-<span id="cb73-4"><a href="whack-a-mole.html#cb73-4" aria-hidden="true" tabindex="-1"></a>    a_number <span class="op">=</span> a_number <span class="op">+</span> <span class="dv">3</span></span>
-<span id="cb73-5"><a href="whack-a-mole.html#cb73-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"  Now we incremented it by 3: </span><span class="sc">%d</span><span class="st">"</span><span class="op">%</span>(a_number))</span>
-<span id="cb73-6"><a href="whack-a-mole.html#cb73-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"  Now we use in a formula a_number / 10: </span><span class="sc">%g</span><span class="st">"</span><span class="op">%</span>(a_number <span class="op">/</span> <span class="dv">10</span>))</span>
-<span id="cb73-7"><a href="whack-a-mole.html#cb73-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Value of a_number variable on this iteration is 2</span></span>
-<span id="cb73-8"><a href="whack-a-mole.html#cb73-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Now we incremented it by 3: 5</span></span>
-<span id="cb73-9"><a href="whack-a-mole.html#cb73-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Now we use in a formula a_number / 10: 0.5</span></span>
-<span id="cb73-10"><a href="whack-a-mole.html#cb73-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Value of a_number variable on this iteration is 4</span></span>
-<span id="cb73-11"><a href="whack-a-mole.html#cb73-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Now we incremented it by 3: 7</span></span>
-<span id="cb73-12"><a href="whack-a-mole.html#cb73-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Now we use in a formula a_number / 10: 0.7</span></span>
-<span id="cb73-13"><a href="whack-a-mole.html#cb73-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Value of a_number variable on this iteration is 42</span></span>
-<span id="cb73-14"><a href="whack-a-mole.html#cb73-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Now we incremented it by 3: 45</span></span>
-<span id="cb73-15"><a href="whack-a-mole.html#cb73-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Now we use in a formula a_number / 10: 4.5</span></span></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb73-1"><a href="whack-a-mole.html#cb73-1" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">42</span>]</span>
+<span id="cb73-2"><a href="whack-a-mole.html#cb73-2" tabindex="-1"></a><span class="cf">for</span> a_number <span class="kw">in</span> numbers:</span>
+<span id="cb73-3"><a href="whack-a-mole.html#cb73-3" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Value of a_number variable on this iteration is </span><span class="sc">%d</span><span class="st">"</span><span class="op">%</span>(a_number))</span>
+<span id="cb73-4"><a href="whack-a-mole.html#cb73-4" tabindex="-1"></a>    a_number <span class="op">=</span> a_number <span class="op">+</span> <span class="dv">3</span></span>
+<span id="cb73-5"><a href="whack-a-mole.html#cb73-5" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"  Now we incremented it by 3: </span><span class="sc">%d</span><span class="st">"</span><span class="op">%</span>(a_number))</span>
+<span id="cb73-6"><a href="whack-a-mole.html#cb73-6" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"  Now we use in a formula a_number / 10: </span><span class="sc">%g</span><span class="st">"</span><span class="op">%</span>(a_number <span class="op">/</span> <span class="dv">10</span>))</span>
+<span id="cb73-7"><a href="whack-a-mole.html#cb73-7" tabindex="-1"></a><span class="co">#&gt; Value of a_number variable on this iteration is 2</span></span>
+<span id="cb73-8"><a href="whack-a-mole.html#cb73-8" tabindex="-1"></a><span class="co">#&gt;   Now we incremented it by 3: 5</span></span>
+<span id="cb73-9"><a href="whack-a-mole.html#cb73-9" tabindex="-1"></a><span class="co">#&gt;   Now we use in a formula a_number / 10: 0.5</span></span>
+<span id="cb73-10"><a href="whack-a-mole.html#cb73-10" tabindex="-1"></a><span class="co">#&gt; Value of a_number variable on this iteration is 4</span></span>
+<span id="cb73-11"><a href="whack-a-mole.html#cb73-11" tabindex="-1"></a><span class="co">#&gt;   Now we incremented it by 3: 7</span></span>
+<span id="cb73-12"><a href="whack-a-mole.html#cb73-12" tabindex="-1"></a><span class="co">#&gt;   Now we use in a formula a_number / 10: 0.7</span></span>
+<span id="cb73-13"><a href="whack-a-mole.html#cb73-13" tabindex="-1"></a><span class="co">#&gt; Value of a_number variable on this iteration is 42</span></span>
+<span id="cb73-14"><a href="whack-a-mole.html#cb73-14" tabindex="-1"></a><span class="co">#&gt;   Now we incremented it by 3: 45</span></span>
+<span id="cb73-15"><a href="whack-a-mole.html#cb73-15" tabindex="-1"></a><span class="co">#&gt;   Now we use in a formula a_number / 10: 4.5</span></span></code></pre></div>
 <p>Here, the code inside the <code>for</code> loop is repeated three times because there are three items in the list. On each iteration, next value from the list gets assigned to a temporary variable <code>a_number</code> (see the output). Once the value is assigned to a variable, you can use it just like any variable. You can print it out (first <code>print</code>), you can modify it (second line within the loop), use its value for when calling other functions, etc. To better appreciate this, copy-paste this code into a temporary file (call it <code>test01.py</code>), put a <a href="guess-the-number-single-round.html#debugging">breakpoint</a> onto the first <code>print</code> statement and then use <strong>F10</strong> to step through the loop and see how value of <code>a_number</code> variable changes on each iteration and then it gets modified in the second line within the loop.</p>
 <p>Note that you can use the same <a href="https://docs.python.org/3/tutorial/controlflow.html?highlight=loop#break-and-continue-statements-and-else-clauses-on-loops">break</a> statement as for the <a href="https://docs.python.org/3/reference/compound_stmts.html#the-while-statement">while</a> loop.</p>
 <div class="rmdnote practice">
@@ -219,16 +225,16 @@
 <span class="header-section-number">9.7</span> range() function: Repeating code N times<a class="anchor" aria-label="anchor" href="#range"><i class="fas fa-link"></i></a>
 </h2>
 <p>Sometimes, you might need to repeat the code several times. For example, imagine that you have 40 trials in an experiment. Thus, you need to repeat a trial-related code 40 times. You can, of course, build a list 40 items long by hand and iterate over it but Python has a handy <a href="https://docs.python.org/3/tutorial/controlflow.html?highlight=loop#the-range-function">range()</a> function for that. <code>range(N)</code> yields N integers from 0 to N-1 (same up-to-but-not-including rule as for slicing) that you can iterate over in a for loop.</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb74-1"><a href="whack-a-mole.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
-<span id="cb74-2"><a href="whack-a-mole.html#cb74-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Value of x is </span><span class="sc">%d</span><span class="st">"</span><span class="op">%</span>(x))</span>
-<span id="cb74-3"><a href="whack-a-mole.html#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Value of x is 0</span></span>
-<span id="cb74-4"><a href="whack-a-mole.html#cb74-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Value of x is 1</span></span>
-<span id="cb74-5"><a href="whack-a-mole.html#cb74-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Value of x is 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb74-1"><a href="whack-a-mole.html#cb74-1" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
+<span id="cb74-2"><a href="whack-a-mole.html#cb74-2" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Value of x is </span><span class="sc">%d</span><span class="st">"</span><span class="op">%</span>(x))</span>
+<span id="cb74-3"><a href="whack-a-mole.html#cb74-3" tabindex="-1"></a><span class="co">#&gt; Value of x is 0</span></span>
+<span id="cb74-4"><a href="whack-a-mole.html#cb74-4" tabindex="-1"></a><span class="co">#&gt; Value of x is 1</span></span>
+<span id="cb74-5"><a href="whack-a-mole.html#cb74-5" tabindex="-1"></a><span class="co">#&gt; Value of x is 2</span></span></code></pre></div>
 <p>You can modify <a href="https://docs.python.org/3/library/stdtypes.html#range">range()</a> function behavior by providing a starting value and a step size. But in its simplest form <code>range(N)</code> is a handy tool to repeat the code that many times. Note that while you always need to have a temporary variable in a <code>for</code> loop, sometimes you may not use it at all. In cases like this, you should use <code>_</code> (underscore symbol) as a variable name to indicate the lack of use.</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb75-1"><a href="whack-a-mole.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>):</span>
-<span id="cb75-2"><a href="whack-a-mole.html#cb75-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"I will be repeated twice!"</span>)</span>
-<span id="cb75-3"><a href="whack-a-mole.html#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; I will be repeated twice!</span></span>
-<span id="cb75-4"><a href="whack-a-mole.html#cb75-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; I will be repeated twice!</span></span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb75-1"><a href="whack-a-mole.html#cb75-1" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>):</span>
+<span id="cb75-2"><a href="whack-a-mole.html#cb75-2" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"I will be repeated twice!"</span>)</span>
+<span id="cb75-3"><a href="whack-a-mole.html#cb75-3" tabindex="-1"></a><span class="co">#&gt; I will be repeated twice!</span></span>
+<span id="cb75-4"><a href="whack-a-mole.html#cb75-4" tabindex="-1"></a><span class="co">#&gt; I will be repeated twice!</span></span></code></pre></div>
 <p>Alternatively, you can use <code><a href="https://rdrr.io/r/base/range.html">range()</a></code> to loop through indexes of a list (remember, you can always access an individual list item via <code>var[index]</code>). Do exactly that<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Note, this is not a &lt;em&gt;better&lt;/em&gt; way but an &lt;em&gt;alternative&lt;/em&gt; way to do this.&lt;/p&gt;"><sup>43</sup></a>! Modify your code to use <a href="(https://docs.python.org/3/library/stdtypes.html#range)">range()</a> function in the for loop (how can you compute the number of iterations from the length of the list?), use temporary variable as an index for the list to draw each item<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Style hint: if a variable is an &lt;em&gt;index&lt;/em&gt; of something, I tend to call it &lt;code&gt;isomething&lt;/code&gt;. E.g., if it holds an index to a current mole, I would call it &lt;code&gt;imole&lt;/code&gt;. This is &lt;em&gt;my&lt;/em&gt; way of doing it. Others use &lt;code&gt;i_&lt;/code&gt; prefix or an &lt;code&gt;_i&lt;/code&gt; suffix. But either way, it is a useful naming convention. Remember, the easier it is to understand the meaning of a variable from its name, the easier it is for you to read and modify the code.&lt;/p&gt;"><sup>44</sup></a>. When in doubt, put a breakpoint inside (or just before) the loop and step through your code to understand what values a temporary loop variable gets and how it is used.</p>
 <div class="rmdnote program">
 <p>Put your modified code into <em>code04.py</em>.</p>
@@ -251,28 +257,28 @@
 </h2>
 <p>What makes Whack-a-Mole game fun is not only that you do not know <em>which</em> mole will appear but you also do not know <em>when</em> it will appear and <em>how much time</em> you have to whack it. Thus, we need to modify our presentation schedule. We need a blank period of a random duration (I would suggest between 0.75 s to 1.5 s) and limited presentation duration (between 0.5 to 0.75 s). First, you need to define these ranges as <a href="python-basics.html#constants">constants</a>. Now that you know lists you can use a single variable to hold both ends of the range. Then, you need to generate two numbers (one for the blank another for the presentation) coming from <a href="https://docs.python.org/3/library/random.html#random.uniform">a uniform distrubition</a> within that range. Finally, you need to time your blank and presentation using the <a href="https://psychopy.org/api/clock.html#psychopy.clock.wait">wait()</a> function from the <a href="https://psychopy.org/api/clock.html">clock</a> module.</p>
 <p>Now is time to update and structure you code. Here is a approximate outline (note that I have dropped the wait for keys):</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb76-1"><a href="whack-a-mole.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Document your file</span></span>
-<span id="cb76-2"><a href="whack-a-mole.html#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
-<span id="cb76-3"><a href="whack-a-mole.html#cb76-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="bu">all</span> libaries you need <span class="kw">in</span> an alphabetical order</span>
-<span id="cb76-4"><a href="whack-a-mole.html#cb76-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-5"><a href="whack-a-mole.html#cb76-5" aria-hidden="true" tabindex="-1"></a>define CONSTANTS</span>
-<span id="cb76-6"><a href="whack-a-mole.html#cb76-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-7"><a href="whack-a-mole.html#cb76-7" aria-hidden="true" tabindex="-1"></a>create window</span>
-<span id="cb76-8"><a href="whack-a-mole.html#cb76-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-9"><a href="whack-a-mole.html#cb76-9" aria-hidden="true" tabindex="-1"></a><span class="co"># generating random parameters for the trial</span></span>
-<span id="cb76-10"><a href="whack-a-mole.html#cb76-10" aria-hidden="true" tabindex="-1"></a>pick random index <span class="cf">for</span> the mole</span>
-<span id="cb76-11"><a href="whack-a-mole.html#cb76-11" aria-hidden="true" tabindex="-1"></a>create the mole</span>
-<span id="cb76-12"><a href="whack-a-mole.html#cb76-12" aria-hidden="true" tabindex="-1"></a>generate random durations <span class="cf">for</span> blank <span class="kw">and</span> presentation interval</span>
-<span id="cb76-13"><a href="whack-a-mole.html#cb76-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-14"><a href="whack-a-mole.html#cb76-14" aria-hidden="true" tabindex="-1"></a><span class="co"># blank</span></span>
-<span id="cb76-15"><a href="whack-a-mole.html#cb76-15" aria-hidden="true" tabindex="-1"></a>clear window (win.flip() alone)</span>
-<span id="cb76-16"><a href="whack-a-mole.html#cb76-16" aria-hidden="true" tabindex="-1"></a>wait <span class="cf">for</span> <span class="st">"blank duration"</span> seconds</span>
-<span id="cb76-17"><a href="whack-a-mole.html#cb76-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-18"><a href="whack-a-mole.html#cb76-18" aria-hidden="true" tabindex="-1"></a><span class="co"># presentation</span></span>
-<span id="cb76-19"><a href="whack-a-mole.html#cb76-19" aria-hidden="true" tabindex="-1"></a>draw the mole</span>
-<span id="cb76-20"><a href="whack-a-mole.html#cb76-20" aria-hidden="true" tabindex="-1"></a>wait <span class="cf">for</span> <span class="st">"presentation duration"</span> seconds</span>
-<span id="cb76-21"><a href="whack-a-mole.html#cb76-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-22"><a href="whack-a-mole.html#cb76-22" aria-hidden="true" tabindex="-1"></a>close the window</span></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb76-1"><a href="whack-a-mole.html#cb76-1" tabindex="-1"></a><span class="co">"""Document your file</span></span>
+<span id="cb76-2"><a href="whack-a-mole.html#cb76-2" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb76-3"><a href="whack-a-mole.html#cb76-3" tabindex="-1"></a><span class="im">import</span> <span class="bu">all</span> libaries you need <span class="kw">in</span> an alphabetical order</span>
+<span id="cb76-4"><a href="whack-a-mole.html#cb76-4" tabindex="-1"></a></span>
+<span id="cb76-5"><a href="whack-a-mole.html#cb76-5" tabindex="-1"></a>define CONSTANTS</span>
+<span id="cb76-6"><a href="whack-a-mole.html#cb76-6" tabindex="-1"></a></span>
+<span id="cb76-7"><a href="whack-a-mole.html#cb76-7" tabindex="-1"></a>create window</span>
+<span id="cb76-8"><a href="whack-a-mole.html#cb76-8" tabindex="-1"></a></span>
+<span id="cb76-9"><a href="whack-a-mole.html#cb76-9" tabindex="-1"></a><span class="co"># generating random parameters for the trial</span></span>
+<span id="cb76-10"><a href="whack-a-mole.html#cb76-10" tabindex="-1"></a>pick random index <span class="cf">for</span> the mole</span>
+<span id="cb76-11"><a href="whack-a-mole.html#cb76-11" tabindex="-1"></a>create the mole</span>
+<span id="cb76-12"><a href="whack-a-mole.html#cb76-12" tabindex="-1"></a>generate random durations <span class="cf">for</span> blank <span class="kw">and</span> presentation interval</span>
+<span id="cb76-13"><a href="whack-a-mole.html#cb76-13" tabindex="-1"></a></span>
+<span id="cb76-14"><a href="whack-a-mole.html#cb76-14" tabindex="-1"></a><span class="co"># blank</span></span>
+<span id="cb76-15"><a href="whack-a-mole.html#cb76-15" tabindex="-1"></a>clear window (win.flip() alone)</span>
+<span id="cb76-16"><a href="whack-a-mole.html#cb76-16" tabindex="-1"></a>wait <span class="cf">for</span> <span class="st">"blank duration"</span> seconds</span>
+<span id="cb76-17"><a href="whack-a-mole.html#cb76-17" tabindex="-1"></a></span>
+<span id="cb76-18"><a href="whack-a-mole.html#cb76-18" tabindex="-1"></a><span class="co"># presentation</span></span>
+<span id="cb76-19"><a href="whack-a-mole.html#cb76-19" tabindex="-1"></a>draw the mole</span>
+<span id="cb76-20"><a href="whack-a-mole.html#cb76-20" tabindex="-1"></a>wait <span class="cf">for</span> <span class="st">"presentation duration"</span> seconds</span>
+<span id="cb76-21"><a href="whack-a-mole.html#cb76-21" tabindex="-1"></a></span>
+<span id="cb76-22"><a href="whack-a-mole.html#cb76-22" tabindex="-1"></a>close the window</span></code></pre></div>
 <p>Note that it has no response processing at the moment and that window should close right after the stimulus is presented.</p>
 <div class="rmdnote program">
 <p>Put your code into <em>code06.py</em>.</p>
@@ -354,11 +360,11 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-01-10.</p>
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-06-16.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+    <p>Please note that this website collects anonymized data via Google analytics. This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
   </div>
 
 </div></div>

@@ -5,16 +5,19 @@
 \documentclass[
 ]{book}
 \usepackage{amsmath,amssymb}
-\usepackage{lmodern}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math}
+  \usepackage{unicode-math} % this also loads fontspec
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -44,13 +47,13 @@
 \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
 \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
 \newcommand{\BuiltInTok}[1]{#1}
 \newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
@@ -58,7 +61,7 @@
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
 \newcommand{\ExtensionTok}[1]{#1}
 \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\ImportTok}[1]{#1}
 \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
@@ -67,7 +70,7 @@
 \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
 \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
@@ -108,7 +111,7 @@
 \bibliographystyle{apalike}
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same} % disable monospaced font for URLs
+\urlstyle{same}
 \hypersetup{
   pdftitle={Writing games with Python and PsychoPy},
   pdfauthor={Alexander (Sasha) Pastukhov},
@@ -117,7 +120,7 @@
 
 \title{Writing games with Python and PsychoPy}
 \author{Alexander (Sasha) Pastukhov}
-\date{2023-01-10}
+\date{2023-06-16}
 
 \begin{document}
 \maketitle
@@ -1217,7 +1220,7 @@ Let us update the final message. Currently it says ``Spot on\ldots{}'' because w
   The player ran out of attempts.
 \end{enumerate}
 
-Use \texttt{if-else} conditional statement to print out an appropriate message. E.g., print \texttt{"Better\ luck\ next\ time!}, if the player lost (ran out of attempts).
+Use \texttt{if-else} conditional statement to print out an appropriate message. E.g., print \texttt{"Better\ luck\ next\ time!"}, if the player lost (ran out of attempts).
 
 Put your code into \texttt{code04.py}.
 
@@ -1646,12 +1649,13 @@ First, put a break point on the line in the main script that calls function \tex
 Now, put the breakpoint inside of \texttt{f1()} function and run the code via \textbf{F5}. Take a look at the left pane, you will see a \emph{Call Stack} tab. While yellow highlighted line in the editor shows you where you currently are (should be inside the \texttt{f1()} function), the \emph{Call Stack} shows you how did you get where. In this case it should show:
 
 \begin{longtable}[]{@{}lll@{}}
-\toprule()
+\toprule\noalign{}
 \endhead
+\bottomrule\noalign{}
+\endlastfoot
 f1 & test01.py & 2:1 \\
 f2 & test01.py & 7:1 \\
 \textless module\textgreater{} & test01.py & 9:1 \\
-\bottomrule()
 \end{longtable}
 
 The calls are stacked from bottom to top, so this means that a function was called in the main module in line 9, you ended up in function \texttt{f2} in line 7, and then in function \texttt{f1} and in line 2. Experiment with stepping in and out of functions while keeping an eye on this. You might not need this information frequently but could be useful in our later projects with multiple nested function calls.
@@ -2344,9 +2348,9 @@ However, this is true only for \emph{immutable} objects (values) such as numbers
 \hypertarget{mutable-objects}{%
 \section{Variables as post-it stickers (mutable objects)}\label{mutable-objects}}
 
-Mutable objects are lists, dictionaries\footnote{Coming up shortly!}, and classes, i.e., things that can change. The key difference is that \emph{immutable} objects can be thought as fixed in their size. A number takes up that many bytes to store, same goes for a given string (although a different string would require more or fewer bytes). Still, they do not change, they are created and destroyed when unneeded but never truly updated.
+Mutable objects are for example lists or dictionaries\footnote{Coming up shortly!}, i.e., things that can change. The key difference is that \emph{immutable} objects can be thought as fixed in their size. A number takes up that many bytes to store, same goes for a given string (although a different string would require more or fewer bytes). Still, they do not change, they are created and destroyed when unneeded but never truly updated.
 
-\emph{Mutable} objects can be changed\footnote{Building on the looks metaphor: You can change your look by using a different (immutable) shirt or by \emph{changing} your haircut. You hair is mutable, you do not wear a different one on different days to look different, you need to modify it to look different.}. For example, you can add elements to your list, or remove them, or shuffle them. Same goes for \href{https://docs.python.org/3/tutorial/datastructures.html?highlight=dictionary\#dictionaries}{dictionaries}. Making such object \emph{immutable} would be computationally inefficient: Every time you add a value a (long) list is destroyed and recreated with just that one additional value. Which is why Python simply \emph{updates} the original object. For further computation efficiency, these objects are not copied when you assign them to a different variable or use as a parameter value but \emph{passed by reference}. This means that the variable is no longer a ``box'' but a ``sticker'' you put on an object (a list, a dictionary). And you can put as many stickers on an object as you want \emph{and it still will be the same object}!
+\emph{Mutable} objects can be changed\footnote{Building on the looks metaphor: You can change your look by using a different (immutable) shirt or by \emph{changing} your haircut. You hair is mutable, you do not wear a different one on different days to look different, you need to modify it to look different.}. For example, you can add elements to your list, or remove them, or shuffle them. Same goes for \href{https://docs.python.org/3/tutorial/datastructures.html?highlight=dictionary\#dictionaries}{dictionaries}. Making such object \emph{immutable} would be computationally inefficient: Every time you add a value a (long) list is destroyed and recreated with just that one additional value. Which is why Python simply \emph{updates} the original object. For further computation efficiency, these objects are not copied when you assign them to a different variable or use as a parameter value but \emph{passed by reference}. This means that the variable is no longer a ``box'' you put values into but a ``sticker'' you put on an object (a list, a dictionary). And you can put as many stickers on an object as you want \emph{and it still will be the same object}!
 
 What on Earth do I mean? Keeping in mind that a variable is just a sticker (one of many) for a mutable object, try figuring out what will be the output below:
 
@@ -2406,7 +2410,7 @@ You can loop over it, e.g.,
 \end{Highlighting}
 \end{Shaded}
 
-but, as I said, appending will throw a mistake (try this code in a Jupyter Notebook)
+but, as I said, appending will throw a mistake
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2414,7 +2418,7 @@ but, as I said, appending will throw a mistake (try this code in a Jupyter Noteb
 
 \CommentTok{\# throws AttributeError: \textquotesingle{}tuple\textquotesingle{} object has no attribute \textquotesingle{}append\textquotesingle{}}
 \NormalTok{i\_am\_a\_tuple.append(}\DecValTok{4}\NormalTok{)}
-\CommentTok{\#\textgreater{} Error in py\_call\_impl(callable, dots$args, dots$keywords): AttributeError: \textquotesingle{}tuple\textquotesingle{} object has no attribute \textquotesingle{}append\textquotesingle{}}
+\CommentTok{\#\textgreater{} Error in eval(expr, p): AttributeError: \textquotesingle{}tuple\textquotesingle{} object has no attribute \textquotesingle{}append\textquotesingle{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2426,7 +2430,7 @@ Same goes for trying to change it
 
 \CommentTok{\# throws TypeError: \textquotesingle{}tuple\textquotesingle{} object does not support item assignment}
 \NormalTok{i\_am\_a\_tuple[}\DecValTok{1}\NormalTok{] }\OperatorTok{=} \DecValTok{1} 
-\CommentTok{\#\textgreater{} Error in py\_call\_impl(callable, dots$args, dots$keywords): TypeError: \textquotesingle{}tuple\textquotesingle{} object does not support item assignment}
+\CommentTok{\#\textgreater{} Error in eval(expr, p): TypeError: \textquotesingle{}tuple\textquotesingle{} object does not support item assignment}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3299,7 +3303,7 @@ We will start with a basic scaffolding for our program. Download the \href{mater
     \DataTypeTok{"Image"} \FunctionTok{:} \StringTok{"Blue{-}Bird.png"}
   \FunctionTok{\},}
   \DataTypeTok{"Window"}\FunctionTok{:} \FunctionTok{\{}
-    \DataTypeTok{"Size"}\FunctionTok{:} \OtherTok{[}\DecValTok{800}\OtherTok{,} \DecValTok{600}\OtherTok{]}\FunctionTok{,}
+    \DataTypeTok{"Size"}\FunctionTok{:} \OtherTok{[}\DecValTok{800}\OtherTok{,} \DecValTok{600}\OtherTok{]}
   \FunctionTok{\}}
 \FunctionTok{\}}
 \end{Highlighting}
@@ -3584,7 +3588,7 @@ The second parameter --- position index --- determines the horizontal position o
 
 The second method you need is \texttt{draw()} which simply draws the rectangle\footnote{Again, inheriting from \texttt{visual.Rect()} would have taken care of this for you.}. Test it by creating a target at one of the position (or three targets at all three positions) and drawing them in the main loop. You should get nice looking but static rectangle(s).
 
-Put updated code in code02.py\_ and create the class \texttt{Target} in a separate file.
+Put updated code in \texttt{code02.py} and create the class \texttt{Target} in a separate file.
 
 \hypertarget{target-class-moving}{%
 \section{Target class: moving}\label{target-class-moving}}
@@ -3595,7 +3599,7 @@ For the actual falling down, implement a new method, call it \texttt{fall()}, th
 
 Include \texttt{fall()} method call in the main loop and see how the target falls. Experiment with falling speed!
 
-Put updated code in \emph{code03.py} and update the class \texttt{Target}.
+Put updated code in \texttt{code03.py} and update the class \texttt{Target}.
 
 \hypertarget{iteratorgenerator-functions}{%
 \section{Iterator/Generator functions}\label{iteratorgenerator-functions}}
@@ -3613,7 +3617,7 @@ In the next section, we will create a \texttt{TimedResponseTask} class that will
 \BuiltInTok{print}\NormalTok{(iterator\_fun())}
 
 \CommentTok{\# iterating via for loop}
-\CommentTok{\#\textgreater{} \textless{}generator object iterator\_fun at 0x000002787EDFD310\textgreater{}}
+\CommentTok{\#\textgreater{} \textless{}generator object iterator\_fun at 0x0000021ADCCF7370\textgreater{}}
 \ControlFlowTok{for}\NormalTok{ elem }\KeywordTok{in}\NormalTok{ iterator\_fun():}
     \BuiltInTok{print}\NormalTok{(elem)}
     
@@ -3740,7 +3744,7 @@ Next, we need to update the score (both its numeric form \emph{and} the text tha
 
 Implement that special method for your class, so we can do \texttt{score\_stim\ +=\ \ timed\_task.check(...)}. Remember, you have to update both numeric \emph{and} visual representations of the score in that method! Add the score to the main code.
 
-Put updated code in \emph{code06.py}, create \texttt{ScoreText} class.
+Put updated code in \texttt{code06.py}, create \texttt{ScoreText} class.
 
 \hypertarget{staircase}{%
 \section{Staircase}\label{staircase}}
@@ -3758,7 +3762,7 @@ Update \texttt{TimedTaskResponse} class.
 
 Let us add a competitive edge by limiting the run time to 20 seconds (you can pick your own duration, of course, and you definitely want to be a setting). Create an additional outer loop, so that the game can be played many times over. Once the round is over, show the latest state (redrawing all game objects) plus the ``Round over'' sign and wait for the player to press either \emph{escape} (then you exit the game) or \emph{space} (to start the next round). Remember to recreate all game objects anew for the next round (or create a \texttt{reset} method for all of them).
 
-Put updated code in \emph{code07.py}, create \texttt{ScoreText} class.
+Put updated code in \texttt{code07.py}.
 
 \hypertarget{using-psychopys-stairhandler}{%
 \section{Using PsychoPy's StairHandler}\label{using-psychopys-stairhandler}}
@@ -3769,15 +3773,15 @@ We will need to modify our \texttt{TimedResponseTask}, so let us create its twin
 
 Now let us make use of the \href{https://psychopy.org/api/data.html\#stairhandler}{StairHandler} in \texttt{TimedResponseTask2}. Drop \texttt{correct\_on\_a\_row} attribute and create a \href{https://psychopy.org/api/data.html\#stairhandler}{StairHandler} as \texttt{stairhandler} attribute instead. You need to specify \texttt{startVal} which is the initial value for the \texttt{speed\_factor}, thus use whatever value you had previously. \href{https://psychopy.org/api/data.html\#stairhandler}{StairHandler} uses \texttt{nUp=1} and \texttt{nDown=3} by default. This matches our custom staircase, so theoretically you can use defaults by omitting these parameters. However, for the sake of code's readability, do specify these explicitly. Our steps were logarithmic, so use \texttt{stepType="log"} and a single fixed \texttt{stepSizes=-0.1}. The magnitude of \texttt{-0.1} correspond roughly to the step that we used in the custom staircase and we need the negative sign because \href{https://psychopy.org/api/data.html\#stairhandler}{StairHandler} \emph{increases} the staircase level following an incorrect response. In our case, we want an exact opposite, \emph{decreasing} \texttt{speed\_factor} tp slow targets down. Hence, the negative sign that turn increase into a decrease. Finally, \href{https://psychopy.org/api/data.html\#stairhandler}{StairHandler} will terminate after it reaches either desired number of trials (\texttt{nTrial}) or reversals (\texttt{nReversals}, changes from correct to incorrect responses or vice versa). These are the settings that would typically determine length of a single block/run in the real experiment. However, we limited our rounds by \emph{time}, so we only need to make sure that the \href{https://psychopy.org/api/data.html\#stairhandler}{StairHandler} does not run out of trials before the run is over. Thus, specify some very large number (e.g., 1000) for both these parameters.
 
-Once you created \texttt{stairhandler} attribute, it is ready for use via \texttt{next(staircase)}. Call it the first time in the constructor and assign the value it returns to \texttt{speed\_factor} attribute (should be whatever \texttt{startVal} you assigned to it but do put a breakpoint and double-check!)
+Once you created \texttt{stairhandler} attribute, it is ready for use via \texttt{next(self.stairhandler)}. Call it the first time in the constructor and assign the value it returns to \texttt{speed\_factor} attribute (should be whatever \texttt{startVal} you assigned to it but do put a breakpoint and double-check!)
 
 Next, we need to modify our \texttt{staicase()} method making it much simpler. First, remove the \texttt{if\ correct:\ ...\ else:\ ...} code but leave targets' speed adjustment code intact (we still need it!). Then, let \texttt{stairhandler} adjust itself via \href{https://psychopy.org/api/data.html\#psychopy.data.StairHandler.addResponse}{addResponse()} method using an information on whether the response was correct (you already have a parameter with exactly that information). Finally, get the next \texttt{speed\_factor} exactly the same way as in the constructor. Done!
 
-Put updated code in \emph{code08.py} using \texttt{TimedResponseTask2}.
+Put updated code in \texttt{code08.py} using \texttt{TimedResponseTask2}.
 
 Your program should run very much like before but now you have many more opportunities to make it more flexible at little cost for yourself (look at \href{https://psychopy.org/api/data.html\#stairhandler}{StairHandler} settings) and to log it via one of \texttt{saveAs} methods.Let us do the latter, save staircase logs via \href{https://psychopy.org/api/data.html\#psychopy.data.StairHandler.saveAsText}{saveAsText()} after a run is over. Figure out a way to generate a unique filename for each run, so that the logs will not be overwritten.
 
-Save staircase logs in \emph{code09.py}.
+Save staircase logs in \texttt{code09.py}.
 
 \hypertarget{this-is-just-a-start}{%
 \section{This is just a start!}\label{this-is-just-a-start}}
@@ -4082,8 +4086,8 @@ Create \texttt{Score} class in \emph{scoring.py}.
 
 Use it in \emph{code18.py}.
 
-\hypertarget{bells-and-whistels-three-lives}{%
-\section{Bells and whistels: three lives}\label{bells-and-whistels-three-lives}}
+\hypertarget{bells-and-whistles-three-lives}{%
+\section{Bells and whistles: three lives}\label{bells-and-whistles-three-lives}}
 
 Let us give the player three attempts to achieve the top score. They have three lives, every time the snake dies, the game \emph{but not the score} resets: A single segment snake appears at the center and a new random apple appears elsewhere (where should you put the code to create them?). Once the snake dies three times, the game is over. Think how you can implement this three repetitions.
 
@@ -4091,15 +4095,15 @@ The score should be cumulative, so at the beginning of round two it should be eq
 
 Put your updated code into \emph{code19.py}.
 
-\hypertarget{bells-and-whistels-press-space-to-start-the-round}{%
-\section{Bells and whistels: press space to start the round}\label{bells-and-whistels-press-space-to-start-the-round}}
+\hypertarget{bells-and-whistles-press-space-to-start-the-round}{%
+\section{Bells and whistles: press space to start the round}\label{bells-and-whistles-press-space-to-start-the-round}}
 
 At the moment, our round starts immediately. It would be friendlier, if the player would start it themselves. Before each round, draw \emph{all} visuals (snake, apple, score) plus a text ``Press SPACE to start'' and wait until either a \emph{space} or \emph{escape} key is pressed. In the former case, the trial should start. In the latter case, the player should exit the game.
 
 Put your updated code into \emph{code20.py}.
 
-\hypertarget{bells-and-whistels-showing-remaining-lives}{%
-\section{Bells and whistels: showing remaining lives}\label{bells-and-whistels-showing-remaining-lives}}
+\hypertarget{bells-and-whistles-showing-remaining-lives}{%
+\section{Bells and whistles: showing remaining lives}\label{bells-and-whistles-showing-remaining-lives}}
 
 Let us not just repeat the game three times but show the player how many lives they still have. Download the \href{material/heart.png}{heart.png}\footnote{This image was downloaded from \href{https://openclipart.org/}{openclipart.org} and was created by \href{https://openclipart.org/artist/cliparteles}{cliparteles}} and use it show remaining lives at the top-left corner of the screen: three hearts in round one, two hearts in round two, and just a single heart in round three. You will need to use (ImageStim){[}\url{https://www.psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim}{]} for this. Think about the size of images and their location. Hint: I created a list of heart images using list comprehension and drawing hearts definitely requires a for loop.
 
@@ -4310,7 +4314,7 @@ Whenever an error occurs at a run time, it \href{https://docs.python.org/3/refer
 \begin{Highlighting}[]
 \NormalTok{a\_dict }\OperatorTok{=}\NormalTok{ \{}\StringTok{"a\_key"}\NormalTok{ : }\DecValTok{1}\NormalTok{\}}
 \NormalTok{a\_dict[}\StringTok{"b\_key"}\NormalTok{]}
-\CommentTok{\#\textgreater{} Error in py\_call\_impl(callable, dots$args, dots$keywords): KeyError: \textquotesingle{}b\_key\textquotesingle{}}
+\CommentTok{\#\textgreater{} Error in eval(expr, p): KeyError: \textquotesingle{}b\_key\textquotesingle{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4646,7 +4650,7 @@ Before we create an alien armada, we need to make a quick detour to talk about \
 
 \CommentTok{\# raises AttributeError}
 \BuiltInTok{print}\NormalTok{(example.\_\_color)}
-\CommentTok{\#\textgreater{} Error in py\_call\_impl(callable, dots$args, dots$keywords): AttributeError: \textquotesingle{}ExampleClass\textquotesingle{} object has no attribute \textquotesingle{}\_\_color\textquotesingle{}}
+\CommentTok{\#\textgreater{} Error in eval(expr, p): AttributeError: \textquotesingle{}ExampleClass\textquotesingle{} object has no attribute \textquotesingle{}\_\_color\textquotesingle{}}
 \end{Highlighting}
 \end{Shaded}
 

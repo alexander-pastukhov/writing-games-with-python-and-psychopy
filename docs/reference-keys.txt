@@ -232,9 +232,9 @@ an-inedible-apple
 eating-an-apple
 eating-yourself
 bells-and-whistles-score
-bells-and-whistels-three-lives
-bells-and-whistels-press-space-to-start-the-round
-bells-and-whistels-showing-remaining-lives
+bells-and-whistles-three-lives
+bells-and-whistles-press-space-to-start-the-round
+bells-and-whistles-showing-remaining-lives
 bells-and-whistles-difficulty
 bells-and-whistles-blinking-game-over-message
 bells-and-whistles-sounds

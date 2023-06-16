@@ -7,7 +7,7 @@
 <title>Chapter 8 Gettings started with PsychoPy | Writing games with Python and PsychoPy</title>
 <meta name="author" content="Alexander (Sasha) Pastukhov">
 <meta name="description" content="Before we program our first game using PsychoPy, we need to spend some time figuring out its basics. It is not the most suitable library for writing games, for that you might want to use Python...">
-<meta name="generator" content="bookdown 0.31 with bs4_book()">
+<meta name="generator" content="bookdown 0.34 with bs4_book()">
 <meta property="og:title" content="Chapter 8 Gettings started with PsychoPy | Writing games with Python and PsychoPy">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://alexander-pastukhov.github.io/writing-games-with-python-and-psychopy/psychopy-basics.html">
@@ -18,7 +18,13 @@
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-NBXRG6YB3R"></script><script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-NBXRG6YB3R');
+      </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -90,24 +96,24 @@
 <span class="header-section-number">8.2</span> Minimal PsychoPy code<a class="anchor" aria-label="anchor" href="#minimal-psychopy"><i class="fas fa-link"></i></a>
 </h2>
 <p>Copy-paste the following code into <code>code01.py</code> file (you did remember to create a new folder for the chapter?):</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb59-1"><a href="psychopy-basics.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
-<span id="cb59-2"><a href="psychopy-basics.html#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="co">A minimal PsychoPy code.</span></span>
-<span id="cb59-3"><a href="psychopy-basics.html#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
-<span id="cb59-4"><a href="psychopy-basics.html#cb59-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-5"><a href="psychopy-basics.html#cb59-5" aria-hidden="true" tabindex="-1"></a><span class="co"># this imports two modules from psychopy</span></span>
-<span id="cb59-6"><a href="psychopy-basics.html#cb59-6" aria-hidden="true" tabindex="-1"></a><span class="co"># visual has all the visual stimuli, including the Window class</span></span>
-<span id="cb59-7"><a href="psychopy-basics.html#cb59-7" aria-hidden="true" tabindex="-1"></a><span class="co"># that we need to create a program window</span></span>
-<span id="cb59-8"><a href="psychopy-basics.html#cb59-8" aria-hidden="true" tabindex="-1"></a><span class="co"># event has function for working with mouse and keyboard</span></span>
-<span id="cb59-9"><a href="psychopy-basics.html#cb59-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> psychopy <span class="im">import</span> visual, event</span>
-<span id="cb59-10"><a href="psychopy-basics.html#cb59-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-11"><a href="psychopy-basics.html#cb59-11" aria-hidden="true" tabindex="-1"></a><span class="co"># creating a 800 x 600 window</span></span>
-<span id="cb59-12"><a href="psychopy-basics.html#cb59-12" aria-hidden="true" tabindex="-1"></a>win <span class="op">=</span> visual.Window(size<span class="op">=</span>(<span class="dv">800</span>, <span class="dv">600</span>))</span>
-<span id="cb59-13"><a href="psychopy-basics.html#cb59-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-14"><a href="psychopy-basics.html#cb59-14" aria-hidden="true" tabindex="-1"></a><span class="co"># waiting for any key press</span></span>
-<span id="cb59-15"><a href="psychopy-basics.html#cb59-15" aria-hidden="true" tabindex="-1"></a>event.waitKeys()</span>
-<span id="cb59-16"><a href="psychopy-basics.html#cb59-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-17"><a href="psychopy-basics.html#cb59-17" aria-hidden="true" tabindex="-1"></a><span class="co"># closing the window</span></span>
-<span id="cb59-18"><a href="psychopy-basics.html#cb59-18" aria-hidden="true" tabindex="-1"></a>win.close()</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb59-1"><a href="psychopy-basics.html#cb59-1" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb59-2"><a href="psychopy-basics.html#cb59-2" tabindex="-1"></a><span class="co">A minimal PsychoPy code.</span></span>
+<span id="cb59-3"><a href="psychopy-basics.html#cb59-3" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb59-4"><a href="psychopy-basics.html#cb59-4" tabindex="-1"></a></span>
+<span id="cb59-5"><a href="psychopy-basics.html#cb59-5" tabindex="-1"></a><span class="co"># this imports two modules from psychopy</span></span>
+<span id="cb59-6"><a href="psychopy-basics.html#cb59-6" tabindex="-1"></a><span class="co"># visual has all the visual stimuli, including the Window class</span></span>
+<span id="cb59-7"><a href="psychopy-basics.html#cb59-7" tabindex="-1"></a><span class="co"># that we need to create a program window</span></span>
+<span id="cb59-8"><a href="psychopy-basics.html#cb59-8" tabindex="-1"></a><span class="co"># event has function for working with mouse and keyboard</span></span>
+<span id="cb59-9"><a href="psychopy-basics.html#cb59-9" tabindex="-1"></a><span class="im">from</span> psychopy <span class="im">import</span> visual, event</span>
+<span id="cb59-10"><a href="psychopy-basics.html#cb59-10" tabindex="-1"></a></span>
+<span id="cb59-11"><a href="psychopy-basics.html#cb59-11" tabindex="-1"></a><span class="co"># creating a 800 x 600 window</span></span>
+<span id="cb59-12"><a href="psychopy-basics.html#cb59-12" tabindex="-1"></a>win <span class="op">=</span> visual.Window(size<span class="op">=</span>(<span class="dv">800</span>, <span class="dv">600</span>))</span>
+<span id="cb59-13"><a href="psychopy-basics.html#cb59-13" tabindex="-1"></a></span>
+<span id="cb59-14"><a href="psychopy-basics.html#cb59-14" tabindex="-1"></a><span class="co"># waiting for any key press</span></span>
+<span id="cb59-15"><a href="psychopy-basics.html#cb59-15" tabindex="-1"></a>event.waitKeys()</span>
+<span id="cb59-16"><a href="psychopy-basics.html#cb59-16" tabindex="-1"></a></span>
+<span id="cb59-17"><a href="psychopy-basics.html#cb59-17" tabindex="-1"></a><span class="co"># closing the window</span></span>
+<span id="cb59-18"><a href="psychopy-basics.html#cb59-18" tabindex="-1"></a>win.close()</span></code></pre></div>
 <p>Run it to check that PsychoPy work. If you get an error saying that <code>psychopy</code> library is not found, check the <a href="software.html#install-vs-code">active Python interpreter</a>. You should get a gray window with <em>PsychoPy</em> title. Press any key (click on the window, if you switched to another one, so that it registers a key press) and it should close. Not very exciting but does show that everything works as it should.</p>
 <div class="rmdnote program">
 <p>Put your code into <em>code01.py</em>.</p>
@@ -131,35 +137,35 @@
 <span class="header-section-number">8.4</span> Function parameters: default values, passing by position or by name<a class="anchor" aria-label="anchor" href="#arguments-by-position-or-name"><i class="fas fa-link"></i></a>
 </h2>
 <p>There are a few more curious bits in the <code>visual.Window(size=(800, 600))</code> call above that we need to discuss. These curiosities are related to functions (and, therefore, methods) not classes per se. First, constructor method of the Window class has <a href="https://psychopy.org/api/visual/window.html#psychopy.visual.Window">a lot of arguments</a> (when we construct an object, we call a constructor <em>method</em> of the class, which is why we are talking about functions). And yet, we only passed one of them. This is because you can specify <a href="https://docs.python.org/3/tutorial/controlflow.html#default-argument-values">default values</a> for individual parameters. In this case, if a parameter is omitted, a default value is used instead</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb60-1"><a href="psychopy-basics.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> divide(x1, x2<span class="op">=</span><span class="dv">2</span>):</span>
-<span id="cb60-2"><a href="psychopy-basics.html#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">"""</span></span>
-<span id="cb60-3"><a href="psychopy-basics.html#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="co">  Divides numbers, uses 2 as a second value if a second term is omitted.</span></span>
-<span id="cb60-4"><a href="psychopy-basics.html#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="co">  </span></span>
-<span id="cb60-5"><a href="psychopy-basics.html#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="co">  Parameters:</span></span>
-<span id="cb60-6"><a href="psychopy-basics.html#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="co">  ----------</span></span>
-<span id="cb60-7"><a href="psychopy-basics.html#cb60-7" aria-hidden="true" tabindex="-1"></a><span class="co">  x1 : number</span></span>
-<span id="cb60-8"><a href="psychopy-basics.html#cb60-8" aria-hidden="true" tabindex="-1"></a><span class="co">  x2 : number, defaults to 2</span></span>
-<span id="cb60-9"><a href="psychopy-basics.html#cb60-9" aria-hidden="true" tabindex="-1"></a><span class="co">  </span></span>
-<span id="cb60-10"><a href="psychopy-basics.html#cb60-10" aria-hidden="true" tabindex="-1"></a><span class="co">  Returns:</span></span>
-<span id="cb60-11"><a href="psychopy-basics.html#cb60-11" aria-hidden="true" tabindex="-1"></a><span class="co">  ----------</span></span>
-<span id="cb60-12"><a href="psychopy-basics.html#cb60-12" aria-hidden="true" tabindex="-1"></a><span class="co">  number</span></span>
-<span id="cb60-13"><a href="psychopy-basics.html#cb60-13" aria-hidden="true" tabindex="-1"></a><span class="co">  """</span></span>
-<span id="cb60-14"><a href="psychopy-basics.html#cb60-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> x1 <span class="op">/</span> x2</span>
-<span id="cb60-15"><a href="psychopy-basics.html#cb60-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(divide(<span class="dv">2</span>))</span>
-<span id="cb60-16"><a href="psychopy-basics.html#cb60-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1.0</span></span>
-<span id="cb60-17"><a href="psychopy-basics.html#cb60-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(divide(<span class="dv">2</span>, <span class="dv">4</span>))</span>
-<span id="cb60-18"><a href="psychopy-basics.html#cb60-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.5</span></span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb60-1"><a href="psychopy-basics.html#cb60-1" tabindex="-1"></a><span class="kw">def</span> divide(x1, x2<span class="op">=</span><span class="dv">2</span>):</span>
+<span id="cb60-2"><a href="psychopy-basics.html#cb60-2" tabindex="-1"></a>  <span class="co">"""</span></span>
+<span id="cb60-3"><a href="psychopy-basics.html#cb60-3" tabindex="-1"></a><span class="co">  Divides numbers, uses 2 as a second value if a second term is omitted.</span></span>
+<span id="cb60-4"><a href="psychopy-basics.html#cb60-4" tabindex="-1"></a><span class="co">  </span></span>
+<span id="cb60-5"><a href="psychopy-basics.html#cb60-5" tabindex="-1"></a><span class="co">  Parameters:</span></span>
+<span id="cb60-6"><a href="psychopy-basics.html#cb60-6" tabindex="-1"></a><span class="co">  ----------</span></span>
+<span id="cb60-7"><a href="psychopy-basics.html#cb60-7" tabindex="-1"></a><span class="co">  x1 : number</span></span>
+<span id="cb60-8"><a href="psychopy-basics.html#cb60-8" tabindex="-1"></a><span class="co">  x2 : number, defaults to 2</span></span>
+<span id="cb60-9"><a href="psychopy-basics.html#cb60-9" tabindex="-1"></a><span class="co">  </span></span>
+<span id="cb60-10"><a href="psychopy-basics.html#cb60-10" tabindex="-1"></a><span class="co">  Returns:</span></span>
+<span id="cb60-11"><a href="psychopy-basics.html#cb60-11" tabindex="-1"></a><span class="co">  ----------</span></span>
+<span id="cb60-12"><a href="psychopy-basics.html#cb60-12" tabindex="-1"></a><span class="co">  number</span></span>
+<span id="cb60-13"><a href="psychopy-basics.html#cb60-13" tabindex="-1"></a><span class="co">  """</span></span>
+<span id="cb60-14"><a href="psychopy-basics.html#cb60-14" tabindex="-1"></a>  <span class="cf">return</span> x1 <span class="op">/</span> x2</span>
+<span id="cb60-15"><a href="psychopy-basics.html#cb60-15" tabindex="-1"></a><span class="bu">print</span>(divide(<span class="dv">2</span>))</span>
+<span id="cb60-16"><a href="psychopy-basics.html#cb60-16" tabindex="-1"></a><span class="co">#&gt; 1.0</span></span>
+<span id="cb60-17"><a href="psychopy-basics.html#cb60-17" tabindex="-1"></a><span class="bu">print</span>(divide(<span class="dv">2</span>, <span class="dv">4</span>))</span>
+<span id="cb60-18"><a href="psychopy-basics.html#cb60-18" tabindex="-1"></a><span class="co">#&gt; 0.5</span></span></code></pre></div>
 <p>If you look at <a href="https://psychopy.org/api/visual/window.html#psychopy.visual.Window">documentation</a>, you will see that for the Window class constructor <em>all</em> parameters have a default value. This is a part of PsychoPy’s philosophy of combining rich customization (just look at the sheer number of parameters!) with simplicity of use through sensible defaults (specify nothing and the window will still work).</p>
 <p>Second, we did not just pass the value but specified which parameter this value is for via <code>size=(800, 600)</code>. This notation is called <a href="https://docs.python.org/3/tutorial/controlflow.html#keyword-arguments">keyword arguments</a>. The advantage is in making it more explicit which parameter you are passing a value through. Plus, it allows you to put parameters any order, if that is more relevant given the context<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;However, stick to original order for consistency otherwise.&lt;/p&gt;"><sup>29</sup></a>. If you do not use names, the values are assigned to individual parameters based on their <em>position</em> (a.k.a. positional parameters). You can even mix the two, but positional parameters must come first, see <a href="https://docs.python.org/3/tutorial/controlflow.html#more-on-defining-functions">documentation</a> if you want to know more.</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb61-1"><a href="psychopy-basics.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># using positional parameters</span></span>
-<span id="cb61-2"><a href="psychopy-basics.html#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(divide(<span class="dv">2</span>, <span class="dv">4</span>))</span>
-<span id="cb61-3"><a href="psychopy-basics.html#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.5</span></span></code></pre></div>
-<div class="sourceCode" id="cb62"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb62-1"><a href="psychopy-basics.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># using keyword arguments</span></span>
-<span id="cb62-2"><a href="psychopy-basics.html#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(divide(x2<span class="op">=</span><span class="dv">4</span>, x1<span class="op">=</span><span class="dv">2</span>))</span>
-<span id="cb62-3"><a href="psychopy-basics.html#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.5</span></span></code></pre></div>
-<div class="sourceCode" id="cb63"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb63-1"><a href="psychopy-basics.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mixing positional and keyword arguments</span></span>
-<span id="cb63-2"><a href="psychopy-basics.html#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(divide(<span class="dv">2</span>, x2<span class="op">=</span><span class="dv">4</span>))</span>
-<span id="cb63-3"><a href="psychopy-basics.html#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.5</span></span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb61-1"><a href="psychopy-basics.html#cb61-1" tabindex="-1"></a><span class="co"># using positional parameters</span></span>
+<span id="cb61-2"><a href="psychopy-basics.html#cb61-2" tabindex="-1"></a><span class="bu">print</span>(divide(<span class="dv">2</span>, <span class="dv">4</span>))</span>
+<span id="cb61-3"><a href="psychopy-basics.html#cb61-3" tabindex="-1"></a><span class="co">#&gt; 0.5</span></span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb62-1"><a href="psychopy-basics.html#cb62-1" tabindex="-1"></a><span class="co"># using keyword arguments</span></span>
+<span id="cb62-2"><a href="psychopy-basics.html#cb62-2" tabindex="-1"></a><span class="bu">print</span>(divide(x2<span class="op">=</span><span class="dv">4</span>, x1<span class="op">=</span><span class="dv">2</span>))</span>
+<span id="cb62-3"><a href="psychopy-basics.html#cb62-3" tabindex="-1"></a><span class="co">#&gt; 0.5</span></span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb63-1"><a href="psychopy-basics.html#cb63-1" tabindex="-1"></a><span class="co"># mixing positional and keyword arguments</span></span>
+<span id="cb63-2"><a href="psychopy-basics.html#cb63-2" tabindex="-1"></a><span class="bu">print</span>(divide(<span class="dv">2</span>, x2<span class="op">=</span><span class="dv">4</span>))</span>
+<span id="cb63-3"><a href="psychopy-basics.html#cb63-3" tabindex="-1"></a><span class="co">#&gt; 0.5</span></span></code></pre></div>
 </div>
 <div id="adding-main-loop" class="section level2" number="8.5">
 <h2>
@@ -167,12 +173,12 @@
 </h2>
 <p>Currently, not much is happening in our program. One thing we need to add is a loop in which we can repeatedly draw in a window (and update it via its <a href="https://psychopy.org/api/visual/window.html#psychopy.visual.Window.flip">flip()</a> method), check user input, and perform any other necessary actions.</p>
 <p>First, let us add the loop and handling of user inputs (the fun drawing part will be next). The loop goes between opening and closing the window:</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb64-1"><a href="psychopy-basics.html#cb64-1" aria-hidden="true" tabindex="-1"></a>importing libraries</span>
-<span id="cb64-2"><a href="psychopy-basics.html#cb64-2" aria-hidden="true" tabindex="-1"></a>opening the window</span>
-<span id="cb64-3"><a href="psychopy-basics.html#cb64-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-4"><a href="psychopy-basics.html#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="op">--&gt;</span> our main loop <span class="op">&lt;--</span></span>
-<span id="cb64-5"><a href="psychopy-basics.html#cb64-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-6"><a href="psychopy-basics.html#cb64-6" aria-hidden="true" tabindex="-1"></a>closing the window</span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb64-1"><a href="psychopy-basics.html#cb64-1" tabindex="-1"></a>importing libraries</span>
+<span id="cb64-2"><a href="psychopy-basics.html#cb64-2" tabindex="-1"></a>opening the window</span>
+<span id="cb64-3"><a href="psychopy-basics.html#cb64-3" tabindex="-1"></a></span>
+<span id="cb64-4"><a href="psychopy-basics.html#cb64-4" tabindex="-1"></a><span class="op">--&gt;</span> our main loop <span class="op">&lt;--</span></span>
+<span id="cb64-5"><a href="psychopy-basics.html#cb64-5" tabindex="-1"></a></span>
+<span id="cb64-6"><a href="psychopy-basics.html#cb64-6" tabindex="-1"></a>closing the window</span></code></pre></div>
 <p>The loop should be repeated until the user presses an <em>escape</em> key and, therefore, you will need a variable that signals this. My approach is to create a variable <code>gameover</code> initializing it to <code>False</code> and repeat the loop as long as the game not over. Then, in the loop, use function <a href="https://psychopy.org/api/event.html#psychopy.event.getKeys">event.getKeys()</a> to check whether <em>escape</em> button was pressed (for this, you need to pass <code>keyList=['escape']</code>). The function returns a <em>list</em> of keys, if any of them were pressed in the meantime or an empty list, if no keys from the <code>keyList</code> were pressed. Store that returned value in a temporary variable (I tend to call it <code>keys</code>). You will learn about lists only in the <em>next</em> chapter, so for now use a ready-made: <code>len(keys) &gt; 0</code> is a comparison that is <code>True</code> if list is not empty. If the list is indeed not empty, that means that the user pressed <em>escape</em> (as that is the only key that we specified in the function call) and the game should be over. Think how can you do it <em>without</em> an <code>if</code> statement, computing the logical value directly?</p>
 <div class="rmdnote program">
 <p>Put your code into <em>code02.py</em>.</p>
@@ -184,7 +190,7 @@
 </h2>
 <p>Although we are now running a nice game loop, we still have only a boring gray window to look at. Let us create a text stimulus, which would say “Press escape to exit” and display it during the loop. For this we will use <a href="https://psychopy.org/api/visual/textstim.html">visual.TextStim</a> class from PsychoPy library.</p>
 <p>First, you need to create the <code>press_escape_text</code> object (instance of the <a href="https://psychopy.org/api/visual/textstim.html%20class">TextStim</a>) before the main loop. There are quite a few parameters that you can play with but minimally, you need to pass the window the text should be displayed in (our <code>win</code> variable) and the actual text you want to display (<code>text="Press escape to exit"</code>). For all other settings PsychoPy will use its <a href="psychopy-basics.html#arguments-by-position-or-name">defaults</a> (default font family, color and size, placed right at the windows’ center).</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb65-1"><a href="psychopy-basics.html#cb65-1" aria-hidden="true" tabindex="-1"></a>press_escape_text <span class="op">=</span> visual.TextStim(win, <span class="st">"Press escape to exit"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb65-1"><a href="psychopy-basics.html#cb65-1" tabindex="-1"></a>press_escape_text <span class="op">=</span> visual.TextStim(win, <span class="st">"Press escape to exit"</span>)</span></code></pre></div>
 <p>To show the visuals in PsychoPy, you first <em>draw</em> each element by calling its <a href="https://psychopy.org/api/visual/textstim.html#psychopy.visual.TextStim.draw">draw()</a> method and then update the window by <em>flipping</em><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;This is called flipping because a window has two buffers: one that is currently displayed on the screen and the other one in which you can draw your stimuli. Once you are done with drawing, you “flip” the buffers so that they exchange their places. Now the one you drew in gets displayed and you have the other buffer to draw in.&lt;/p&gt;"><sup>30</sup></a> it. Note that you call <a href="https://psychopy.org/api/visual/window.html#psychopy.visual.Window.flip">flip()</a> only <em>once</em> after <em>all</em> stimuli are drawn. I typically organize this code into a separate chunk and prepend it with a comment line <code># drawing stimuli</code>.</p>
 <p>The <code># drawing stimuli</code> chunk goes inside the main loop either before<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;My personal preference is to draw first but in most cases it makes no difference.&lt;/p&gt;"><sup>31</sup></a> or after the keyboard check. Organize the latter also as a separate code chunk with its own brief comment.</p>
 <div class="rmdnote program">
@@ -328,11 +334,11 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-01-10.</p>
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-06-16.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+    <p>Please note that this website collects anonymized data via Google analytics. This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
   </div>
 
 </div></div>

@@ -26,9 +26,9 @@ The box metaphor explains why the [scopes](#scopes-for-immutable-values) work th
 However, this is true only for _immutable_ objects (values) such as numbers, strings, logical values, etc. but also [tuples](https://docs.python.org/3/library/stdtypes.html?highlight=tuple#tuple) (see below for what these are). As you could have guessed from the name, this means that there are other _mutable_ objects and they behave very differently.
 
 ## Variables as post-it stickers (mutable objects){#mutable-objects}
-Mutable objects are lists, dictionaries^[Coming up shortly!], and classes, i.e., things that can change. The key difference is that _immutable_ objects can be thought as fixed in their size. A number takes up that many bytes to store, same goes for a given string (although a different string would require more or fewer bytes). Still, they do not change, they are created and destroyed when unneeded but never truly updated.
+Mutable objects are for example lists or dictionaries^[Coming up shortly!], i.e., things that can change. The key difference is that _immutable_ objects can be thought as fixed in their size. A number takes up that many bytes to store, same goes for a given string (although a different string would require more or fewer bytes). Still, they do not change, they are created and destroyed when unneeded but never truly updated.
 
-_Mutable_ objects can be changed^[Building on the looks metaphor: You can change your look by using a different (immutable) shirt or by _changing_ your haircut. You hair is mutable, you do not wear a different one on different days to look different, you need to modify it to look different.]. For example, you can add elements to your list, or remove them, or shuffle them. Same goes for [dictionaries](https://docs.python.org/3/tutorial/datastructures.html?highlight=dictionary#dictionaries). Making such object _immutable_ would be computationally inefficient: Every time you add a value a (long) list is destroyed and recreated with just that one additional value. Which is why Python simply _updates_ the original object. For further computation efficiency, these objects are not copied when you assign them to a different variable or use as a parameter value but _passed by reference_. This means that the variable is no longer a "box" but a "sticker" you put on an object (a list, a dictionary). And you can put as many stickers on an object as you want _and it still will be the same object_!
+_Mutable_ objects can be changed^[Building on the looks metaphor: You can change your look by using a different (immutable) shirt or by _changing_ your haircut. You hair is mutable, you do not wear a different one on different days to look different, you need to modify it to look different.]. For example, you can add elements to your list, or remove them, or shuffle them. Same goes for [dictionaries](https://docs.python.org/3/tutorial/datastructures.html?highlight=dictionary#dictionaries). Making such object _immutable_ would be computationally inefficient: Every time you add a value a (long) list is destroyed and recreated with just that one additional value. Which is why Python simply _updates_ the original object. For further computation efficiency, these objects are not copied when you assign them to a different variable or use as a parameter value but _passed by reference_. This means that the variable is no longer a "box" you put values into but a "sticker" you put on an object (a list, a dictionary). And you can put as many stickers on an object as you want _and it still will be the same object_!
 
 What on Earth do I mean? Keeping in mind that a variable is just a sticker (one of many) for a mutable object, try figuring out what will be the output below:
 
@@ -81,14 +81,14 @@ for number in i_am_a_tuple:
 #> 3
 ```
 
-but, as I said, appending will throw a mistake (try this code in a Jupyter Notebook)
+but, as I said, appending will throw a mistake
 
 ```python
 i_am_a_tuple = (1, 2, 3)
 
 # throws AttributeError: 'tuple' object has no attribute 'append'
 i_am_a_tuple.append(4)
-#> Error in py_call_impl(callable, dots$args, dots$keywords): AttributeError: 'tuple' object has no attribute 'append'
+#> Error in eval(expr, p): AttributeError: 'tuple' object has no attribute 'append'
 ```
 
 Same goes for trying to change it
@@ -98,7 +98,7 @@ i_am_a_tuple = (1, 2, 3)
 
 # throws TypeError: 'tuple' object does not support item assignment
 i_am_a_tuple[1] = 1 
-#> Error in py_call_impl(callable, dots$args, dots$keywords): TypeError: 'tuple' object does not support item assignment
+#> Error in eval(expr, p): TypeError: 'tuple' object does not support item assignment
 ```
 
 This means that when you need to pass a list of values to a function and you want them to have no link to the original variable, you should instead pass _a tuple of values_ to the function. The function still has a list of values but the link to the original list object is now broken. You can turn a list into a tuple using `tuple()`. Keeping in mind that `tuple()` creates a frozen copy of the list, what will happen below?

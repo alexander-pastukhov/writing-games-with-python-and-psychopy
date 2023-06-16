@@ -47,7 +47,7 @@ The second parameter --- position index --- determines the horizontal position o
 The second method you need is `draw()` which simply draws the rectangle^[Again, inheriting from `visual.Rect()` would have taken care of this for you.]. Test it by creating a target at one of the position (or three targets at all three positions) and drawing them in the main loop. You should get nice looking but static rectangle(s).
 
 ::: {.rmdnote .program}
-Put updated code in code02.py_  and create the class `Target` in a separate file.
+Put updated code in `code02.py`  and create the class `Target` in a separate file.
 :::
 
 ## Target class: moving
@@ -58,7 +58,7 @@ For the actual falling down, implement a new method, call it `fall()`, that will
 Include `fall()` method call in the main loop and see how the target falls. Experiment with falling speed!
 
 ::: {.rmdnote .program}
-Put updated code in _code03.py_  and update the class `Target`.
+Put updated code in `code03.py`  and update the class `Target`.
 :::
 
 ## Iterator/Generator functions
@@ -75,7 +75,7 @@ def iterator_fun():
 print(iterator_fun())
 
 # iterating via for loop
-#> <generator object iterator_fun at 0x00000256E762D310>
+#> <generator object iterator_fun at 0x0000022C1E7B7370>
 for elem in iterator_fun():
     print(elem)
     
@@ -196,7 +196,7 @@ print(adder.number)
 Implement that special method for your class, so we can do `score_stim +=  timed_task.check(...)`. Remember, you have to update both numeric _and_ visual representations of the score in that method! Add the score to the main code.
 
 ::: {.rmdnote .program}
-Put updated code in _code06.py_, create `ScoreText` class.
+Put updated code in `code06.py`, create `ScoreText` class.
 :::
 
 ## Staircase
@@ -214,7 +214,7 @@ Update `TimedTaskResponse` class.
 Let us add a competitive edge by limiting the run time to 20 seconds (you can pick your own duration, of course, and you definitely want to be a setting). Create an additional outer loop, so that the game can be played many times over. Once the round is over, show the latest state (redrawing all game objects) plus the "Round over" sign and wait for the player to press either _escape_ (then you exit the game) or _space_ (to start the next round). Remember to recreate all game objects anew for the next round (or create a `reset` method for all of them).
 
 ::: {.rmdnote .program}
-Put updated code in _code07.py_, create `ScoreText` class.
+Put updated code in `code07.py`.
 :::
 
 ## Using PsychoPy's StairHandler
@@ -224,18 +224,18 @@ We will need to modify our `TimedResponseTask`, so let us create its twin `Timed
 
 Now let us make use of the [StairHandler](https://psychopy.org/api/data.html#stairhandler) in `TimedResponseTask2`. Drop `correct_on_a_row` attribute and create a [StairHandler](https://psychopy.org/api/data.html#stairhandler) as `stairhandler` attribute instead. You need to specify `startVal` which is the initial value for the `speed_factor`, thus use whatever value you had previously. [StairHandler](https://psychopy.org/api/data.html#stairhandler) uses `nUp=1` and `nDown=3` by default. This matches our custom staircase, so theoretically you can use defaults by omitting these parameters. However, for the sake of code's readability, do specify these explicitly. Our steps were logarithmic, so use `stepType="log"` and a single fixed `stepSizes=-0.1`. The magnitude of `-0.1` correspond roughly to the step that we used in the custom staircase and we need the negative sign because [StairHandler](https://psychopy.org/api/data.html#stairhandler) _increases_ the staircase level following an incorrect response. In our case, we want an exact opposite, _decreasing_ `speed_factor` tp slow targets down. Hence, the negative sign that turn increase into a decrease. Finally, [StairHandler](https://psychopy.org/api/data.html#stairhandler) will terminate after it reaches either desired number of trials (`nTrial`) or reversals (`nReversals`, changes from correct to incorrect responses or vice versa). These are the settings that would typically determine length of a single block/run in the real experiment. However, we limited our rounds by _time_, so we only need to make sure that the [StairHandler](https://psychopy.org/api/data.html#stairhandler) does not run out of trials before the run is over. Thus, specify some very large number (e.g., 1000) for both these parameters.
 
-Once you created `stairhandler` attribute, it is ready for use via `next(staircase)`. Call it the first time in the constructor and assign the value it returns to `speed_factor` attribute (should be whatever `startVal` you assigned to it but do put a breakpoint and double-check!)
+Once you created `stairhandler` attribute, it is ready for use via `next(self.stairhandler)`. Call it the first time in the constructor and assign the value it returns to `speed_factor` attribute (should be whatever `startVal` you assigned to it but do put a breakpoint and double-check!)
 
 Next, we need to modify our `staicase()` method making it much simpler. First, remove the `if correct: ... else: ...` code but leave targets' speed adjustment code intact (we still need it!). Then, let `stairhandler` adjust itself via [addResponse()](https://psychopy.org/api/data.html#psychopy.data.StairHandler.addResponse) method using an information on whether the response was correct (you already have a parameter with exactly that information). Finally, get the next `speed_factor` exactly the same way as in the constructor. Done!
 
 ::: {.rmdnote .program}
-Put updated code in _code08.py_ using `TimedResponseTask2`.
+Put updated code in `code08.py` using `TimedResponseTask2`.
 :::
 
 Your program should run very much like before but now you have many more opportunities to make it more flexible at little cost for yourself (look at [StairHandler](https://psychopy.org/api/data.html#stairhandler) settings) and to log it via one of `saveAs` methods.Let us do the latter, save staircase logs via [saveAsText()](https://psychopy.org/api/data.html#psychopy.data.StairHandler.saveAsText) after a run is over. Figure out a way to generate a unique filename for each run, so that the logs will not be overwritten.
 
 ::: {.rmdnote .program}
-Save staircase logs in _code09.py_.
+Save staircase logs in `code09.py`.
 :::
 
 ## This is just a start!

@@ -7,7 +7,7 @@
 <title>Chapter 15 Moon lander | Writing games with Python and PsychoPy</title>
 <meta name="author" content="Alexander (Sasha) Pastukhov">
 <meta name="description" content="Today we will create a moon lander game. You job is simple: land your ship on the pad but do not crash it! Here is a brief video of my implementation of the game  Here is the general outline of...">
-<meta name="generator" content="bookdown 0.31 with bs4_book()">
+<meta name="generator" content="bookdown 0.34 with bs4_book()">
 <meta property="og:title" content="Chapter 15 Moon lander | Writing games with Python and PsychoPy">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://alexander-pastukhov.github.io/writing-games-with-python-and-psychopy/moon-lander.html">
@@ -18,7 +18,13 @@
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-NBXRG6YB3R"></script><script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-NBXRG6YB3R');
+      </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -126,57 +132,57 @@
 </ol>
 <p>If you look at your code, you will realized that steps 1 and 3 remain pretty much the same throughout all the games that we programmed. Thus, we will create a context manager class that you can always reuse and which will hide away the boilerplate code.</p>
 <p>Here is a reminded of how a context manager is used when working with files. First, how it works <em>without</em> a context manager: 1) you open a file and assign the object to a variable, 2) you work with it, 3) you close it. The latter is important to ensure that information was fully written into it and that you do not lock for file.</p>
-<div class="sourceCode" id="cb119"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb119-1"><a href="moon-lander.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="bu">file</span> <span class="op">=</span> <span class="bu">open</span>(<span class="st">"somefile.txt"</span>, <span class="st">"r"</span>)</span>
-<span id="cb119-2"><a href="moon-lander.html#cb119-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ... do something with the file, such as reading the entire file into a single variable</span></span>
-<span id="cb119-3"><a href="moon-lander.html#cb119-3" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> <span class="bu">file</span>.read()</span>
-<span id="cb119-4"><a href="moon-lander.html#cb119-4" aria-hidden="true" tabindex="-1"></a>close(<span class="bu">file</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb119-1"><a href="moon-lander.html#cb119-1" tabindex="-1"></a><span class="bu">file</span> <span class="op">=</span> <span class="bu">open</span>(<span class="st">"somefile.txt"</span>, <span class="st">"r"</span>)</span>
+<span id="cb119-2"><a href="moon-lander.html#cb119-2" tabindex="-1"></a><span class="co"># ... do something with the file, such as reading the entire file into a single variable</span></span>
+<span id="cb119-3"><a href="moon-lander.html#cb119-3" tabindex="-1"></a>data <span class="op">=</span> <span class="bu">file</span>.read()</span>
+<span id="cb119-4"><a href="moon-lander.html#cb119-4" tabindex="-1"></a>close(<span class="bu">file</span>)</span></code></pre></div>
 <p>A better way is to use a context manager via a <code>with ... as ...</code> statement (again, this should look familiar by now):</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb120-1"><a href="moon-lander.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"somefile.txt"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb120-2"><a href="moon-lander.html#cb120-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">file</span>.read()</span></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb120-1"><a href="moon-lander.html#cb120-1" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"somefile.txt"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb120-2"><a href="moon-lander.html#cb120-2" tabindex="-1"></a>    <span class="bu">file</span>.read()</span></code></pre></div>
 <p>Note that now the <code>file.read()</code> is inside of the <code>with</code> block and there is no <code>file.close()</code> call. The latter is evoked automatically, once you run all the code inside the <code>with</code> block and exit it. Although for this example the difference is minimal — a different way to assign a value to a variable and explicit versus implicit file closing — the second variant takes care of cleaning up, ensures that you do not forget about it, and allows you to concentrate on the important bits.</p>
 <p>Here’s how it works behind the scenes. A context manager is a class that implements two special methods <code>__enter__</code> and <code>__exit__</code>[Spoiler alert! This approach is called <a href="duck-typing">duck typing</a> and we will learn more about in the next game]. The former creates and returns a context, which is whatever attribute or value you require, wheres the latter performs cleaning up that is necessary before exiting the context. Here is how we would implement a limited file context manager by ourselves:</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb121-1"><a href="moon-lander.html#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> FileManager():</span>
-<span id="cb121-2"><a href="moon-lander.html#cb121-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, filename, mode):</span>
-<span id="cb121-3"><a href="moon-lander.html#cb121-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
-<span id="cb121-4"><a href="moon-lander.html#cb121-4" aria-hidden="true" tabindex="-1"></a><span class="co">        Stores the settings for use in __enter__</span></span>
-<span id="cb121-5"><a href="moon-lander.html#cb121-5" aria-hidden="true" tabindex="-1"></a><span class="co">        </span></span>
-<span id="cb121-6"><a href="moon-lander.html#cb121-6" aria-hidden="true" tabindex="-1"></a><span class="co">        Parameters</span></span>
-<span id="cb121-7"><a href="moon-lander.html#cb121-7" aria-hidden="true" tabindex="-1"></a><span class="co">        ----------</span></span>
-<span id="cb121-8"><a href="moon-lander.html#cb121-8" aria-hidden="true" tabindex="-1"></a><span class="co">        filename : str</span></span>
-<span id="cb121-9"><a href="moon-lander.html#cb121-9" aria-hidden="true" tabindex="-1"></a><span class="co">        mode : str</span></span>
-<span id="cb121-10"><a href="moon-lander.html#cb121-10" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
-<span id="cb121-11"><a href="moon-lander.html#cb121-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.<span class="bu">file</span> <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb121-12"><a href="moon-lander.html#cb121-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.filename <span class="op">=</span> filename</span>
-<span id="cb121-13"><a href="moon-lander.html#cb121-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.mode <span class="op">=</span> mode</span>
-<span id="cb121-14"><a href="moon-lander.html#cb121-14" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb121-15"><a href="moon-lander.html#cb121-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__enter__</span>(<span class="va">self</span>):</span>
-<span id="cb121-16"><a href="moon-lander.html#cb121-16" aria-hidden="true" tabindex="-1"></a>      <span class="co">""" </span></span>
-<span id="cb121-17"><a href="moon-lander.html#cb121-17" aria-hidden="true" tabindex="-1"></a><span class="co">      What we need to do to create context:</span></span>
-<span id="cb121-18"><a href="moon-lander.html#cb121-18" aria-hidden="true" tabindex="-1"></a><span class="co">        * Open the file and returns the object.</span></span>
-<span id="cb121-19"><a href="moon-lander.html#cb121-19" aria-hidden="true" tabindex="-1"></a><span class="co">      </span></span>
-<span id="cb121-20"><a href="moon-lander.html#cb121-20" aria-hidden="true" tabindex="-1"></a><span class="co">      Returns</span></span>
-<span id="cb121-21"><a href="moon-lander.html#cb121-21" aria-hidden="true" tabindex="-1"></a><span class="co">      ----------</span></span>
-<span id="cb121-22"><a href="moon-lander.html#cb121-22" aria-hidden="true" tabindex="-1"></a><span class="co">      File object</span></span>
-<span id="cb121-23"><a href="moon-lander.html#cb121-23" aria-hidden="true" tabindex="-1"></a><span class="co">      """</span></span>
-<span id="cb121-24"><a href="moon-lander.html#cb121-24" aria-hidden="true" tabindex="-1"></a>      <span class="va">self</span>.<span class="bu">file</span> <span class="op">=</span> <span class="bu">open</span>(<span class="va">self</span>.filename, <span class="va">self</span>.mode)</span>
-<span id="cb121-25"><a href="moon-lander.html#cb121-25" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="va">self</span>.<span class="bu">file</span></span>
-<span id="cb121-26"><a href="moon-lander.html#cb121-26" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb121-27"><a href="moon-lander.html#cb121-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__exit__</span>(<span class="va">self</span>, exc_type, exc_value, traceback):</span>
-<span id="cb121-28"><a href="moon-lander.html#cb121-28" aria-hidden="true" tabindex="-1"></a>      <span class="co">"""</span></span>
-<span id="cb121-29"><a href="moon-lander.html#cb121-29" aria-hidden="true" tabindex="-1"></a><span class="co">      What we need to do before destroying the context:</span></span>
-<span id="cb121-30"><a href="moon-lander.html#cb121-30" aria-hidden="true" tabindex="-1"></a><span class="co">        * Close the file before we exit the context.</span></span>
-<span id="cb121-31"><a href="moon-lander.html#cb121-31" aria-hidden="true" tabindex="-1"></a><span class="co">      """</span></span>
-<span id="cb121-32"><a href="moon-lander.html#cb121-32" aria-hidden="true" tabindex="-1"></a>      close(<span class="va">self</span>.<span class="bu">file</span>)</span>
-<span id="cb121-33"><a href="moon-lander.html#cb121-33" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb121-34"><a href="moon-lander.html#cb121-34" aria-hidden="true" tabindex="-1"></a><span class="co"># and now we use it!</span></span>
-<span id="cb121-35"><a href="moon-lander.html#cb121-35" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> FileManager(<span class="st">"somefile.txt"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb121-36"><a href="moon-lander.html#cb121-36" aria-hidden="true" tabindex="-1"></a>    <span class="bu">file</span>.read()</span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb121-1"><a href="moon-lander.html#cb121-1" tabindex="-1"></a><span class="kw">class</span> FileManager():</span>
+<span id="cb121-2"><a href="moon-lander.html#cb121-2" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, filename, mode):</span>
+<span id="cb121-3"><a href="moon-lander.html#cb121-3" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb121-4"><a href="moon-lander.html#cb121-4" tabindex="-1"></a><span class="co">        Stores the settings for use in __enter__</span></span>
+<span id="cb121-5"><a href="moon-lander.html#cb121-5" tabindex="-1"></a><span class="co">        </span></span>
+<span id="cb121-6"><a href="moon-lander.html#cb121-6" tabindex="-1"></a><span class="co">        Parameters</span></span>
+<span id="cb121-7"><a href="moon-lander.html#cb121-7" tabindex="-1"></a><span class="co">        ----------</span></span>
+<span id="cb121-8"><a href="moon-lander.html#cb121-8" tabindex="-1"></a><span class="co">        filename : str</span></span>
+<span id="cb121-9"><a href="moon-lander.html#cb121-9" tabindex="-1"></a><span class="co">        mode : str</span></span>
+<span id="cb121-10"><a href="moon-lander.html#cb121-10" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb121-11"><a href="moon-lander.html#cb121-11" tabindex="-1"></a>        <span class="va">self</span>.<span class="bu">file</span> <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb121-12"><a href="moon-lander.html#cb121-12" tabindex="-1"></a>        <span class="va">self</span>.filename <span class="op">=</span> filename</span>
+<span id="cb121-13"><a href="moon-lander.html#cb121-13" tabindex="-1"></a>        <span class="va">self</span>.mode <span class="op">=</span> mode</span>
+<span id="cb121-14"><a href="moon-lander.html#cb121-14" tabindex="-1"></a>        </span>
+<span id="cb121-15"><a href="moon-lander.html#cb121-15" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__enter__</span>(<span class="va">self</span>):</span>
+<span id="cb121-16"><a href="moon-lander.html#cb121-16" tabindex="-1"></a>      <span class="co">""" </span></span>
+<span id="cb121-17"><a href="moon-lander.html#cb121-17" tabindex="-1"></a><span class="co">      What we need to do to create context:</span></span>
+<span id="cb121-18"><a href="moon-lander.html#cb121-18" tabindex="-1"></a><span class="co">        * Open the file and returns the object.</span></span>
+<span id="cb121-19"><a href="moon-lander.html#cb121-19" tabindex="-1"></a><span class="co">      </span></span>
+<span id="cb121-20"><a href="moon-lander.html#cb121-20" tabindex="-1"></a><span class="co">      Returns</span></span>
+<span id="cb121-21"><a href="moon-lander.html#cb121-21" tabindex="-1"></a><span class="co">      ----------</span></span>
+<span id="cb121-22"><a href="moon-lander.html#cb121-22" tabindex="-1"></a><span class="co">      File object</span></span>
+<span id="cb121-23"><a href="moon-lander.html#cb121-23" tabindex="-1"></a><span class="co">      """</span></span>
+<span id="cb121-24"><a href="moon-lander.html#cb121-24" tabindex="-1"></a>      <span class="va">self</span>.<span class="bu">file</span> <span class="op">=</span> <span class="bu">open</span>(<span class="va">self</span>.filename, <span class="va">self</span>.mode)</span>
+<span id="cb121-25"><a href="moon-lander.html#cb121-25" tabindex="-1"></a>      <span class="cf">return</span> <span class="va">self</span>.<span class="bu">file</span></span>
+<span id="cb121-26"><a href="moon-lander.html#cb121-26" tabindex="-1"></a>      </span>
+<span id="cb121-27"><a href="moon-lander.html#cb121-27" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__exit__</span>(<span class="va">self</span>, exc_type, exc_value, traceback):</span>
+<span id="cb121-28"><a href="moon-lander.html#cb121-28" tabindex="-1"></a>      <span class="co">"""</span></span>
+<span id="cb121-29"><a href="moon-lander.html#cb121-29" tabindex="-1"></a><span class="co">      What we need to do before destroying the context:</span></span>
+<span id="cb121-30"><a href="moon-lander.html#cb121-30" tabindex="-1"></a><span class="co">        * Close the file before we exit the context.</span></span>
+<span id="cb121-31"><a href="moon-lander.html#cb121-31" tabindex="-1"></a><span class="co">      """</span></span>
+<span id="cb121-32"><a href="moon-lander.html#cb121-32" tabindex="-1"></a>      close(<span class="va">self</span>.<span class="bu">file</span>)</span>
+<span id="cb121-33"><a href="moon-lander.html#cb121-33" tabindex="-1"></a>      </span>
+<span id="cb121-34"><a href="moon-lander.html#cb121-34" tabindex="-1"></a><span class="co"># and now we use it!</span></span>
+<span id="cb121-35"><a href="moon-lander.html#cb121-35" tabindex="-1"></a><span class="cf">with</span> FileManager(<span class="st">"somefile.txt"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb121-36"><a href="moon-lander.html#cb121-36" tabindex="-1"></a>    <span class="bu">file</span>.read()</span></code></pre></div>
 <p>Note that <code>__exit__</code> method has extra parameters <code>exc_type</code>, <code>exc_value</code>, and <code>traceback</code>. They will be relevant for exception handling later on but you can ignore them for now.</p>
 <p>Now is your turn! Create a <code>GameContext</code> class (in a separate file, of course) that will load settings (filename should be passed to the constructor), create a PsychoPy Window object of a given size upon entering the context, and <a href="https://psychopy.org/api/visual/window.html#psychopy.visual.Window.close">close</a> when the code exists the context. For now, you will need one attribute to store settings (call it <code>settings</code>) and one attribute for PsychoPy Window itself (use <code>win</code> as an attribute name). There will be a small but important difference relative to <code>FileManager</code> class in the example above. Here, we have two objects (attributes) that we would like to use inside the context: <code>settings</code> and <code>win</code>. We could return both as a tuple but this approach does not scale well. Instead, the <strong>enter</strong> should return the reference to the context object itself (reminder, reference to the current object is always in the <code>self</code> parameter of a method). This way you can always access either attribute via <code>context.settings</code> or <code>context.win</code>.</p>
-<div class="sourceCode" id="cb122"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb122-1"><a href="moon-lander.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> GameContext(<span class="st">"settings.yaml"</span>) <span class="im">as</span> context:</span>
-<span id="cb122-2"><a href="moon-lander.html#cb122-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># your usual code inside but</span></span>
-<span id="cb122-3"><a href="moon-lander.html#cb122-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># PsychoPy window is context.win</span></span>
-<span id="cb122-4"><a href="moon-lander.html#cb122-4" aria-hidden="true" tabindex="-1"></a>  context.win.flip()</span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb122-1"><a href="moon-lander.html#cb122-1" tabindex="-1"></a><span class="cf">with</span> GameContext(<span class="st">"settings.yaml"</span>) <span class="im">as</span> context:</span>
+<span id="cb122-2"><a href="moon-lander.html#cb122-2" tabindex="-1"></a>  <span class="co"># your usual code inside but</span></span>
+<span id="cb122-3"><a href="moon-lander.html#cb122-3" tabindex="-1"></a>  <span class="co"># PsychoPy window is context.win</span></span>
+<span id="cb122-4"><a href="moon-lander.html#cb122-4" tabindex="-1"></a>  context.win.flip()</span></code></pre></div>
 <div class="rmdnote program">
 <p>Create <code>GameContext</code> class and use it in <em>code02.py</em>.</p>
 </div>
@@ -188,34 +194,34 @@
 </h2>
 <p>When you are running an actual experiment, one of the worries that you have is “what happens to the data I have already logged if the program crashes with an error”? Not collecting a full measurement is bad but not keeping at least partial log is even worse, as you can still use it for analysis or as a guidance for future adjustments. Python, as other languages, has special mechanisms to handle <a href="https://docs.python.org/3/tutorial/errors.html">exceptions</a> that arise during the code execution.</p>
 <p>Whenever an error occurs at a run time, it <a href="https://docs.python.org/3/reference/simple_stmts.html#the-raise-statement">raises</a> an exception: it creates an object of <a href="https://docs.python.org/3/library/exceptions.html#concrete-exceptions">a special class</a> that contains information describing the problem. For example, a <a href="https://docs.python.org/3/library/exceptions.html#ZeroDivisionError">ZeroDivisionError</a> is raised whenever you try to divide by zero, e.g., <code>1 / 0</code> (you can try this in a Jupyter notebook). A <a href="https://docs.python.org/3/library/exceptions.html#KeyError">KeyError</a> is raised, if you using a dictionary with a wrong key, the code below will raise it:</p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb123-1"><a href="moon-lander.html#cb123-1" aria-hidden="true" tabindex="-1"></a>a_dict <span class="op">=</span> {<span class="st">"a_key"</span> : <span class="dv">1</span>}</span>
-<span id="cb123-2"><a href="moon-lander.html#cb123-2" aria-hidden="true" tabindex="-1"></a>a_dict[<span class="st">"b_key"</span>]</span>
-<span id="cb123-3"><a href="moon-lander.html#cb123-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in py_call_impl(callable, dots$args, dots$keywords): KeyError: 'b_key'</span></span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb123-1"><a href="moon-lander.html#cb123-1" tabindex="-1"></a>a_dict <span class="op">=</span> {<span class="st">"a_key"</span> : <span class="dv">1</span>}</span>
+<span id="cb123-2"><a href="moon-lander.html#cb123-2" tabindex="-1"></a>a_dict[<span class="st">"b_key"</span>]</span>
+<span id="cb123-3"><a href="moon-lander.html#cb123-3" tabindex="-1"></a><span class="co">#&gt; Error in eval(expr, p): KeyError: 'b_key'</span></span></code></pre></div>
 <p>Similarly, an <a href="https://docs.python.org/3/library/exceptions.html#IndexError">IndexError</a> is raised, if you try to use an invalid index for a list, a <a href="https://docs.python.org/3/library/exceptions.html#NameError">NameError</a>, if you are trying to access variable that does not exist, <a href="https://docs.python.org/3/library/exceptions.html#AttributeError">AttributeError</a> when an object does not have an attribute you are trying to use, etc.</p>
 <p>In Python, you use <code>try: ... except:...finally:</code> operators to anticipate and handle exceptions:</p>
-<div class="sourceCode" id="cb124"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb124-1"><a href="moon-lander.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="cb124-2"><a href="moon-lander.html#cb124-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># some code that might generate a runtime error</span></span>
-<span id="cb124-3"><a href="moon-lander.html#cb124-3" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span>:  </span>
-<span id="cb124-4"><a href="moon-lander.html#cb124-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># code that is executed if something bad happens</span></span>
-<span id="cb124-5"><a href="moon-lander.html#cb124-5" aria-hidden="true" tabindex="-1"></a><span class="cf">finally</span>:</span>
-<span id="cb124-6"><a href="moon-lander.html#cb124-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># code that is executed both with and without exception</span></span>
-<span id="cb124-7"><a href="moon-lander.html#cb124-7" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb124-8"><a href="moon-lander.html#cb124-8" aria-hidden="true" tabindex="-1"></a><span class="co"># code that is executed ONLY if there were no exceptions or if an exception was handled</span></span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb124-1"><a href="moon-lander.html#cb124-1" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb124-2"><a href="moon-lander.html#cb124-2" tabindex="-1"></a>    <span class="co"># some code that might generate a runtime error</span></span>
+<span id="cb124-3"><a href="moon-lander.html#cb124-3" tabindex="-1"></a><span class="cf">except</span>:  </span>
+<span id="cb124-4"><a href="moon-lander.html#cb124-4" tabindex="-1"></a>    <span class="co"># code that is executed if something bad happens</span></span>
+<span id="cb124-5"><a href="moon-lander.html#cb124-5" tabindex="-1"></a><span class="cf">finally</span>:</span>
+<span id="cb124-6"><a href="moon-lander.html#cb124-6" tabindex="-1"></a>    <span class="co"># code that is executed both with and without exception</span></span>
+<span id="cb124-7"><a href="moon-lander.html#cb124-7" tabindex="-1"></a>    </span>
+<span id="cb124-8"><a href="moon-lander.html#cb124-8" tabindex="-1"></a><span class="co"># code that is executed ONLY if there were no exceptions or if an exception was handled</span></span></code></pre></div>
 <p>In the simplest case, you need just the first two operators: <code>try</code> and <code>except</code>. Create a Jupyter notebook (that you will submit as part of the assignment) and write the code that generates a division-by-zero error but is handled via <code>try...except...</code>. In the <code>except</code> simply print out a message, so that you know that it was executed. Create another cell, copy the code and now check that the exception handling code is <em>not</em> executed, if the error is not generated (i.e., divide by some non-zero number).</p>
 <div class="rmdnote program">
 <p>Put exception handling code is cell of a Jupyter notebook.</p>
 </div>
 <p>Using <code>except:</code> catches <em>all</em> exceptions. However, this is considered a bad style (too general) and a linter will complain. Instead, you can be more specific and handle exceptions based on their class.</p>
-<div class="sourceCode" id="cb125"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb125-1"><a href="moon-lander.html#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="cb125-2"><a href="moon-lander.html#cb125-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># some code that might generate a runtime error</span></span>
-<span id="cb125-3"><a href="moon-lander.html#cb125-3" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">KeyError</span> <span class="im">as</span> key_error:</span>
-<span id="cb125-4"><a href="moon-lander.html#cb125-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># code that is executed only if KeyError exception was raised </span></span>
-<span id="cb125-5"><a href="moon-lander.html#cb125-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># with exception information stored in the key_error object</span></span>
-<span id="cb125-6"><a href="moon-lander.html#cb125-6" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ZeroDivisionError</span> <span class="im">as</span> zero_division_error:  </span>
-<span id="cb125-7"><a href="moon-lander.html#cb125-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># code that is executed only if ZeroDivisionError exception was raised</span></span>
-<span id="cb125-8"><a href="moon-lander.html#cb125-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># with exception information stored in the zero_division_error object</span></span>
-<span id="cb125-9"><a href="moon-lander.html#cb125-9" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span>:</span>
-<span id="cb125-10"><a href="moon-lander.html#cb125-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># code that is executed if any OTHER exception is raised.</span></span></code></pre></div>
+<div class="sourceCode" id="cb125"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb125-1"><a href="moon-lander.html#cb125-1" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb125-2"><a href="moon-lander.html#cb125-2" tabindex="-1"></a>    <span class="co"># some code that might generate a runtime error</span></span>
+<span id="cb125-3"><a href="moon-lander.html#cb125-3" tabindex="-1"></a><span class="cf">except</span> <span class="pp">KeyError</span> <span class="im">as</span> key_error:</span>
+<span id="cb125-4"><a href="moon-lander.html#cb125-4" tabindex="-1"></a>    <span class="co"># code that is executed only if KeyError exception was raised </span></span>
+<span id="cb125-5"><a href="moon-lander.html#cb125-5" tabindex="-1"></a>    <span class="co"># with exception information stored in the key_error object</span></span>
+<span id="cb125-6"><a href="moon-lander.html#cb125-6" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ZeroDivisionError</span> <span class="im">as</span> zero_division_error:  </span>
+<span id="cb125-7"><a href="moon-lander.html#cb125-7" tabindex="-1"></a>    <span class="co"># code that is executed only if ZeroDivisionError exception was raised</span></span>
+<span id="cb125-8"><a href="moon-lander.html#cb125-8" tabindex="-1"></a>    <span class="co"># with exception information stored in the zero_division_error object</span></span>
+<span id="cb125-9"><a href="moon-lander.html#cb125-9" tabindex="-1"></a><span class="cf">except</span>:</span>
+<span id="cb125-10"><a href="moon-lander.html#cb125-10" tabindex="-1"></a>    <span class="co"># code that is executed if any OTHER exception is raised.</span></span></code></pre></div>
 <p>Implement handling for <code>KeyError</code> and <code>ZeroDivisionError</code>, they should print out different messages to check that it works. Test it by generating these runtime errors with your code.</p>
 <div class="rmdnote program">
 <p>Put specific exception handling code is cell of a Jupyter notebook.</p>
@@ -233,13 +239,13 @@
 <p><code>try..except...</code> operators provide a general mechanism for exceptions handling but what happens if an exception is raised inside a context? You can, of course, put a <code>try...except...</code> in the code itself, something you should do, if you are planning to handling <em>specific</em> exceptions. However, if an exception occurs in the code inside the context, Python will first <em>exit</em> the context, i.e., call the <code>__exit__</code> method, before handling it explicitly. Moreover, it will kindly put the exception information into the parameters <code>exc_type</code> (a class of the exception) and <code>exc_value</code> (an object of that class). This way, you can perform a proper clean-up (save data, close window, etc.) and then either handle an exception or leave it alone, so that it propagates further and can be handled by other pieces of your code (or it will stop the execution, if you do not handle it explicitly).</p>
 <p>Here, we will use this mechanism not only for safe clean-up but also to make aborting an experiment (or a game) easy. In previous games with many rounds, you had nested loops that made aborting a game via <em>escape</em> key press awkward. You had to check it in the inner loop and then differentiate between a normal end-of-round and a used abort in the outside loop. We can make our life much easier via a combination of a context manager and a custom exception.</p>
 <p>First, create a custom <code>GameAbort</code> class, which is a descendant of the <code>Exception</code> class. You do not need any code in it, even a constructor does not need to be redefined, so use <a href="https://docs.python.org/3/reference/simple_stmts.html#the-pass-statement">pass</a> statement for its body (you do need to have at least one line of code in the class). Next, you <code>raise GameAbort()</code>, if the player pressed <em>escape</em> key (do not forget to import <code>GameAbort</code> class, so you can use it in the main script). Finally, in the <strong>exit</strong> method of the <code>GameContext</code> manager, you should check whether <code>exc_type is GameAbort</code> (<code>exc_type</code> will be <code>None</code>, if no exception occurred) and, <strong>very important(!)</strong>, <code>return True</code> in that case:</p>
-<div class="sourceCode" id="cb126"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb126-1"><a href="moon-lander.html#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> GameContext:</span>
-<span id="cb126-2"><a href="moon-lander.html#cb126-2" aria-hidden="true" tabindex="-1"></a>    ...</span>
-<span id="cb126-3"><a href="moon-lander.html#cb126-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__exit__</span>(<span class="va">self</span>, exc_type, exc_value, traceback):</span>
-<span id="cb126-4"><a href="moon-lander.html#cb126-4" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb126-5"><a href="moon-lander.html#cb126-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> exc_type <span class="kw">is</span> GameAbort:</span>
-<span id="cb126-6"><a href="moon-lander.html#cb126-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">True</span></span>
-<span id="cb126-7"><a href="moon-lander.html#cb126-7" aria-hidden="true" tabindex="-1"></a>  </span></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb126-1"><a href="moon-lander.html#cb126-1" tabindex="-1"></a><span class="kw">def</span> GameContext:</span>
+<span id="cb126-2"><a href="moon-lander.html#cb126-2" tabindex="-1"></a>    ...</span>
+<span id="cb126-3"><a href="moon-lander.html#cb126-3" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__exit__</span>(<span class="va">self</span>, exc_type, exc_value, traceback):</span>
+<span id="cb126-4"><a href="moon-lander.html#cb126-4" tabindex="-1"></a>        ...</span>
+<span id="cb126-5"><a href="moon-lander.html#cb126-5" tabindex="-1"></a>        <span class="cf">if</span> exc_type <span class="kw">is</span> GameAbort:</span>
+<span id="cb126-6"><a href="moon-lander.html#cb126-6" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">True</span></span>
+<span id="cb126-7"><a href="moon-lander.html#cb126-7" tabindex="-1"></a>  </span></code></pre></div>
 <p>That last bit <code>return True</code> informs Python that you handled the exception and all is good (not need to propagate it further). However, note that your <em>return</em> <code>True</code> meaning that any other code that handles the exit from a context must be <em>before</em> that statement. Now, you can safely abort your experiment from any code location, inside nested loops, functions, etc. In all cases, the exception will be propagated until the <code>__exit__</code> method, doing away with awkward extra checks.</p>
 <div class="rmdnote program">
 <p>Create <code>GameAbort</code> exception class,<br>update <code>GameContext</code> class to handle it,<br>use this in an updated main script in <em>code03.py</em>.</p>
@@ -289,10 +295,10 @@ Use it in the main loop of <em>code06.py</em>.</p>
 <span class="header-section-number">15.8</span> Vertical thurster<a class="anchor" aria-label="anchor" href="#vertical-thurster"><i class="fas fa-link"></i></a>
 </h2>
 <p>PsychoPy allows you to get key presses or, using <a href="https://www.psychopy.org/api/hardware/keyboard.html">hardware.keyboard</a> to get both press and release time. Unfortunately, you get both only <em>after</em> the key was released. In our game, the thursters must be active for as long as the player presses the key. Thus, we need to know whether a key is <em>currently</em> pressed, not that it was pressed and released at some time in the past. For this, we will use <em>pyglet</em> library (a backend used by PsychoPy) directly. First, in your <em>moonlander.py</em> add <code>import pyglet</code> and then include the following code inside the constructor of the class.</p>
-<div class="sourceCode" id="cb127"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb127-1"><a href="moon-lander.html#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setting up keyboard monitoring</span></span>
-<span id="cb127-2"><a href="moon-lander.html#cb127-2" aria-hidden="true" tabindex="-1"></a><span class="va">self</span>.key <span class="op">=</span> pyglet.window.key</span>
-<span id="cb127-3"><a href="moon-lander.html#cb127-3" aria-hidden="true" tabindex="-1"></a><span class="va">self</span>.keyboard <span class="op">=</span> <span class="va">self</span>.key.KeyStateHandler()</span>
-<span id="cb127-4"><a href="moon-lander.html#cb127-4" aria-hidden="true" tabindex="-1"></a>win.winHandle.push_handlers(<span class="va">self</span>.keyboard)</span></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb127-1"><a href="moon-lander.html#cb127-1" tabindex="-1"></a><span class="co"># setting up keyboard monitoring</span></span>
+<span id="cb127-2"><a href="moon-lander.html#cb127-2" tabindex="-1"></a><span class="va">self</span>.key <span class="op">=</span> pyglet.window.key</span>
+<span id="cb127-3"><a href="moon-lander.html#cb127-3" tabindex="-1"></a><span class="va">self</span>.keyboard <span class="op">=</span> <span class="va">self</span>.key.KeyStateHandler()</span>
+<span id="cb127-4"><a href="moon-lander.html#cb127-4" tabindex="-1"></a>win.winHandle.push_handlers(<span class="va">self</span>.keyboard)</span></code></pre></div>
 <p>This installs a “handler” that monitors the state of the keyboard. Now, you can read out the state of, say, <em>down arrow</em> key as<code>self.keyboard[self.key.DOWN]</code> (<code>True</code> if pressed, <code>False</code> otherwise). We will use <code>DOWN</code> for the vertical thruster and <code>LEFT</code> and <code>RIGHT</code> for the horizontal ones.</p>
 <p>Define a <code>vertical accelartion [norm/sec^2]</code> to be twice the gravity (but you can use some other number, of course) and update the <code><a href="https://rdrr.io/r/stats/update.html">update()</a></code><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Pun intended.&lt;/p&gt;"><sup>95</sup></a>, so that the total vertical acceleration is <span class="math inline">\(vertical acceleration + gravity\)</span> if the the user is pressing <em>down</em> key (use <code>self.keyboard</code> and <code>self.key</code> to figure that out) but <span class="math inline">\(gravity\)</span> alone, if not.</p>
 <p>Test that the vertical thruster works (do you need to update the main code?)!</p>
@@ -343,12 +349,12 @@ Use it in <em>code07.py</em>.</p>
 </ul>
 <p>If <em>any</em> of these three conditions are false, the lander has crashed. Either way, the game is over, so you should record the outcome (whether the landing was successful) and exit the main game loop. After the loop, inform the player about the outcome. Draw all game objects plus the message about the outcome (e.g., “You did it!” / “Oh, no!” or something else) and wait for a space key press.</p>
 <p>The condition above will be quite long, so fitting it into a single line will make it hard to read. In Python, you can split the line by putting <code>\</code> at the end of it. So a multiline if statement will look as follows:</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb128-1"><a href="moon-lander.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> lander_is_within_horizontal_limits <span class="kw">and</span> <span class="op">\</span></span>
-<span id="cb128-2"><a href="moon-lander.html#cb128-2" aria-hidden="true" tabindex="-1"></a>   lander_vertical_speed_is_good <span class="kw">and</span> <span class="op">\</span></span>
-<span id="cb128-3"><a href="moon-lander.html#cb128-3" aria-hidden="true" tabindex="-1"></a>   lander_horizontal_speed_is_good:</span>
-<span id="cb128-4"><a href="moon-lander.html#cb128-4" aria-hidden="true" tabindex="-1"></a>   ...</span>
-<span id="cb128-5"><a href="moon-lander.html#cb128-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb128-6"><a href="moon-lander.html#cb128-6" aria-hidden="true" tabindex="-1"></a>  ...</span></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb128-1"><a href="moon-lander.html#cb128-1" tabindex="-1"></a><span class="cf">if</span> lander_is_within_horizontal_limits <span class="kw">and</span> <span class="op">\</span></span>
+<span id="cb128-2"><a href="moon-lander.html#cb128-2" tabindex="-1"></a>   lander_vertical_speed_is_good <span class="kw">and</span> <span class="op">\</span></span>
+<span id="cb128-3"><a href="moon-lander.html#cb128-3" tabindex="-1"></a>   lander_horizontal_speed_is_good:</span>
+<span id="cb128-4"><a href="moon-lander.html#cb128-4" tabindex="-1"></a>   ...</span>
+<span id="cb128-5"><a href="moon-lander.html#cb128-5" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb128-6"><a href="moon-lander.html#cb128-6" tabindex="-1"></a>  ...</span></code></pre></div>
 <div class="rmdnote program">
 <p>Implement landing checks in <em>code08.py</em>.</p>
 </div>
@@ -422,11 +428,11 @@ Add more rounds in <em>code09.py</em>.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-01-10.</p>
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-06-16.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+    <p>Please note that this website collects anonymized data via Google analytics. This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
   </div>
 
 </div></div>

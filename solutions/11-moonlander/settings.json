@@ -1,0 +1,8 @@
+{
+    "Window" : {
+        "Size [pix]" : [640, 480]
+    },
+    "Ship" : {
+        "Image" : "ufo.png"
+    }
+} 

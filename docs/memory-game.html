@@ -7,7 +7,7 @@
 <title>Chapter 10 Memory game | Writing games with Python and PsychoPy</title>
 <meta name="author" content="Alexander (Sasha) Pastukhov">
 <meta name="description" content="Today, you will write a good old Memory game: Eight cards are lying “face down”, you can turn any two of them and, if they are identical, they are taken off the table. If they are different, the...">
-<meta name="generator" content="bookdown 0.31 with bs4_book()">
+<meta name="generator" content="bookdown 0.34 with bs4_book()">
 <meta property="og:title" content="Chapter 10 Memory game | Writing games with Python and PsychoPy">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://alexander-pastukhov.github.io/writing-games-with-python-and-psychopy/memory-game.html">
@@ -18,7 +18,13 @@
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-NBXRG6YB3R"></script><script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-NBXRG6YB3R');
+      </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -107,24 +113,24 @@ from &lt;a href="https://openclipart.org/"&gt;OpenClipart&lt;/a&gt;. They are &l
 <h2>
 <span class="header-section-number">10.3</span> Variables as post-it stickers (mutable objects)<a class="anchor" aria-label="anchor" href="#mutable-objects"><i class="fas fa-link"></i></a>
 </h2>
-<p>Mutable objects are lists, dictionaries<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Coming up shortly!&lt;/p&gt;"><sup>53</sup></a>, and classes, i.e., things that can change. The key difference is that <em>immutable</em> objects can be thought as fixed in their size. A number takes up that many bytes to store, same goes for a given string (although a different string would require more or fewer bytes). Still, they do not change, they are created and destroyed when unneeded but never truly updated.</p>
-<p><em>Mutable</em> objects can be changed<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Building on the looks metaphor: You can change your look by using a different (immutable) shirt or by &lt;em&gt;changing&lt;/em&gt; your haircut. You hair is mutable, you do not wear a different one on different days to look different, you need to modify it to look different.&lt;/p&gt;"><sup>54</sup></a>. For example, you can add elements to your list, or remove them, or shuffle them. Same goes for <a href="https://docs.python.org/3/tutorial/datastructures.html?highlight=dictionary#dictionaries">dictionaries</a>. Making such object <em>immutable</em> would be computationally inefficient: Every time you add a value a (long) list is destroyed and recreated with just that one additional value. Which is why Python simply <em>updates</em> the original object. For further computation efficiency, these objects are not copied when you assign them to a different variable or use as a parameter value but <em>passed by reference</em>. This means that the variable is no longer a “box” but a “sticker” you put on an object (a list, a dictionary). And you can put as many stickers on an object as you want <em>and it still will be the same object</em>!</p>
+<p>Mutable objects are for example lists or dictionaries<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Coming up shortly!&lt;/p&gt;"><sup>53</sup></a>, i.e., things that can change. The key difference is that <em>immutable</em> objects can be thought as fixed in their size. A number takes up that many bytes to store, same goes for a given string (although a different string would require more or fewer bytes). Still, they do not change, they are created and destroyed when unneeded but never truly updated.</p>
+<p><em>Mutable</em> objects can be changed<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Building on the looks metaphor: You can change your look by using a different (immutable) shirt or by &lt;em&gt;changing&lt;/em&gt; your haircut. You hair is mutable, you do not wear a different one on different days to look different, you need to modify it to look different.&lt;/p&gt;"><sup>54</sup></a>. For example, you can add elements to your list, or remove them, or shuffle them. Same goes for <a href="https://docs.python.org/3/tutorial/datastructures.html?highlight=dictionary#dictionaries">dictionaries</a>. Making such object <em>immutable</em> would be computationally inefficient: Every time you add a value a (long) list is destroyed and recreated with just that one additional value. Which is why Python simply <em>updates</em> the original object. For further computation efficiency, these objects are not copied when you assign them to a different variable or use as a parameter value but <em>passed by reference</em>. This means that the variable is no longer a “box” you put values into but a “sticker” you put on an object (a list, a dictionary). And you can put as many stickers on an object as you want <em>and it still will be the same object</em>!</p>
 <p>What on Earth do I mean? Keeping in mind that a variable is just a sticker (one of many) for a mutable object, try figuring out what will be the output below:</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb77-1"><a href="memory-game.html#cb77-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
-<span id="cb77-2"><a href="memory-game.html#cb77-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> x</span>
-<span id="cb77-3"><a href="memory-game.html#cb77-3" aria-hidden="true" tabindex="-1"></a>y.append(<span class="dv">4</span>)</span>
-<span id="cb77-4"><a href="memory-game.html#cb77-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb77-1"><a href="memory-game.html#cb77-1" tabindex="-1"></a>x <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb77-2"><a href="memory-game.html#cb77-2" tabindex="-1"></a>y <span class="op">=</span> x</span>
+<span id="cb77-3"><a href="memory-game.html#cb77-3" tabindex="-1"></a>y.append(<span class="dv">4</span>)</span>
+<span id="cb77-4"><a href="memory-game.html#cb77-4" tabindex="-1"></a><span class="bu">print</span>(x)</span></code></pre></div>
 <div class="rmdnote practice">
 <p>Do exercise #1.</p>
 </div>
 <p>Huh? That is precisely what I meant with “stickers on the same object”. First, we create a list and put an <code>x</code> sticker on it. Then, we assign <em>the same list</em> to <code>y</code>, in other words, we put a <code>y</code> sticker on the same list. Since both <code>x</code> and <code>y</code> are stickers on the <em>same</em> object, they are, effectively, synonyms. In that specific situation, once you set <code>x = y</code>, it does not matter which variable name you use to change <em>the</em> object, they are just two stickers hanging side-by-side on the <em>same</em> list. Again, just a reminder, this is <em>not</em> what would happen for <em>immutable</em> values, like numbers, where things would behave the way you expect them to behave.</p>
 <p>This variable-as-a-sticker, a.k.a. “passing value by reference”, has very important implications for function calls, as it breaks your scope without ever giving you a warning. Look at the code below and try figuring out what the output will be.</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb78-1"><a href="memory-game.html#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> change_it(y):</span>
-<span id="cb78-2"><a href="memory-game.html#cb78-2" aria-hidden="true" tabindex="-1"></a>    y.append(<span class="dv">4</span>)</span>
-<span id="cb78-3"><a href="memory-game.html#cb78-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-4"><a href="memory-game.html#cb78-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
-<span id="cb78-5"><a href="memory-game.html#cb78-5" aria-hidden="true" tabindex="-1"></a>change_it(x)</span>
-<span id="cb78-6"><a href="memory-game.html#cb78-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb78-1"><a href="memory-game.html#cb78-1" tabindex="-1"></a><span class="kw">def</span> change_it(y):</span>
+<span id="cb78-2"><a href="memory-game.html#cb78-2" tabindex="-1"></a>    y.append(<span class="dv">4</span>)</span>
+<span id="cb78-3"><a href="memory-game.html#cb78-3" tabindex="-1"></a></span>
+<span id="cb78-4"><a href="memory-game.html#cb78-4" tabindex="-1"></a>x <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb78-5"><a href="memory-game.html#cb78-5" tabindex="-1"></a>change_it(x)</span>
+<span id="cb78-6"><a href="memory-game.html#cb78-6" tabindex="-1"></a><span class="bu">print</span>(x)</span></code></pre></div>
 <div class="rmdnote practice">
 <p>Do exercise #2.</p>
 </div>
@@ -138,31 +144,31 @@ from &lt;a href="https://openclipart.org/"&gt;OpenClipart&lt;/a&gt;. They are &l
 <span class="header-section-number">10.4</span> Tuple: a frozen list<a class="anchor" aria-label="anchor" href="#tuple"><i class="fas fa-link"></i></a>
 </h2>
 <p>The wise people who created Python were acutely aware of the problem that the <em>variable-as-a-sticker</em> creates. Which is why, they added an <strong>immutable</strong> version of a list, called a <a href="https://docs.python.org/3/library/stdtypes.html?highlight=tuple#tuple">tuple</a>. It is a “frozen” list of values, which you can loop over, access its items by index, or figure out how many items it has, but you <em>cannot modify it</em>. No appending, removing, replacing values, etc. For you this means that a variable with a frozen list is a box rather than a sticker and that it behaves just like any other “normal” <strong>immutable</strong> object. You can create a <code>tuple</code> by using round brackets.</p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb79-1"><a href="memory-game.html#cb79-1" aria-hidden="true" tabindex="-1"></a>i_am_a_tuple <span class="op">=</span> (<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb79-1"><a href="memory-game.html#cb79-1" tabindex="-1"></a>i_am_a_tuple <span class="op">=</span> (<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span></code></pre></div>
 <p>You can loop over it, e.g.,</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb80-1"><a href="memory-game.html#cb80-1" aria-hidden="true" tabindex="-1"></a>i_am_a_tuple <span class="op">=</span> (<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb80-2"><a href="memory-game.html#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> number <span class="kw">in</span> i_am_a_tuple:</span>
-<span id="cb80-3"><a href="memory-game.html#cb80-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(number)</span>
-<span id="cb80-4"><a href="memory-game.html#cb80-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1</span></span>
-<span id="cb80-5"><a href="memory-game.html#cb80-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2</span></span>
-<span id="cb80-6"><a href="memory-game.html#cb80-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3</span></span></code></pre></div>
-<p>but, as I said, appending will throw a mistake (try this code in a Jupyter Notebook)</p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb81-1"><a href="memory-game.html#cb81-1" aria-hidden="true" tabindex="-1"></a>i_am_a_tuple <span class="op">=</span> (<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb81-2"><a href="memory-game.html#cb81-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb81-3"><a href="memory-game.html#cb81-3" aria-hidden="true" tabindex="-1"></a><span class="co"># throws AttributeError: 'tuple' object has no attribute 'append'</span></span>
-<span id="cb81-4"><a href="memory-game.html#cb81-4" aria-hidden="true" tabindex="-1"></a>i_am_a_tuple.append(<span class="dv">4</span>)</span>
-<span id="cb81-5"><a href="memory-game.html#cb81-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in py_call_impl(callable, dots$args, dots$keywords): AttributeError: 'tuple' object has no attribute 'append'</span></span></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb80-1"><a href="memory-game.html#cb80-1" tabindex="-1"></a>i_am_a_tuple <span class="op">=</span> (<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb80-2"><a href="memory-game.html#cb80-2" tabindex="-1"></a><span class="cf">for</span> number <span class="kw">in</span> i_am_a_tuple:</span>
+<span id="cb80-3"><a href="memory-game.html#cb80-3" tabindex="-1"></a>    <span class="bu">print</span>(number)</span>
+<span id="cb80-4"><a href="memory-game.html#cb80-4" tabindex="-1"></a><span class="co">#&gt; 1</span></span>
+<span id="cb80-5"><a href="memory-game.html#cb80-5" tabindex="-1"></a><span class="co">#&gt; 2</span></span>
+<span id="cb80-6"><a href="memory-game.html#cb80-6" tabindex="-1"></a><span class="co">#&gt; 3</span></span></code></pre></div>
+<p>but, as I said, appending will throw a mistake</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb81-1"><a href="memory-game.html#cb81-1" tabindex="-1"></a>i_am_a_tuple <span class="op">=</span> (<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb81-2"><a href="memory-game.html#cb81-2" tabindex="-1"></a></span>
+<span id="cb81-3"><a href="memory-game.html#cb81-3" tabindex="-1"></a><span class="co"># throws AttributeError: 'tuple' object has no attribute 'append'</span></span>
+<span id="cb81-4"><a href="memory-game.html#cb81-4" tabindex="-1"></a>i_am_a_tuple.append(<span class="dv">4</span>)</span>
+<span id="cb81-5"><a href="memory-game.html#cb81-5" tabindex="-1"></a><span class="co">#&gt; Error in eval(expr, p): AttributeError: 'tuple' object has no attribute 'append'</span></span></code></pre></div>
 <p>Same goes for trying to change it</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb82-1"><a href="memory-game.html#cb82-1" aria-hidden="true" tabindex="-1"></a>i_am_a_tuple <span class="op">=</span> (<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb82-2"><a href="memory-game.html#cb82-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb82-3"><a href="memory-game.html#cb82-3" aria-hidden="true" tabindex="-1"></a><span class="co"># throws TypeError: 'tuple' object does not support item assignment</span></span>
-<span id="cb82-4"><a href="memory-game.html#cb82-4" aria-hidden="true" tabindex="-1"></a>i_am_a_tuple[<span class="dv">1</span>] <span class="op">=</span> <span class="dv">1</span> </span>
-<span id="cb82-5"><a href="memory-game.html#cb82-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in py_call_impl(callable, dots$args, dots$keywords): TypeError: 'tuple' object does not support item assignment</span></span></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb82-1"><a href="memory-game.html#cb82-1" tabindex="-1"></a>i_am_a_tuple <span class="op">=</span> (<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb82-2"><a href="memory-game.html#cb82-2" tabindex="-1"></a></span>
+<span id="cb82-3"><a href="memory-game.html#cb82-3" tabindex="-1"></a><span class="co"># throws TypeError: 'tuple' object does not support item assignment</span></span>
+<span id="cb82-4"><a href="memory-game.html#cb82-4" tabindex="-1"></a>i_am_a_tuple[<span class="dv">1</span>] <span class="op">=</span> <span class="dv">1</span> </span>
+<span id="cb82-5"><a href="memory-game.html#cb82-5" tabindex="-1"></a><span class="co">#&gt; Error in eval(expr, p): TypeError: 'tuple' object does not support item assignment</span></span></code></pre></div>
 <p>This means that when you need to pass a list of values to a function and you want them to have no link to the original variable, you should instead pass <em>a tuple of values</em> to the function. The function still has a list of values but the link to the original list object is now broken. You can turn a list into a tuple using <code>tuple()</code>. Keeping in mind that <code>tuple()</code> creates a frozen copy of the list, what will happen below?</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb83-1"><a href="memory-game.html#cb83-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
-<span id="cb83-2"><a href="memory-game.html#cb83-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="bu">tuple</span>(x)</span>
-<span id="cb83-3"><a href="memory-game.html#cb83-3" aria-hidden="true" tabindex="-1"></a>x.append(<span class="dv">4</span>)</span>
-<span id="cb83-4"><a href="memory-game.html#cb83-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y)</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb83-1"><a href="memory-game.html#cb83-1" tabindex="-1"></a>x <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb83-2"><a href="memory-game.html#cb83-2" tabindex="-1"></a>y <span class="op">=</span> <span class="bu">tuple</span>(x)</span>
+<span id="cb83-3"><a href="memory-game.html#cb83-3" tabindex="-1"></a>x.append(<span class="dv">4</span>)</span>
+<span id="cb83-4"><a href="memory-game.html#cb83-4" tabindex="-1"></a><span class="bu">print</span>(y)</span></code></pre></div>
 <div class="rmdnote practice">
 <p>Do exercise #4.</p>
 </div>
@@ -183,13 +189,13 @@ from &lt;a href="https://openclipart.org/"&gt;OpenClipart&lt;/a&gt;. They are &l
 <span class="header-section-number">10.5</span> Minimal code<a class="anchor" aria-label="anchor" href="#minimal-code"><i class="fas fa-link"></i></a>
 </h2>
 <p>Enough of theory, let us get busy writing the game. As usual, let us start with a minimal code (try doing it from scratch instead of copy-pasting from the last game):</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb84-1"><a href="memory-game.html#cb84-1" aria-hidden="true" tabindex="-1"></a>importing psychopy modules that we need</span>
-<span id="cb84-2"><a href="memory-game.html#cb84-2" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb84-3"><a href="memory-game.html#cb84-3" aria-hidden="true" tabindex="-1"></a>creating a window of a useful size <span class="kw">and</span> useful units</span>
-<span id="cb84-4"><a href="memory-game.html#cb84-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-5"><a href="memory-game.html#cb84-5" aria-hidden="true" tabindex="-1"></a>waiting <span class="cf">for</span> a key press</span>
-<span id="cb84-6"><a href="memory-game.html#cb84-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-7"><a href="memory-game.html#cb84-7" aria-hidden="true" tabindex="-1"></a>closing the window</span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb84-1"><a href="memory-game.html#cb84-1" tabindex="-1"></a>importing psychopy modules that we need</span>
+<span id="cb84-2"><a href="memory-game.html#cb84-2" tabindex="-1"></a> </span>
+<span id="cb84-3"><a href="memory-game.html#cb84-3" tabindex="-1"></a>creating a window of a useful size <span class="kw">and</span> useful units</span>
+<span id="cb84-4"><a href="memory-game.html#cb84-4" tabindex="-1"></a></span>
+<span id="cb84-5"><a href="memory-game.html#cb84-5" tabindex="-1"></a>waiting <span class="cf">for</span> a key press</span>
+<span id="cb84-6"><a href="memory-game.html#cb84-6" tabindex="-1"></a></span>
+<span id="cb84-7"><a href="memory-game.html#cb84-7" tabindex="-1"></a>closing the window</span></code></pre></div>
 <p>The first thing you need to decide on is the window size <em>in pixels</em> and which units would sizing and placing cards easier. Each chicken image is 240×400 pixels and, for the game, we need place for <em>exactly</em> 4×2 images, i.e. our window must be 4 cards wide and 2 cards high. Do not forget to document the file!</p>
 <div class="rmdnote program">
 <p>Put your code into <code>code01.py</code>.</p>
@@ -215,8 +221,8 @@ from &lt;a href="https://openclipart.org/"&gt;OpenClipart&lt;/a&gt;. They are &l
 <span class="header-section-number">10.7</span> Placing an image (index to position)<a class="anchor" aria-label="anchor" href="#placing-an-image-index-to-position"><i class="fas fa-link"></i></a>
 </h2>
 <p>By default, our image is placed at the center of the screen, which is a surprisingly useful default for a typical psychophysical experiment that shows stimuli at fixation (which is also, typically, at the center of the screen). However, we will need to draw eight images, each at its designated location. You need to create a function that takes an image index (it goes 0 to 7) and returns a list with pair of values with its location on the screen. Below is a sketch of how index correspond to the location. Note that image location (<a href="https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim.pos%20attribute">pos</a> corresponds to the <em>center</em> of the image.</p>
-<div class="figure">
-<img src="images/memory-location-index.png" style="width:100.0%" alt=""><p class="caption">Card location index</p>
+<div class="float">
+<img src="images/memory-location-index.png" style="width:100.0%" alt="Card location index"><div class="figcaption">Card location index</div>
 </div>
 <p>Name the function <code>position_from_index</code>. It should take one argument (<code>index</code>) and return a list with <code>(&lt;x&gt;, &lt;y&gt;)</code> coordinates in the PsychoPy units (from now on I assume that these are <a href="psychopy-basics.html#psychopy-units-norm">norm</a>). You can then use this value for the <a href="https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim.pos">pos</a> argument of the <a href="https://psychopy.org/api/visual/imagestim.html#imagestim">ImageStim()</a>.</p>
 <p>The computation might look complicated, so let me get you started. How can you compute <em>x</em> coordinate for the <em>top</em> row? Concentrating on the top row alone makes things simpler because here the <em>column index</em> is the same as the overall index: The left-most column is 0, the next one is 1, etc. You need a simple algebra of <span class="math inline">\(x = a_x + b_x \cdot column\)</span>. You can easily deduce out both <span class="math inline">\(a_x\)</span> and <span class="math inline">\(b_x\)</span> if you figure out locations of the first and second cards by hand. Same goes for the <em>y</em> coordinate. Assuming that you know the <em>row</em>, which is either 0 (top row) or 1 (bottom row), you can compute <span class="math inline">\(y = a_y + b_y \cdot row\)</span>.</p>
@@ -242,8 +248,8 @@ Put update code into <code>code03.py</code></p>
 </h2>
 <p>Each card that we use has plenty of properties: A front (image), a back (rectangle), and will have other properties such as which side should be shown or whether card is already taken off the screen. This calls for a container, so we could put all these relevant bits into a single variable. We <em>could</em> put these values into a list and use numerical indexes to access individual elements (e.g., <code>card[0]</code> would be front image but <code>card[2]</code> would indicate the active side) but indexes do not have meaning per se, so figuring out how <code>card[0]</code> is different from <code>card[2]</code> would be tricky. Python has a solution for cases like this: <a href="https://docs.python.org/3/library/stdtypes.html#dict">dictionaries</a>.</p>
 <p>A dictionary is a container that stores information using <em>key : value</em> pairs. This is similar to how you look up a meaning or a translation (value) of a word (key) in a real dictionary, hence the name. To create a dictionary, you use <em>curly</em> brackets <code>{&lt;key1&gt; : &lt;value1&gt;}, {&lt;key2&gt; : &lt;value2&gt;, ...}</code> or create it via <code>dict(&lt;key1&gt;=&lt;value1&gt;, &lt;key2&gt;=&lt;value2&gt;, ...)</code>.</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb85-1"><a href="memory-game.html#cb85-1" aria-hidden="true" tabindex="-1"></a>book <span class="op">=</span> {<span class="st">"Author"</span> : <span class="st">"Walter Moers"</span>,</span>
-<span id="cb85-2"><a href="memory-game.html#cb85-2" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Title"</span>: <span class="st">"Die 13½ Leben des Käpt'n Blaubär"</span>}</span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb85-1"><a href="memory-game.html#cb85-1" tabindex="-1"></a>book <span class="op">=</span> {<span class="st">"Author"</span> : <span class="st">"Walter Moers"</span>,</span>
+<span id="cb85-2"><a href="memory-game.html#cb85-2" tabindex="-1"></a>        <span class="st">"Title"</span>: <span class="st">"Die 13½ Leben des Käpt'n Blaubär"</span>}</span></code></pre></div>
 <p>Once you created a dictionary, you can access or modify each field using its key, <em>e.g.</em> <code>print(book["Author"])</code> or <code>book["Author"] = "Moers, W."</code>. You can also add new fields by assigning values to them, e.g., <code>book["Publication year"] = 1999</code>. In short, you can use a combination of <code>&lt;dictionary-variable&gt;[&lt;key&gt;]</code> just like you would use a normal variable. This is similar to using the <code>list[index]</code> combination, the only difference is that <code>index</code> must be an integer, whereas <code>key</code> can be any hashable<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Immutable values are &lt;a href="https://docs.python.org/3/glossary.html#term-hashable"&gt;hashable&lt;/a&gt;, whereas mutable ones, like dictionaries and lists, are not. This is because mutable objects can &lt;em&gt;change&lt;/em&gt; while the program is running and therefore are unusable as a key. I.e., it is hard to match by a key, if the key can be different by the time you need to access the dictionary.&lt;/p&gt;'><sup>56</sup></a> value.</p>
 </div>
 <div id="using-a-dictionary-to-represent-a-card" class="section level2" number="10.10">
@@ -296,38 +302,38 @@ Put code into <code>code06.py</code>.</p>
 <span class="header-section-number">10.13</span> List comprehension<a class="anchor" aria-label="anchor" href="#list-comprehension"><i class="fas fa-link"></i></a>
 </h2>
 <p>List comprehension provides an elegant and easy-to-read way to create, modify and/or filter elements of the list creating a new list. The general structure is</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb86-1"><a href="memory-game.html#cb86-1" aria-hidden="true" tabindex="-1"></a>new_list <span class="op">=</span> [<span class="op">&lt;</span>transform<span class="op">-</span>the<span class="op">-</span>item<span class="op">&gt;</span> <span class="cf">for</span> item <span class="kw">in</span> old_list <span class="cf">if</span> <span class="op">&lt;</span>condition<span class="op">-</span>given<span class="op">-</span>the<span class="op">-</span>item<span class="op">&gt;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb86-1"><a href="memory-game.html#cb86-1" tabindex="-1"></a>new_list <span class="op">=</span> [<span class="op">&lt;</span>transform<span class="op">-</span>the<span class="op">-</span>item<span class="op">&gt;</span> <span class="cf">for</span> item <span class="kw">in</span> old_list <span class="cf">if</span> <span class="op">&lt;</span>condition<span class="op">-</span>given<span class="op">-</span>the<span class="op">-</span>item<span class="op">&gt;</span>]</span></code></pre></div>
 <p>Let us look at examples to understand how it works. Imagine that you have a list <code>numbers = [1, 2, 3]</code> and you need increment each number by 1<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;A very arbitrary example!&lt;/p&gt;"><sup>58</sup></a>. You can do it by creating a new list and adding 1 to each item in the <transform-the-item> part:</transform-the-item></p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb87-1"><a href="memory-game.html#cb87-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
-<span id="cb87-2"><a href="memory-game.html#cb87-2" aria-hidden="true" tabindex="-1"></a>numbers_plus_1 <span class="op">=</span> [item <span class="op">+</span> <span class="dv">1</span> <span class="cf">for</span> item <span class="kw">in</span> numbers]</span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb87-1"><a href="memory-game.html#cb87-1" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb87-2"><a href="memory-game.html#cb87-2" tabindex="-1"></a>numbers_plus_1 <span class="op">=</span> [item <span class="op">+</span> <span class="dv">1</span> <span class="cf">for</span> item <span class="kw">in</span> numbers]</span></code></pre></div>
 <p>Note that this is equivalent to</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb88-1"><a href="memory-game.html#cb88-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
-<span id="cb88-2"><a href="memory-game.html#cb88-2" aria-hidden="true" tabindex="-1"></a>numbers_plus_1 <span class="op">=</span> []</span>
-<span id="cb88-3"><a href="memory-game.html#cb88-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> numbers:</span>
-<span id="cb88-4"><a href="memory-game.html#cb88-4" aria-hidden="true" tabindex="-1"></a>    numbers_plus_1.append(item <span class="op">+</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb88-1"><a href="memory-game.html#cb88-1" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb88-2"><a href="memory-game.html#cb88-2" tabindex="-1"></a>numbers_plus_1 <span class="op">=</span> []</span>
+<span id="cb88-3"><a href="memory-game.html#cb88-3" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> numbers:</span>
+<span id="cb88-4"><a href="memory-game.html#cb88-4" tabindex="-1"></a>    numbers_plus_1.append(item <span class="op">+</span> <span class="dv">1</span>)</span></code></pre></div>
 <p>Or, imagine that you need to convert each item to a string. You can do it simply as</p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb89-1"><a href="memory-game.html#cb89-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
-<span id="cb89-2"><a href="memory-game.html#cb89-2" aria-hidden="true" tabindex="-1"></a>numbers_as_strings <span class="op">=</span> [<span class="bu">str</span>(item) <span class="cf">for</span> item <span class="kw">in</span> numbers]</span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb89-1"><a href="memory-game.html#cb89-1" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb89-2"><a href="memory-game.html#cb89-2" tabindex="-1"></a>numbers_as_strings <span class="op">=</span> [<span class="bu">str</span>(item) <span class="cf">for</span> item <span class="kw">in</span> numbers]</span></code></pre></div>
 <p>What would be an equivalent form using a normal for loop? Write both versions of code in Jupiter cells and check that the results are the same.</p>
 <div class="rmdnote practice">
 <p>Do exercise #7 in Jupyter notebook.</p>
 </div>
 <p>Now, implement the code below using list comprehension. Check that results match.</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb90-1"><a href="memory-game.html#cb90-1" aria-hidden="true" tabindex="-1"></a>strings <span class="op">=</span> [<span class="st">'1'</span>, <span class="st">'2'</span>, <span class="st">'3'</span>]</span>
-<span id="cb90-2"><a href="memory-game.html#cb90-2" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> []</span>
-<span id="cb90-3"><a href="memory-game.html#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> astring <span class="kw">in</span> strings:</span>
-<span id="cb90-4"><a href="memory-game.html#cb90-4" aria-hidden="true" tabindex="-1"></a>    numbers.append(<span class="bu">int</span>(astring) <span class="op">+</span> <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb90-1"><a href="memory-game.html#cb90-1" tabindex="-1"></a>strings <span class="op">=</span> [<span class="st">'1'</span>, <span class="st">'2'</span>, <span class="st">'3'</span>]</span>
+<span id="cb90-2"><a href="memory-game.html#cb90-2" tabindex="-1"></a>numbers <span class="op">=</span> []</span>
+<span id="cb90-3"><a href="memory-game.html#cb90-3" tabindex="-1"></a><span class="cf">for</span> astring <span class="kw">in</span> strings:</span>
+<span id="cb90-4"><a href="memory-game.html#cb90-4" tabindex="-1"></a>    numbers.append(<span class="bu">int</span>(astring) <span class="op">+</span> <span class="dv">10</span>)</span></code></pre></div>
 <div class="rmdnote practice">
 <p>Do exercise #8 in Jupyter notebook.</p>
 </div>
 <p>As noted above, you can also use a conditional statement to filter which items are passed to the new list. In our numbers example, we can retain numbers that are greater than 1</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb91-1"><a href="memory-game.html#cb91-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
-<span id="cb91-2"><a href="memory-game.html#cb91-2" aria-hidden="true" tabindex="-1"></a>numbers_greater_than_1 <span class="op">=</span> [item <span class="cf">for</span> item <span class="kw">in</span> numbers <span class="cf">if</span> item <span class="op">&gt;</span> <span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb91-1"><a href="memory-game.html#cb91-1" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb91-2"><a href="memory-game.html#cb91-2" tabindex="-1"></a>numbers_greater_than_1 <span class="op">=</span> [item <span class="cf">for</span> item <span class="kw">in</span> numbers <span class="cf">if</span> item <span class="op">&gt;</span> <span class="dv">1</span>]</span></code></pre></div>
 <p>Sometimes, the same statement is written in three lines, instead of one, to make reading easier:</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb92-1"><a href="memory-game.html#cb92-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
-<span id="cb92-2"><a href="memory-game.html#cb92-2" aria-hidden="true" tabindex="-1"></a>numbers_greater_than_1 <span class="op">=</span> [item </span>
-<span id="cb92-3"><a href="memory-game.html#cb92-3" aria-hidden="true" tabindex="-1"></a>                          <span class="cf">for</span> item <span class="kw">in</span> numbers</span>
-<span id="cb92-4"><a href="memory-game.html#cb92-4" aria-hidden="true" tabindex="-1"></a>                          <span class="cf">if</span> item <span class="op">&gt;</span> <span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb92-1"><a href="memory-game.html#cb92-1" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb92-2"><a href="memory-game.html#cb92-2" tabindex="-1"></a>numbers_greater_than_1 <span class="op">=</span> [item </span>
+<span id="cb92-3"><a href="memory-game.html#cb92-3" tabindex="-1"></a>                          <span class="cf">for</span> item <span class="kw">in</span> numbers</span>
+<span id="cb92-4"><a href="memory-game.html#cb92-4" tabindex="-1"></a>                          <span class="cf">if</span> item <span class="op">&gt;</span> <span class="dv">1</span>]</span></code></pre></div>
 <p>You can of course combine the transformation and filtering in a single statement. Create code that filters out all items below 2 and adds 4 to them.</p>
 <div class="rmdnote practice">
 <p>Do exercise #9 in Jupyter notebook.</p>
@@ -347,18 +353,18 @@ Put code into <code>code06.py</code>.</p>
 <ul>
 <li>Adding two lists together: <code>&lt;list1&gt; + &lt;list2&gt;</code>.</li>
 </ul>
-<div class="sourceCode" id="cb93"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb93-1"><a href="memory-game.html#cb93-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
-<span id="cb93-2"><a href="memory-game.html#cb93-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> [<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]</span>
-<span id="cb93-3"><a href="memory-game.html#cb93-3" aria-hidden="true" tabindex="-1"></a>a <span class="op">+</span> b</span>
-<span id="cb93-4"><a href="memory-game.html#cb93-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1, 2, 3, 4, 5, 6]</span></span></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb93-1"><a href="memory-game.html#cb93-1" tabindex="-1"></a>a <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb93-2"><a href="memory-game.html#cb93-2" tabindex="-1"></a>b <span class="op">=</span> [<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]</span>
+<span id="cb93-3"><a href="memory-game.html#cb93-3" tabindex="-1"></a>a <span class="op">+</span> b</span>
+<span id="cb93-4"><a href="memory-game.html#cb93-4" tabindex="-1"></a><span class="co">#&gt; [1, 2, 3, 4, 5, 6]</span></span></code></pre></div>
 <p>Note that this produces a <em>new</em> list and, therefore, that this is not equivalent to <a href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists">extend</a> method <code>a.extend(b)</code>! The <code>+</code> creates a <em>new</em> list, <code>.extend()</code> extends the original list <code>a</code>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;You will learn about practical implications of this later. For now, keep in mind that seemingly identical output might be fundamentally different underneath.&lt;/p&gt;"><sup>59</sup></a></p>
 <ul>
 <li>List replication:: <code>&lt;list&gt; * &lt;integer-value&gt;</code> creates a <em>new</em> list by replicating the original one <code>&lt;integer-value&gt;</code> times. For example:</li>
 </ul>
-<div class="sourceCode" id="cb94"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb94-1"><a href="memory-game.html#cb94-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
-<span id="cb94-2"><a href="memory-game.html#cb94-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="dv">4</span></span>
-<span id="cb94-3"><a href="memory-game.html#cb94-3" aria-hidden="true" tabindex="-1"></a>a <span class="op">*</span> b</span>
-<span id="cb94-4"><a href="memory-game.html#cb94-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3]</span></span></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb94-1"><a href="memory-game.html#cb94-1" tabindex="-1"></a>a <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb94-2"><a href="memory-game.html#cb94-2" tabindex="-1"></a>b <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb94-3"><a href="memory-game.html#cb94-3" tabindex="-1"></a>a <span class="op">*</span> b</span>
+<span id="cb94-4"><a href="memory-game.html#cb94-4" tabindex="-1"></a><span class="co">#&gt; [1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3]</span></span></code></pre></div>
 <p>Use either operation or <code>.extend()</code> method to create the list where each filename is repeated twice. Hint, you can apply list multiplication directly to the filenames list you created via list comprehension (so, replicate it in that same line). Try this code out in a Jupyter Notebook.</p>
 </div>
 <div id="enumerate" class="section level2" number="10.16">
@@ -366,16 +372,16 @@ Put code into <code>code06.py</code>.</p>
 <span class="header-section-number">10.16</span> Looping over both index and item via list enumeration<a class="anchor" aria-label="anchor" href="#enumerate"><i class="fas fa-link"></i></a>
 </h2>
 <p>Now that we have a list of filenames, we can create a list of cards out of it. Our dictionary function requires both index and filename. The latter is the <em>item</em> of the list, the former is the <em>index</em> of that item. You could build the index using <a href="whack-a-mole.html#range">range()</a> function but Python has a better solution for this: a <a href="https://docs.python.org/3/library/functions.html#enumerate">enumerate()</a> function! If, instead of iterating over a list, you iterate over <a href="https://docs.python.org/3/library/functions.html#enumerate">enumerate(<list>)</list></a>, you get a tuple with both <code>(index, value)</code>. Here is an example:</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb95-1"><a href="memory-game.html#cb95-1" aria-hidden="true" tabindex="-1"></a>letters <span class="op">=</span> [<span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>]</span>
-<span id="cb95-2"><a href="memory-game.html#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> index, letter <span class="kw">in</span> <span class="bu">enumerate</span>(letters):</span>
-<span id="cb95-3"><a href="memory-game.html#cb95-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'</span><span class="sc">%d</span><span class="st">: </span><span class="sc">%s</span><span class="st">'</span><span class="op">%</span>(index, letter))</span>
-<span id="cb95-4"><a href="memory-game.html#cb95-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0: a</span></span>
-<span id="cb95-5"><a href="memory-game.html#cb95-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1: b</span></span>
-<span id="cb95-6"><a href="memory-game.html#cb95-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2: c</span></span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb95-1"><a href="memory-game.html#cb95-1" tabindex="-1"></a>letters <span class="op">=</span> [<span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>]</span>
+<span id="cb95-2"><a href="memory-game.html#cb95-2" tabindex="-1"></a><span class="cf">for</span> index, letter <span class="kw">in</span> <span class="bu">enumerate</span>(letters):</span>
+<span id="cb95-3"><a href="memory-game.html#cb95-3" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'</span><span class="sc">%d</span><span class="st">: </span><span class="sc">%s</span><span class="st">'</span><span class="op">%</span>(index, letter))</span>
+<span id="cb95-4"><a href="memory-game.html#cb95-4" tabindex="-1"></a><span class="co">#&gt; 0: a</span></span>
+<span id="cb95-5"><a href="memory-game.html#cb95-5" tabindex="-1"></a><span class="co">#&gt; 1: b</span></span>
+<span id="cb95-6"><a href="memory-game.html#cb95-6" tabindex="-1"></a><span class="co">#&gt; 2: c</span></span></code></pre></div>
 <p>And here is how you can use <a href="https://docs.python.org/3/library/functions.html#enumerate">enumerate()</a> for list comprehension.</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb96-1"><a href="memory-game.html#cb96-1" aria-hidden="true" tabindex="-1"></a>letters <span class="op">=</span> [<span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>]</span>
-<span id="cb96-2"><a href="memory-game.html#cb96-2" aria-hidden="true" tabindex="-1"></a>[<span class="st">"</span><span class="sc">%d</span><span class="st">: </span><span class="sc">%s</span><span class="st">"</span><span class="op">%</span>(index, letter) <span class="cf">for</span> index, letter <span class="kw">in</span> <span class="bu">enumerate</span>(letters)]</span>
-<span id="cb96-3"><a href="memory-game.html#cb96-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ['0: a', '1: b', '2: c']</span></span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb96-1"><a href="memory-game.html#cb96-1" tabindex="-1"></a>letters <span class="op">=</span> [<span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>]</span>
+<span id="cb96-2"><a href="memory-game.html#cb96-2" tabindex="-1"></a>[<span class="st">"</span><span class="sc">%d</span><span class="st">: </span><span class="sc">%s</span><span class="st">"</span><span class="op">%</span>(index, letter) <span class="cf">for</span> index, letter <span class="kw">in</span> <span class="bu">enumerate</span>(letters)]</span>
+<span id="cb96-3"><a href="memory-game.html#cb96-3" tabindex="-1"></a><span class="co">#&gt; ['0: a', '1: b', '2: c']</span></span></code></pre></div>
 </div>
 <div id="os-library" class="section level2" number="10.17">
 <h2>
@@ -572,11 +578,11 @@ Put updated code into <code>code07.py</code>.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-01-10.</p>
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-06-16.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+    <p>Please note that this website collects anonymized data via Google analytics. This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
   </div>
 
 </div></div>

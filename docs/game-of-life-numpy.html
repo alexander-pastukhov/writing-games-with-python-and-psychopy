@@ -7,7 +7,7 @@
 <title>Chapter 17 Game of life (NumPy) | Writing games with Python and PsychoPy</title>
 <meta name="author" content="Alexander (Sasha) Pastukhov">
 <meta name="description" content="Today you will be programming the Game of Life created by the British mathematician John Horton Conway. This is not really a game but rather a simulation where you set initial conditions up and...">
-<meta name="generator" content="bookdown 0.31 with bs4_book()">
+<meta name="generator" content="bookdown 0.34 with bs4_book()">
 <meta property="og:title" content="Chapter 17 Game of life (NumPy) | Writing games with Python and PsychoPy">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://alexander-pastukhov.github.io/writing-games-with-python-and-psychopy/game-of-life-numpy.html">
@@ -18,7 +18,13 @@
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-NBXRG6YB3R"></script><script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-NBXRG6YB3R');
+      </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -97,7 +103,7 @@
 <span class="header-section-number">17.2</span> NumPy<a class="anchor" aria-label="anchor" href="#numpy"><i class="fas fa-link"></i></a>
 </h2>
 <p>Our cells live on a 2D grid which we can implement it as a list of lists. We will start with this implementation but you will see that using a matrix (a 2D array) is more natural. It also gives us opportunity to learn about <a href="https://numpy.org/">NumPy</a> that provides a powerful and fast implementation of multidimensional arrays and numerous mathematical tools. It is one of the core non-standard (i.e., not included into the base Python distribution) libraries that is so prominent that you are expected to use it via its alias rather than by its full name:</p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb136-1"><a href="game-of-life-numpy.html#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code></pre></div>
+<div class="sourceCode" id="cb136"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb136-1"><a href="game-of-life-numpy.html#cb136-1" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code></pre></div>
 <p>I will not try to properly cover NumPy here, it is simply too vast. Rather, the purpose is to make you aware of opportunities that NumPy provides. The material below will contain just the bare minimum that we need for the game. I suggest that you read the <a href="https://numpy.org/doc/stable/user/quickstart.html">quickstart guide to NumPy</a> before continuing and you should be ready to consult <a href="https://numpy.org/doc/stable/user/absolute_beginners.html">the absolute basics for beginners</a> whenever you have questions about manipulating arrays.</p>
 </div>
 <div id="boilerplate-3" class="section level2" number="17.3">
@@ -151,12 +157,12 @@ Put your boilerplate code into <em>code01.py</em>.</p>
 <span class="header-section-number">17.7</span> Correct values range<a class="anchor" aria-label="anchor" href="#correct-values-range"><i class="fas fa-link"></i></a>
 </h2>
 <p>We are almost ready to use the 3D array as an image but our values go from <span class="math inline">\(0\)</span> to <span class="math inline">\(1\)</span>, whereas the default RGB color space in PsychoPy expects values to go from <span class="math inline">\(-1\)</span> (black) to <span class="math inline">\(1\)</span> (white). Thus, we need to rescale the entire array via basic algebra. The good news is that NumPy is build on the idea of vectorization of operations, i.e., you do not need to apply the same operation to one element at a time (as you would do with Python list) but to the entire array at once.</p>
-<div class="sourceCode" id="cb139"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb139-1"><a href="game-of-life-numpy.html#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb139-2"><a href="game-of-life-numpy.html#cb139-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>])</span>
-<span id="cb139-3"><a href="game-of-life-numpy.html#cb139-3" aria-hidden="true" tabindex="-1"></a>a <span class="op">+</span> <span class="dv">10</span></span>
-<span id="cb139-4"><a href="game-of-life-numpy.html#cb139-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([11, 12, 13, 14])</span></span>
-<span id="cb139-5"><a href="game-of-life-numpy.html#cb139-5" aria-hidden="true" tabindex="-1"></a>a <span class="op">*</span> <span class="dv">10</span></span>
-<span id="cb139-6"><a href="game-of-life-numpy.html#cb139-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([10, 20, 30, 40])</span></span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb139-1"><a href="game-of-life-numpy.html#cb139-1" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb139-2"><a href="game-of-life-numpy.html#cb139-2" tabindex="-1"></a>a <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>])</span>
+<span id="cb139-3"><a href="game-of-life-numpy.html#cb139-3" tabindex="-1"></a>a <span class="op">+</span> <span class="dv">10</span></span>
+<span id="cb139-4"><a href="game-of-life-numpy.html#cb139-4" tabindex="-1"></a><span class="co">#&gt; array([11, 12, 13, 14])</span></span>
+<span id="cb139-5"><a href="game-of-life-numpy.html#cb139-5" tabindex="-1"></a>a <span class="op">*</span> <span class="dv">10</span></span>
+<span id="cb139-6"><a href="game-of-life-numpy.html#cb139-6" tabindex="-1"></a><span class="co">#&gt; array([10, 20, 30, 40])</span></span></code></pre></div>
 <p>As per usual, experiment in a notebook and check that values turn out as expected:</p>
 <pre><code>#&gt; [[[-1  1  1 -1]
 #&gt;   [ 1 -1 -1  1]
@@ -189,30 +195,30 @@ Put your boilerplate code into <em>code01.py</em>.</p>
 <img src="images/game-of-life-padding.png" width="50%" style="display: block; margin: auto;"></p>
 <p>This solution still requires extra work. Namely, we need to generate an empty 2D grid that is 2 elements wide and taller than we need, fill the inner part with random <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>, and then use only that inner part when stacking a 3D array for an image. When using Python lists, we would need to use nested loops but NumPy’s <a href="https://numpy.org/doc/stable/user/absolute_beginners.html#indexing-and-slicing">indexing and slicing</a> makes it very easy.</p>
 <p>Here is how it works for a 3×3 array.</p>
-<div class="sourceCode" id="cb141"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb141-1"><a href="game-of-life-numpy.html#cb141-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>], [<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>], [<span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>]])</span>
-<span id="cb141-2"><a href="game-of-life-numpy.html#cb141-2" aria-hidden="true" tabindex="-1"></a>a</span>
-<span id="cb141-3"><a href="game-of-life-numpy.html#cb141-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([[1, 2, 3],</span></span>
-<span id="cb141-4"><a href="game-of-life-numpy.html#cb141-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [4, 5, 6],</span></span>
-<span id="cb141-5"><a href="game-of-life-numpy.html#cb141-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [7, 8, 9]])</span></span></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb141-1"><a href="game-of-life-numpy.html#cb141-1" tabindex="-1"></a>a <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>], [<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>], [<span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>]])</span>
+<span id="cb141-2"><a href="game-of-life-numpy.html#cb141-2" tabindex="-1"></a>a</span>
+<span id="cb141-3"><a href="game-of-life-numpy.html#cb141-3" tabindex="-1"></a><span class="co">#&gt; array([[1, 2, 3],</span></span>
+<span id="cb141-4"><a href="game-of-life-numpy.html#cb141-4" tabindex="-1"></a><span class="co">#&gt;        [4, 5, 6],</span></span>
+<span id="cb141-5"><a href="game-of-life-numpy.html#cb141-5" tabindex="-1"></a><span class="co">#&gt;        [7, 8, 9]])</span></span></code></pre></div>
 <p>The first index (called <a href="https://numpy.org/doc/stable/glossary.html#term-axis">axis</a> in NumPy) is for row and the second is for columns. You can get the second row by specifying its index alone (if no other indexes are given, NumPy assumes you want all elements along other axes).</p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb142-1"><a href="game-of-life-numpy.html#cb142-1" aria-hidden="true" tabindex="-1"></a>a[<span class="dv">1</span>]</span>
-<span id="cb142-2"><a href="game-of-life-numpy.html#cb142-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([4, 5, 6])</span></span></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb142-1"><a href="game-of-life-numpy.html#cb142-1" tabindex="-1"></a>a[<span class="dv">1</span>]</span>
+<span id="cb142-2"><a href="game-of-life-numpy.html#cb142-2" tabindex="-1"></a><span class="co">#&gt; array([4, 5, 6])</span></span></code></pre></div>
 <p>Or, you can be more explicit via <code>:</code>, as <code>:</code> alone means “all elements along this axis”</p>
-<div class="sourceCode" id="cb143"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb143-1"><a href="game-of-life-numpy.html#cb143-1" aria-hidden="true" tabindex="-1"></a>a[<span class="dv">1</span>, :]</span>
-<span id="cb143-2"><a href="game-of-life-numpy.html#cb143-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([4, 5, 6])</span></span></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb143-1"><a href="game-of-life-numpy.html#cb143-1" tabindex="-1"></a>a[<span class="dv">1</span>, :]</span>
+<span id="cb143-2"><a href="game-of-life-numpy.html#cb143-2" tabindex="-1"></a><span class="co">#&gt; array([4, 5, 6])</span></span></code></pre></div>
 <p>Similarly, you can extract the entire <em>last</em> column (negative indexes work the same way as for Python lists) but notice that you need to explicitly mention the row axis in this case:</p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb144-1"><a href="game-of-life-numpy.html#cb144-1" aria-hidden="true" tabindex="-1"></a>a[:, <span class="op">-</span><span class="dv">1</span>]</span>
-<span id="cb144-2"><a href="game-of-life-numpy.html#cb144-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([3, 6, 9])</span></span></code></pre></div>
+<div class="sourceCode" id="cb144"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb144-1"><a href="game-of-life-numpy.html#cb144-1" tabindex="-1"></a>a[:, <span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb144-2"><a href="game-of-life-numpy.html#cb144-2" tabindex="-1"></a><span class="co">#&gt; array([3, 6, 9])</span></span></code></pre></div>
 <p>Even better, you can easily extract a rectangular part of a 2D matrix by specifying both rows and columns. Note that omitting either a start or stop value means, respectively, from the first or till the last element.</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb145-1"><a href="game-of-life-numpy.html#cb145-1" aria-hidden="true" tabindex="-1"></a>a[:<span class="dv">2</span>, <span class="op">-</span><span class="dv">2</span>:]</span>
-<span id="cb145-2"><a href="game-of-life-numpy.html#cb145-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([[2, 3],</span></span>
-<span id="cb145-3"><a href="game-of-life-numpy.html#cb145-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [5, 6]])</span></span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb145-1"><a href="game-of-life-numpy.html#cb145-1" tabindex="-1"></a>a[:<span class="dv">2</span>, <span class="op">-</span><span class="dv">2</span>:]</span>
+<span id="cb145-2"><a href="game-of-life-numpy.html#cb145-2" tabindex="-1"></a><span class="co">#&gt; array([[2, 3],</span></span>
+<span id="cb145-3"><a href="game-of-life-numpy.html#cb145-3" tabindex="-1"></a><span class="co">#&gt;        [5, 6]])</span></span></code></pre></div>
 <p>Finally, this can be used not only to extract values from an array but also to modify them:</p>
-<div class="sourceCode" id="cb146"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb146-1"><a href="game-of-life-numpy.html#cb146-1" aria-hidden="true" tabindex="-1"></a>a[<span class="op">-</span><span class="dv">2</span>:, <span class="dv">1</span>:] <span class="op">=</span> np.zeros((<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb146-2"><a href="game-of-life-numpy.html#cb146-2" aria-hidden="true" tabindex="-1"></a>a</span>
-<span id="cb146-3"><a href="game-of-life-numpy.html#cb146-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([[1, 2, 3],</span></span>
-<span id="cb146-4"><a href="game-of-life-numpy.html#cb146-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [4, 0, 0],</span></span>
-<span id="cb146-5"><a href="game-of-life-numpy.html#cb146-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [7, 0, 0]])</span></span></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb146-1"><a href="game-of-life-numpy.html#cb146-1" tabindex="-1"></a>a[<span class="op">-</span><span class="dv">2</span>:, <span class="dv">1</span>:] <span class="op">=</span> np.zeros((<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb146-2"><a href="game-of-life-numpy.html#cb146-2" tabindex="-1"></a>a</span>
+<span id="cb146-3"><a href="game-of-life-numpy.html#cb146-3" tabindex="-1"></a><span class="co">#&gt; array([[1, 2, 3],</span></span>
+<span id="cb146-4"><a href="game-of-life-numpy.html#cb146-4" tabindex="-1"></a><span class="co">#&gt;        [4, 0, 0],</span></span>
+<span id="cb146-5"><a href="game-of-life-numpy.html#cb146-5" tabindex="-1"></a><span class="co">#&gt;        [7, 0, 0]])</span></span></code></pre></div>
 <p>The information above is enough to get you going but NumPy’s documentation on <a href="https://numpy.org/doc/stable/user/basics.indexing.html">indexing</a> is definitely worth the read, if you need to use it frequently.</p>
 </div>
 <div id="padding-with-zeros" class="section level2" number="17.10">
@@ -246,17 +252,17 @@ Use it in <em>code04.py</em>.</p>
 <span class="header-section-number">17.12</span> Counting neigbors, single cell nested-loops edition<a class="anchor" aria-label="anchor" href="#counting-neigbors-single-cell-nested-loops-edition"><i class="fas fa-link"></i></a>
 </h2>
 <p>Recall the rules, we need to count live neighbors for each cell and this is how we decide on whether it lives (or gets born) or dies (or the location remains empty). Let us implement this for a single cell first via nested loops and then via slicing. I suggest that you experiment and debug in a Jupiter notebook and we will transfer the code into the <code>CellCulture</code> class once it is ready. I will illustrate this using a zero-padded 5×5 grid.</p>
-<div class="sourceCode" id="cb147"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb147-1"><a href="game-of-life-numpy.html#cb147-1" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">1423</span>)</span>
-<span id="cb147-2"><a href="game-of-life-numpy.html#cb147-2" aria-hidden="true" tabindex="-1"></a>grid <span class="op">=</span> np.zeros((<span class="dv">7</span>, <span class="dv">7</span>))</span>
-<span id="cb147-3"><a href="game-of-life-numpy.html#cb147-3" aria-hidden="true" tabindex="-1"></a>grid[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> rng.integers(low<span class="op">=</span><span class="dv">0</span>, high<span class="op">=</span><span class="dv">2</span>, size<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">5</span>))</span>
-<span id="cb147-4"><a href="game-of-life-numpy.html#cb147-4" aria-hidden="true" tabindex="-1"></a>grid.astype(<span class="bu">int</span>)</span>
-<span id="cb147-5"><a href="game-of-life-numpy.html#cb147-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([[0, 0, 0, 0, 0, 0, 0],</span></span>
-<span id="cb147-6"><a href="game-of-life-numpy.html#cb147-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [0, 0, 1, 1, 0, 1, 0],</span></span>
-<span id="cb147-7"><a href="game-of-life-numpy.html#cb147-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [0, 0, 0, 1, 1, 0, 0],</span></span>
-<span id="cb147-8"><a href="game-of-life-numpy.html#cb147-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [0, 1, 0, 0, 1, 1, 0],</span></span>
-<span id="cb147-9"><a href="game-of-life-numpy.html#cb147-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [0, 1, 1, 1, 0, 0, 0],</span></span>
-<span id="cb147-10"><a href="game-of-life-numpy.html#cb147-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [0, 1, 0, 0, 1, 1, 0],</span></span>
-<span id="cb147-11"><a href="game-of-life-numpy.html#cb147-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [0, 0, 0, 0, 0, 0, 0]])</span></span></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb147-1"><a href="game-of-life-numpy.html#cb147-1" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">1423</span>)</span>
+<span id="cb147-2"><a href="game-of-life-numpy.html#cb147-2" tabindex="-1"></a>grid <span class="op">=</span> np.zeros((<span class="dv">7</span>, <span class="dv">7</span>))</span>
+<span id="cb147-3"><a href="game-of-life-numpy.html#cb147-3" tabindex="-1"></a>grid[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> rng.integers(low<span class="op">=</span><span class="dv">0</span>, high<span class="op">=</span><span class="dv">2</span>, size<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">5</span>))</span>
+<span id="cb147-4"><a href="game-of-life-numpy.html#cb147-4" tabindex="-1"></a>grid.astype(<span class="bu">int</span>)</span>
+<span id="cb147-5"><a href="game-of-life-numpy.html#cb147-5" tabindex="-1"></a><span class="co">#&gt; array([[0, 0, 0, 0, 0, 0, 0],</span></span>
+<span id="cb147-6"><a href="game-of-life-numpy.html#cb147-6" tabindex="-1"></a><span class="co">#&gt;        [0, 0, 1, 1, 0, 1, 0],</span></span>
+<span id="cb147-7"><a href="game-of-life-numpy.html#cb147-7" tabindex="-1"></a><span class="co">#&gt;        [0, 0, 0, 1, 1, 0, 0],</span></span>
+<span id="cb147-8"><a href="game-of-life-numpy.html#cb147-8" tabindex="-1"></a><span class="co">#&gt;        [0, 1, 0, 0, 1, 1, 0],</span></span>
+<span id="cb147-9"><a href="game-of-life-numpy.html#cb147-9" tabindex="-1"></a><span class="co">#&gt;        [0, 1, 1, 1, 0, 0, 0],</span></span>
+<span id="cb147-10"><a href="game-of-life-numpy.html#cb147-10" tabindex="-1"></a><span class="co">#&gt;        [0, 1, 0, 0, 1, 1, 0],</span></span>
+<span id="cb147-11"><a href="game-of-life-numpy.html#cb147-11" tabindex="-1"></a><span class="co">#&gt;        [0, 0, 0, 0, 0, 0, 0]])</span></span></code></pre></div>
 <p>Let us count the neighbors for a cell at location <span class="math inline">\((2, 2)\)</span> (so, <em>third</em> row and <em>third</em> column). For the example grid that I generated using <span class="math inline">\(1423\)</span> as a seed for the random generator, that should be <span class="math inline">\(4\)</span>.</p>
 <div class="inline-figure"><img src="images/game-of-life-neighbors.png" width="50%" style="display: block; margin: auto;"></div>
 <p>Assume that the cell is identified via <code>icell_row</code> and <code>icell_col</code> and use nested loops to count the neighbors (think about the values <em>relative</em> indexes you need to loop through). Note that the cell itself <em>does not count</em>. You can either use an <code>if-else</code> for this but an alternative solution would be to count everybody and <em>then</em> subtract the value of the cell itself. Implement the code and try it out with different <code>icell_row</code> and <code>icell_col</code>. Specifically test it for live cells, e.g., for <span class="math inline">\((2, 3)\)</span> you should get four neighbors not five.</p>
@@ -270,26 +276,26 @@ Use it in <em>code04.py</em>.</p>
 #&gt;  [0 0 1]
 #&gt;  [1 0 0]]</code></pre>
 <p>For didactic purposes, let us learn a different way to build relative index via <a href="https://numpy.org/doc/stable/reference/generated/numpy.meshgrid.html?highlight=meshgrid">numpy.meshgrid()</a>. It allows you to create two matrices so that corresponding cell cover all possible combinations:</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb149-1"><a href="game-of-life-numpy.html#cb149-1" aria-hidden="true" tabindex="-1"></a>a, b <span class="op">=</span> np.meshgrid([<span class="dv">1</span>, <span class="dv">2</span>], [<span class="dv">3</span>, <span class="dv">4</span>])</span>
-<span id="cb149-2"><a href="game-of-life-numpy.html#cb149-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"a</span><span class="ch">\n</span><span class="st">"</span>, a)</span>
-<span id="cb149-3"><a href="game-of-life-numpy.html#cb149-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a</span></span>
-<span id="cb149-4"><a href="game-of-life-numpy.html#cb149-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [[1 2]</span></span>
-<span id="cb149-5"><a href="game-of-life-numpy.html#cb149-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1 2]]</span></span>
-<span id="cb149-6"><a href="game-of-life-numpy.html#cb149-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">b</span><span class="ch">\n</span><span class="st">"</span>, b)</span>
-<span id="cb149-7"><a href="game-of-life-numpy.html#cb149-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb149-8"><a href="game-of-life-numpy.html#cb149-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; b</span></span>
-<span id="cb149-9"><a href="game-of-life-numpy.html#cb149-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [[3 3]</span></span>
-<span id="cb149-10"><a href="game-of-life-numpy.html#cb149-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [4 4]]</span></span></code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb149-1"><a href="game-of-life-numpy.html#cb149-1" tabindex="-1"></a>a, b <span class="op">=</span> np.meshgrid([<span class="dv">1</span>, <span class="dv">2</span>], [<span class="dv">3</span>, <span class="dv">4</span>])</span>
+<span id="cb149-2"><a href="game-of-life-numpy.html#cb149-2" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"a</span><span class="ch">\n</span><span class="st">"</span>, a)</span>
+<span id="cb149-3"><a href="game-of-life-numpy.html#cb149-3" tabindex="-1"></a><span class="co">#&gt; a</span></span>
+<span id="cb149-4"><a href="game-of-life-numpy.html#cb149-4" tabindex="-1"></a><span class="co">#&gt;  [[1 2]</span></span>
+<span id="cb149-5"><a href="game-of-life-numpy.html#cb149-5" tabindex="-1"></a><span class="co">#&gt;  [1 2]]</span></span>
+<span id="cb149-6"><a href="game-of-life-numpy.html#cb149-6" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">b</span><span class="ch">\n</span><span class="st">"</span>, b)</span>
+<span id="cb149-7"><a href="game-of-life-numpy.html#cb149-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb149-8"><a href="game-of-life-numpy.html#cb149-8" tabindex="-1"></a><span class="co">#&gt; b</span></span>
+<span id="cb149-9"><a href="game-of-life-numpy.html#cb149-9" tabindex="-1"></a><span class="co">#&gt;  [[3 3]</span></span>
+<span id="cb149-10"><a href="game-of-life-numpy.html#cb149-10" tabindex="-1"></a><span class="co">#&gt;  [4 4]]</span></span></code></pre></div>
 <p>Use this function to create 3×3 grids of <em>relative</em> indexes for rows and columns (I called it <code>irel_rows</code> and <code>irel_cols</code>). You can hard code relative indexes or (better) use <a href="https://numpy.org/doc/stable/reference/generated/numpy.arange.html?highlight=arange">numpy.arange()</a> to generate the sequence.
 and then compute <em>absolute</em> index using <code>icell_row</code> and <code>icell_col</code>.</p>
 <pre><code>#&gt; [[0 0 1]
 #&gt;  [1 0 0]
 #&gt;  [1 1 0]]</code></pre>
 <p>We sliced the neighbors out but now we need to <em>count</em> them via a <a href="https://numpy.org/doc/stable/reference/generated/numpy.sum.html">numpy.sum()</a> or, equivalently via a <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.sum.html">sum()</a> method of an array. I tend to use the function but this is purely a matter of taste (or, more likely, habit), so pick the one you like.</p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb151-1"><a href="game-of-life-numpy.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">sum</span>(grid))</span>
-<span id="cb151-2"><a href="game-of-life-numpy.html#cb151-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14.0</span></span>
-<span id="cb151-3"><a href="game-of-life-numpy.html#cb151-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(grid.<span class="bu">sum</span>())</span>
-<span id="cb151-4"><a href="game-of-life-numpy.html#cb151-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14.0</span></span></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb151-1"><a href="game-of-life-numpy.html#cb151-1" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">sum</span>(grid))</span>
+<span id="cb151-2"><a href="game-of-life-numpy.html#cb151-2" tabindex="-1"></a><span class="co">#&gt; 14.0</span></span>
+<span id="cb151-3"><a href="game-of-life-numpy.html#cb151-3" tabindex="-1"></a><span class="bu">print</span>(grid.<span class="bu">sum</span>())</span>
+<span id="cb151-4"><a href="game-of-life-numpy.html#cb151-4" tabindex="-1"></a><span class="co">#&gt; 14.0</span></span></code></pre></div>
 <p>For our example subset, we get</p>
 <pre><code>#&gt; Neighbor count for the example cell:  4.0</code></pre>
 </div>
@@ -306,24 +312,24 @@ and then compute <em>absolute</em> index using <code>icell_row</code> and <code>
 #&gt;  [0 2 4 3 2 1 0]
 #&gt;  [0 0 0 0 0 0 0]]</code></pre>
 <p>We have information about whether a cell is alive or dead in our <code>grid</code> matrix and information about its neighbor count is <code>neighbors</code>. Now we can use comparison and logical operation to implement the rules. Comparisons are easy, they work the same way but are applied to the entire array:</p>
-<div class="sourceCode" id="cb154"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb154-1"><a href="game-of-life-numpy.html#cb154-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.arange(<span class="op">-</span><span class="dv">3</span>, <span class="dv">4</span>)</span>
-<span id="cb154-2"><a href="game-of-life-numpy.html#cb154-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>
-<span id="cb154-3"><a href="game-of-life-numpy.html#cb154-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [-3 -2 -1  0  1  2  3]</span></span>
-<span id="cb154-4"><a href="game-of-life-numpy.html#cb154-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a <span class="op">&lt;</span> <span class="dv">0</span>)</span>
-<span id="cb154-5"><a href="game-of-life-numpy.html#cb154-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [ True  True  True False False False False]</span></span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb154-1"><a href="game-of-life-numpy.html#cb154-1" tabindex="-1"></a>a <span class="op">=</span> np.arange(<span class="op">-</span><span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb154-2"><a href="game-of-life-numpy.html#cb154-2" tabindex="-1"></a><span class="bu">print</span>(a)</span>
+<span id="cb154-3"><a href="game-of-life-numpy.html#cb154-3" tabindex="-1"></a><span class="co">#&gt; [-3 -2 -1  0  1  2  3]</span></span>
+<span id="cb154-4"><a href="game-of-life-numpy.html#cb154-4" tabindex="-1"></a><span class="bu">print</span>(a <span class="op">&lt;</span> <span class="dv">0</span>)</span>
+<span id="cb154-5"><a href="game-of-life-numpy.html#cb154-5" tabindex="-1"></a><span class="co">#&gt; [ True  True  True False False False False]</span></span></code></pre></div>
 <p>The logical <code>and</code> and <code>or</code> are replaced with <a href="https://numpy.org/doc/stable/reference/generated/numpy.logical_and.html">&amp;</a> and <a href="https://numpy.org/doc/stable/reference/generated/numpy.logical_or.html">|</a> but work the same way. The only thing to keep in mind is that comparisons must be wrapped in brackets (otherwise you will get an error)</p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb155-1"><a href="game-of-life-numpy.html#cb155-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.arange(<span class="op">-</span><span class="dv">3</span>, <span class="dv">4</span>)</span>
-<span id="cb155-2"><a href="game-of-life-numpy.html#cb155-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>])</span>
-<span id="cb155-3"><a href="game-of-life-numpy.html#cb155-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-4"><a href="game-of-life-numpy.html#cb155-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>((a <span class="op">&lt;</span> <span class="dv">0</span> ) <span class="op">&amp;</span> (b <span class="op">==</span> <span class="dv">1</span>))</span>
-<span id="cb155-5"><a href="game-of-life-numpy.html#cb155-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [ True False  True False False False False]</span></span>
-<span id="cb155-6"><a href="game-of-life-numpy.html#cb155-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>((a <span class="op">&lt;</span> <span class="dv">0</span> ) <span class="op">|</span> (b <span class="op">==</span> <span class="dv">1</span>))</span>
-<span id="cb155-7"><a href="game-of-life-numpy.html#cb155-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [ True  True  True False  True False  True]</span></span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb155-1"><a href="game-of-life-numpy.html#cb155-1" tabindex="-1"></a>a <span class="op">=</span> np.arange(<span class="op">-</span><span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb155-2"><a href="game-of-life-numpy.html#cb155-2" tabindex="-1"></a>b <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>])</span>
+<span id="cb155-3"><a href="game-of-life-numpy.html#cb155-3" tabindex="-1"></a></span>
+<span id="cb155-4"><a href="game-of-life-numpy.html#cb155-4" tabindex="-1"></a><span class="bu">print</span>((a <span class="op">&lt;</span> <span class="dv">0</span> ) <span class="op">&amp;</span> (b <span class="op">==</span> <span class="dv">1</span>))</span>
+<span id="cb155-5"><a href="game-of-life-numpy.html#cb155-5" tabindex="-1"></a><span class="co">#&gt; [ True False  True False False False False]</span></span>
+<span id="cb155-6"><a href="game-of-life-numpy.html#cb155-6" tabindex="-1"></a><span class="bu">print</span>((a <span class="op">&lt;</span> <span class="dv">0</span> ) <span class="op">|</span> (b <span class="op">==</span> <span class="dv">1</span>))</span>
+<span id="cb155-7"><a href="game-of-life-numpy.html#cb155-7" tabindex="-1"></a><span class="co">#&gt; [ True  True  True False  True False  True]</span></span></code></pre></div>
 <p>We want ones and zeros, so integers rather than logical values. We can easily convert the entire array via <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.astype.html?highlight=astype">.astype()</a> method:</p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb156-1"><a href="game-of-life-numpy.html#cb156-1" aria-hidden="true" tabindex="-1"></a>(a <span class="op">&lt;</span> <span class="dv">0</span>)</span>
-<span id="cb156-2"><a href="game-of-life-numpy.html#cb156-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([ True,  True,  True, False, False, False, False])</span></span>
-<span id="cb156-3"><a href="game-of-life-numpy.html#cb156-3" aria-hidden="true" tabindex="-1"></a>(a <span class="op">&lt;</span> <span class="dv">0</span>).astype(<span class="bu">int</span>)</span>
-<span id="cb156-4"><a href="game-of-life-numpy.html#cb156-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([1, 1, 1, 0, 0, 0, 0])</span></span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb156-1"><a href="game-of-life-numpy.html#cb156-1" tabindex="-1"></a>(a <span class="op">&lt;</span> <span class="dv">0</span>)</span>
+<span id="cb156-2"><a href="game-of-life-numpy.html#cb156-2" tabindex="-1"></a><span class="co">#&gt; array([ True,  True,  True, False, False, False, False])</span></span>
+<span id="cb156-3"><a href="game-of-life-numpy.html#cb156-3" tabindex="-1"></a>(a <span class="op">&lt;</span> <span class="dv">0</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb156-4"><a href="game-of-life-numpy.html#cb156-4" tabindex="-1"></a><span class="co">#&gt; array([1, 1, 1, 0, 0, 0, 0])</span></span></code></pre></div>
 <p>Now you have everything you need to implement the first rule: cell must be alive <em>and</em> have <span class="math inline">\(2\)</span> <em>or</em> <span class="math inline">\(3\)</span> neighbors. Here is the output matrix:</p>
 <pre><code>#&gt; [[0 0 0 0 0 0 0]
 #&gt;  [0 0 1 1 0 0 0]
@@ -556,11 +562,11 @@ Use mouse inputs and <code>change()</code> in <em>code07.py</em>.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-01-10.</p>
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-06-16.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+    <p>Please note that this website collects anonymized data via Google analytics. This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
   </div>
 
 </div></div>

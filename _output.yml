@@ -2,8 +2,11 @@ bookdown::bs4_book:
   css:
     - bs4_style.css
     - style.css
+  template: book_template.html
   theme:
     primary: "#096B72"
+  includes:
+    in_header: ga4tag.html
   repo: https://github.com/alexander-pastukhov/writing-games-with-python-and-psychopy
   footnotes_inline : yes
 bookdown::pdf_book:

@@ -94,7 +94,7 @@ Let us update the final message. Currently it says "Spot on..." because we assum
 1. The player answered correctly
 2. The player ran out of attempts.
 
-Use `if-else` conditional statement to print out an appropriate message. E.g., print `"Better luck next time!`, if the player lost (ran out of attempts).
+Use `if-else` conditional statement to print out an appropriate message. E.g., print `"Better luck next time!"`, if the player lost (ran out of attempts).
 
 ::: {.rmdnote .program}
 Put your code into `code04.py`.

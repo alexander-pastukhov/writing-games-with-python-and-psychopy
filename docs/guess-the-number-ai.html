@@ -7,7 +7,7 @@
 <title>Chapter 7 Guess the Number: AI takes a turn | Writing games with Python and PsychoPy</title>
 <meta name="author" content="Alexander (Sasha) Pastukhov">
 <meta name="description" content="Let us program Guess the Number game again18 but reverse the roles. Now you will pick a number and the computer will guess. Think about the algorithm that a computer could use for this before...">
-<meta name="generator" content="bookdown 0.31 with bs4_book()">
+<meta name="generator" content="bookdown 0.34 with bs4_book()">
 <meta property="og:title" content="Chapter 7 Guess the Number: AI takes a turn | Writing games with Python and PsychoPy">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://alexander-pastukhov.github.io/writing-games-with-python-and-psychopy/guess-the-number-ai.html">
@@ -18,7 +18,13 @@
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-NBXRG6YB3R"></script><script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-NBXRG6YB3R');
+      </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -125,62 +131,62 @@
 <span class="header-section-number">7.3.4</span> Function makes code reusable<a class="anchor" aria-label="anchor" href="#function-makes-code-reusable"><i class="fas fa-link"></i></a>
 </h3>
 <p>Sometimes, this is given as a primary reason to use functions. Turning code into a function means that you can call the function instead of copy-pasting the code. The latter approach is a terrible idea as it means that you have to maintain the same code at many places and you might not be even sure in just how many. This is a problem even if a code is extremely simple. Here, we define a <em>standard</em> way to compute an initial by taking the first symbol from a string (you will learn about indexing and slicing later). The code is as simple as it gets.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb43-1"><a href="guess-the-number-ai.html#cb43-1" aria-hidden="true" tabindex="-1"></a>...</span>
-<span id="cb43-2"><a href="guess-the-number-ai.html#cb43-2" aria-hidden="true" tabindex="-1"></a>initial <span class="op">=</span> <span class="st">"test"</span>[<span class="dv">0</span>]</span>
-<span id="cb43-3"><a href="guess-the-number-ai.html#cb43-3" aria-hidden="true" tabindex="-1"></a>...</span>
-<span id="cb43-4"><a href="guess-the-number-ai.html#cb43-4" aria-hidden="true" tabindex="-1"></a>initial_for_file <span class="op">=</span> filename[<span class="dv">0</span>]</span>
-<span id="cb43-5"><a href="guess-the-number-ai.html#cb43-5" aria-hidden="true" tabindex="-1"></a>...</span>
-<span id="cb43-6"><a href="guess-the-number-ai.html#cb43-6" aria-hidden="true" tabindex="-1"></a>initial_for_website <span class="op">=</span> first_name[<span class="dv">0</span>]</span>
-<span id="cb43-7"><a href="guess-the-number-ai.html#cb43-7" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb43-1"><a href="guess-the-number-ai.html#cb43-1" tabindex="-1"></a>...</span>
+<span id="cb43-2"><a href="guess-the-number-ai.html#cb43-2" tabindex="-1"></a>initial <span class="op">=</span> <span class="st">"test"</span>[<span class="dv">0</span>]</span>
+<span id="cb43-3"><a href="guess-the-number-ai.html#cb43-3" tabindex="-1"></a>...</span>
+<span id="cb43-4"><a href="guess-the-number-ai.html#cb43-4" tabindex="-1"></a>initial_for_file <span class="op">=</span> filename[<span class="dv">0</span>]</span>
+<span id="cb43-5"><a href="guess-the-number-ai.html#cb43-5" tabindex="-1"></a>...</span>
+<span id="cb43-6"><a href="guess-the-number-ai.html#cb43-6" tabindex="-1"></a>initial_for_website <span class="op">=</span> first_name[<span class="dv">0</span>]</span>
+<span id="cb43-7"><a href="guess-the-number-ai.html#cb43-7" tabindex="-1"></a>...</span></code></pre></div>
 <p>Imagine that you decided to change it and use first <em>two</em> symbols. Again, the computation is not complicated, use just replace <code>[0]</code> with <code>[:2]</code>. But you have to do it for <em>all</em> the code that does this computation. And you cannot use <em>Replace All</em> option because sometimes you might use the first element for some other purposes. And when you edit the code, you are bound to forget about some locations (I do it all the time) making things even less consistent and more confusing. Turning code into a function means you need to modify and test at just <em>one</em> location. Here is the original code implemented via a function.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb44-1"><a href="guess-the-number-ai.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_initial(full_string):</span>
-<span id="cb44-2"><a href="guess-the-number-ai.html#cb44-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Generates an initial using first symbol.</span></span>
-<span id="cb44-3"><a href="guess-the-number-ai.html#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb44-4"><a href="guess-the-number-ai.html#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
-<span id="cb44-5"><a href="guess-the-number-ai.html#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
-<span id="cb44-6"><a href="guess-the-number-ai.html#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="co">    full_string : str</span></span>
-<span id="cb44-7"><a href="guess-the-number-ai.html#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb44-8"><a href="guess-the-number-ai.html#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
-<span id="cb44-9"><a href="guess-the-number-ai.html#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
-<span id="cb44-10"><a href="guess-the-number-ai.html#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="co">    str : single symbol</span></span>
-<span id="cb44-11"><a href="guess-the-number-ai.html#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb44-12"><a href="guess-the-number-ai.html#cb44-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> full_string[<span class="dv">0</span>]</span>
-<span id="cb44-13"><a href="guess-the-number-ai.html#cb44-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-14"><a href="guess-the-number-ai.html#cb44-14" aria-hidden="true" tabindex="-1"></a>...</span>
-<span id="cb44-15"><a href="guess-the-number-ai.html#cb44-15" aria-hidden="true" tabindex="-1"></a>initial <span class="op">=</span> generate_initial(<span class="st">"test"</span>)</span>
-<span id="cb44-16"><a href="guess-the-number-ai.html#cb44-16" aria-hidden="true" tabindex="-1"></a>...</span>
-<span id="cb44-17"><a href="guess-the-number-ai.html#cb44-17" aria-hidden="true" tabindex="-1"></a>initial_for_file <span class="op">=</span> generate_initial(filename)</span>
-<span id="cb44-18"><a href="guess-the-number-ai.html#cb44-18" aria-hidden="true" tabindex="-1"></a>...</span>
-<span id="cb44-19"><a href="guess-the-number-ai.html#cb44-19" aria-hidden="true" tabindex="-1"></a>initial_for_website <span class="op">=</span> generate_initial(first_name)</span>
-<span id="cb44-20"><a href="guess-the-number-ai.html#cb44-20" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb44-1"><a href="guess-the-number-ai.html#cb44-1" tabindex="-1"></a><span class="kw">def</span> generate_initial(full_string):</span>
+<span id="cb44-2"><a href="guess-the-number-ai.html#cb44-2" tabindex="-1"></a>    <span class="co">"""Generates an initial using first symbol.</span></span>
+<span id="cb44-3"><a href="guess-the-number-ai.html#cb44-3" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb44-4"><a href="guess-the-number-ai.html#cb44-4" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb44-5"><a href="guess-the-number-ai.html#cb44-5" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb44-6"><a href="guess-the-number-ai.html#cb44-6" tabindex="-1"></a><span class="co">    full_string : str</span></span>
+<span id="cb44-7"><a href="guess-the-number-ai.html#cb44-7" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb44-8"><a href="guess-the-number-ai.html#cb44-8" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb44-9"><a href="guess-the-number-ai.html#cb44-9" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb44-10"><a href="guess-the-number-ai.html#cb44-10" tabindex="-1"></a><span class="co">    str : single symbol</span></span>
+<span id="cb44-11"><a href="guess-the-number-ai.html#cb44-11" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb44-12"><a href="guess-the-number-ai.html#cb44-12" tabindex="-1"></a>    <span class="cf">return</span> full_string[<span class="dv">0</span>]</span>
+<span id="cb44-13"><a href="guess-the-number-ai.html#cb44-13" tabindex="-1"></a></span>
+<span id="cb44-14"><a href="guess-the-number-ai.html#cb44-14" tabindex="-1"></a>...</span>
+<span id="cb44-15"><a href="guess-the-number-ai.html#cb44-15" tabindex="-1"></a>initial <span class="op">=</span> generate_initial(<span class="st">"test"</span>)</span>
+<span id="cb44-16"><a href="guess-the-number-ai.html#cb44-16" tabindex="-1"></a>...</span>
+<span id="cb44-17"><a href="guess-the-number-ai.html#cb44-17" tabindex="-1"></a>initial_for_file <span class="op">=</span> generate_initial(filename)</span>
+<span id="cb44-18"><a href="guess-the-number-ai.html#cb44-18" tabindex="-1"></a>...</span>
+<span id="cb44-19"><a href="guess-the-number-ai.html#cb44-19" tabindex="-1"></a>initial_for_website <span class="op">=</span> generate_initial(first_name)</span>
+<span id="cb44-20"><a href="guess-the-number-ai.html#cb44-20" tabindex="-1"></a>...</span></code></pre></div>
 <p>and here is the “alternative” initial computation. Note that the code that uses the function <em>stays the same</em></p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb45-1"><a href="guess-the-number-ai.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_initial(full_string):</span>
-<span id="cb45-2"><a href="guess-the-number-ai.html#cb45-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Generates an initial using first TWO symbols.</span></span>
-<span id="cb45-3"><a href="guess-the-number-ai.html#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb45-4"><a href="guess-the-number-ai.html#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
-<span id="cb45-5"><a href="guess-the-number-ai.html#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
-<span id="cb45-6"><a href="guess-the-number-ai.html#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="co">    full_string : str</span></span>
-<span id="cb45-7"><a href="guess-the-number-ai.html#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb45-8"><a href="guess-the-number-ai.html#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
-<span id="cb45-9"><a href="guess-the-number-ai.html#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
-<span id="cb45-10"><a href="guess-the-number-ai.html#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="co">    str : two symbols long</span></span>
-<span id="cb45-11"><a href="guess-the-number-ai.html#cb45-11" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb45-12"><a href="guess-the-number-ai.html#cb45-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> full_string[:<span class="dv">2</span>]</span>
-<span id="cb45-13"><a href="guess-the-number-ai.html#cb45-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-14"><a href="guess-the-number-ai.html#cb45-14" aria-hidden="true" tabindex="-1"></a>...</span>
-<span id="cb45-15"><a href="guess-the-number-ai.html#cb45-15" aria-hidden="true" tabindex="-1"></a>initial <span class="op">=</span> generate_initial(<span class="st">"test"</span>)</span>
-<span id="cb45-16"><a href="guess-the-number-ai.html#cb45-16" aria-hidden="true" tabindex="-1"></a>...</span>
-<span id="cb45-17"><a href="guess-the-number-ai.html#cb45-17" aria-hidden="true" tabindex="-1"></a>initial_for_file <span class="op">=</span> generate_initial(filename)</span>
-<span id="cb45-18"><a href="guess-the-number-ai.html#cb45-18" aria-hidden="true" tabindex="-1"></a>...</span>
-<span id="cb45-19"><a href="guess-the-number-ai.html#cb45-19" aria-hidden="true" tabindex="-1"></a>initial_for_website <span class="op">=</span> generate_initial(first_name)</span>
-<span id="cb45-20"><a href="guess-the-number-ai.html#cb45-20" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb45-1"><a href="guess-the-number-ai.html#cb45-1" tabindex="-1"></a><span class="kw">def</span> generate_initial(full_string):</span>
+<span id="cb45-2"><a href="guess-the-number-ai.html#cb45-2" tabindex="-1"></a>    <span class="co">"""Generates an initial using first TWO symbols.</span></span>
+<span id="cb45-3"><a href="guess-the-number-ai.html#cb45-3" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb45-4"><a href="guess-the-number-ai.html#cb45-4" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb45-5"><a href="guess-the-number-ai.html#cb45-5" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb45-6"><a href="guess-the-number-ai.html#cb45-6" tabindex="-1"></a><span class="co">    full_string : str</span></span>
+<span id="cb45-7"><a href="guess-the-number-ai.html#cb45-7" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb45-8"><a href="guess-the-number-ai.html#cb45-8" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb45-9"><a href="guess-the-number-ai.html#cb45-9" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb45-10"><a href="guess-the-number-ai.html#cb45-10" tabindex="-1"></a><span class="co">    str : two symbols long</span></span>
+<span id="cb45-11"><a href="guess-the-number-ai.html#cb45-11" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb45-12"><a href="guess-the-number-ai.html#cb45-12" tabindex="-1"></a>    <span class="cf">return</span> full_string[:<span class="dv">2</span>]</span>
+<span id="cb45-13"><a href="guess-the-number-ai.html#cb45-13" tabindex="-1"></a></span>
+<span id="cb45-14"><a href="guess-the-number-ai.html#cb45-14" tabindex="-1"></a>...</span>
+<span id="cb45-15"><a href="guess-the-number-ai.html#cb45-15" tabindex="-1"></a>initial <span class="op">=</span> generate_initial(<span class="st">"test"</span>)</span>
+<span id="cb45-16"><a href="guess-the-number-ai.html#cb45-16" tabindex="-1"></a>...</span>
+<span id="cb45-17"><a href="guess-the-number-ai.html#cb45-17" tabindex="-1"></a>initial_for_file <span class="op">=</span> generate_initial(filename)</span>
+<span id="cb45-18"><a href="guess-the-number-ai.html#cb45-18" tabindex="-1"></a>...</span>
+<span id="cb45-19"><a href="guess-the-number-ai.html#cb45-19" tabindex="-1"></a>initial_for_website <span class="op">=</span> generate_initial(first_name)</span>
+<span id="cb45-20"><a href="guess-the-number-ai.html#cb45-20" tabindex="-1"></a>...</span></code></pre></div>
 <p>Thus, turning the code into a function is particularly useful when the reused code is complex but it pays off even if computation is as simple and trivial as in example above. With a function you have a single code chunk to worry about and you can be sure that the same computation is performed whenever you call the function (and that these are not several copies of the code that might or might not be identical).</p>
 <p>Note that I put reusable code as the last and the least reason to use functions. This is because the other three reasons are far more important. Having a conceptually clear isolated and testable code is advantageous even if you call this function only once. It still makes code easier to understand and to test and helps you to reduce its complexity by replacing chunks of code with its meaning. Take a look at the example below. The first code takes the first symbol but this action (taking the first symbol) does not <em>mean</em> anything by itself, it is just a mechanical computation. It is only the original context <code>initial_for_file = filename[0]</code> or additional comments that give it its meaning. In contrast, calling a function called <em>compute_initial</em> tells you what is happening, as it disambiguates the purpose. I suspect that future-you is very pro-disambiguation and anti-confusion.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb46-1"><a href="guess-the-number-ai.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> filename[<span class="dv">0</span>] <span class="op">==</span> <span class="st">"A"</span>:</span>
-<span id="cb46-2"><a href="guess-the-number-ai.html#cb46-2" aria-hidden="true" tabindex="-1"></a>    ...</span>
-<span id="cb46-3"><a href="guess-the-number-ai.html#cb46-3" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb46-4"><a href="guess-the-number-ai.html#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> compute_initial(filename) <span class="op">==</span> <span class="st">"A"</span>:</span>
-<span id="cb46-5"><a href="guess-the-number-ai.html#cb46-5" aria-hidden="true" tabindex="-1"></a>    ...</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb46-1"><a href="guess-the-number-ai.html#cb46-1" tabindex="-1"></a><span class="cf">if</span> filename[<span class="dv">0</span>] <span class="op">==</span> <span class="st">"A"</span>:</span>
+<span id="cb46-2"><a href="guess-the-number-ai.html#cb46-2" tabindex="-1"></a>    ...</span>
+<span id="cb46-3"><a href="guess-the-number-ai.html#cb46-3" tabindex="-1"></a>    </span>
+<span id="cb46-4"><a href="guess-the-number-ai.html#cb46-4" tabindex="-1"></a><span class="cf">if</span> compute_initial(filename) <span class="op">==</span> <span class="st">"A"</span>:</span>
+<span id="cb46-5"><a href="guess-the-number-ai.html#cb46-5" tabindex="-1"></a>    ...</span></code></pre></div>
 </div>
 </div>
 <div id="functions-in-python" class="section level2" number="7.4">
@@ -192,36 +198,36 @@
 <span class="header-section-number">7.4.1</span> Defining a function in Python<a class="anchor" aria-label="anchor" href="#defining-a-function-in-python"><i class="fas fa-link"></i></a>
 </h3>
 <p>A function in Python looks like this (note the indentation and <code>:</code> at the end of the first line)</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb47-1"><a href="guess-the-number-ai.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> <span class="op">&lt;</span>function name<span class="op">&gt;</span>(param1, param2, ...):</span>
-<span id="cb47-2"><a href="guess-the-number-ai.html#cb47-2" aria-hidden="true" tabindex="-1"></a>    some internal computation</span>
-<span id="cb47-3"><a href="guess-the-number-ai.html#cb47-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> somecondition:</span>
-<span id="cb47-4"><a href="guess-the-number-ai.html#cb47-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> some value</span>
-<span id="cb47-5"><a href="guess-the-number-ai.html#cb47-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> some other value</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb47-1"><a href="guess-the-number-ai.html#cb47-1" tabindex="-1"></a><span class="kw">def</span> <span class="op">&lt;</span>function name<span class="op">&gt;</span>(param1, param2, ...):</span>
+<span id="cb47-2"><a href="guess-the-number-ai.html#cb47-2" tabindex="-1"></a>    some internal computation</span>
+<span id="cb47-3"><a href="guess-the-number-ai.html#cb47-3" tabindex="-1"></a>    <span class="cf">if</span> somecondition:</span>
+<span id="cb47-4"><a href="guess-the-number-ai.html#cb47-4" tabindex="-1"></a>        <span class="cf">return</span> some value</span>
+<span id="cb47-5"><a href="guess-the-number-ai.html#cb47-5" tabindex="-1"></a>    <span class="cf">return</span> some other value</span></code></pre></div>
 <p>The parameters are optional, so is the return value. Thus the minimal function would be</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb48-1"><a href="guess-the-number-ai.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> minimal_function():</span>
-<span id="cb48-2"><a href="guess-the-number-ai.html#cb48-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span> <span class="co"># pass means "do nothing"</span></span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb48-1"><a href="guess-the-number-ai.html#cb48-1" tabindex="-1"></a><span class="kw">def</span> minimal_function():</span>
+<span id="cb48-2"><a href="guess-the-number-ai.html#cb48-2" tabindex="-1"></a>    <span class="cf">pass</span> <span class="co"># pass means "do nothing"</span></span></code></pre></div>
 <p>You must define your function (once!) before calling it (one or more times). Thus, you should create functions <em>before</em> the code that uses it.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb49-1"><a href="guess-the-number-ai.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> do_something():</span>
-<span id="cb49-2"><a href="guess-the-number-ai.html#cb49-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb49-3"><a href="guess-the-number-ai.html#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="co">    This is a function called "do_something". It actually does nothing.</span></span>
-<span id="cb49-4"><a href="guess-the-number-ai.html#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="co">    It requires no input and returns no value.</span></span>
-<span id="cb49-5"><a href="guess-the-number-ai.html#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb49-6"><a href="guess-the-number-ai.html#cb49-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span></span>
-<span id="cb49-7"><a href="guess-the-number-ai.html#cb49-7" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb49-8"><a href="guess-the-number-ai.html#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> another_function():</span>
-<span id="cb49-9"><a href="guess-the-number-ai.html#cb49-9" aria-hidden="true" tabindex="-1"></a>    ...</span>
-<span id="cb49-10"><a href="guess-the-number-ai.html#cb49-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># We call it in another function.</span></span>
-<span id="cb49-11"><a href="guess-the-number-ai.html#cb49-11" aria-hidden="true" tabindex="-1"></a>    do_something()</span>
-<span id="cb49-12"><a href="guess-the-number-ai.html#cb49-12" aria-hidden="true" tabindex="-1"></a>    ...</span>
-<span id="cb49-13"><a href="guess-the-number-ai.html#cb49-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-14"><a href="guess-the-number-ai.html#cb49-14" aria-hidden="true" tabindex="-1"></a><span class="co"># This is a function call (we use this function)</span></span>
-<span id="cb49-15"><a href="guess-the-number-ai.html#cb49-15" aria-hidden="true" tabindex="-1"></a>do_something()</span>
-<span id="cb49-16"><a href="guess-the-number-ai.html#cb49-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-17"><a href="guess-the-number-ai.html#cb49-17" aria-hidden="true" tabindex="-1"></a><span class="co"># And we use it again!</span></span>
-<span id="cb49-18"><a href="guess-the-number-ai.html#cb49-18" aria-hidden="true" tabindex="-1"></a>do_something()</span>
-<span id="cb49-19"><a href="guess-the-number-ai.html#cb49-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-20"><a href="guess-the-number-ai.html#cb49-20" aria-hidden="true" tabindex="-1"></a><span class="co"># And again but via another_function call</span></span>
-<span id="cb49-21"><a href="guess-the-number-ai.html#cb49-21" aria-hidden="true" tabindex="-1"></a>another_function()</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb49-1"><a href="guess-the-number-ai.html#cb49-1" tabindex="-1"></a><span class="kw">def</span> do_something():</span>
+<span id="cb49-2"><a href="guess-the-number-ai.html#cb49-2" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb49-3"><a href="guess-the-number-ai.html#cb49-3" tabindex="-1"></a><span class="co">    This is a function called "do_something". It actually does nothing.</span></span>
+<span id="cb49-4"><a href="guess-the-number-ai.html#cb49-4" tabindex="-1"></a><span class="co">    It requires no input and returns no value.</span></span>
+<span id="cb49-5"><a href="guess-the-number-ai.html#cb49-5" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb49-6"><a href="guess-the-number-ai.html#cb49-6" tabindex="-1"></a>    <span class="cf">return</span></span>
+<span id="cb49-7"><a href="guess-the-number-ai.html#cb49-7" tabindex="-1"></a>    </span>
+<span id="cb49-8"><a href="guess-the-number-ai.html#cb49-8" tabindex="-1"></a><span class="kw">def</span> another_function():</span>
+<span id="cb49-9"><a href="guess-the-number-ai.html#cb49-9" tabindex="-1"></a>    ...</span>
+<span id="cb49-10"><a href="guess-the-number-ai.html#cb49-10" tabindex="-1"></a>    <span class="co"># We call it in another function.</span></span>
+<span id="cb49-11"><a href="guess-the-number-ai.html#cb49-11" tabindex="-1"></a>    do_something()</span>
+<span id="cb49-12"><a href="guess-the-number-ai.html#cb49-12" tabindex="-1"></a>    ...</span>
+<span id="cb49-13"><a href="guess-the-number-ai.html#cb49-13" tabindex="-1"></a></span>
+<span id="cb49-14"><a href="guess-the-number-ai.html#cb49-14" tabindex="-1"></a><span class="co"># This is a function call (we use this function)</span></span>
+<span id="cb49-15"><a href="guess-the-number-ai.html#cb49-15" tabindex="-1"></a>do_something()</span>
+<span id="cb49-16"><a href="guess-the-number-ai.html#cb49-16" tabindex="-1"></a></span>
+<span id="cb49-17"><a href="guess-the-number-ai.html#cb49-17" tabindex="-1"></a><span class="co"># And we use it again!</span></span>
+<span id="cb49-18"><a href="guess-the-number-ai.html#cb49-18" tabindex="-1"></a>do_something()</span>
+<span id="cb49-19"><a href="guess-the-number-ai.html#cb49-19" tabindex="-1"></a></span>
+<span id="cb49-20"><a href="guess-the-number-ai.html#cb49-20" tabindex="-1"></a><span class="co"># And again but via another_function call</span></span>
+<span id="cb49-21"><a href="guess-the-number-ai.html#cb49-21" tabindex="-1"></a>another_function()</span></code></pre></div>
 <div class="rmdnote practice">
 <p>Do exercise #1.</p>
 </div>
@@ -236,63 +242,63 @@
 <span class="header-section-number">7.4.2</span> Function arguments<a class="anchor" aria-label="anchor" href="#function-arguments"><i class="fas fa-link"></i></a>
 </h3>
 <p>Some functions may not need arguments (also called parameters), as they perform a fixed action:</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb50-1"><a href="guess-the-number-ai.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ping():</span>
-<span id="cb50-2"><a href="guess-the-number-ai.html#cb50-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb50-3"><a href="guess-the-number-ai.html#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Machine that goes "ping!"</span></span>
-<span id="cb50-4"><a href="guess-the-number-ai.html#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb50-5"><a href="guess-the-number-ai.html#cb50-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"ping!"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb50-1"><a href="guess-the-number-ai.html#cb50-1" tabindex="-1"></a><span class="kw">def</span> ping():</span>
+<span id="cb50-2"><a href="guess-the-number-ai.html#cb50-2" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb50-3"><a href="guess-the-number-ai.html#cb50-3" tabindex="-1"></a><span class="co">    Machine that goes "ping!"</span></span>
+<span id="cb50-4"><a href="guess-the-number-ai.html#cb50-4" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb50-5"><a href="guess-the-number-ai.html#cb50-5" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"ping!"</span>)</span></code></pre></div>
 <p>However, you may need to pass information to the function via arguments in order to influence how the function performs its action. In Python, you simply list arguments within the round brackets after the function name (there are more bells and whistles but we will keep it simple for now). For example, we could write a function that computes and prints person’s age given two parameters 1) their birth year, 2) current year:</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb51-1"><a href="guess-the-number-ai.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_age(birth_year, current_year):</span>
-<span id="cb51-2"><a href="guess-the-number-ai.html#cb51-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb51-3"><a href="guess-the-number-ai.html#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Prints age given birth year and current year.</span></span>
-<span id="cb51-4"><a href="guess-the-number-ai.html#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb51-5"><a href="guess-the-number-ai.html#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
-<span id="cb51-6"><a href="guess-the-number-ai.html#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
-<span id="cb51-7"><a href="guess-the-number-ai.html#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="co">    birth_year : int</span></span>
-<span id="cb51-8"><a href="guess-the-number-ai.html#cb51-8" aria-hidden="true" tabindex="-1"></a><span class="co">    current_year : int</span></span>
-<span id="cb51-9"><a href="guess-the-number-ai.html#cb51-9" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb51-10"><a href="guess-the-number-ai.html#cb51-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(current_year <span class="op">-</span> birth_year)</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb51-1"><a href="guess-the-number-ai.html#cb51-1" tabindex="-1"></a><span class="kw">def</span> print_age(birth_year, current_year):</span>
+<span id="cb51-2"><a href="guess-the-number-ai.html#cb51-2" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb51-3"><a href="guess-the-number-ai.html#cb51-3" tabindex="-1"></a><span class="co">    Prints age given birth year and current year.</span></span>
+<span id="cb51-4"><a href="guess-the-number-ai.html#cb51-4" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb51-5"><a href="guess-the-number-ai.html#cb51-5" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb51-6"><a href="guess-the-number-ai.html#cb51-6" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb51-7"><a href="guess-the-number-ai.html#cb51-7" tabindex="-1"></a><span class="co">    birth_year : int</span></span>
+<span id="cb51-8"><a href="guess-the-number-ai.html#cb51-8" tabindex="-1"></a><span class="co">    current_year : int</span></span>
+<span id="cb51-9"><a href="guess-the-number-ai.html#cb51-9" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb51-10"><a href="guess-the-number-ai.html#cb51-10" tabindex="-1"></a>    <span class="bu">print</span>(current_year <span class="op">-</span> birth_year)</span></code></pre></div>
 <p>It is a <strong>very good idea</strong> to give meaningful names to functions, parameters, and variables. The following code will produce exactly the same result but understanding <em>why</em> and <em>what for</em> it is doing what it is doing would be much harder (so <strong>always</strong> use meaningful names!):</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb52-1"><a href="guess-the-number-ai.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> x(a, b):</span>
-<span id="cb52-2"><a href="guess-the-number-ai.html#cb52-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(b <span class="op">-</span> a)</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb52-1"><a href="guess-the-number-ai.html#cb52-1" tabindex="-1"></a><span class="kw">def</span> x(a, b):</span>
+<span id="cb52-2"><a href="guess-the-number-ai.html#cb52-2" tabindex="-1"></a>    <span class="bu">print</span>(b <span class="op">-</span> a)</span></code></pre></div>
 <p>When calling a function, you must pass the correct number of parameters and pass them in a <em>correct order</em>, another reason for a function arguments to have meaningful names<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;This is also not strictly true but you will have to wait until you learn about named parameters and default values&lt;/p&gt;"><sup>25</sup></a>.</p>
 <div class="rmdnote practice">
 <p>Do exercise #3.</p>
 </div>
 <p>When you call a function, values you <em>pass</em> to the function are assigned to the parameters and they are used as <em>local</em> variables (more on <em>local</em> bit later). However, it does not matter <em>how</em> you came up with this values, whether they were in a variable, hard-coded, or returned by another function. If you are using numeric, logical, or string values (<em>immutable</em> types), you can assume that any link to the original variable or function that produced it is gone (we’ll deal with <em>mutable</em> types, like lists, later). Thus, when writing a function or reading its code, you just assume that it has been set to some value during the call and you can ignore the context in which this call was made</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb53-1"><a href="guess-the-number-ai.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># hardcoded</span></span>
-<span id="cb53-2"><a href="guess-the-number-ai.html#cb53-2" aria-hidden="true" tabindex="-1"></a>print_age(<span class="dv">1976</span>, <span class="dv">2020</span>)</span>
-<span id="cb53-3"><a href="guess-the-number-ai.html#cb53-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-4"><a href="guess-the-number-ai.html#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="co"># using values from variables</span></span>
-<span id="cb53-5"><a href="guess-the-number-ai.html#cb53-5" aria-hidden="true" tabindex="-1"></a>i_was_born <span class="op">=</span> <span class="dv">1976</span></span>
-<span id="cb53-6"><a href="guess-the-number-ai.html#cb53-6" aria-hidden="true" tabindex="-1"></a>today_is <span class="op">=</span> <span class="dv">2020</span></span>
-<span id="cb53-7"><a href="guess-the-number-ai.html#cb53-7" aria-hidden="true" tabindex="-1"></a>print_age(i_was_born, today_is)</span>
-<span id="cb53-8"><a href="guess-the-number-ai.html#cb53-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-9"><a href="guess-the-number-ai.html#cb53-9" aria-hidden="true" tabindex="-1"></a><span class="co"># using value from a function</span></span>
-<span id="cb53-10"><a href="guess-the-number-ai.html#cb53-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_current_year():</span>
-<span id="cb53-11"><a href="guess-the-number-ai.html#cb53-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">2020</span></span>
-<span id="cb53-12"><a href="guess-the-number-ai.html#cb53-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-13"><a href="guess-the-number-ai.html#cb53-13" aria-hidden="true" tabindex="-1"></a>print_age(<span class="dv">1976</span>, get_current_year())</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb53-1"><a href="guess-the-number-ai.html#cb53-1" tabindex="-1"></a><span class="co"># hardcoded</span></span>
+<span id="cb53-2"><a href="guess-the-number-ai.html#cb53-2" tabindex="-1"></a>print_age(<span class="dv">1976</span>, <span class="dv">2020</span>)</span>
+<span id="cb53-3"><a href="guess-the-number-ai.html#cb53-3" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="guess-the-number-ai.html#cb53-4" tabindex="-1"></a><span class="co"># using values from variables</span></span>
+<span id="cb53-5"><a href="guess-the-number-ai.html#cb53-5" tabindex="-1"></a>i_was_born <span class="op">=</span> <span class="dv">1976</span></span>
+<span id="cb53-6"><a href="guess-the-number-ai.html#cb53-6" tabindex="-1"></a>today_is <span class="op">=</span> <span class="dv">2020</span></span>
+<span id="cb53-7"><a href="guess-the-number-ai.html#cb53-7" tabindex="-1"></a>print_age(i_was_born, today_is)</span>
+<span id="cb53-8"><a href="guess-the-number-ai.html#cb53-8" tabindex="-1"></a></span>
+<span id="cb53-9"><a href="guess-the-number-ai.html#cb53-9" tabindex="-1"></a><span class="co"># using value from a function</span></span>
+<span id="cb53-10"><a href="guess-the-number-ai.html#cb53-10" tabindex="-1"></a><span class="kw">def</span> get_current_year():</span>
+<span id="cb53-11"><a href="guess-the-number-ai.html#cb53-11" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">2020</span></span>
+<span id="cb53-12"><a href="guess-the-number-ai.html#cb53-12" tabindex="-1"></a></span>
+<span id="cb53-13"><a href="guess-the-number-ai.html#cb53-13" tabindex="-1"></a>print_age(<span class="dv">1976</span>, get_current_year())</span></code></pre></div>
 </div>
 <div id="functions-returned-value-output" class="section level3" number="7.4.3">
 <h3>
 <span class="header-section-number">7.4.3</span> Functions’ returned value (output)<a class="anchor" aria-label="anchor" href="#functions-returned-value-output"><i class="fas fa-link"></i></a>
 </h3>
 <p>Your function may perform an action without returning any value to the caller (this is what out <code>print_age</code> function was doing). However, you may need to return the value instead. For example, to make things more general, we might want write a new function called <code>compute_age</code> that returns the age instead of printing it (we can always print it ourselves).</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb54-1"><a href="guess-the-number-ai.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_age(birth_year, current_year):</span>
-<span id="cb54-2"><a href="guess-the-number-ai.html#cb54-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb54-3"><a href="guess-the-number-ai.html#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Computes age given birth year and current year.</span></span>
-<span id="cb54-4"><a href="guess-the-number-ai.html#cb54-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-5"><a href="guess-the-number-ai.html#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
-<span id="cb54-6"><a href="guess-the-number-ai.html#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
-<span id="cb54-7"><a href="guess-the-number-ai.html#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="co">    birth_year : int</span></span>
-<span id="cb54-8"><a href="guess-the-number-ai.html#cb54-8" aria-hidden="true" tabindex="-1"></a><span class="co">    current_year : int</span></span>
-<span id="cb54-9"><a href="guess-the-number-ai.html#cb54-9" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb54-10"><a href="guess-the-number-ai.html#cb54-10" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
-<span id="cb54-11"><a href="guess-the-number-ai.html#cb54-11" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
-<span id="cb54-12"><a href="guess-the-number-ai.html#cb54-12" aria-hidden="true" tabindex="-1"></a><span class="co">    int : age</span></span>
-<span id="cb54-13"><a href="guess-the-number-ai.html#cb54-13" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb54-14"><a href="guess-the-number-ai.html#cb54-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> current_year <span class="op">-</span> birth_year</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb54-1"><a href="guess-the-number-ai.html#cb54-1" tabindex="-1"></a><span class="kw">def</span> compute_age(birth_year, current_year):</span>
+<span id="cb54-2"><a href="guess-the-number-ai.html#cb54-2" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb54-3"><a href="guess-the-number-ai.html#cb54-3" tabindex="-1"></a><span class="co">    Computes age given birth year and current year.</span></span>
+<span id="cb54-4"><a href="guess-the-number-ai.html#cb54-4" tabindex="-1"></a></span>
+<span id="cb54-5"><a href="guess-the-number-ai.html#cb54-5" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb54-6"><a href="guess-the-number-ai.html#cb54-6" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb54-7"><a href="guess-the-number-ai.html#cb54-7" tabindex="-1"></a><span class="co">    birth_year : int</span></span>
+<span id="cb54-8"><a href="guess-the-number-ai.html#cb54-8" tabindex="-1"></a><span class="co">    current_year : int</span></span>
+<span id="cb54-9"><a href="guess-the-number-ai.html#cb54-9" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb54-10"><a href="guess-the-number-ai.html#cb54-10" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb54-11"><a href="guess-the-number-ai.html#cb54-11" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb54-12"><a href="guess-the-number-ai.html#cb54-12" tabindex="-1"></a><span class="co">    int : age</span></span>
+<span id="cb54-13"><a href="guess-the-number-ai.html#cb54-13" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb54-14"><a href="guess-the-number-ai.html#cb54-14" tabindex="-1"></a>    <span class="cf">return</span> current_year <span class="op">-</span> birth_year</span></code></pre></div>
 <p>Note that even if a function returns the value, it is retained only if it is actually used (stored in a variable, used as a value, etc.). Thus, just calling it will not by itself store the returned value anywhere!</p>
 <div class="rmdnote practice">
 <p>Do exercise #4.</p>
@@ -304,24 +310,24 @@
 </h3>
 <p>As we have discussed above, turning code into a function <em>isolates</em> it, so makes it run in it own <em>scope</em>. In Python, each variable exists in the <em>scope</em> it has been defined in. If it was defined in the <em>global</em> script, it exists in that <em>global</em> scope as a <em>global</em> variable. However, it is not accessible (at least not without special effort via a <code>global</code> operator) from within a function. Conversely, function’s parameters and any variables defined <em>inside a function</em>, exists and are accessible only <strong>inside that function</strong>. It is fully invisible for the outside world and cannot be accessed from a global script or from another function. Conversely, any changes you make to the function parameter or local variable have no effect on the outside world<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Again, almost, as &lt;em&gt;mutable&lt;/em&gt; objects like lists are more complicated, more on that later&lt;/p&gt;"><sup>26</sup></a>.</p>
 <p>The purpose of scopes is to isolate individual code segments from each other, so that modifying variables within one scope has no effect on all other scopes. This means that when writing or debugging the code, you do not need to worry about code in other scopes and concentrate only on the code you working on. Because scopes are isolated, they may have <em>identically named variables</em> that, however, have no relationship to each other as they exists in their own parallel universes. Thus, if you want to know which value a variable has, you must look only within the scope and ignore all other scopes (even if the names match!).</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb55-1"><a href="guess-the-number-ai.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this is variable `x` in the global scope</span></span>
-<span id="cb55-2"><a href="guess-the-number-ai.html#cb55-2" aria-hidden="true" tabindex="-1"></a>x  <span class="op">=</span> <span class="dv">5</span> </span>
-<span id="cb55-3"><a href="guess-the-number-ai.html#cb55-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-4"><a href="guess-the-number-ai.html#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f1():</span>
-<span id="cb55-5"><a href="guess-the-number-ai.html#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This is variable `x` in the scope of function f1</span></span>
-<span id="cb55-6"><a href="guess-the-number-ai.html#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># It has the same name as the global variable but</span></span>
-<span id="cb55-7"><a href="guess-the-number-ai.html#cb55-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># has no relation to it: many people are called Sasha </span></span>
-<span id="cb55-8"><a href="guess-the-number-ai.html#cb55-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># but they are still different people. Whatever</span></span>
-<span id="cb55-9"><a href="guess-the-number-ai.html#cb55-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># happens to `x` in f1, stays in f1's scope.</span></span>
-<span id="cb55-10"><a href="guess-the-number-ai.html#cb55-10" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> <span class="dv">3</span></span>
-<span id="cb55-11"><a href="guess-the-number-ai.html#cb55-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb55-12"><a href="guess-the-number-ai.html#cb55-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb55-13"><a href="guess-the-number-ai.html#cb55-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f2(x):</span>
-<span id="cb55-14"><a href="guess-the-number-ai.html#cb55-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This is parameter `x` in the scope of function f2.</span></span>
-<span id="cb55-15"><a href="guess-the-number-ai.html#cb55-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Again, no relation to other global or local variables.</span></span>
-<span id="cb55-16"><a href="guess-the-number-ai.html#cb55-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># It is a completely separate object, it just happens to </span></span>
-<span id="cb55-17"><a href="guess-the-number-ai.html#cb55-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># have the same name (again, just namesakes)</span></span>
-<span id="cb55-18"><a href="guess-the-number-ai.html#cb55-18" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb55-1"><a href="guess-the-number-ai.html#cb55-1" tabindex="-1"></a><span class="co"># this is variable `x` in the global scope</span></span>
+<span id="cb55-2"><a href="guess-the-number-ai.html#cb55-2" tabindex="-1"></a>x  <span class="op">=</span> <span class="dv">5</span> </span>
+<span id="cb55-3"><a href="guess-the-number-ai.html#cb55-3" tabindex="-1"></a></span>
+<span id="cb55-4"><a href="guess-the-number-ai.html#cb55-4" tabindex="-1"></a><span class="kw">def</span> f1():</span>
+<span id="cb55-5"><a href="guess-the-number-ai.html#cb55-5" tabindex="-1"></a>  <span class="co"># This is variable `x` in the scope of function f1</span></span>
+<span id="cb55-6"><a href="guess-the-number-ai.html#cb55-6" tabindex="-1"></a>  <span class="co"># It has the same name as the global variable but</span></span>
+<span id="cb55-7"><a href="guess-the-number-ai.html#cb55-7" tabindex="-1"></a>  <span class="co"># has no relation to it: many people are called Sasha </span></span>
+<span id="cb55-8"><a href="guess-the-number-ai.html#cb55-8" tabindex="-1"></a>  <span class="co"># but they are still different people. Whatever</span></span>
+<span id="cb55-9"><a href="guess-the-number-ai.html#cb55-9" tabindex="-1"></a>  <span class="co"># happens to `x` in f1, stays in f1's scope.</span></span>
+<span id="cb55-10"><a href="guess-the-number-ai.html#cb55-10" tabindex="-1"></a>  x <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb55-11"><a href="guess-the-number-ai.html#cb55-11" tabindex="-1"></a>  </span>
+<span id="cb55-12"><a href="guess-the-number-ai.html#cb55-12" tabindex="-1"></a>  </span>
+<span id="cb55-13"><a href="guess-the-number-ai.html#cb55-13" tabindex="-1"></a><span class="kw">def</span> f2(x):</span>
+<span id="cb55-14"><a href="guess-the-number-ai.html#cb55-14" tabindex="-1"></a>  <span class="co"># This is parameter `x` in the scope of function f2.</span></span>
+<span id="cb55-15"><a href="guess-the-number-ai.html#cb55-15" tabindex="-1"></a>  <span class="co"># Again, no relation to other global or local variables.</span></span>
+<span id="cb55-16"><a href="guess-the-number-ai.html#cb55-16" tabindex="-1"></a>  <span class="co"># It is a completely separate object, it just happens to </span></span>
+<span id="cb55-17"><a href="guess-the-number-ai.html#cb55-17" tabindex="-1"></a>  <span class="co"># have the same name (again, just namesakes)</span></span>
+<span id="cb55-18"><a href="guess-the-number-ai.html#cb55-18" tabindex="-1"></a>  <span class="bu">print</span>(x)</span></code></pre></div>
 <div class="rmdnote practice">
 <p>Do exercise #5.</p>
 </div>
@@ -341,16 +347,16 @@
 <span class="header-section-number">7.6</span> Debugging a function<a class="anchor" aria-label="anchor" href="#debugging-a-function"><i class="fas fa-link"></i></a>
 </h2>
 <p>Now that we have your first function, you can make sense of three step over/in/out buttons that the debugger offers you. Copy-paste the following code in a separate file (call it <code>test01.py</code>, for example).</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb56-1"><a href="guess-the-number-ai.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f1(x, y):</span>
-<span id="cb56-2"><a href="guess-the-number-ai.html#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> x <span class="op">/</span> y</span>
-<span id="cb56-3"><a href="guess-the-number-ai.html#cb56-3" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb56-4"><a href="guess-the-number-ai.html#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f2(x, y):</span>
-<span id="cb56-5"><a href="guess-the-number-ai.html#cb56-5" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> x <span class="op">+</span> <span class="dv">5</span></span>
-<span id="cb56-6"><a href="guess-the-number-ai.html#cb56-6" aria-hidden="true" tabindex="-1"></a>  y <span class="op">=</span> y <span class="op">*</span> <span class="dv">2</span></span>
-<span id="cb56-7"><a href="guess-the-number-ai.html#cb56-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> f1(x, y)</span>
-<span id="cb56-8"><a href="guess-the-number-ai.html#cb56-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb56-9"><a href="guess-the-number-ai.html#cb56-9" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> f2(<span class="dv">4</span>, <span class="dv">2</span>)</span>
-<span id="cb56-10"><a href="guess-the-number-ai.html#cb56-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(z)</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb56-1"><a href="guess-the-number-ai.html#cb56-1" tabindex="-1"></a><span class="kw">def</span> f1(x, y):</span>
+<span id="cb56-2"><a href="guess-the-number-ai.html#cb56-2" tabindex="-1"></a>  <span class="cf">return</span> x <span class="op">/</span> y</span>
+<span id="cb56-3"><a href="guess-the-number-ai.html#cb56-3" tabindex="-1"></a>  </span>
+<span id="cb56-4"><a href="guess-the-number-ai.html#cb56-4" tabindex="-1"></a><span class="kw">def</span> f2(x, y):</span>
+<span id="cb56-5"><a href="guess-the-number-ai.html#cb56-5" tabindex="-1"></a>  x <span class="op">=</span> x <span class="op">+</span> <span class="dv">5</span></span>
+<span id="cb56-6"><a href="guess-the-number-ai.html#cb56-6" tabindex="-1"></a>  y <span class="op">=</span> y <span class="op">*</span> <span class="dv">2</span></span>
+<span id="cb56-7"><a href="guess-the-number-ai.html#cb56-7" tabindex="-1"></a>  <span class="cf">return</span> f1(x, y)</span>
+<span id="cb56-8"><a href="guess-the-number-ai.html#cb56-8" tabindex="-1"></a>  </span>
+<span id="cb56-9"><a href="guess-the-number-ai.html#cb56-9" tabindex="-1"></a>z <span class="op">=</span> f2(<span class="dv">4</span>, <span class="dv">2</span>)</span>
+<span id="cb56-10"><a href="guess-the-number-ai.html#cb56-10" tabindex="-1"></a><span class="bu">print</span>(z)</span></code></pre></div>
 <p>First, put a break point on the line in the main script that calls function <code>f2()</code>. Run the debugger via <strong>F5</strong> and the program will pause at that line. If you now press <strong>F10</strong> (step over), the program will go to the next line <code>print(z)</code>. However, if you are to press <strong>F11</strong> (step into) instead, the program will <em>step into</em> the function and go to <code>x = x + 5</code> line. When inside the function, you have the same two choices we just looked at but also, you can press <strong>Shift+F11</strong> to step out of the function. Here, the program will run all the code until you reach the next line <em>outside</em> of the function (you should end up at <code>print(z)</code> again). Experiment with putting breakpoints at various lines and stepping over/in/out to get a hang of these useful debugging tools.</p>
 <p>Now, put the breakpoint inside of <code>f1()</code> function and run the code via <strong>F5</strong>. Take a look at the left pane, you will see a <em>Call Stack</em> tab. While yellow highlighted line in the editor shows you where you currently are (should be inside the <code>f1()</code> function), the <em>Call Stack</em> shows you how did you get where. In this case it should show:</p>
 <div class="inline-table"><table class="table table-sm"><tbody>
@@ -377,18 +383,18 @@
 <span class="header-section-number">7.7</span> Documenting your function<a class="anchor" aria-label="anchor" href="#numpy-docstring"><i class="fas fa-link"></i></a>
 </h2>
 <p>Writing a function is only half the job. You need to document it! <a href="programming-tips.html#programming-tips">Remember</a>, this is a good habit that makes your code easy to use and reuse. There are different ways to document the code but we will use <a href="https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard">NumPy docstring convention</a>. Here is an example of such documented function</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb57-1"><a href="guess-the-number-ai.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_initial(full_string):</span>
-<span id="cb57-2"><a href="guess-the-number-ai.html#cb57-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Generates an initial using first symbol.</span></span>
-<span id="cb57-3"><a href="guess-the-number-ai.html#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb57-4"><a href="guess-the-number-ai.html#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
-<span id="cb57-5"><a href="guess-the-number-ai.html#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
-<span id="cb57-6"><a href="guess-the-number-ai.html#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="co">    full_string : str</span></span>
-<span id="cb57-7"><a href="guess-the-number-ai.html#cb57-7" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb57-8"><a href="guess-the-number-ai.html#cb57-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
-<span id="cb57-9"><a href="guess-the-number-ai.html#cb57-9" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
-<span id="cb57-10"><a href="guess-the-number-ai.html#cb57-10" aria-hidden="true" tabindex="-1"></a><span class="co">    str : single symbol</span></span>
-<span id="cb57-11"><a href="guess-the-number-ai.html#cb57-11" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb57-12"><a href="guess-the-number-ai.html#cb57-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> full_string[<span class="dv">0</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb57-1"><a href="guess-the-number-ai.html#cb57-1" tabindex="-1"></a><span class="kw">def</span> generate_initial(full_string):</span>
+<span id="cb57-2"><a href="guess-the-number-ai.html#cb57-2" tabindex="-1"></a>    <span class="co">"""Generates an initial using first symbol.</span></span>
+<span id="cb57-3"><a href="guess-the-number-ai.html#cb57-3" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb57-4"><a href="guess-the-number-ai.html#cb57-4" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb57-5"><a href="guess-the-number-ai.html#cb57-5" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb57-6"><a href="guess-the-number-ai.html#cb57-6" tabindex="-1"></a><span class="co">    full_string : str</span></span>
+<span id="cb57-7"><a href="guess-the-number-ai.html#cb57-7" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb57-8"><a href="guess-the-number-ai.html#cb57-8" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb57-9"><a href="guess-the-number-ai.html#cb57-9" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb57-10"><a href="guess-the-number-ai.html#cb57-10" tabindex="-1"></a><span class="co">    str : single symbol</span></span>
+<span id="cb57-11"><a href="guess-the-number-ai.html#cb57-11" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb57-12"><a href="guess-the-number-ai.html#cb57-12" tabindex="-1"></a>    <span class="cf">return</span> full_string[<span class="dv">0</span>]</span></code></pre></div>
 <p>Take the look at the <a href="https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard">manual</a> and document the <code>input_response</code> function. You will not need the <code>Parameters</code> section as it currently accepts no inputs.</p>
 <div class="rmdnote program">
 <p>Update your code in <code>code02.py</code>.</p>
@@ -464,8 +470,8 @@ report the best score (fewest number of attempts) after the game is over. You wi
 <span class="header-section-number">7.15</span> Ordnung muss sein!<a class="anchor" aria-label="anchor" href="#keep-imports-tidy"><i class="fas fa-link"></i></a>
 </h2>
 <p>So far, you only imported one library at most. However, as Python is highly modular, it is very common to have many imports in a single file. There are several rules that make it easier to track the imports. When you import libraries, all import statements should be at the top of your file and you should avoid putting them in random order. The recommended order is 1) system libraries, like <code>os</code> or <code>random</code>; 2) third-party libraries, like <code>psychopy</code>; 3) your project modules . And, within each section you should put the libraries <em>alphabetically</em>, so</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb58-1"><a href="guess-the-number-ai.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb58-2"><a href="guess-the-number-ai.html#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb58-1"><a href="guess-the-number-ai.html#cb58-1" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb58-2"><a href="guess-the-number-ai.html#cb58-2" tabindex="-1"></a><span class="im">import</span> random</span></code></pre></div>
 <p>This may not look particularly useful for our simple code but as your projects will grow, you will need to include more and more libraries. Keeping them in that order makes it easy to understand which libraries you use and which are non-standard. Alphabetic order means that you can quickly check whether a library is included, as you can quickly find the location where its import statement should appear.</p>
 </div>
 <div id="putting-video-into-videogames" class="section level2" number="7.16">
@@ -531,11 +537,11 @@ report the best score (fewest number of attempts) after the game is over. You wi
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-01-10.</p>
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-06-16.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+    <p>Please note that this website collects anonymized data via Google analytics. This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
   </div>
 
 </div></div>

@@ -7,7 +7,7 @@
 <title>Chapter 14 The Snake | Writing games with Python and PsychoPy</title>
 <meta name="author" content="Alexander (Sasha) Pastukhov">
 <meta name="description" content="This chapter marks the beginning of the second semester in the course, therefore we will use our first game to refresh your knowledge of Python acquired previously. We will use classes (and their...">
-<meta name="generator" content="bookdown 0.31 with bs4_book()">
+<meta name="generator" content="bookdown 0.34 with bs4_book()">
 <meta property="og:title" content="Chapter 14 The Snake | Writing games with Python and PsychoPy">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://alexander-pastukhov.github.io/writing-games-with-python-and-psychopy/the-snake.html">
@@ -18,7 +18,13 @@
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-NBXRG6YB3R"></script><script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-NBXRG6YB3R');
+      </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -229,11 +235,11 @@ Figure 14.1: Grid versus window coordinates
 <p>In our current design, we described direction as a tuple <code>(dx, dy)</code>. Let us change it, so that it is described using words <code>"up"</code>, <code>"down"</code>, <code>"left"</code>, and <code>"right"</code>. This is not strictly necessary but will make our lives somewhat easier later on when we add steering controls. More importantly, it will serve a didactic purpose as well, showing how you can use dictionaries to translate values from one representation to another.</p>
 <p>Thus, in the main script, let us create a new string variable <code>direction</code> and set it to <code>"up"</code> (or any other direction you like). We will keep the <code>grow()</code> method as is and will translate individual strings to pairs of <code>(dx, dy)</code> values in the main script itself. E.g., <code>"up"</code> should correspond to <code>(0, -1)</code>, <code>"right"</code> to <code>(1, 0)</code>, etc.</p>
 <p>We can implement this translation via if-elif conditional statements:</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb118-1"><a href="the-snake.html#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> direction <span class="op">==</span> <span class="st">"up"</span>:</span>
-<span id="cb118-2"><a href="the-snake.html#cb118-2" aria-hidden="true" tabindex="-1"></a>  dxy <span class="op">=</span> (<span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>)</span>
-<span id="cb118-3"><a href="the-snake.html#cb118-3" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> direction <span class="op">==</span> <span class="st">"right"</span>:</span>
-<span id="cb118-4"><a href="the-snake.html#cb118-4" aria-hidden="true" tabindex="-1"></a>  dxy <span class="op">=</span> (<span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb118-5"><a href="the-snake.html#cb118-5" aria-hidden="true" tabindex="-1"></a>  ...</span></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb118-1"><a href="the-snake.html#cb118-1" tabindex="-1"></a><span class="cf">if</span> direction <span class="op">==</span> <span class="st">"up"</span>:</span>
+<span id="cb118-2"><a href="the-snake.html#cb118-2" tabindex="-1"></a>  dxy <span class="op">=</span> (<span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb118-3"><a href="the-snake.html#cb118-3" tabindex="-1"></a><span class="cf">elif</span> direction <span class="op">==</span> <span class="st">"right"</span>:</span>
+<span id="cb118-4"><a href="the-snake.html#cb118-4" tabindex="-1"></a>  dxy <span class="op">=</span> (<span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb118-5"><a href="the-snake.html#cb118-5" tabindex="-1"></a>  ...</span></code></pre></div>
 <p>However, this approach introduces a lot of repetitive code and does not scale particularly well. Instead, we can use a <a href="memory-game.html#dictionaries">dictionary</a> (let us call it <code>DIRECTION_TO_DXY</code> as it is another constant) with <code>"up"</code>, <code>"right"</code>, etc. string as keys and tuples <code>(0, -1)</code>, <code>(1, 0)</code>, etc. as values. This way, we can use current value of the <code>direction</code> variable as a key to get the <code>(dx, dy)</code> pair from <code>DIRECTION_TO_DXY</code> dictionary. Do this translation directly in the <code>grow()</code> method call rather than creating a temporary variable as in the if-elif examples above. Test the translation by changing <code>direction</code> and checking that the snake moves accordingly.</p>
 <div class="rmdnote program">
 <p>Use <code>direction</code> and <code>DIRECTION_TO_DXY</code> in <em>code10.py</em>.</p>
@@ -330,9 +336,9 @@ Figure 14.1: Grid versus window coordinates
 <p>Use it in <em>code18.py</em>.</p>
 </div>
 </div>
-<div id="bells-and-whistels-three-lives" class="section level2" number="14.20">
+<div id="bells-and-whistles-three-lives" class="section level2" number="14.20">
 <h2>
-<span class="header-section-number">14.20</span> Bells and whistels: three lives<a class="anchor" aria-label="anchor" href="#bells-and-whistels-three-lives"><i class="fas fa-link"></i></a>
+<span class="header-section-number">14.20</span> Bells and whistles: three lives<a class="anchor" aria-label="anchor" href="#bells-and-whistles-three-lives"><i class="fas fa-link"></i></a>
 </h2>
 <p>Let us give the player three attempts to achieve the top score. They have three lives, every time the snake dies, the game <em>but not the score</em> resets: A single segment snake appears at the center and a new random apple appears elsewhere (where should you put the code to create them?). Once the snake dies three times, the game is over. Think how you can implement this three repetitions.</p>
 <p>The score should be cumulative, so at the beginning of round two it should be equal to the final score of round one. Think how you can achieve this. <em>Another important point</em>: now you have two nested loop, one is for the game, one is for the round. When the snake dies, the round is over and, if you run out of lives, the game as well. When the player presses <em>escape</em> both round <strong>and</strong> the game are over. Think about how you can implement it.</p>
@@ -340,18 +346,18 @@ Figure 14.1: Grid versus window coordinates
 <p>Put your updated code into <em>code19.py</em>.</p>
 </div>
 </div>
-<div id="bells-and-whistels-press-space-to-start-the-round" class="section level2" number="14.21">
+<div id="bells-and-whistles-press-space-to-start-the-round" class="section level2" number="14.21">
 <h2>
-<span class="header-section-number">14.21</span> Bells and whistels: press space to start the round<a class="anchor" aria-label="anchor" href="#bells-and-whistels-press-space-to-start-the-round"><i class="fas fa-link"></i></a>
+<span class="header-section-number">14.21</span> Bells and whistles: press space to start the round<a class="anchor" aria-label="anchor" href="#bells-and-whistles-press-space-to-start-the-round"><i class="fas fa-link"></i></a>
 </h2>
 <p>At the moment, our round starts immediately. It would be friendlier, if the player would start it themselves. Before each round, draw <em>all</em> visuals (snake, apple, score) plus a text “Press SPACE to start” and wait until either a <em>space</em> or <em>escape</em> key is pressed. In the former case, the trial should start. In the latter case, the player should exit the game.</p>
 <div class="rmdnote program">
 <p>Put your updated code into <em>code20.py</em>.</p>
 </div>
 </div>
-<div id="bells-and-whistels-showing-remaining-lives" class="section level2" number="14.22">
+<div id="bells-and-whistles-showing-remaining-lives" class="section level2" number="14.22">
 <h2>
-<span class="header-section-number">14.22</span> Bells and whistels: showing remaining lives<a class="anchor" aria-label="anchor" href="#bells-and-whistels-showing-remaining-lives"><i class="fas fa-link"></i></a>
+<span class="header-section-number">14.22</span> Bells and whistles: showing remaining lives<a class="anchor" aria-label="anchor" href="#bells-and-whistles-showing-remaining-lives"><i class="fas fa-link"></i></a>
 </h2>
 <p>Let us not just repeat the game three times but show the player how many lives they still have. Download the <a href="material/heart.png">heart.png</a><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;This image was downloaded from &lt;a href="https://openclipart.org/"&gt;openclipart.org&lt;/a&gt; and was created by &lt;a href="https://openclipart.org/artist/cliparteles"&gt;cliparteles&lt;/a&gt;&lt;/p&gt;'><sup>89</sup></a> and use it show remaining lives at the top-left corner of the screen: three hearts in round one, two hearts in round two, and just a single heart in round three. You will need to use (ImageStim)[<a href="https://www.psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim" class="uri">https://www.psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim</a>] for this. Think about the size of images and their location. Hint: I created a list of heart images using list comprehension and drawing hearts definitely requires a for loop.</p>
 <div class="rmdnote program">
@@ -423,9 +429,9 @@ Figure 14.1: Grid versus window coordinates
 <li><a class="nav-link" href="#eating-an-apple"><span class="header-section-number">14.17</span> Eating an apple</a></li>
 <li><a class="nav-link" href="#eating-yourself"><span class="header-section-number">14.18</span> Eating yourself</a></li>
 <li><a class="nav-link" href="#bells-and-whistles-score"><span class="header-section-number">14.19</span> Bells and whistles: score</a></li>
-<li><a class="nav-link" href="#bells-and-whistels-three-lives"><span class="header-section-number">14.20</span> Bells and whistels: three lives</a></li>
-<li><a class="nav-link" href="#bells-and-whistels-press-space-to-start-the-round"><span class="header-section-number">14.21</span> Bells and whistels: press space to start the round</a></li>
-<li><a class="nav-link" href="#bells-and-whistels-showing-remaining-lives"><span class="header-section-number">14.22</span> Bells and whistels: showing remaining lives</a></li>
+<li><a class="nav-link" href="#bells-and-whistles-three-lives"><span class="header-section-number">14.20</span> Bells and whistles: three lives</a></li>
+<li><a class="nav-link" href="#bells-and-whistles-press-space-to-start-the-round"><span class="header-section-number">14.21</span> Bells and whistles: press space to start the round</a></li>
+<li><a class="nav-link" href="#bells-and-whistles-showing-remaining-lives"><span class="header-section-number">14.22</span> Bells and whistles: showing remaining lives</a></li>
 <li><a class="nav-link" href="#bells-and-whistles-difficulty"><span class="header-section-number">14.23</span> Bells and whistles: difficulty</a></li>
 <li><a class="nav-link" href="#bells-and-whistles-blinking-game-over-message"><span class="header-section-number">14.24</span> Bells and whistles: blinking “game over” message</a></li>
 <li><a class="nav-link" href="#bells-and-whistles-sounds"><span class="header-section-number">14.25</span> Bells and whistles: sounds</a></li>
@@ -447,11 +453,11 @@ Figure 14.1: Grid versus window coordinates
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-01-10.</p>
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-06-16.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+    <p>Please note that this website collects anonymized data via Google analytics. This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
   </div>
 
 </div></div>

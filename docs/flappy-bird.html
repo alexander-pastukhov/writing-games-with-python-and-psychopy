@@ -7,7 +7,7 @@
 <title>Chapter 12 Flappy Bird | Writing games with Python and PsychoPy</title>
 <meta name="author" content="Alexander (Sasha) Pastukhov">
 <meta name="description" content="Today we will stat developing a Flappy Bird game. You control a bird that must fly through the openings in the obstacles but your only action is to “flap the wings” in order to counteract the...">
-<meta name="generator" content="bookdown 0.31 with bs4_book()">
+<meta name="generator" content="bookdown 0.34 with bs4_book()">
 <meta property="og:title" content="Chapter 12 Flappy Bird | Writing games with Python and PsychoPy">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://alexander-pastukhov.github.io/writing-games-with-python-and-psychopy/flappy-bird.html">
@@ -18,7 +18,13 @@
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-NBXRG6YB3R"></script><script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-NBXRG6YB3R');
+      </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -125,25 +131,25 @@
 <span class="header-section-number">12.2.5</span> A minimal class example<a class="anchor" aria-label="anchor" href="#a-minimal-class-example"><i class="fas fa-link"></i></a>
 </h3>
 <p>Enough of the theory, let us see how classes are implemented in Python. Here is a very simple class that has nothing but the <em>constructor</em> <code>__init__()</code> method, which is called whenever a new object (class instance) is created, and a single attribute / property <code>total</code>.</p>
-<div class="sourceCode" id="cb107"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb107-1"><a href="flappy-bird.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Accumulator:</span>
-<span id="cb107-2"><a href="flappy-bird.html#cb107-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb107-3"><a href="flappy-bird.html#cb107-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Simple class that accumulates (sums up) values.</span></span>
-<span id="cb107-4"><a href="flappy-bird.html#cb107-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb107-5"><a href="flappy-bird.html#cb107-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Properties</span></span>
-<span id="cb107-6"><a href="flappy-bird.html#cb107-6" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
-<span id="cb107-7"><a href="flappy-bird.html#cb107-7" aria-hidden="true" tabindex="-1"></a><span class="co">    total : float</span></span>
-<span id="cb107-8"><a href="flappy-bird.html#cb107-8" aria-hidden="true" tabindex="-1"></a><span class="co">        Total accumulated value</span></span>
-<span id="cb107-9"><a href="flappy-bird.html#cb107-9" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb107-10"><a href="flappy-bird.html#cb107-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb107-11"><a href="flappy-bird.html#cb107-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
-<span id="cb107-12"><a href="flappy-bird.html#cb107-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
-<span id="cb107-13"><a href="flappy-bird.html#cb107-13" aria-hidden="true" tabindex="-1"></a><span class="co">        Constructor, initializes the total value to zero.</span></span>
-<span id="cb107-14"><a href="flappy-bird.html#cb107-14" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
-<span id="cb107-15"><a href="flappy-bird.html#cb107-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.total <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb107-16"><a href="flappy-bird.html#cb107-16" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb107-17"><a href="flappy-bird.html#cb107-17" aria-hidden="true" tabindex="-1"></a><span class="co"># here we create an object number_sum, which is an instance of class Accumulator.</span></span>
-<span id="cb107-18"><a href="flappy-bird.html#cb107-18" aria-hidden="true" tabindex="-1"></a>number_sum <span class="op">=</span> Accumulator()</span>
-<span id="cb107-19"><a href="flappy-bird.html#cb107-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(number_sum.total)</span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb107-1"><a href="flappy-bird.html#cb107-1" tabindex="-1"></a><span class="kw">class</span> Accumulator:</span>
+<span id="cb107-2"><a href="flappy-bird.html#cb107-2" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb107-3"><a href="flappy-bird.html#cb107-3" tabindex="-1"></a><span class="co">    Simple class that accumulates (sums up) values.</span></span>
+<span id="cb107-4"><a href="flappy-bird.html#cb107-4" tabindex="-1"></a></span>
+<span id="cb107-5"><a href="flappy-bird.html#cb107-5" tabindex="-1"></a><span class="co">    Properties</span></span>
+<span id="cb107-6"><a href="flappy-bird.html#cb107-6" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb107-7"><a href="flappy-bird.html#cb107-7" tabindex="-1"></a><span class="co">    total : float</span></span>
+<span id="cb107-8"><a href="flappy-bird.html#cb107-8" tabindex="-1"></a><span class="co">        Total accumulated value</span></span>
+<span id="cb107-9"><a href="flappy-bird.html#cb107-9" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb107-10"><a href="flappy-bird.html#cb107-10" tabindex="-1"></a></span>
+<span id="cb107-11"><a href="flappy-bird.html#cb107-11" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb107-12"><a href="flappy-bird.html#cb107-12" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb107-13"><a href="flappy-bird.html#cb107-13" tabindex="-1"></a><span class="co">        Constructor, initializes the total value to zero.</span></span>
+<span id="cb107-14"><a href="flappy-bird.html#cb107-14" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb107-15"><a href="flappy-bird.html#cb107-15" tabindex="-1"></a>        <span class="va">self</span>.total <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb107-16"><a href="flappy-bird.html#cb107-16" tabindex="-1"></a>        </span>
+<span id="cb107-17"><a href="flappy-bird.html#cb107-17" tabindex="-1"></a><span class="co"># here we create an object number_sum, which is an instance of class Accumulator.</span></span>
+<span id="cb107-18"><a href="flappy-bird.html#cb107-18" tabindex="-1"></a>number_sum <span class="op">=</span> Accumulator()</span>
+<span id="cb107-19"><a href="flappy-bird.html#cb107-19" tabindex="-1"></a><span class="bu">print</span>(number_sum.total)</span></code></pre></div>
 <p>Let’s go through it line by line. First line <code>class Accumulator:</code> shows that this is a declaration of a <code>class</code> whose name is <code>Accumulator</code>. Note that the first letter is capitalized. This is not required per se, so Python police won’t be knocking on your door if you write it all in lower or upper case. However, the general recommendation is that <strong>class</strong> names are written using <code>UpperCaseCamelCase</code> whereas <strong>object</strong> (instances of the class) names are written using <code>lower_case_snake_case</code>. This makes distinguishing between classes and objects (instances of classes) easier, so you should follow this convention.</p>
 <p>The definition of the class are the remaining <em>indented</em> lines. As with functions or loops, it is the indentation that defines what is inside and what is outside of the class. The only method we defined is <code>def __init__(self):</code>. This is a <em>special</em> method<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;There are more special methods that you will learn about later, they all follow &lt;code&gt;__methodname__()&lt;/code&gt; convention.&lt;/p&gt;"><sup>67</sup></a> that is called when an object (instance of the class) is created. This allows you to initialize the object based on parameters that were passed to this function (if any). You do not call this function directly, rather it is called whenever an object is created, e.g., <code>number_sum = Accumulator()</code> (last line). Also, it does not return any value explicitly via <code>return</code>. Instead, <code>self</code> (the very first parameter, more on it below) is returned automatically.</p>
 <p>All class methods (apart from special cases we currently do not concern ourselves with) must have one special first parameter that is <em>the object</em> itself. By convention it is called <code>self</code><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Again, you can use any name for that parameter but that will surely confuse everyone.&lt;/p&gt;"><sup>68</sup></a>. It is passed to the method automatically, so whenever you write <code>square.draw()</code> (no explicit parameters written in the function call), the actual method still receives one parameter that is the <em>reference</em> to the <code>square</code> variable whose method you called. Inside a method, you use this variable to refer to the object itself.
@@ -154,14 +160,14 @@ Let us go back to the constructor <code>__init()__</code> to see how you can use
 <span class="header-section-number">12.2.6</span> <code>add</code> method<a class="anchor" aria-label="anchor" href="#add-method"><i class="fas fa-link"></i></a>
 </h3>
 <p>Let us add a method that adds 1 to the <code>total</code> property.</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb108-1"><a href="flappy-bird.html#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Accumulator:</span>
-<span id="cb108-2"><a href="flappy-bird.html#cb108-2" aria-hidden="true" tabindex="-1"></a>    ... <span class="co"># I am skipping all previous code here</span></span>
-<span id="cb108-3"><a href="flappy-bird.html#cb108-3" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb108-4"><a href="flappy-bird.html#cb108-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> add(<span class="va">self</span>):</span>
-<span id="cb108-5"><a href="flappy-bird.html#cb108-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
-<span id="cb108-6"><a href="flappy-bird.html#cb108-6" aria-hidden="true" tabindex="-1"></a><span class="co">        Add 1 to total</span></span>
-<span id="cb108-7"><a href="flappy-bird.html#cb108-7" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
-<span id="cb108-8"><a href="flappy-bird.html#cb108-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.total <span class="op">+=</span> <span class="dv">1</span></span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb108-1"><a href="flappy-bird.html#cb108-1" tabindex="-1"></a><span class="kw">class</span> Accumulator:</span>
+<span id="cb108-2"><a href="flappy-bird.html#cb108-2" tabindex="-1"></a>    ... <span class="co"># I am skipping all previous code here</span></span>
+<span id="cb108-3"><a href="flappy-bird.html#cb108-3" tabindex="-1"></a>    </span>
+<span id="cb108-4"><a href="flappy-bird.html#cb108-4" tabindex="-1"></a>    <span class="kw">def</span> add(<span class="va">self</span>):</span>
+<span id="cb108-5"><a href="flappy-bird.html#cb108-5" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb108-6"><a href="flappy-bird.html#cb108-6" tabindex="-1"></a><span class="co">        Add 1 to total</span></span>
+<span id="cb108-7"><a href="flappy-bird.html#cb108-7" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb108-8"><a href="flappy-bird.html#cb108-8" tabindex="-1"></a>        <span class="va">self</span>.total <span class="op">+=</span> <span class="dv">1</span></span></code></pre></div>
 <p>It has first special argument <code>self</code> that is the object itself and we simply add 1 to its <code>total</code> property. Again, remember that <code>self</code> is passed automatically whenever you call the method, meaning that an actual call looks like <code>number_sum.add()</code>.</p>
 <p>Create a Jupyter notebook (you will need to submit it as part of the assignment) and copy-paste the code for <code>Accumulator</code> class, including the <code>.add()</code> method. Create <strong>two</strong> objects, call them <code>counter1</code> and <code>counter2</code>. Call <code>.add()</code> method twice for <code>counter2</code> and thrice for <code>counter1</code> (bonus: do it using <code>for</code> loop). What is the value of the <code>.total</code> property of each object? Check it by printing it out.</p>
 <div class="rmdnote practice">
@@ -173,8 +179,8 @@ Let us go back to the constructor <code>__init()__</code> to see how you can use
 <span class="header-section-number">12.2.7</span> Flexible accumulator with a <code>subtract</code> method<a class="anchor" aria-label="anchor" href="#flexible-accumulator-with-a-subtract-method"><i class="fas fa-link"></i></a>
 </h3>
 <p>Now lets us create a new class that is a <em>descendant</em> of the <code>Accumulator</code>. We will call it <code>FlexibleAccumulator</code> as it will allow you to also <em>subtract</em> from the total count. You specify ancestors (could be more than one!) in round brackets after the class name</p>
-<div class="sourceCode" id="cb109"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb109-1"><a href="flappy-bird.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> FlexibleAccumulator(Accumulator):</span>
-<span id="cb109-2"><a href="flappy-bird.html#cb109-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span> <span class="co"># You must have at least one non-empty line, and pass means "do nothing"</span></span></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb109-1"><a href="flappy-bird.html#cb109-1" tabindex="-1"></a><span class="kw">class</span> FlexibleAccumulator(Accumulator):</span>
+<span id="cb109-2"><a href="flappy-bird.html#cb109-2" tabindex="-1"></a>    <span class="cf">pass</span> <span class="co"># You must have at least one non-empty line, and pass means "do nothing"</span></span></code></pre></div>
 <p>Now you have a new class that is a descendant of <code>Accumulator</code> but, so far, is a perfect copy of it. Add <code>subtract</code> method to the class. It should subtract <code>1</code> from the <code>.total</code> property (don’t forget to <em>document</em> it!). Check that it works. Create one instance of <code>Accumulator</code> and another one of <code>FlexibleAccumulator</code> class and check that you can call <code>add()</code> on both of them but <code>subtract()</code> only for the latter.</p>
 <div class="rmdnote practice">
 <p>Add <code>subtract</code> method to the <code>FlexibleAccumulator</code><br>
@@ -214,19 +220,19 @@ class in a Jupiter notebook. Add testing.</p>
 <span class="header-section-number">12.3.3</span> Local variables<a class="anchor" aria-label="anchor" href="#local-variables"><i class="fas fa-link"></i></a>
 </h3>
 <p>Just like normal functions, you methods can have local variables. They are local (visible and accessible only from within the method) and are not persistent (their values do not survive between the calls). Conceptually, you separate variables that need to be persistent (retain their value the whole time object exists) as attributes/properties and temporary variables that are need only for the computation itself as local method variables. What would be value of property <code>.total</code> in this example:</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb110-1"><a href="flappy-bird.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Accumulator:</span>
-<span id="cb110-2"><a href="flappy-bird.html#cb110-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, initial):</span>
-<span id="cb110-3"><a href="flappy-bird.html#cb110-3" aria-hidden="true" tabindex="-1"></a>        temp <span class="op">=</span> initial <span class="op">*</span> <span class="dv">2</span></span>
-<span id="cb110-4"><a href="flappy-bird.html#cb110-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.total <span class="op">=</span> initial</span>
-<span id="cb110-5"><a href="flappy-bird.html#cb110-5" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb110-6"><a href="flappy-bird.html#cb110-6" aria-hidden="true" tabindex="-1"></a>counter <span class="op">=</span> Accumulator(<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb110-1"><a href="flappy-bird.html#cb110-1" tabindex="-1"></a><span class="kw">class</span> Accumulator:</span>
+<span id="cb110-2"><a href="flappy-bird.html#cb110-2" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, initial):</span>
+<span id="cb110-3"><a href="flappy-bird.html#cb110-3" tabindex="-1"></a>        temp <span class="op">=</span> initial <span class="op">*</span> <span class="dv">2</span></span>
+<span id="cb110-4"><a href="flappy-bird.html#cb110-4" tabindex="-1"></a>        <span class="va">self</span>.total <span class="op">=</span> initial</span>
+<span id="cb110-5"><a href="flappy-bird.html#cb110-5" tabindex="-1"></a>        </span>
+<span id="cb110-6"><a href="flappy-bird.html#cb110-6" tabindex="-1"></a>counter <span class="op">=</span> Accumulator(<span class="dv">1</span>)</span></code></pre></div>
 <p>What about in this case?</p>
-<div class="sourceCode" id="cb111"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb111-1"><a href="flappy-bird.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Accumulator:</span>
-<span id="cb111-2"><a href="flappy-bird.html#cb111-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, initial):</span>
-<span id="cb111-3"><a href="flappy-bird.html#cb111-3" aria-hidden="true" tabindex="-1"></a>        temp <span class="op">=</span> initial <span class="op">*</span> <span class="dv">2</span></span>
-<span id="cb111-4"><a href="flappy-bird.html#cb111-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.total <span class="op">=</span> temp</span>
-<span id="cb111-5"><a href="flappy-bird.html#cb111-5" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb111-6"><a href="flappy-bird.html#cb111-6" aria-hidden="true" tabindex="-1"></a>counter <span class="op">=</span> Accumulator(<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb111"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb111-1"><a href="flappy-bird.html#cb111-1" tabindex="-1"></a><span class="kw">class</span> Accumulator:</span>
+<span id="cb111-2"><a href="flappy-bird.html#cb111-2" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, initial):</span>
+<span id="cb111-3"><a href="flappy-bird.html#cb111-3" tabindex="-1"></a>        temp <span class="op">=</span> initial <span class="op">*</span> <span class="dv">2</span></span>
+<span id="cb111-4"><a href="flappy-bird.html#cb111-4" tabindex="-1"></a>        <span class="va">self</span>.total <span class="op">=</span> temp</span>
+<span id="cb111-5"><a href="flappy-bird.html#cb111-5" tabindex="-1"></a>        </span>
+<span id="cb111-6"><a href="flappy-bird.html#cb111-6" tabindex="-1"></a>counter <span class="op">=</span> Accumulator(<span class="dv">1</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="flappy-bird-the-humble-beginnings" class="section level2" number="12.4">
@@ -234,14 +240,14 @@ class in a Jupiter notebook. Add testing.</p>
 <span class="header-section-number">12.4</span> Flappy Bird: the humble beginnings<a class="anchor" aria-label="anchor" href="#flappy-bird-the-humble-beginnings"><i class="fas fa-link"></i></a>
 </h2>
 <p>We will start with a basic scaffolding for our program. Download the <a href="material/Blue-Bird.png">bird image</a><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Created by &lt;a href="https://openclipart.org/artist/Scout"&gt;Madison Kingsford&lt;/a&gt;.&lt;/p&gt;'><sup>71</sup></a> and put it into a folder where you will store the code. Create a basic code that uses <a href="settings-files">settings file</a> that defines minimal setting for a window (size) and a bird (image file). Organize it hierarchically, as follows, as this will help us keep settings for different classes organized.</p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb112-1"><a href="flappy-bird.html#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb112-2"><a href="flappy-bird.html#cb112-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"Bird"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb112-3"><a href="flappy-bird.html#cb112-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Image"</span> <span class="fu">:</span> <span class="st">"Blue-Bird.png"</span></span>
-<span id="cb112-4"><a href="flappy-bird.html#cb112-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
-<span id="cb112-5"><a href="flappy-bird.html#cb112-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"Window"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb112-6"><a href="flappy-bird.html#cb112-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"Size"</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">800</span><span class="ot">,</span> <span class="dv">600</span><span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb112-7"><a href="flappy-bird.html#cb112-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
-<span id="cb112-8"><a href="flappy-bird.html#cb112-8" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb112-1"><a href="flappy-bird.html#cb112-1" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb112-2"><a href="flappy-bird.html#cb112-2" tabindex="-1"></a>  <span class="dt">"Bird"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb112-3"><a href="flappy-bird.html#cb112-3" tabindex="-1"></a>    <span class="dt">"Image"</span> <span class="fu">:</span> <span class="st">"Blue-Bird.png"</span></span>
+<span id="cb112-4"><a href="flappy-bird.html#cb112-4" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb112-5"><a href="flappy-bird.html#cb112-5" tabindex="-1"></a>  <span class="dt">"Window"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb112-6"><a href="flappy-bird.html#cb112-6" tabindex="-1"></a>    <span class="dt">"Size"</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">800</span><span class="ot">,</span> <span class="dv">600</span><span class="ot">]</span></span>
+<span id="cb112-7"><a href="flappy-bird.html#cb112-7" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb112-8"><a href="flappy-bird.html#cb112-8" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 <p>Create a <a href="https://psychopy.org/api/visual/window.html#psychopy.visual.Window">window</a> using this specified size and an <a href="https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim">ImageStim</a> using the filename from the settings file. Add a basic game loop in which you repeatedly draw the bird (should appear right at the center of the screen) and check for a key press (<em>escape</em> should exit the game).</p>
 <div class="rmdnote program">
 <p>Put your code into <code>code01.py</code>.</p>
@@ -253,19 +259,19 @@ class in a Jupiter notebook. Add testing.</p>
 </h2>
 <p>Our flappy bird is, effectively, an image but we would like it to have additional behaviors, like, automatically falling down due to gravity, flying up due to flapping its wings, etc. There are several way we can do this. We can keep the image in <a href="https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim">ImageStim</a> and write additional functions to handle it (the way we did previously). We could create an new class <code>FlappyBird</code> that will have the <a href="https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim">ImageStim</a> as its attribute. Or, we could utilize the power of inheritance and build <code>FlappyBird</code> class on top of the <a href="https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim">ImageStim</a>. This means less work for us, so that is the path we will follow.</p>
 <p>Create a new file that will contain your <code>FlappyBird</code> class. Here is how it should look like:</p>
-<div class="sourceCode" id="cb113"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb113-1"><a href="flappy-bird.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Your comment on what this file contains.</span></span>
-<span id="cb113-2"><a href="flappy-bird.html#cb113-2" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
-<span id="cb113-3"><a href="flappy-bird.html#cb113-3" aria-hidden="true" tabindex="-1"></a><span class="co"># import libraries, which ones do you need?</span></span>
-<span id="cb113-4"><a href="flappy-bird.html#cb113-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb113-5"><a href="flappy-bird.html#cb113-5" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> FlappyBird(visual.image.ImageStim):</span>
-<span id="cb113-6"><a href="flappy-bird.html#cb113-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">"""</span></span>
-<span id="cb113-7"><a href="flappy-bird.html#cb113-7" aria-hidden="true" tabindex="-1"></a><span class="co">  FlappyBird class based on ImageStim</span></span>
-<span id="cb113-8"><a href="flappy-bird.html#cb113-8" aria-hidden="true" tabindex="-1"></a><span class="co">  """</span></span>
-<span id="cb113-9"><a href="flappy-bird.html#cb113-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, win, settings):</span>
-<span id="cb113-10"><a href="flappy-bird.html#cb113-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb113-11"><a href="flappy-bird.html#cb113-11" aria-hidden="true" tabindex="-1"></a><span class="co">    Constructor.</span></span>
-<span id="cb113-12"><a href="flappy-bird.html#cb113-12" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb113-13"><a href="flappy-bird.html#cb113-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">super</span>().<span class="fu">__init__</span>(win, image<span class="op">=</span>settings[<span class="st">"Image"</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb113-1"><a href="flappy-bird.html#cb113-1" tabindex="-1"></a><span class="co">"""Your comment on what this file contains.</span></span>
+<span id="cb113-2"><a href="flappy-bird.html#cb113-2" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb113-3"><a href="flappy-bird.html#cb113-3" tabindex="-1"></a><span class="co"># import libraries, which ones do you need?</span></span>
+<span id="cb113-4"><a href="flappy-bird.html#cb113-4" tabindex="-1"></a></span>
+<span id="cb113-5"><a href="flappy-bird.html#cb113-5" tabindex="-1"></a><span class="kw">class</span> FlappyBird(visual.image.ImageStim):</span>
+<span id="cb113-6"><a href="flappy-bird.html#cb113-6" tabindex="-1"></a>  <span class="co">"""</span></span>
+<span id="cb113-7"><a href="flappy-bird.html#cb113-7" tabindex="-1"></a><span class="co">  FlappyBird class based on ImageStim</span></span>
+<span id="cb113-8"><a href="flappy-bird.html#cb113-8" tabindex="-1"></a><span class="co">  """</span></span>
+<span id="cb113-9"><a href="flappy-bird.html#cb113-9" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, win, settings):</span>
+<span id="cb113-10"><a href="flappy-bird.html#cb113-10" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb113-11"><a href="flappy-bird.html#cb113-11" tabindex="-1"></a><span class="co">    Constructor.</span></span>
+<span id="cb113-12"><a href="flappy-bird.html#cb113-12" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb113-13"><a href="flappy-bird.html#cb113-13" tabindex="-1"></a>    <span class="bu">super</span>().<span class="fu">__init__</span>(win, image<span class="op">=</span>settings[<span class="st">"Image"</span>])</span></code></pre></div>
 <p>In the code above, I defined <code>FlappyBird</code> as a descendant of the <a href="https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim">ImageStim</a><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Note that even though you can import &lt;code&gt;ImageStim&lt;/code&gt; from &lt;code&gt;visual&lt;/code&gt;, it is a better idea to specify its submodule for inheritance: &lt;code&gt;visual.image.ImageStim&lt;/code&gt;. Inheritance will work for &lt;code&gt;ImageStim&lt;/code&gt; even without that extra &lt;code&gt;.image&lt;/code&gt; bit but won’t work for some other stimuli due to so-called “laze loading” of classes. For these other classes, like &lt;code&gt;Rect&lt;/code&gt;, you will get a very mysterious sounding error message, so it is better to always use full paths to the class when inheriting from them. You can find the full path in the “Details” section of documentation. E.g., the full path for &lt;code&gt;Rect&lt;/code&gt; class is &lt;a href="https://psychopy.org/api/visual/rect.html#details"&gt;psychopy.visual.rect.Rect&lt;/a&gt;&lt;/p&gt;'><sup>72</sup></a>. To make the latter work, we need to initialize it properly by calling it constructor. This is what <code>super().__init__(...)</code> call does: Calls constructor of the ancestor class to enable all the magic that we want to reuse. Recall that <a href="https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim">ImageStim</a> needs at least two parameters: a PsychoPy <a href="(https://psychopy.org/api/visual/window.html#psychopy.visual.Window)">window</a> that the stimulus will belong to and an image (a filename in this case). Here, I assume that when I create a bird object (call the constructor), I pass <em>two</em> parameters (again, <code>self</code> comes “for free”, so you do not pass it explicitly but assume that it is the <em>first</em> argument that you get): the [window]((<a href="https://psychopy.org/api/visual/window.html#psychopy.visual.Window" class="uri">https://psychopy.org/api/visual/window.html#psychopy.visual.Window</a>) that we created plus a dictionary with settings for the bird (there will be more settings, so it would be practical to pass the whole dictionary instead of passing one parameter at a time).</p>
 <p>Copy paste that code (plus add appropriate imports and comments) and use <code>FlappyBird</code> class instead of <a href="https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim">ImageStim</a>. Note that <code>FlappyBird</code> inherits <em>all</em> its functionality from <a href="https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim">ImageStim</a>, so, apart from how you create it, you can use it in exactly the same way. Meaning, you do not need to modify anything else in your code (told you, it would save us time and effort!).</p>
 <div class="rmdnote program">
@@ -519,11 +525,11 @@ Use it in <code>code10.py</code>.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-01-10.</p>
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-06-16.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+    <p>Please note that this website collects anonymized data via Google analytics. This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
   </div>
 
 </div></div>

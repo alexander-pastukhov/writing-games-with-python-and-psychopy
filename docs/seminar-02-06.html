@@ -7,7 +7,7 @@
 <title>Chapter 13 Guitar Hero: staircase and iterator functions | Writing games with Python and PsychoPy</title>
 <meta name="author" content="Alexander (Sasha) Pastukhov">
 <meta name="description" content="13.1 Getting the difficulty just right In game design, one of the hardest things to get right is difficulty. Make your game too easy and it will be boring. Make it too hard and only hardcore fans...">
-<meta name="generator" content="bookdown 0.31 with bs4_book()">
+<meta name="generator" content="bookdown 0.34 with bs4_book()">
 <meta property="og:title" content="Chapter 13 Guitar Hero: staircase and iterator functions | Writing games with Python and PsychoPy">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://alexander-pastukhov.github.io/writing-games-with-python-and-psychopy/seminar-02-06.html">
@@ -18,7 +18,13 @@
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-NBXRG6YB3R"></script><script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-NBXRG6YB3R');
+      </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -129,7 +135,7 @@
 <p>The second parameter — position index — determines the horizontal position of the target and its color (to make targets more fun and distinct). For my code, I have decided to make rectangle 0.4 norm units wide and 0.1 norm units high. The leftmost <em>red</em> rectangle (for <code>ipos</code> 0), is centered at -0.5, the middle <em>green</em> one is dead center, and the rightmost <em>blue</em> rectangle is centered at 0.5. I’ve defined all these in my <code>settings.json</code> file under <code>Target</code> group. Think about how you can compute both color and position for a target from <code>ipos</code> and <code>settings</code> without using if-else statements. Also, think about the y-position of the rectangle, so it appears right at the top of the window.</p>
 <p>The second method you need is <code>draw()</code> which simply draws the rectangle<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Again, inheriting from &lt;code&gt;visual.Rect()&lt;/code&gt; would have taken care of this for you.&lt;/p&gt;"><sup>76</sup></a>. Test it by creating a target at one of the position (or three targets at all three positions) and drawing them in the main loop. You should get nice looking but static rectangle(s).</p>
 <div class="rmdnote program">
-<p>Put updated code in code02.py_ and create the class <code>Target</code> in a separate file.</p>
+<p>Put updated code in <code>code02.py</code> and create the class <code>Target</code> in a separate file.</p>
 </div>
 </div>
 <div id="target-class-moving" class="section level2" number="13.6">
@@ -140,7 +146,7 @@
 <p>For the actual falling down, implement a new method, call it <code>fall()</code>, that will update target’s position on every frame. The speed is in <code>norm units per second</code>, thus, to compute the change in vertical position you also need to know the how much time <em>in seconds</em> has elapsed since last position update. The simplest way to do this is by using a <a href="https://psychopy.org/api/clock.html#psychopy.clock.Clock">Clock</a> class. You create it as an attribute in the constructor and then, in the <code>fall()</code> method you use its current time to compute and apply a change in vertical position of the rectangle. Don’t forget to reset the clock after that!</p>
 <p>Include <code>fall()</code> method call in the main loop and see how the target falls. Experiment with falling speed!</p>
 <div class="rmdnote program">
-<p>Put updated code in <em>code03.py</em> and update the class <code>Target</code>.</p>
+<p>Put updated code in <code>code03.py</code> and update the class <code>Target</code>.</p>
 </div>
 </div>
 <div id="iteratorgenerator-functions" class="section level2" number="13.7">
@@ -148,43 +154,43 @@
 <span class="header-section-number">13.7</span> Iterator/Generator functions<a class="anchor" aria-label="anchor" href="#iteratorgenerator-functions"><i class="fas fa-link"></i></a>
 </h2>
 <p>In the next section, we will create a <code>TimedResponseTask</code> class that will generate targets at a random location and after a random interval. We can, of course, do it directly in the class but where’s fun in that?! Instead, we will use this as an opportunity to learn about iterator/generator functions. An iterator is a <em>function</em> that uses <code>yield</code> instead of <code>return</code> statement to, well, <em>yield</em> a value. It <em>yields</em> it, because the function itself <em>returns</em> an iterator object that you can iterate over in a for loop or via <code>next()</code> function. Importantly, <code>yield</code> “freezes” execution of the function and the next time you call the function <em>it continues from that point</em> rather than from the start of the function. Once you reach the end of the function, it automatically raises <code>StopIteration()</code> exception, so you don’t need to worry about how to communicate that you ran out of items. It may sound confusing but it is really simple. Here an example to illustrate this:</p>
-<div class="sourceCode" id="cb114"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb114-1"><a href="seminar-02-06.html#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> iterator_fun():</span>
-<span id="cb114-2"><a href="seminar-02-06.html#cb114-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">yield</span> <span class="dv">3</span></span>
-<span id="cb114-3"><a href="seminar-02-06.html#cb114-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">yield</span> <span class="dv">1</span></span>
-<span id="cb114-4"><a href="seminar-02-06.html#cb114-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">yield</span> <span class="st">"wow!"</span></span>
-<span id="cb114-5"><a href="seminar-02-06.html#cb114-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb114-6"><a href="seminar-02-06.html#cb114-6" aria-hidden="true" tabindex="-1"></a><span class="co"># function returns an iterator, not a value!</span></span>
-<span id="cb114-7"><a href="seminar-02-06.html#cb114-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(iterator_fun())</span>
-<span id="cb114-8"><a href="seminar-02-06.html#cb114-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb114-9"><a href="seminar-02-06.html#cb114-9" aria-hidden="true" tabindex="-1"></a><span class="co"># iterating via for loop</span></span>
-<span id="cb114-10"><a href="seminar-02-06.html#cb114-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;generator object iterator_fun at 0x00000293FF6DD310&gt;</span></span>
-<span id="cb114-11"><a href="seminar-02-06.html#cb114-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> elem <span class="kw">in</span> iterator_fun():</span>
-<span id="cb114-12"><a href="seminar-02-06.html#cb114-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(elem)</span>
-<span id="cb114-13"><a href="seminar-02-06.html#cb114-13" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb114-14"><a href="seminar-02-06.html#cb114-14" aria-hidden="true" tabindex="-1"></a><span class="co"># iterating via next(), note you use an iterator object </span></span>
-<span id="cb114-15"><a href="seminar-02-06.html#cb114-15" aria-hidden="true" tabindex="-1"></a><span class="co"># that function returned, not the function itself!</span></span>
-<span id="cb114-16"><a href="seminar-02-06.html#cb114-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3</span></span>
-<span id="cb114-17"><a href="seminar-02-06.html#cb114-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1</span></span>
-<span id="cb114-18"><a href="seminar-02-06.html#cb114-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; wow!</span></span>
-<span id="cb114-19"><a href="seminar-02-06.html#cb114-19" aria-hidden="true" tabindex="-1"></a>an_iterator <span class="op">=</span> iterator_fun()  </span>
-<span id="cb114-20"><a href="seminar-02-06.html#cb114-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb114-21"><a href="seminar-02-06.html#cb114-21" aria-hidden="true" tabindex="-1"></a><span class="co"># now you can use an_iterator to get a next item from it</span></span>
-<span id="cb114-22"><a href="seminar-02-06.html#cb114-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">next</span>(an_iterator))</span>
-<span id="cb114-23"><a href="seminar-02-06.html#cb114-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3</span></span>
-<span id="cb114-24"><a href="seminar-02-06.html#cb114-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">next</span>(an_iterator))</span>
-<span id="cb114-25"><a href="seminar-02-06.html#cb114-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1</span></span>
-<span id="cb114-26"><a href="seminar-02-06.html#cb114-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">next</span>(an_iterator))</span>
-<span id="cb114-27"><a href="seminar-02-06.html#cb114-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; wow!</span></span></code></pre></div>
-<div class="sourceCode" id="cb115"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb115-1"><a href="seminar-02-06.html#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="co"># next call will raise an exception StopIteration(), so I do not run it here.</span></span>
-<span id="cb115-2"><a href="seminar-02-06.html#cb115-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">next</span>(iterator_var))</span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb114-1"><a href="seminar-02-06.html#cb114-1" tabindex="-1"></a><span class="kw">def</span> iterator_fun():</span>
+<span id="cb114-2"><a href="seminar-02-06.html#cb114-2" tabindex="-1"></a>    <span class="cf">yield</span> <span class="dv">3</span></span>
+<span id="cb114-3"><a href="seminar-02-06.html#cb114-3" tabindex="-1"></a>    <span class="cf">yield</span> <span class="dv">1</span></span>
+<span id="cb114-4"><a href="seminar-02-06.html#cb114-4" tabindex="-1"></a>    <span class="cf">yield</span> <span class="st">"wow!"</span></span>
+<span id="cb114-5"><a href="seminar-02-06.html#cb114-5" tabindex="-1"></a>  </span>
+<span id="cb114-6"><a href="seminar-02-06.html#cb114-6" tabindex="-1"></a><span class="co"># function returns an iterator, not a value!</span></span>
+<span id="cb114-7"><a href="seminar-02-06.html#cb114-7" tabindex="-1"></a><span class="bu">print</span>(iterator_fun())</span>
+<span id="cb114-8"><a href="seminar-02-06.html#cb114-8" tabindex="-1"></a></span>
+<span id="cb114-9"><a href="seminar-02-06.html#cb114-9" tabindex="-1"></a><span class="co"># iterating via for loop</span></span>
+<span id="cb114-10"><a href="seminar-02-06.html#cb114-10" tabindex="-1"></a><span class="co">#&gt; &lt;generator object iterator_fun at 0x000002C05F837370&gt;</span></span>
+<span id="cb114-11"><a href="seminar-02-06.html#cb114-11" tabindex="-1"></a><span class="cf">for</span> elem <span class="kw">in</span> iterator_fun():</span>
+<span id="cb114-12"><a href="seminar-02-06.html#cb114-12" tabindex="-1"></a>    <span class="bu">print</span>(elem)</span>
+<span id="cb114-13"><a href="seminar-02-06.html#cb114-13" tabindex="-1"></a>    </span>
+<span id="cb114-14"><a href="seminar-02-06.html#cb114-14" tabindex="-1"></a><span class="co"># iterating via next(), note you use an iterator object </span></span>
+<span id="cb114-15"><a href="seminar-02-06.html#cb114-15" tabindex="-1"></a><span class="co"># that function returned, not the function itself!</span></span>
+<span id="cb114-16"><a href="seminar-02-06.html#cb114-16" tabindex="-1"></a><span class="co">#&gt; 3</span></span>
+<span id="cb114-17"><a href="seminar-02-06.html#cb114-17" tabindex="-1"></a><span class="co">#&gt; 1</span></span>
+<span id="cb114-18"><a href="seminar-02-06.html#cb114-18" tabindex="-1"></a><span class="co">#&gt; wow!</span></span>
+<span id="cb114-19"><a href="seminar-02-06.html#cb114-19" tabindex="-1"></a>an_iterator <span class="op">=</span> iterator_fun()  </span>
+<span id="cb114-20"><a href="seminar-02-06.html#cb114-20" tabindex="-1"></a></span>
+<span id="cb114-21"><a href="seminar-02-06.html#cb114-21" tabindex="-1"></a><span class="co"># now you can use an_iterator to get a next item from it</span></span>
+<span id="cb114-22"><a href="seminar-02-06.html#cb114-22" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">next</span>(an_iterator))</span>
+<span id="cb114-23"><a href="seminar-02-06.html#cb114-23" tabindex="-1"></a><span class="co">#&gt; 3</span></span>
+<span id="cb114-24"><a href="seminar-02-06.html#cb114-24" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">next</span>(an_iterator))</span>
+<span id="cb114-25"><a href="seminar-02-06.html#cb114-25" tabindex="-1"></a><span class="co">#&gt; 1</span></span>
+<span id="cb114-26"><a href="seminar-02-06.html#cb114-26" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">next</span>(an_iterator))</span>
+<span id="cb114-27"><a href="seminar-02-06.html#cb114-27" tabindex="-1"></a><span class="co">#&gt; wow!</span></span></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb115-1"><a href="seminar-02-06.html#cb115-1" tabindex="-1"></a><span class="co"># next call will raise an exception StopIteration(), so I do not run it here.</span></span>
+<span id="cb115-2"><a href="seminar-02-06.html#cb115-2" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">next</span>(iterator_var))</span></code></pre></div>
 <p>This format makes writing iterators very easy, just <code>yield</code> whatever you want in an order you want and Python will take care of the rest. You can also <code>yield</code> in a loop, inside an if-else statement, etc. Look at the code below and figure out what will be printed out before running it.</p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb116-1"><a href="seminar-02-06.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> iterator_fun():</span>
-<span id="cb116-2"><a href="seminar-02-06.html#cb116-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> e <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>):</span>
-<span id="cb116-3"><a href="seminar-02-06.html#cb116-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> e <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">1</span>:</span>
-<span id="cb116-4"><a href="seminar-02-06.html#cb116-4" aria-hidden="true" tabindex="-1"></a>      <span class="cf">yield</span> e</span>
-<span id="cb116-5"><a href="seminar-02-06.html#cb116-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-6"><a href="seminar-02-06.html#cb116-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> iterator_fun():</span>
-<span id="cb116-7"><a href="seminar-02-06.html#cb116-7" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(item)</span></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb116-1"><a href="seminar-02-06.html#cb116-1" tabindex="-1"></a><span class="kw">def</span> iterator_fun():</span>
+<span id="cb116-2"><a href="seminar-02-06.html#cb116-2" tabindex="-1"></a>  <span class="cf">for</span> e <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>):</span>
+<span id="cb116-3"><a href="seminar-02-06.html#cb116-3" tabindex="-1"></a>    <span class="cf">if</span> e <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb116-4"><a href="seminar-02-06.html#cb116-4" tabindex="-1"></a>      <span class="cf">yield</span> e</span>
+<span id="cb116-5"><a href="seminar-02-06.html#cb116-5" tabindex="-1"></a></span>
+<span id="cb116-6"><a href="seminar-02-06.html#cb116-6" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> iterator_fun():</span>
+<span id="cb116-7"><a href="seminar-02-06.html#cb116-7" tabindex="-1"></a>  <span class="bu">print</span>(item)</span></code></pre></div>
 <p>For our <code>TimedResponseTask</code> class, we will need two <em>generators</em>. They are <em>generators</em> rather than <em>iterators</em> because both will be endless. One that generates a random delay until the next target and one that generates a random target position (0, 1, or 2). Implement both in a separate file (I called it <em>generators.py</em>).</p>
 <p>The <code>time_to_next_target_generator()</code> function should take a tuple of two float values, which define shortest and longest allowed delays, as a parameter and <em>yield</em> a <a href="https://docs.python.org/3/library/random.html#random.uniform">random number</a> within this range in an <em>endless</em> loop. We need the endless loop (<code>while True:</code> will do) because we do not know how many values we will need, so we just generate as many as needed.</p>
 <p>The <code>next_target_generator()</code> will be a bit more interesting. It can just return a <a href="https://docs.python.org/3/library/random.html#random.choice">random.choice</a> from 0, 1, and 2 but where is fun in that? Instead, we will make it a bit more complicated to ensure that all three targets appear equal number of times within <em>3N</em> trials, where <em>N</em> will be a parameter of the generator function. This would ensure random, reasonably unpredictable but balanced targets in the short run. Remember, in the long run random choice will always give us a balanced uniform distribution but there is not such guarantee for the shorter runs of a few trials. First, you should create a list where each target appears N times (think how you can do it using <a href="https://docs.python.org/3/library/functions.html#func-range">range()</a>, <a href="https://docs.python.org/3/library/functions.html#func-list">list()</a> and <a href="https://docs.python.org/3/library/stdtypes.html#common-sequence-operations">*</a>). Then, create an endless loop (again, we don’t know how many values we will need) in which you 1) shuffle elements of the list, 2) yield one element at a time via for loop. Once you run out of elements, you shuffle them again and yield one by one again. Then repeat. And again, and again. Endless loop!</p>
@@ -245,24 +251,24 @@ where <span class="math inline">\(y_{target}\)</span> is the vertical center of 
 <p>Playing is more fun when you can see how well you are doing. Let us add a simple score indicator that is updated with response score. You already know how you can do it via <a href="https://psychopy.org/api/visual/textstim.html#psychopy.visual.TextStim">TextStim</a> stimulus but you also already know how you can inherit from a base class and extend its functionality. This is what we will do here, as the class will record and draw the score (that part is covered by the inheritance).</p>
 <p>Create a new class (I have called it <code>ScoreText</code>) that inherits from <a href="https://psychopy.org/api/visual/textstim.html#psychopy.visual.TextStim">TextStim</a>. In the constructor, you need to create an integer attribute that will hold current <code>score</code> and initialize it 0. Plus, call ancestor’s constructor via <code>super().__init__(...)</code> to initialize and place the text stimulus (I’ve picked top left corner). Think about parameters that the constructor and ancestor’s constructor need.</p>
 <p>Next, we need to update the score (both its numeric form <em>and</em> the text that we draw) every time participant presses a key. We could implement the code <em>outside</em> of the class but that is a fairly bad idea, as it puts class-related code elsewhere. We could also implement a “normal” method, e.g., <code>add()</code> that will take care of that. Instead, we will implement a <em>special</em> method <a href="https://docs.python.org/3/reference/datamodel.html#object.__iadd__"><strong>iadd</strong></a> that allows to “add to” the object. It takes a single parameter (in addition to the compulsory <code>self</code>, of course), performs “adding to the self” operation (whatever that means with respect to your object, can be mathematical addition for an attribute, concatenation of the string, adding to the list, etc.), and <strong>returns back the reference to itself</strong>, i.e., returns <code>self</code> not a value of any attribute! Here’s how it works:</p>
-<div class="sourceCode" id="cb117"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb117-1"><a href="seminar-02-06.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> AddIt():</span>
-<span id="cb117-2"><a href="seminar-02-06.html#cb117-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
-<span id="cb117-3"><a href="seminar-02-06.html#cb117-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.number <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb117-4"><a href="seminar-02-06.html#cb117-4" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb117-5"><a href="seminar-02-06.html#cb117-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__iadd__</span>(<span class="va">self</span>, addendum):</span>
-<span id="cb117-6"><a href="seminar-02-06.html#cb117-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.number <span class="op">+=</span> addendum</span>
-<span id="cb117-7"><a href="seminar-02-06.html#cb117-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span> <span class="co"># important!!!</span></span>
-<span id="cb117-8"><a href="seminar-02-06.html#cb117-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-9"><a href="seminar-02-06.html#cb117-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-10"><a href="seminar-02-06.html#cb117-10" aria-hidden="true" tabindex="-1"></a>adder <span class="op">=</span> AddIt()</span>
-<span id="cb117-11"><a href="seminar-02-06.html#cb117-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(adder.number)</span>
-<span id="cb117-12"><a href="seminar-02-06.html#cb117-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0</span></span>
-<span id="cb117-13"><a href="seminar-02-06.html#cb117-13" aria-hidden="true" tabindex="-1"></a>adder <span class="op">+=</span> <span class="dv">10</span></span>
-<span id="cb117-14"><a href="seminar-02-06.html#cb117-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(adder.number)</span>
-<span id="cb117-15"><a href="seminar-02-06.html#cb117-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10</span></span></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb117-1"><a href="seminar-02-06.html#cb117-1" tabindex="-1"></a><span class="kw">class</span> AddIt():</span>
+<span id="cb117-2"><a href="seminar-02-06.html#cb117-2" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb117-3"><a href="seminar-02-06.html#cb117-3" tabindex="-1"></a>        <span class="va">self</span>.number <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb117-4"><a href="seminar-02-06.html#cb117-4" tabindex="-1"></a>        </span>
+<span id="cb117-5"><a href="seminar-02-06.html#cb117-5" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__iadd__</span>(<span class="va">self</span>, addendum):</span>
+<span id="cb117-6"><a href="seminar-02-06.html#cb117-6" tabindex="-1"></a>        <span class="va">self</span>.number <span class="op">+=</span> addendum</span>
+<span id="cb117-7"><a href="seminar-02-06.html#cb117-7" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span> <span class="co"># important!!!</span></span>
+<span id="cb117-8"><a href="seminar-02-06.html#cb117-8" tabindex="-1"></a></span>
+<span id="cb117-9"><a href="seminar-02-06.html#cb117-9" tabindex="-1"></a></span>
+<span id="cb117-10"><a href="seminar-02-06.html#cb117-10" tabindex="-1"></a>adder <span class="op">=</span> AddIt()</span>
+<span id="cb117-11"><a href="seminar-02-06.html#cb117-11" tabindex="-1"></a><span class="bu">print</span>(adder.number)</span>
+<span id="cb117-12"><a href="seminar-02-06.html#cb117-12" tabindex="-1"></a><span class="co">#&gt; 0</span></span>
+<span id="cb117-13"><a href="seminar-02-06.html#cb117-13" tabindex="-1"></a>adder <span class="op">+=</span> <span class="dv">10</span></span>
+<span id="cb117-14"><a href="seminar-02-06.html#cb117-14" tabindex="-1"></a><span class="bu">print</span>(adder.number)</span>
+<span id="cb117-15"><a href="seminar-02-06.html#cb117-15" tabindex="-1"></a><span class="co">#&gt; 10</span></span></code></pre></div>
 <p>Implement that special method for your class, so we can do <code>score_stim +=  timed_task.check(...)</code>. Remember, you have to update both numeric <em>and</em> visual representations of the score in that method! Add the score to the main code.</p>
 <div class="rmdnote program">
-<p>Put updated code in <em>code06.py</em>, create <code>ScoreText</code> class.</p>
+<p>Put updated code in <code>code06.py</code>, create <code>ScoreText</code> class.</p>
 </div>
 </div>
 <div id="staircase" class="section level2" number="13.13">
@@ -282,7 +288,7 @@ where <span class="math inline">\(y_{target}\)</span> is the vertical center of 
 </h2>
 <p>Let us add a competitive edge by limiting the run time to 20 seconds (you can pick your own duration, of course, and you definitely want to be a setting). Create an additional outer loop, so that the game can be played many times over. Once the round is over, show the latest state (redrawing all game objects) plus the “Round over” sign and wait for the player to press either <em>escape</em> (then you exit the game) or <em>space</em> (to start the next round). Remember to recreate all game objects anew for the next round (or create a <code>reset</code> method for all of them).</p>
 <div class="rmdnote program">
-<p>Put updated code in <em>code07.py</em>, create <code>ScoreText</code> class.</p>
+<p>Put updated code in <code>code07.py</code>.</p>
 </div>
 </div>
 <div id="using-psychopys-stairhandler" class="section level2" number="13.15">
@@ -292,14 +298,14 @@ where <span class="math inline">\(y_{target}\)</span> is the vertical center of 
 <p>Now that you know how to program a very basic staircase, let us use its much more flexible implementation by PsychoPy via <a href="https://psychopy.org/api/data.html#stairhandler">StairHandler</a> class. We will use so as to replicate the staircase that we already implemented. However, it is capable of much more and PsychoPy has implementation for other adaptive methods, such as parametric <a href="https://psychopy.org/api/data.html#psychopy.data.PsiHandler">Psi</a> or <a href="https://psychopy.org/api/data.html#questhandler">Quest</a> approaches. I strongly recommend consulting the literature to decide which method is best suited for your experiment and then relying on PsychoPy’s implementation in your code.</p>
 <p>We will need to modify our <code>TimedResponseTask</code>, so let us create its twin <code>TimedResponseTask2</code> (or <code>TimedResponseTaskPsychoPy</code>, if you find that more intuitive). Simply copy-paste the entire code, modify the name, import and use it in your <em>code08.py</em> code. Make sure everything works just as before (because you did not do anything beyond making a carbon copy).</p>
 <p>Now let us make use of the <a href="https://psychopy.org/api/data.html#stairhandler">StairHandler</a> in <code>TimedResponseTask2</code>. Drop <code>correct_on_a_row</code> attribute and create a <a href="https://psychopy.org/api/data.html#stairhandler">StairHandler</a> as <code>stairhandler</code> attribute instead. You need to specify <code>startVal</code> which is the initial value for the <code>speed_factor</code>, thus use whatever value you had previously. <a href="https://psychopy.org/api/data.html#stairhandler">StairHandler</a> uses <code>nUp=1</code> and <code>nDown=3</code> by default. This matches our custom staircase, so theoretically you can use defaults by omitting these parameters. However, for the sake of code’s readability, do specify these explicitly. Our steps were logarithmic, so use <code>stepType="log"</code> and a single fixed <code>stepSizes=-0.1</code>. The magnitude of <code>-0.1</code> correspond roughly to the step that we used in the custom staircase and we need the negative sign because <a href="https://psychopy.org/api/data.html#stairhandler">StairHandler</a> <em>increases</em> the staircase level following an incorrect response. In our case, we want an exact opposite, <em>decreasing</em> <code>speed_factor</code> tp slow targets down. Hence, the negative sign that turn increase into a decrease. Finally, <a href="https://psychopy.org/api/data.html#stairhandler">StairHandler</a> will terminate after it reaches either desired number of trials (<code>nTrial</code>) or reversals (<code>nReversals</code>, changes from correct to incorrect responses or vice versa). These are the settings that would typically determine length of a single block/run in the real experiment. However, we limited our rounds by <em>time</em>, so we only need to make sure that the <a href="https://psychopy.org/api/data.html#stairhandler">StairHandler</a> does not run out of trials before the run is over. Thus, specify some very large number (e.g., 1000) for both these parameters.</p>
-<p>Once you created <code>stairhandler</code> attribute, it is ready for use via <code>next(staircase)</code>. Call it the first time in the constructor and assign the value it returns to <code>speed_factor</code> attribute (should be whatever <code>startVal</code> you assigned to it but do put a breakpoint and double-check!)</p>
+<p>Once you created <code>stairhandler</code> attribute, it is ready for use via <code>next(self.stairhandler)</code>. Call it the first time in the constructor and assign the value it returns to <code>speed_factor</code> attribute (should be whatever <code>startVal</code> you assigned to it but do put a breakpoint and double-check!)</p>
 <p>Next, we need to modify our <code>staicase()</code> method making it much simpler. First, remove the <code>if correct: ... else: ...</code> code but leave targets’ speed adjustment code intact (we still need it!). Then, let <code>stairhandler</code> adjust itself via <a href="https://psychopy.org/api/data.html#psychopy.data.StairHandler.addResponse">addResponse()</a> method using an information on whether the response was correct (you already have a parameter with exactly that information). Finally, get the next <code>speed_factor</code> exactly the same way as in the constructor. Done!</p>
 <div class="rmdnote program">
-<p>Put updated code in <em>code08.py</em> using <code>TimedResponseTask2</code>.</p>
+<p>Put updated code in <code>code08.py</code> using <code>TimedResponseTask2</code>.</p>
 </div>
 <p>Your program should run very much like before but now you have many more opportunities to make it more flexible at little cost for yourself (look at <a href="https://psychopy.org/api/data.html#stairhandler">StairHandler</a> settings) and to log it via one of <code>saveAs</code> methods.Let us do the latter, save staircase logs via <a href="https://psychopy.org/api/data.html#psychopy.data.StairHandler.saveAsText">saveAsText()</a> after a run is over. Figure out a way to generate a unique filename for each run, so that the logs will not be overwritten.</p>
 <div class="rmdnote program">
-<p>Save staircase logs in <em>code09.py</em>.</p>
+<p>Save staircase logs in <code>code09.py</code>.</p>
 </div>
 </div>
 <div id="this-is-just-a-start" class="section level2" number="13.16">
@@ -351,11 +357,11 @@ where <span class="math inline">\(y_{target}\)</span> is the vertical center of 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-01-10.</p>
+    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-06-16.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+    <p>Please note that this website collects anonymized data via Google analytics. This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
   </div>
 
 </div></div>
