@@ -1,7 +1,7 @@
 --- 
 title: "Writing games with Python and PsychoPy"
 author: "Alexander (Sasha) Pastukhov"
-date: "2023-06-16"
+date: "2023-06-19"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib]
@@ -11,6 +11,7 @@ description: |
   Material and exercises for 'Python for social and experimental psychology' seminar.
 biblio-style: apalike
 csl: chicago-fullnote-bibliography.csl
+twitter-handle: PastukhovSasha
 ---
 
 # Introduction {#intro}
