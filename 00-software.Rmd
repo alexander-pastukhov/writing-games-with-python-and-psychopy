@@ -1,21 +1,21 @@
 # Software {#software}
 For this book and seminar, we will need to install
 
-* PsychoPy that comes bundled with Python.
+* PsychoPy.
 * IDE of your choice. My instructions will be for Visual Studio Code, which has a very good Python support.
 * Jupyter Notebook for trying out small snippets of code.
 
 I will not give detailed instructions on how to install the necessary software but rather point you to official manuals. This makes this text more future-proof as specific details might easily change^[If you are part of the seminar, ask me whenever you have problems or are unsure about how to proceeed].
 
 ## PsychoPy {#install-psychopy}
-Download and install [Standalone PsychoPy](https://www.psychopy.org/download.html) version. Use whatever the latest (and greatest) PsychoPy version is suggested to you (PsychoPy 2022.2.4 using Python 3.8 as of time of writing) and follow instructions.
+If you are using Windows, download and install [Standalone PsychoPy](https://www.psychopy.org/download.html) version. Use whatever the latest (and greatest) PsychoPy version is suggested to you (PsychoPy 2023.2.2 using Python 3.8 as of time of writing) and follow instructions. 
 
-Note that you can also install PsychoPy as a anaconda package or install an official Python distribution and add PsychoPy via pip. However, I find the standalone easier to use as it has all necessary additional libraries. Plus, it has additional tools for GUI-based experiment programming and integration with [Pavlovia.org](https://pavlovia.org/).
+If you are using Mac or Linux, installing PsychoPy via pip or Anaconda are your options. Please follow up-to-date [instructions](https://www.psychopy.org/download.html#manual-installations). 
 
 ## VS Code {#install-vs-code}
 [Visual Studio Code](https://code.visualstudio.com/) is a free lightweight open-source editor with strong support for Python. Download the installer for your platform and follow the instructions.
 
-Next, follow [Getting Started with Python in VS Code](https://code.visualstudio.com/docs/python/python-tutorial) tutorial. **Skip** the _Install a Python interpreter_ section, as you already have Python installation bundled with PsychoPy. This is the interpreter that you should use in the _Select a Python interpreter_ section. In my case the path is `C:\Program Files\PsychoPy3\python.exe`.
+Next, follow [Getting Started with Python in VS Code](https://code.visualstudio.com/docs/python/python-tutorial) tutorial. If you are using Windows and the standalone PsychoPy installation, **skip** the _Install a Python interpreter_ section, as you already have Python installation bundled with PsychoPy. This is the interpreter that you should use in the _Select a Python interpreter_ section. In my case the path is `C:\Program Files\PsychoPy3\python.exe`.
 
 Install and enable a linter, software that highlights syntactical and stylistic problems in your Python source code. Follow the [manual](https://code.visualstudio.com/docs/python/linting) at VS Code website.
 

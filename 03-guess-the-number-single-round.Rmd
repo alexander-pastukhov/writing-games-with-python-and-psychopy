@@ -28,13 +28,13 @@ Our first version will allow just one attempt and the overall game algorithm wil
 
 
 ## Let's pick a number
-Let us start by implementing just the first two steps of the program. First, create a variable holding a number that computer "picked". We will name it `number_picked` (you can use some other meaningful name as well but it might be easier if we all stick to the same name). To make things simpler at the beginning, we will hard-code an arbitrary number between 1 and 10 (pick the one you like). Then, let us print it out, so that we know the number ourselves^[Of course, we know it because we hard-coded it. But that won't be the case when computer will generate it randomly, so let us plan for the future]. Use string formatting to make things user-friendly, e.g., print out something like "The number I've picked is ...". You should be able to do this using the knowledge from the previous chapter. Your code should be a two-liner:
+Let us start by implementing just the first two steps of the program. First, create a variable holding a number that computer "picked". We will name it `number_picked` (you can use some other meaningful name as well but it might be easier if we all stick to the same name). To make things simpler at the beginning, we will hard-code an arbitrary number between 1 and 10 (pick the one you like). Then, let us print it out, so that we know the number ourselves^[Of course, we know it because we hard-coded it, but that won't be the case when computer will generate it randomly, so let us plan for the future]. Use string formatting to make things user-friendly, e.g., print out something like "The number I've picked is ...". You should be able to do this using the knowledge from the [previous chapter](#string-formatting). Your code should be a two-liner:
 ```{python eval=FALSE}
 # 1. create variable and set its value
 # 2. print out the value
 ```
 
-Try out this two-liner in a Jupyter Notebook (create an empty notebook just for that). Once you are happy with it, copy-paste the code into `code01.py` and read on to learn how to run it.
+Try out this two-liner in a Jupyter Notebook (create an empty notebook just for that). Once you are happy with it, copy-paste the code into `code01.py` and read on to learn how to document and run it.
 
 ::: {.rmdnote .program}
 Put your code into `code01.py`.
@@ -43,10 +43,9 @@ Put your code into `code01.py`.
 ## Documenting your code
 Now that you have your first file with Python program, you should document it. Documenting a two-lines long and simple program may feel silly but it should be an automatic thing. Later on you will find yourself using several lines of comments to document a single line function. Again, it is not about the code that works, it is about the code you can understand. In a sense, it is better to have a clean well-documented program that currently does not work correctly than an undocumented spaghetti code that does. You can fix and update the former, but maintaining or updating the latter...
 
-In Python, you have two ways to write comments  multiline and single line
+In Python, you have two ways to write comments: multiline and single line
 ```python
-'''
-A 
+'''A 
 multiline 
 comment
 '''
@@ -54,9 +53,9 @@ comment
 #  A single line comment.
 ```
 
-Use multiline comments to write documentation for individual files, functions, classes, methods, etc. You will learn how to format this documentation Numpy docstring style, once you learn about functions.  In our case, you should start your `code01.py` file with a multiline comment that briefly describes what program it contains. Minimally, you should write that this is a _Guess a Number_ game. It is probably a good idea to sketch out what the game is about.
+Use multiline comments to write documentation for individual files, functions, classes, methods, etc. You will learn how to format this documentation Numpy docstring style, once you learn about functions. In our case, you should start your `code01.py` file with a multiline comment that briefly describes what program it contains. Minimally, you should write that this is a _Guess a Number_ game. It is probably a good idea to sketch out what the game is about.
 
-Use single line comments to explain what happens in a particular code block. You do not need to comment every line and you should not explain the code in human language. A comment should be about _what_ is going on not _how_. At the moment, we have too little code to need this. 
+Use single line comments to explain what happens in a particular code block. You do not need to comment every line and you should not replicate the code in human language. A comment should be about _what_ is going on not _how_. You already have a single chunk of code, so document it with a single sentence. 
 
 ::: {.rmdnote .program}
 Document `code01.py` file.
@@ -87,7 +86,7 @@ If I now run the code via **F5**, the program will stop at that line _before_ ex
 
 ![Program paused at the breakpoint.](images/debug-pause.png)
 
-This gives me a chance to see what value my `number_picked` variable has. It is already listed in local variables (top left). But I also added it to list of watched variables (_Watch_, lift middle) and I also looked at its value in the _Debug Console_ (bottom tab) that allows me to execute _any_ Python code while my program is paused. Do the same and explore these different ways yourself. For example, see how you can compute `number_picked + 1` or `number_picked * number_picked` in the _Watch_ tab and in _Debug Console_.
+This gives me a chance to see what value my `number_picked` variable has. It is already listed in local variables (top left). But I also added it to list of watched variables (_Watch_, left middle) and I also looked at its value in the _Debug Console_ (bottom tab) that allows me to execute _any_ Python code while my program is paused. Do the same and explore these different ways yourself. For example, see how you can compute `number_picked + 1` or `number_picked * number_picked` in the _Watch_ tab and in _Debug Console_.
 
 Once you are done examining the current state of the program, you have six buttons at the top to decide what to do next (hover over them to see hints). They are, from left to right
 
@@ -165,32 +164,30 @@ You can _invert_ the logical value using `not` operator, as `not True` is `False
 Go to exercise #2 to explore this inversion yourself.
 :::
 
-You can also combine several comparisons using `and` and/or^[pun intended] `or` operators. As in human language, `and` means that both parts must be true: `True and True` → `True` but `True and False` → `False`, `False and True` → `False`, and `False and False` → `False`. Same holds if you have more have than two conditions/comparisons linked via `and`: **All** of them must be true. In case of `or` only one of the statements must be true, e.g. `True or True` → `True`, `True or False` → `True`, `False or True` → `True`, but `False or False` → `False`. Again, for more than two comparisons/conditions at least one of them should be true for the entire expression to be true.
+You can also combine several comparisons using `and` and/or^[pun intended] `or` operators. As in human language, `and` means that both parts must be true: `True and True` → `True` but `True and False` → `False`, `False and True` → `False`, and `False and False` → `False`. Same holds if you have more than two conditions/comparisons linked via `and`: **All** of them must be true. In case of `or` only one of the statements must be true, e.g. `True or True` → `True`, `True or False` → `True`, `False or True` → `True`, but `False or False` → `False`. Again, for more than two comparisons/conditions at least one of them should be true for the entire expression to be true.
 
 ::: {.rmdnote .practice}
 Do exercises #3 and #4.
 :::
 
-Subtle but important point: conditions are evaluated from left to right until the whole expression is resolved one way or another. This means that if the first expression in a `and` pair is `False`, the second one is **never evaluated**. I.e., if `first and second` expressions both need to be `True` and you know that `first` expression already is false, the whole expression will be `False` in any case. This means that in the code below there will be no error, even though evaluating `int("e123")` alone would raise a `ValueError`.
-```{python eval=FALSE}
+Subtle but important point: conditions are evaluated from left to right until the whole expression is resolved one way or another. This means that if the first expression in a `and` is `False`, the second one (the rest of them) is **never evaluated**. I.e., if `first and second` expressions both need to be `True` and you know that `first` expression already is false, the whole expression will be `False` in any case. This means that in the code below there will be no error, even though evaluating `int("e123")` alone would raise a `ValueError`.
+```{python}
 2 * 2 == 5 and int("e123") == 123
 ```
 
 However, reverse the order, so that `int("e123") == 123` needs to be evaluated first and you get the error message
-```{python eval=FALSE}
+```{python error=TRUE}
 int("e123") == 123 and 2 * 2 == 4
-# Generates ValueError: invalid literal for int() with base 10: 'e123'
 ```
 
 Similarly, if _any_ expression in `or` is `True`, you do not need to check the rest.
-```{python eval=FALSE}
+```{python}
 2 * 2 == 4 or int("e123") == 123
 ```
 
 However, if the first condition is `False`, we do need to continue (and stumble into an error):
-```{python eval=FALSE}
+```{python error=TRUE}
 2 * 2 == 5 or int("e123") == 123
-# Generates ValueError: invalid literal for int() with base 10: 'e123'
 ```
 
 ::: {.rmdnote .practice}
@@ -213,7 +210,7 @@ if some_condition_is_true:
 statement #2 
 ```
 
-Both statements #1 and #2 appear after the if-statement, so how does Python now that the first one is executed only if condition is true but the other one always runs? The answer is indentation: The **4 (four!) spaces**  that are automatically added whenever you press **Tab** in VS Code and removed whenever you press **Shift+Tab**. The indentation puts statement #1 _inside_ the if-statement. Thus, indentation shows whether statements belong to the same group and must be executed one after another (same indentation level for `if` and `statement #2`) or are inside conditional statement, loop, function, class, etc. (`statement #1`). For more complex code that will have, for example, an if-statement inside an if-statement inside a loop, you will express this by adding more levels of indentation. E.g.
+Both statements #1 and #2 appear after the if-statement, so how does Python know that the first one is executed only if condition is true but the other one always runs? The answer is indentation: The **4 (four!) spaces**  that are automatically added whenever you press **Tab** in VS Code and removed whenever you press **Shift+Tab**. The indentation puts statement #1 _inside_ the if-statement. Thus, indentation shows whether statements belong to the same group and must be executed one after another (same indentation level for `if` and `statement #2`) or are inside conditional statement, loop, function, class, etc. (`statement #1`). For more complex code that will have, for example, an if-statement inside an if-statement inside a loop, you will express this by adding more levels of indentation. E.g.
 ```{python eval=FALSE}
 # some statements outside of the loop (0 indentation)
 while game_is_not_over: # (0 indentation)
@@ -251,14 +248,15 @@ Now you have all necessary tools to finish the first version of our game. Add a 
 * if the computer pick is larger than player's guess, it will print `"My number is higher!"`
 * if two numbers are identical, it will print `"Spot on!"`
 
+First, save a copy of your original code into `code02.py` and then add the comparison and printing.
 ::: {.rmdnote .program}
-Update `code01.py`
+Extend your program with the comparison in`code02.py`
 :::
 
 Test that your code works. Again, use breakpoints if you need to better understand the control flow and check whether comparisons work the way you expect.
 
 ## Using libraries {#using-libraries}
-Our game is "feature-complete": computer picks a number, player makes a guess, computer responds appropriately. However, currently we are playing for both sides. Lets make computer pick a random number itself. For this we need to use [randint(a, b)](https://docs.python.org/3/library/random.html#random.randint). It is a part of any Python distribution, so you would have it even if you would install a vanilla Python distribution instead of using one from PsychoPy. However, you cannot use it straightaway like you did with `print()` or `input()`. Type `randint(1, 3)` in your Jupyter Notebook and observe _NameError: name 'randint' is not defined_.
+Our game is "feature-complete": computer picks a number, player makes a guess, computer responds appropriately. However, currently we are playing for both sides. Lets make computer pick a random number itself. For this we need to use [randint(a, b)](https://docs.python.org/3/library/random.html#random.randint) function. It is a part of any Python distribution, so you would have it even if you install a vanilla Python distribution instead of using one from PsychoPy. However, you cannot use it straightaway like you did with `print()` or `input()`. Type `randint(1, 3)` in your Jupyter Notebook and observe _NameError: name 'randint' is not defined_.
 
 The reason for this is that Python has an awful lot of functions and loading them all at the same time would clog the memory with things you never intended to use. Instead, they are packaged into _libraries_, so that you can import only functions (or libraries) that you actually need for your program. You [import](https://docs.python.org/3/reference/import.html) them via an `import` statement that should go to the top of your file (but below the comment about the file content). There are several ways you can import libraries. First, you can import an _entire_ library (such as _random_ library that has function `randint()` that we need) and then use its functions as `<library>.<function>`. For `randint` this would be
 ```{python eval=FALSE}
@@ -293,16 +291,16 @@ computer_pick = random_integer(1, 5)
 Finally, there is a **very bad way** to import functions from a library: `from random import *`. The asterisk means that you want to import _all_ functions from the library and you want to call them by their names without `random.` prefix. Never, never, never^[Did I already say never? Never!] do this! This fills your environment with functions that you may not be aware of, potentially overwriting some other functions, creating conflicts, etc. Never ever! I am showing you this only because you will, at some point, see a code that uses this approach and you might think that this is a good idea. It is a terrible idea! Import the library, not the functions, so you can explicitly show which library you are relying on when calling a function. Always remember the [Zen of Python](https://www.python.org/dev/peps/pep-0020/): "Explicit is better than implicit."
 
 ## Picking a number randomly
-Now that you know how to import a library, we can use [randint()](https://docs.python.org/3/library/random.html#random.randint) function. For this, save a copy of your original code into `code02.py`. Import the library and use [randint()](https://docs.python.org/3/library/random.html#random.randint) to generate a random number between 1 and 10. Read the documentation  on [randint()](https://docs.python.org/3/library/random.html#random.randint) to understand how to use it. Reading manuals is a necessary part of programming, so this is a good point to start practicing.
+Now that you know how to import a library, we can use [randint()](https://docs.python.org/3/library/random.html#random.randint) function. For this, save a copy of your previous code into `code03.py`. Import the library and use [randint()](https://docs.python.org/3/library/random.html#random.randint) to generate a random number between 1 and 10. Read the documentation  on [randint()](https://docs.python.org/3/library/random.html#random.randint) to understand how to use it. Reading manuals is a necessary part of programming, so this is a good point to start practicing.
 
 
 Once you implemented this in `code02.py`, run it several times to check that computer does pick different random values. Again, use breakpoints if you want to double-check what is going on.
 
 ::: {.rmdnote .program}
-Put your code into `code02.py`.
+Put your code into `code03.py`.
 :::
 
-Congratulations, you just programmed your first computer game! Yes, it is very simple but it has key ingredients: a random decision by computer, a user input, and feedback. Next time, you will learn about loops to allow for multiple attempts and will start writing functions to make your code modular and reliable. In the meantime, let us solidify your knowledge by programming yet another game!
+Congratulations, you just programmed your first computer game! Yes, it is very simple but it has key ingredients: a random decision by computer, user input, and feedback. Next time, you will learn about loops to allow for multiple attempts and will start writing functions to make your code modular and reliable. In the meantime, let us solidify your knowledge by programming yet another game!
 
 ## One-armed bandit (a single round edition)
 You know everything you need to program a simple version of an "one-armed bandit" game. Here is the game logic:
@@ -318,8 +316,8 @@ You know everything you need to program a simple version of an "one-armed bandit
 Do not forget to document the new `code03.py` file and feel free to use breakpoints to debug it.
 
 ::: {.rmdnote .program}
-Put your code into `code03.py`.
+Put your code into `code04.py`.
 :::
 
 ## Submitting for the seminar
-For the seminar, submit a zipped folder with exercise notebook and all three programs.
+For the seminar, submit a zipped folder with exercise notebook and all four programs.
