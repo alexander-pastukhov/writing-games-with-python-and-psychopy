@@ -50,7 +50,7 @@ Put your code into `code01.py`.
 Do not forget to document the file and use breakpoints and step overs to explore the program flow.
 
 ## Counting attempts
-Now let us add a variable that will count a total number of attempts by the player. For this, create a new variable (call it `attempts` or something similar) _before the loop_ and initialize it `1`. Add `1` to it every time the player enters a guess. After the loop, expand the `"Spot on!"` message by adding information about the number of attempts. Use [string formatting](##string-formatting) to make things look nice, e.g., `"Spot on, and you needed just 5 attempts!"`. Check that the number of attempts your required _matches_ the number of attempts reported by the program!
+Now let us add a variable that will count a total number of attempts by the player. For this, create a new variable (call it `attempts` or something similar) _before the loop_ and initialize it `1` (because the first attempt is before the player enter the loop). Add `1` to it every time the player enters a guess. After the loop, expand the `"Spot on!"` message by adding information about the number of attempts. Use [string formatting](##string-formatting) to make things look nice, e.g., `"Spot on, and you needed just 5 attempts!"`. Check that the number of attempts your required _matches_ the number of attempts reported by the program!
 
 ::: {.rmdnote .program}
 Put your code into `code02.py`.
@@ -62,10 +62,10 @@ Code inside the _while_ loop is executed repeatedly while the condition is `True
 ```{python eval=FALSE}
 # this code runs before the loop
 
-while <somecondition>:
+while <some_condition>:
   # this code runs on every iteration
   
-    if <someothercondition>:
+    if <some_other_condition>:
         break
   
   # this code runs on every iteration but not when you break out of the loop
@@ -107,7 +107,7 @@ Put your code into `code05.py`.
 :::
 
 ## Show remaining attempts
-It is all about a user interface! Modify the `input` prompt message to include a number of _remaining_ attempts. E.g. `"Please enter the guess, you have X attempts remaining"`.
+It is all about the user interface! Modify the `input` prompt message to include a number of _remaining_ attempts. E.g. `"Please enter the guess, you have X attempts remaining"`.
 
 ::: {.rmdnote .program}
 Put your code into `code06.py`.
@@ -138,7 +138,7 @@ Put your code into `code07.py`.
 :::
 
 ## You do not need a comparison, if you already have the value
-In your updated code, you have `want_to_play` variable that is either `True` or `False`. It is used in the loop that repeats while its value is `True`. Sometimes, people write `want_to_play == True` to express that. While it is technically correct and will certaintly work correctly, it is also redundant. Since `want_to_play` can only be `True` or `False` this comparison turns into `True == True` (which is of course `True`) or `False == True` (which is `False`). So comparing either value to `True` produces exactly the same value. Thus, you can just write `while want_to_play:` and use the logical value directly. 
+In your updated code, you have `want_to_play` variable that is either `True` or `False`. It is used in the loop that repeats while its value is `True`. Sometimes, people write `want_to_play == True` to express that. While it is technically correct and will certainly work correctly, it is also redundant. Since `want_to_play` can only be `True` or `False` this comparison turns into `True == True` (which is of course `True`) or `False == True` (which is `False`). So comparing either value to `True` produces exactly the same value. Thus, you can just write `while want_to_play:` and use the logical value directly. 
 
 ## Best score
 A "proper" game typically keeps the track of players' performance. Let us record a fewest number of attempts that the player needed to guess the number. For this, create a new variable `fewest_attempts` and set it to `MAX_ATTEMPTS` (this is as bad as the player can be). Think, where do you need to create it. You should update it after each game round. Add the information about "Best so far" into the round-over message.
@@ -148,11 +148,29 @@ Put your code into `code08.py`.
 :::
 
 ## Counting game rounds
-Let us count how many rounds the player played. The idea and implementation is the same as with counting the attempts. Create a new variable, initialize it to 0, increment by 1 whenever a new round starts. Include the total number of rounds into the very final message, e.g. "Thank you for playing the game _X_ times!"
+Let us count how many times the player played the game. The idea and implementation is the same as with counting the attempts. Create a new variable, initialize it to 0, increment by 1 whenever a new round starts. Include the total number of games played into the very final message, e.g. "Thank you for playing the game _X_ times!"
 
 ::: {.rmdnote .program}
 Put your code into `code09.py`.
 :::
 
+## Multi round one-armed bandit
+At the end of the previous chapter, you have programmed a single round one-armed bandit game. You already know everything you need to implement a multiple round version and its structure is similar (but simpler) than of the multi-round guess-the-number game that you just implemented. 
+
+Let player start with an initial pot of money, say 10 coins. Playing each round costs 1 coin, getting three of a kind pays off 10 coins, while getting a pair pays off 2 coins (you can change payoffs as you see fit). On each round:
+
+ * Take one coin from the pot (price for playing the game).
+ * Roll the dice (you already implemented that).
+ * Tell the player about the outcome (you implemented that as well).
+ * Add coins to the pot, if necessary.
+ * Print out the amount of coins left in pot.
+ * Ask the player where they want to continue. 
+ 
+Special case, once the player runs out of coins, the game is definitely over.
+
+::: {.rmdnote .program}
+Put your code into `code10.py`.
+:::
+
 ## Wrap up
-Most excellent, you now have a proper working computer game with game rounds, limited attempts, best score, and what not! Zip the folder and submit.
+Most excellent, you now have two proper working computer games with game rounds, limited attempts, best score, and what not! Zip the folder and submit.
