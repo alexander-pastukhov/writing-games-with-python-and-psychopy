@@ -18,6 +18,30 @@ twitter-handle: PastukhovSasha
 
 This book will teach you programming. Hopefully, it will do so in a fun way because if there is something more satisfying than playing a video game then it is creating one. Although it is written for the course called *"Python for social and experimental psychology"*, my main aim is not to teach you Python per se. Python is a fantastic tool (more on this later) but it is just one of many programming languages that exist. My ultimate goal is to help you to develop general programming skills, which do not depend on a specific programming language, and make sure that you form good habits that will make your code clear, easy to read, and easy to maintain. That last part is crucial. Programming is not about writing code that works. That, obviously, must be true but it is only the minimal requirement. Programming is about writing a clear and easy-to-read code that others and, even more importantly, you-two-weeks later can understand.
 
+## Goal of the book
+The goal is for you to be able to program a sophisticated experiment that can have multiple blocks and trials, various conditions, complicated visual presentation, automatic logging of data and exception handling. If this sound ambitious, it is but we will proceed in small steps in the process you will learn
+
+* Core Python concepts including
+  * variables and constants
+  * immutable data types such as integers, floats, strings, logical values, and tuples
+  * mutable types such as lists and dictionaries
+  * functions
+  * control structures such as if-else conditional statements and loops
+  * object-oriented programming including concepts of inheritance, duck-typing, and mixing
+  * exceptions
+  * file operations
+* PsychoPy: this is not core Python but it is a prime library for psychophysical experiments and you will learn key tools that are required for programming an experiment.
+* Good programming style including 
+  * Writing clear code in iterative manner
+  * Reading (your own) code
+  * Documenting your code
+  * Debugging your program in VS Code
+
+I have tried to present concepts within the context that requires them and, therefore, best explain and presents their typical usage scenarios. This means that material is spread around and is presented in the need-to-now basis. For example, the concept of lists is presented first but operations on them are presented in the later chapter both because we only need this later and to keep your feeling of being overwhelmed to within reason. This makes this book harder to use as a reference (there are excellent references out where, starting with [official Python documentation](https://docs.python.org/3/)) but the hope is that by giving you bite-sized chunks of new information, it will make it easier to understand the material and integrate it with whatever you already know.
+
+Same "distributed" logic applies to exercises. Rather than being listed at the end of each chapter, they are embedded in the text and you should do them at that time point. A lot of them are designed to clarify concepts that were presented before them by using illustrative examples, so doing them immediately would be most helpful. Same goes for coding practice, although in that case, you can read the entire material to get a "bird's eye view" of the entire program and then read the text again, doing the coding practice.
+
+
 ## Prerequisites
 The material assumes no foreknowledge of Python or programming from the reader. Its purpose is to gradually build up your knowledge and allow you to create more and more complex games.
 
