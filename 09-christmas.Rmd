@@ -27,7 +27,7 @@ Put your code into `code01.py`.
 ## Christmas tree decoration
 For the decoration, let us use [Circle](https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle) objects of various sizes and color. We could create each one separately with its own custom hard-coded values, but let us instead create three constants that are lists of equal length that describe, respectively position of each ball (`BALL_POS` would be a good name, each entry should be a tuple of `(x, y)`), size (`BALL_SIZE`), and color (`BALL_COLOR`, stick to `"red"`, `"blue"`, and `"yellow"`, this limited selection of specific colors will be important later when we animate them). 
 
-Create a list of balls by iterating over these three lists. You have two choices, you can either use an index variable, building an index via [range()](https://docs.python.org/3/library/functions.html#func-range) using [len()](https://docs.python.org/3/library/functions.html#len) of one of the lists (they should all be of the same length). But let use a cool trick of iterating over a [zip()](https://docs.python.org/3/library/functions.html#zip) of lists. [zip()](https://docs.python.org/3/library/functions.html#zip) gives you a tuple combining one element from each list that you can unpack on the fly as in the example below (note that loop variables will receive values in the  order that you used for lists).
+Create a list of balls by iterating over these three lists. You have two choices, you can either use an index variable, building an index via [range()](https://docs.python.org/3/library/functions.html#func-range) using [len()](https://docs.python.org/3/library/functions.html#len) of one of the lists (they should all be of the same length). But let's use a cool trick of iterating over a [zip()](https://docs.python.org/3/library/functions.html#zip) of lists. [zip()](https://docs.python.org/3/library/functions.html#zip) gives you a tuple combining one element from each list that you can unpack on the fly as in the example below (note that loop variables will receive values in the  order that you used for lists).
 ```{python}
 numbers = [1, 2, 3]
 letters = ["A", "B", "C"]
@@ -35,7 +35,7 @@ for  a_number, a_letter in  zip(numbers, letters):
   print("%d: %s"%(a_number, a_letter))
 ```
 
-You can zip as many lists as you want. We, obviously, want three. Decide on whether you want to create `balls` as an empty list and then append each newly created [Circle](https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle) to it in the loop or use list comprehension. Do not forget to draw the balls and think about what you should draw first: the tree or the balls. Experiment with position and sizes to makes it look just perfect.
+You can zip as many lists as you want. We, obviously, want three. Decide on whether you want to create `balls` as an empty list and then append each newly created [Circle](https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle) to it in the loop or use [list comprehension](#list-comprehension). Do not forget to draw the balls and think about what you should draw first: the tree or the balls. Experiment with position and sizes to makes it look just perfect.
 
 ::: {.rmdnote .program}
 Put your code into `code02.py`.
@@ -60,14 +60,14 @@ Put your code into `code03.py`.
 Let add some Christmas music! Download [Deck the Halls version by Kevin MacLeod](material/Deck the Halls B.ogg)^[Deck the Halls B by Kevin MacLeod http://incompetech.com
 Creative Commons — Attribution 4.0 International — CC BY 4.0
 Free Download / Stream: https://bit.ly/deck-the-halls-b
-Music promoted by Audio Library https://youtu.be/RzjZ-WdVeyk]. For this, we will use [sound](https://psychopy.org/api/sound.html) module of PsychoPy library that generate sounds on the fly and also play audio files in various format such as wav or ogg (but not mp3!). Unfortunately, sound it surprisingly tricky, there are many libraries that might be used by PsychoPy (as of end of 2021 PsychoPy lists four backends that it might use), and things sometimes break. Thus, if the music does not play for you, ask me and we will try to set your sound libraries up.
+Music promoted by Audio Library https://youtu.be/RzjZ-WdVeyk]. For this, we will use [sound](https://psychopy.org/api/sound.html) module of PsychoPy library that generates sounds on the fly and also play audio files in various format such as wav or ogg (but not mp3!). Unfortunately, sound it surprisingly tricky, there are many libraries that might be used by PsychoPy (as of 2023 PsychoPy lists four backends that it might use), and things sometimes break. Thus, if the music does not play for you, ask me and we will try to set your sound libraries up.
 
 Using sound is very simple. First, you need to import the `Sound` class as suggested in the manual:
 ```python
 from psychopy.sound import Sound
 ```
 
-Then, you need a new object of `Sound` class supplying the file  name as the first parameter (I called the variable `song`). Right before start the loop, you `.play()` the sound. Note, if you want to play the same sound again, you need to "rewind" it by explicitly calling its `.stop()` method. For some reason, the sound stops at the end but does not gets "rewind", so when you try to play it again and notices that it is already at the end and stops without playing anything.
+Then, you need a new object of `Sound` class supplying the file  name as the first parameter (I called the variable `song`). Right before start the loop, you `.play()` the sound. Note, if you want to play the same sound again, you need to "rewind" it by explicitly calling its `.stop()` method. For some reason, the sound stops at the end but does not gets "rewind" back, so when you try to play it again and notices that it is already at the end and stops without playing anything.
 
 ::: {.rmdnote .program}
 Put your code into `code04.py`.
@@ -138,7 +138,7 @@ settings['Balls']['size'] # this will give you a string '0.01, 0.02'
 ```
 
 ### JSON{#json} 
-[JSON](https://en.wikipedia.org/wiki/JSON) (JavaScript Object Notation) is a popular format to serialize data for web applications that use it to exchange data between a server and a client. 
+[JSON](https://en.wikipedia.org/wiki/JSON) (JavaScript Object Notation) is a popular format to serialize data for web applications that use it to exchange data between a server and a client.
 ```json
 {
   "Balls": {
@@ -176,7 +176,7 @@ You will need to install a third-party library [pyyaml](https://pyyaml.org/) to 
 ```python
 import yaml
 with open("settings.yaml") as yaml_stream:
-    settings = yaml.load(yaml_stream)
+    settings = yaml.safe_load(yaml_stream)
     
 settings["Balls"]["size"] # this will give a list [0.01, 0.02]
 ```
@@ -190,7 +190,4 @@ Once you transferred all your constants into the settings file (use either JSON 
 Put your code into `code05.py`.
 :::
 
-
 ## Merry Christmas and a Happy New Year!
-
-
