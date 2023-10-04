@@ -250,7 +250,7 @@ For a single card, we simply hard-coded the name of an image file, as well as it
 
 Try this out in a Jupyter Notebook (do not forget to import the [os](https://docs.python.org/3/library/os.html#module-os) library). You should get a list of 8 files that are coded as _[r|l][index].png_, where _r_ or _l_ denote a direction the chicken is looking. However, for our game we need only four images (4 × 2 = 8 cards). Therefore, we need to select a subset of them, e.g., four chicken looking to the left or to the right only. Here, let us work with chicken looking to the left, meaning that we need to pick only files that start with "l". To make this filtering easier, we will use a cool Python trick called [list comprehensions](https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions).
 
-## List comprehension
+## List comprehension {#list-comprehension}
 List comprehension provides an elegant and easy-to-read way to create, modify and/or filter elements of the list creating a new list. The general structure is
 ```python
 new_list = [<transformation-of-the-item> for item in old_list if <condition-given-the-item>]
