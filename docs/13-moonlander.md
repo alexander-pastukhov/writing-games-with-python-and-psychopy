@@ -124,7 +124,7 @@ Whenever an error occurs at a run time, it [raises](https://docs.python.org/3/re
 ```python
 a_dict = {"a_key" : 1}
 a_dict["b_key"]
-#> Error in eval(expr, p): KeyError: 'b_key'
+#> 'b_key'
 ```
 
 Similarly, an [IndexError](https://docs.python.org/3/library/exceptions.html#IndexError) is raised, if you try to use an invalid index for a list, a [NameError](https://docs.python.org/3/library/exceptions.html#NameError), if you are trying to access variable that does not exist, [AttributeError](https://docs.python.org/3/library/exceptions.html#AttributeError) when an object does not have an attribute you are trying to use, etc. 

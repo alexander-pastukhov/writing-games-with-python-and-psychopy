@@ -4,21 +4,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 6 Guess the Number: a multi round edition | Writing games with Python and PsychoPy</title>
+<title>Chapter 6 Guess the Number: a multi round edition | Learning Python and PsychoPy by writing games</title>
 <meta name="author" content="Alexander (Sasha) Pastukhov">
 <meta name="description" content="In previous chapter, you programmed a single-attempt-only “Guess the Number” game. Now, we will expand to allow multiple attempts and will add other bells-and-whistles to make it more fun. Create...">
-<meta name="generator" content="bookdown 0.34 with bs4_book()">
-<meta property="og:title" content="Chapter 6 Guess the Number: a multi round edition | Writing games with Python and PsychoPy">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="Chapter 6 Guess the Number: a multi round edition | Learning Python and PsychoPy by writing games">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://alexander-pastukhov.github.io/writing-games-with-python-and-psychopy/guess-the-number-multi-round.html">
 <meta property="og:description" content="In previous chapter, you programmed a single-attempt-only “Guess the Number” game. Now, we will expand to allow multiple attempts and will add other bells-and-whistles to make it more fun. Create...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 6 Guess the Number: a multi round edition | Writing games with Python and PsychoPy">
+<meta name="twitter:title" content="Chapter 6 Guess the Number: a multi round edition | Learning Python and PsychoPy by writing games">
 <meta name="twitter:site" content="@PastukhovSasha">
 <meta name="twitter:description" content="In previous chapter, you programmed a single-attempt-only “Guess the Number” game. Now, we will expand to allow multiple attempts and will add other bells-and-whistles to make it more fun. Create...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-NBXRG6YB3R"></script><script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -40,7 +40,7 @@
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
-        <a href="index.html" title="">Writing games with Python and PsychoPy</a>
+        <a href="index.html" title="">Learning Python and PsychoPy by writing games</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
@@ -129,7 +129,7 @@
 <h2>
 <span class="header-section-number">6.3</span> Counting attempts<a class="anchor" aria-label="anchor" href="#counting-attempts"><i class="fas fa-link"></i></a>
 </h2>
-<p>Now let us add a variable that will count a total number of attempts by the player. For this, create a new variable (call it <code>attempts</code> or something similar) <em>before the loop</em> and initialize it <code>1</code>. Add <code>1</code> to it every time the player enters a guess. After the loop, expand the <code>"Spot on!"</code> message by adding information about the number of attempts. Use <a href="#id_#string-formatting">string formatting</a> to make things look nice, e.g., <code>"Spot on, and you needed just 5 attempts!"</code>. Check that the number of attempts your required <em>matches</em> the number of attempts reported by the program!</p>
+<p>Now let us add a variable that will count a total number of attempts by the player. For this, create a new variable (call it <code>attempts</code> or something similar) <em>before the loop</em> and initialize it <code>1</code> (because the first attempt is before the player enter the loop). Add <code>1</code> to it every time the player enters a guess. After the loop, expand the <code>"Spot on!"</code> message by adding information about the number of attempts. Use <a href="#id_#string-formatting">string formatting</a> to make things look nice, e.g., <code>"Spot on, and you needed just 5 attempts!"</code>. Check that the number of attempts your required <em>matches</em> the number of attempts reported by the program!</p>
 <div class="rmdnote program">
 <p>Put your code into <code>code02.py</code>.</p>
 </div>
@@ -141,10 +141,10 @@
 <p>Code inside the <em>while</em> loop is executed repeatedly while the condition is <code>True</code> and, importantly, all of code inside is executed before the condition is evaluated again. However, sometimes you may need to abort sooner without executing the remaining code. For this, Python has a <a href="https://docs.python.org/3/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops">break</a> statement that causes the program to exit the loop immediately without executing the rest of the code inside the loop, so that the program continues with the code <em>after</em> the loop.</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="guess-the-number-multi-round.html#cb41-1" tabindex="-1"></a><span class="co"># this code runs before the loop</span></span>
 <span id="cb41-2"><a href="guess-the-number-multi-round.html#cb41-2" tabindex="-1"></a></span>
-<span id="cb41-3"><a href="guess-the-number-multi-round.html#cb41-3" tabindex="-1"></a><span class="cf">while</span> <span class="op">&lt;</span>somecondition<span class="op">&gt;</span>:</span>
+<span id="cb41-3"><a href="guess-the-number-multi-round.html#cb41-3" tabindex="-1"></a><span class="cf">while</span> <span class="op">&lt;</span>some_condition<span class="op">&gt;</span>:</span>
 <span id="cb41-4"><a href="guess-the-number-multi-round.html#cb41-4" tabindex="-1"></a>  <span class="co"># this code runs on every iteration</span></span>
 <span id="cb41-5"><a href="guess-the-number-multi-round.html#cb41-5" tabindex="-1"></a>  </span>
-<span id="cb41-6"><a href="guess-the-number-multi-round.html#cb41-6" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">&lt;</span>someothercondition<span class="op">&gt;</span>:</span>
+<span id="cb41-6"><a href="guess-the-number-multi-round.html#cb41-6" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">&lt;</span>some_other_condition<span class="op">&gt;</span>:</span>
 <span id="cb41-7"><a href="guess-the-number-multi-round.html#cb41-7" tabindex="-1"></a>        <span class="cf">break</span></span>
 <span id="cb41-8"><a href="guess-the-number-multi-round.html#cb41-8" tabindex="-1"></a>  </span>
 <span id="cb41-9"><a href="guess-the-number-multi-round.html#cb41-9" tabindex="-1"></a>  <span class="co"># this code runs on every iteration but not when you break out of the loop</span></span>
@@ -191,7 +191,7 @@
 <h2>
 <span class="header-section-number">6.8</span> Show remaining attempts<a class="anchor" aria-label="anchor" href="#show-remaining-attempts"><i class="fas fa-link"></i></a>
 </h2>
-<p>It is all about a user interface! Modify the <code>input</code> prompt message to include a number of <em>remaining</em> attempts. E.g. <code>"Please enter the guess, you have X attempts remaining"</code>.</p>
+<p>It is all about the user interface! Modify the <code>input</code> prompt message to include a number of <em>remaining</em> attempts. E.g. <code>"Please enter the guess, you have X attempts remaining"</code>.</p>
 <div class="rmdnote program">
 <p>Put your code into <code>code06.py</code>.</p>
 </div>
@@ -223,7 +223,7 @@
 <h2>
 <span class="header-section-number">6.10</span> You do not need a comparison, if you already have the value<a class="anchor" aria-label="anchor" href="#you-do-not-need-a-comparison-if-you-already-have-the-value"><i class="fas fa-link"></i></a>
 </h2>
-<p>In your updated code, you have <code>want_to_play</code> variable that is either <code>True</code> or <code>False</code>. It is used in the loop that repeats while its value is <code>True</code>. Sometimes, people write <code>want_to_play == True</code> to express that. While it is technically correct and will certaintly work correctly, it is also redundant. Since <code>want_to_play</code> can only be <code>True</code> or <code>False</code> this comparison turns into <code>True == True</code> (which is of course <code>True</code>) or <code>False == True</code> (which is <code>False</code>). So comparing either value to <code>True</code> produces exactly the same value. Thus, you can just write <code>while want_to_play:</code> and use the logical value directly.</p>
+<p>In your updated code, you have <code>want_to_play</code> variable that is either <code>True</code> or <code>False</code>. It is used in the loop that repeats while its value is <code>True</code>. Sometimes, people write <code>want_to_play == True</code> to express that. While it is technically correct and will certainly work correctly, it is also redundant. Since <code>want_to_play</code> can only be <code>True</code> or <code>False</code> this comparison turns into <code>True == True</code> (which is of course <code>True</code>) or <code>False == True</code> (which is <code>False</code>). So comparing either value to <code>True</code> produces exactly the same value. Thus, you can just write <code>while want_to_play:</code> and use the logical value directly.</p>
 </div>
 <div id="best-score" class="section level2" number="6.11">
 <h2>
@@ -238,16 +238,35 @@
 <h2>
 <span class="header-section-number">6.12</span> Counting game rounds<a class="anchor" aria-label="anchor" href="#counting-game-rounds"><i class="fas fa-link"></i></a>
 </h2>
-<p>Let us count how many rounds the player played. The idea and implementation is the same as with counting the attempts. Create a new variable, initialize it to 0, increment by 1 whenever a new round starts. Include the total number of rounds into the very final message, e.g. “Thank you for playing the game <em>X</em> times!”</p>
+<p>Let us count how many times the player played the game. The idea and implementation is the same as with counting the attempts. Create a new variable, initialize it to 0, increment by 1 whenever a new round starts. Include the total number of games played into the very final message, e.g. “Thank you for playing the game <em>X</em> times!”</p>
 <div class="rmdnote program">
 <p>Put your code into <code>code09.py</code>.</p>
 </div>
 </div>
-<div id="wrap-up" class="section level2" number="6.13">
+<div id="multi-round-one-armed-bandit" class="section level2" number="6.13">
 <h2>
-<span class="header-section-number">6.13</span> Wrap up<a class="anchor" aria-label="anchor" href="#wrap-up"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.13</span> Multi round one-armed bandit<a class="anchor" aria-label="anchor" href="#multi-round-one-armed-bandit"><i class="fas fa-link"></i></a>
 </h2>
-<p>Most excellent, you now have a proper working computer game with game rounds, limited attempts, best score, and what not! Zip the folder and submit.</p>
+<p>At the end of the previous chapter, you have programmed a single round one-armed bandit game. You already know everything you need to implement a multiple round version and its structure is similar (but simpler) than of the multi-round guess-the-number game that you just implemented.</p>
+<p>Let player start with an initial pot of money, say 10 coins. Playing each round costs 1 coin, getting three of a kind pays off 10 coins, while getting a pair pays off 2 coins (you can change payoffs as you see fit). On each round:</p>
+<ul>
+<li>Take one coin from the pot (price for playing the game).</li>
+<li>Roll the dice (you already implemented that).</li>
+<li>Tell the player about the outcome (you implemented that as well).</li>
+<li>Add coins to the pot, if necessary.</li>
+<li>Print out the amount of coins left in pot.</li>
+<li>Ask the player where they want to continue.</li>
+</ul>
+<p>Special case, once the player runs out of coins, the game is definitely over.</p>
+<div class="rmdnote program">
+<p>Put your code into <code>code10.py</code>.</p>
+</div>
+</div>
+<div id="wrap-up" class="section level2" number="6.14">
+<h2>
+<span class="header-section-number">6.14</span> Wrap up<a class="anchor" aria-label="anchor" href="#wrap-up"><i class="fas fa-link"></i></a>
+</h2>
+<p>Most excellent, you now have two proper working computer games with game rounds, limited attempts, best score, and what not! Zip the folder and submit.</p>
 
 </div>
 </div>
@@ -270,7 +289,8 @@
 <li><a class="nav-link" href="#you-do-not-need-a-comparison-if-you-already-have-the-value"><span class="header-section-number">6.10</span> You do not need a comparison, if you already have the value</a></li>
 <li><a class="nav-link" href="#best-score"><span class="header-section-number">6.11</span> Best score</a></li>
 <li><a class="nav-link" href="#counting-game-rounds"><span class="header-section-number">6.12</span> Counting game rounds</a></li>
-<li><a class="nav-link" href="#wrap-up"><span class="header-section-number">6.13</span> Wrap up</a></li>
+<li><a class="nav-link" href="#multi-round-one-armed-bandit"><span class="header-section-number">6.13</span> Multi round one-armed bandit</a></li>
+<li><a class="nav-link" href="#wrap-up"><span class="header-section-number">6.14</span> Wrap up</a></li>
 </ul>
 
       <div class="book-extra">
@@ -288,7 +308,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-06-19.</p>
+    <p>"<strong>Learning Python and PsychoPy by writing games</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-10-04.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

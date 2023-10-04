@@ -4,21 +4,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 2 Software | Writing games with Python and PsychoPy</title>
+<title>Chapter 2 Software | Learning Python and PsychoPy by writing games</title>
 <meta name="author" content="Alexander (Sasha) Pastukhov">
-<meta name="description" content="For this book and seminar, we will need to install PsychoPy that comes bundled with Python. IDE of your choice. My instructions will be for Visual Studio Code, which has a very good Python...">
-<meta name="generator" content="bookdown 0.34 with bs4_book()">
-<meta property="og:title" content="Chapter 2 Software | Writing games with Python and PsychoPy">
+<meta name="description" content="For this book and seminar, we will need to install PsychoPy. IDE of your choice. My instructions will be for Visual Studio Code, which has a very good Python support. Jupyter Notebook for trying...">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="Chapter 2 Software | Learning Python and PsychoPy by writing games">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://alexander-pastukhov.github.io/writing-games-with-python-and-psychopy/software.html">
-<meta property="og:description" content="For this book and seminar, we will need to install PsychoPy that comes bundled with Python. IDE of your choice. My instructions will be for Visual Studio Code, which has a very good Python...">
+<meta property="og:description" content="For this book and seminar, we will need to install PsychoPy. IDE of your choice. My instructions will be for Visual Studio Code, which has a very good Python support. Jupyter Notebook for trying...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 2 Software | Writing games with Python and PsychoPy">
+<meta name="twitter:title" content="Chapter 2 Software | Learning Python and PsychoPy by writing games">
 <meta name="twitter:site" content="@PastukhovSasha">
-<meta name="twitter:description" content="For this book and seminar, we will need to install PsychoPy that comes bundled with Python. IDE of your choice. My instructions will be for Visual Studio Code, which has a very good Python...">
+<meta name="twitter:description" content="For this book and seminar, we will need to install PsychoPy. IDE of your choice. My instructions will be for Visual Studio Code, which has a very good Python support. Jupyter Notebook for trying...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-NBXRG6YB3R"></script><script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -40,7 +40,7 @@
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
-        <a href="index.html" title="">Writing games with Python and PsychoPy</a>
+        <a href="index.html" title="">Learning Python and PsychoPy by writing games</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
@@ -82,24 +82,24 @@
 </h1>
 <p>For this book and seminar, we will need to install</p>
 <ul>
-<li>PsychoPy that comes bundled with Python.</li>
+<li>PsychoPy.</li>
 <li>IDE of your choice. My instructions will be for Visual Studio Code, which has a very good Python support.</li>
 <li>Jupyter Notebook for trying out small snippets of code.</li>
 </ul>
-<p>I will not give detailed instructions on how to install the necessary software but rather point you to official manuals. This makes this text more future-proof as specific details might easily change<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;If you are part of the seminar, ask me whenever you have problems or are unsure about how to proceeed&lt;/p&gt;"><sup>2</sup></a>.</p>
+<p>I will not give detailed instructions on how to install the necessary software but rather point you to official manuals. This makes this text more future-proof as specific details might easily change<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;If you are part of the seminar, ask me whenever you have problems or are unsure about how to proceeed&lt;/p&gt;"><sup>3</sup></a>.</p>
 <div id="install-psychopy" class="section level2" number="2.1">
 <h2>
 <span class="header-section-number">2.1</span> PsychoPy<a class="anchor" aria-label="anchor" href="#install-psychopy"><i class="fas fa-link"></i></a>
 </h2>
-<p>Download and install <a href="https://www.psychopy.org/download.html">Standalone PsychoPy</a> version. Use whatever the latest (and greatest) PsychoPy version is suggested to you (PsychoPy 2022.2.4 using Python 3.8 as of time of writing) and follow instructions.</p>
-<p>Note that you can also install PsychoPy as a anaconda package or install an official Python distribution and add PsychoPy via pip. However, I find the standalone easier to use as it has all necessary additional libraries. Plus, it has additional tools for GUI-based experiment programming and integration with <a href="https://pavlovia.org/">Pavlovia.org</a>.</p>
+<p>If you are using Windows, download and install <a href="https://www.psychopy.org/download.html">Standalone PsychoPy</a> version. Use whatever the latest (and greatest) PsychoPy version is suggested to you (PsychoPy 2023.2.2 using Python 3.8 as of time of writing) and follow instructions.</p>
+<p>If you are using Mac or Linux, installing PsychoPy via pip or Anaconda are your options. Please follow up-to-date <a href="https://www.psychopy.org/download.html#manual-installations">instructions</a>.</p>
 </div>
 <div id="install-vs-code" class="section level2" number="2.2">
 <h2>
 <span class="header-section-number">2.2</span> VS Code<a class="anchor" aria-label="anchor" href="#install-vs-code"><i class="fas fa-link"></i></a>
 </h2>
 <p><a href="https://code.visualstudio.com/">Visual Studio Code</a> is a free lightweight open-source editor with strong support for Python. Download the installer for your platform and follow the instructions.</p>
-<p>Next, follow <a href="https://code.visualstudio.com/docs/python/python-tutorial">Getting Started with Python in VS Code</a> tutorial. <strong>Skip</strong> the <em>Install a Python interpreter</em> section, as you already have Python installation bundled with PsychoPy. This is the interpreter that you should use in the <em>Select a Python interpreter</em> section. In my case the path is <code>C:\Program Files\PsychoPy3\python.exe</code>.</p>
+<p>Next, follow <a href="https://code.visualstudio.com/docs/python/python-tutorial">Getting Started with Python in VS Code</a> tutorial. If you are using Windows and the standalone PsychoPy installation, <strong>skip</strong> the <em>Install a Python interpreter</em> section, as you already have Python installation bundled with PsychoPy. This is the interpreter that you should use in the <em>Select a Python interpreter</em> section. In my case the path is <code>C:\Program Files\PsychoPy3\python.exe</code>.</p>
 <p>Install and enable a linter, software that highlights syntactical and stylistic problems in your Python source code. Follow the <a href="https://code.visualstudio.com/docs/python/linting">manual</a> at VS Code website.</p>
 </div>
 <div id="jupyter-notebooks" class="section level2" number="2.3">
@@ -163,7 +163,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-06-19.</p>
+    <p>"<strong>Learning Python and PsychoPy by writing games</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-10-04.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

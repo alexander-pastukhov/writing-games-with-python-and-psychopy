@@ -1,5 +1,6 @@
 fig:unnamed-chunk-2
 intro
+goal-of-the-book
 prerequisites
 why-games
 why-should-a-psychologist-learn-programming
@@ -62,6 +63,7 @@ guess-the-number-repeat-game
 you-do-not-need-a-comparison-if-you-already-have-the-value
 best-score
 counting-game-rounds
+multi-round-one-armed-bandit
 wrap-up
 guess-the-number-ai
 chapter-concepts.
@@ -196,12 +198,13 @@ removing-redundant-obstacles
 keeping-the-score
 a-foundation
 seminar-02-06
-getting-the-difficulty-just-right
+chapter-concepts-8
+getting-the-difficulty-just-right-staircase-procedure
 guitar-hero
 boilerplate
 target-and-timedresponsetask-classes
-target-class-static
-target-class-moving
+target-class-a-static-target
+target-class-a-moving-target
 iteratorgenerator-functions
 timedresponsetask-class
 disposing-of-targets

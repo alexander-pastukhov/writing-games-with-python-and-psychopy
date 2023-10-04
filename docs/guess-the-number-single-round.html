@@ -4,21 +4,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 5 Guess the Number: a single round edition | Writing games with Python and PsychoPy</title>
+<title>Chapter 5 Guess the Number: a single round edition | Learning Python and PsychoPy by writing games</title>
 <meta name="author" content="Alexander (Sasha) Pastukhov">
 <meta name="description" content="The previous chapter covered Python basics, so now you are ready to start developing you first game! We will build it step by step as there will be a lot to learn about input, libraries,...">
-<meta name="generator" content="bookdown 0.34 with bs4_book()">
-<meta property="og:title" content="Chapter 5 Guess the Number: a single round edition | Writing games with Python and PsychoPy">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="Chapter 5 Guess the Number: a single round edition | Learning Python and PsychoPy by writing games">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://alexander-pastukhov.github.io/writing-games-with-python-and-psychopy/guess-the-number-single-round.html">
 <meta property="og:description" content="The previous chapter covered Python basics, so now you are ready to start developing you first game! We will build it step by step as there will be a lot to learn about input, libraries,...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 5 Guess the Number: a single round edition | Writing games with Python and PsychoPy">
+<meta name="twitter:title" content="Chapter 5 Guess the Number: a single round edition | Learning Python and PsychoPy by writing games">
 <meta name="twitter:site" content="@PastukhovSasha">
 <meta name="twitter:description" content="The previous chapter covered Python basics, so now you are ready to start developing you first game! We will build it step by step as there will be a lot to learn about input, libraries,...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-NBXRG6YB3R"></script><script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -40,7 +40,7 @@
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
-        <a href="index.html" title="">Writing games with Python and PsychoPy</a>
+        <a href="index.html" title="">Learning Python and PsychoPy by writing games</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
@@ -82,7 +82,7 @@
 </h1>
 <p>The previous chapter covered Python basics, so now you are ready to start developing you first game! We will build it step by step as there will be a lot to learn about input, libraries, conditional statements, and indentation.</p>
 <p>Before you start, create a new folder (inside your <a href="software.html#files-folder">course folder</a>) called, for example, “guess-the-number”, download <a href="notebooks/Guess%20the%20number%20-%20single%20round.ipynb">exercise notebook</a>, copy it in the newly created folder, and open it in <a href="software.html#jupyter-notebooks">Jupyter Notebook</a>. As in the chapter before, it will contain exercises on reading and understanding the code.</p>
-<p>However, we will be using <a href="software.html#install-vs-code">VS Code</a> to program scripts with the actual game. You will need to create a separate file for each code practice<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;You can “Save as…” the previous code to avoid copy-pasting things by hand.&lt;/p&gt;"><sup>11</sup></a> (e.g., <em>code01.py</em><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;I recommend using &lt;code&gt;01&lt;/code&gt; instead of &lt;code&gt;1&lt;/code&gt;, as it will ensure consistent file sorting in your file manager&lt;/p&gt;"><sup>12</sup></a>, <em>code02.py</em>, etc.) This is not the most efficient implementation of a version control and it will certainly clutter the folder. But it would allow me to see your solutions for every step, which will make it easier for me to give feedback. For submitting the assignment, just zip the folder and submit the zip-file.</p>
+<p>However, we will be using <a href="software.html#install-vs-code">VS Code</a> to program scripts with the actual game. You will need to create a separate file for each code practice<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;You can “Save as…” the previous code to avoid copy-pasting things by hand.&lt;/p&gt;"><sup>12</sup></a> (e.g., <em>code01.py</em><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;I recommend using &lt;code&gt;01&lt;/code&gt; instead of &lt;code&gt;1&lt;/code&gt;, as it will ensure consistent file sorting in your file manager&lt;/p&gt;"><sup>13</sup></a>, <em>code02.py</em>, etc.) This is not the most efficient implementation of a version control and it will certainly clutter the folder. But it would allow me to see your solutions for every step, which will make it easier for me to give feedback. For submitting the assignment, just zip the folder and submit the zip-file.</p>
 <div id="chapter-concepts-1" class="section level2" number="5.1">
 <h2>
 <span class="header-section-number">5.1</span> Chapter concepts<a class="anchor" aria-label="anchor" href="#chapter-concepts-1"><i class="fas fa-link"></i></a>
@@ -116,10 +116,10 @@
 <h2>
 <span class="header-section-number">5.3</span> Let’s pick a number<a class="anchor" aria-label="anchor" href="#lets-pick-a-number"><i class="fas fa-link"></i></a>
 </h2>
-<p>Let us start by implementing just the first two steps of the program. First, create a variable holding a number that computer “picked”. We will name it <code>number_picked</code> (you can use some other meaningful name as well but it might be easier if we all stick to the same name). To make things simpler at the beginning, we will hard-code an arbitrary number between 1 and 10 (pick the one you like). Then, let us print it out, so that we know the number ourselves<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Of course, we know it because we hard-coded it. But that won’t be the case when computer will generate it randomly, so let us plan for the future&lt;/p&gt;"><sup>13</sup></a>. Use string formatting to make things user-friendly, e.g., print out something like “The number I’ve picked is …”. You should be able to do this using the knowledge from the previous chapter. Your code should be a two-liner:</p>
+<p>Let us start by implementing just the first two steps of the program. First, create a variable holding a number that computer “picked”. We will name it <code>number_picked</code> (you can use some other meaningful name as well but it might be easier if we all stick to the same name). To make things simpler at the beginning, we will hard-code an arbitrary number between 1 and 10 (pick the one you like). Then, let us print it out, so that we know the number ourselves<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Of course, we know it because we hard-coded it, but that won’t be the case when computer will generate it randomly, so let us plan for the future&lt;/p&gt;"><sup>14</sup></a>. Use string formatting to make things user-friendly, e.g., print out something like “The number I’ve picked is …”. You should be able to do this using the knowledge from the <a href="python-basics.html#string-formatting">previous chapter</a>. Your code should be a two-liner:</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="guess-the-number-single-round.html#cb26-1" tabindex="-1"></a><span class="co"># 1. create variable and set its value</span></span>
 <span id="cb26-2"><a href="guess-the-number-single-round.html#cb26-2" tabindex="-1"></a><span class="co"># 2. print out the value</span></span></code></pre></div>
-<p>Try out this two-liner in a Jupyter Notebook (create an empty notebook just for that). Once you are happy with it, copy-paste the code into <code>code01.py</code> and read on to learn how to run it.</p>
+<p>Try out this two-liner in a Jupyter Notebook (create an empty notebook just for that). Once you are happy with it, copy-paste the code into <code>code01.py</code> and read on to learn how to document and run it.</p>
 <div class="rmdnote program">
 <p>Put your code into <code>code01.py</code>.</p>
 </div>
@@ -129,16 +129,15 @@
 <span class="header-section-number">5.4</span> Documenting your code<a class="anchor" aria-label="anchor" href="#documenting-your-code"><i class="fas fa-link"></i></a>
 </h2>
 <p>Now that you have your first file with Python program, you should document it. Documenting a two-lines long and simple program may feel silly but it should be an automatic thing. Later on you will find yourself using several lines of comments to document a single line function. Again, it is not about the code that works, it is about the code you can understand. In a sense, it is better to have a clean well-documented program that currently does not work correctly than an undocumented spaghetti code that does. You can fix and update the former, but maintaining or updating the latter…</p>
-<p>In Python, you have two ways to write comments multiline and single line</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="guess-the-number-single-round.html#cb27-1" tabindex="-1"></a><span class="co">'''</span></span>
-<span id="cb27-2"><a href="guess-the-number-single-round.html#cb27-2" tabindex="-1"></a><span class="co">A </span></span>
-<span id="cb27-3"><a href="guess-the-number-single-round.html#cb27-3" tabindex="-1"></a><span class="co">multiline </span></span>
-<span id="cb27-4"><a href="guess-the-number-single-round.html#cb27-4" tabindex="-1"></a><span class="co">comment</span></span>
-<span id="cb27-5"><a href="guess-the-number-single-round.html#cb27-5" tabindex="-1"></a><span class="co">'''</span></span>
-<span id="cb27-6"><a href="guess-the-number-single-round.html#cb27-6" tabindex="-1"></a></span>
-<span id="cb27-7"><a href="guess-the-number-single-round.html#cb27-7" tabindex="-1"></a><span class="co">#  A single line comment.</span></span></code></pre></div>
+<p>In Python, you have two ways to write comments: multiline and single line</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="guess-the-number-single-round.html#cb27-1" tabindex="-1"></a><span class="co">'''A </span></span>
+<span id="cb27-2"><a href="guess-the-number-single-round.html#cb27-2" tabindex="-1"></a><span class="co">multiline </span></span>
+<span id="cb27-3"><a href="guess-the-number-single-round.html#cb27-3" tabindex="-1"></a><span class="co">comment</span></span>
+<span id="cb27-4"><a href="guess-the-number-single-round.html#cb27-4" tabindex="-1"></a><span class="co">'''</span></span>
+<span id="cb27-5"><a href="guess-the-number-single-round.html#cb27-5" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="guess-the-number-single-round.html#cb27-6" tabindex="-1"></a><span class="co">#  A single line comment.</span></span></code></pre></div>
 <p>Use multiline comments to write documentation for individual files, functions, classes, methods, etc. You will learn how to format this documentation Numpy docstring style, once you learn about functions. In our case, you should start your <code>code01.py</code> file with a multiline comment that briefly describes what program it contains. Minimally, you should write that this is a <em>Guess a Number</em> game. It is probably a good idea to sketch out what the game is about.</p>
-<p>Use single line comments to explain what happens in a particular code block. You do not need to comment every line and you should not explain the code in human language. A comment should be about <em>what</em> is going on not <em>how</em>. At the moment, we have too little code to need this.</p>
+<p>Use single line comments to explain what happens in a particular code block. You do not need to comment every line and you should not replicate the code in human language. A comment should be about <em>what</em> is going on not <em>how</em>. You already have a single chunk of code, so document it with a single sentence.</p>
 <div class="rmdnote program">
 <p>Document <code>code01.py</code> file.</p>
 </div>
@@ -147,7 +146,7 @@
 <h2>
 <span class="header-section-number">5.5</span> Running and debugging your game in VS Code<a class="anchor" aria-label="anchor" href="#debugging"><i class="fas fa-link"></i></a>
 </h2>
-<p>Now that we have a two-lines-long program, we can run it and already start learning how to debug it. Yes, our current program is probably to simple to require actual debugging but it is also simple enough to make understanding debugging easier as well. And debugging is a crucial skill that turns a running program from a black box into something transparent and easy<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Or, at least, easier.&lt;/p&gt;"><sup>14</sup></a> to understand. Below I will describe how to debug in VS Code but you might want to consult <a href="https://code.visualstudio.com/docs/python/debugging">an official manual</a> in case things have changed in the meantime.</p>
+<p>Now that we have a two-lines-long program, we can run it and already start learning how to debug it. Yes, our current program is probably to simple to require actual debugging but it is also simple enough to make understanding debugging easier as well. And debugging is a crucial skill that turns a running program from a black box into something transparent and easy<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Or, at least, easier.&lt;/p&gt;"><sup>15</sup></a> to understand. Below I will describe how to debug in VS Code but you might want to consult <a href="https://code.visualstudio.com/docs/python/debugging">an official manual</a> in case things have changed in the meantime.</p>
 <p>There are two ways to run a Python program in VS Code. First, you can use the <em>“Run Python File in Terminal”</em> play button on the right. This runs your program <em>without</em> a debugger, so you should use it only for the actual runs of the finalized code. Still, you can try running it and see whether it prints out what it should.</p>
 <div class="float">
 <img src="images/debug-vs-run.png" alt="Running code without a debugger."><div class="figcaption">Running code without a debugger.</div>
@@ -169,7 +168,7 @@
 <div class="float">
 <img src="images/debug-pause.png" alt="Program paused at the breakpoint."><div class="figcaption">Program paused at the breakpoint.</div>
 </div>
-<p>This gives me a chance to see what value my <code>number_picked</code> variable has. It is already listed in local variables (top left). But I also added it to list of watched variables (<em>Watch</em>, lift middle) and I also looked at its value in the <em>Debug Console</em> (bottom tab) that allows me to execute <em>any</em> Python code while my program is paused. Do the same and explore these different ways yourself. For example, see how you can compute <code>number_picked + 1</code> or <code>number_picked * number_picked</code> in the <em>Watch</em> tab and in <em>Debug Console</em>.</p>
+<p>This gives me a chance to see what value my <code>number_picked</code> variable has. It is already listed in local variables (top left). But I also added it to list of watched variables (<em>Watch</em>, left middle) and I also looked at its value in the <em>Debug Console</em> (bottom tab) that allows me to execute <em>any</em> Python code while my program is paused. Do the same and explore these different ways yourself. For example, see how you can compute <code>number_picked + 1</code> or <code>number_picked * number_picked</code> in the <em>Watch</em> tab and in <em>Debug Console</em>.</p>
 <p>Once you are done examining the current state of the program, you have six buttons at the top to decide what to do next (hover over them to see hints). They are, from left to right</p>
 <ul>
 <li>Continue (<strong>F5</strong>): resume the program.</li>
@@ -220,7 +219,7 @@
 <h2>
 <span class="header-section-number">5.8</span> Conditions and comparisons<a class="anchor" aria-label="anchor" href="#comparisons"><i class="fas fa-link"></i></a>
 </h2>
-<p>Condition is any expression that can be evaluated to see whether it is <code>True</code> or <code>False</code>. A straightforward example of such expression are comparisons expressed in human language as: <em>Is today Thursday?</em> <em>Is the answer (equal to) 42?</em> <em>Is it raining and I have an umbrella?</em> We will concentrate on comparisons like that for a moment but later you will see that in Python <em>any</em> expression is either <code>True</code> or <code>False</code>, even when it does not look like a comparison<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;This is because you can convert any value to a logical one via &lt;a href="https://docs.python.org/3/library/functions.html#bool"&gt;bool()&lt;/a&gt; function that you learned about the last time and so any value is (converted to) either &lt;code&gt;True&lt;/code&gt; or &lt;code&gt;False&lt;/code&gt;.&lt;/p&gt;'><sup>15</sup></a>.</p>
+<p>Condition is any expression that can be evaluated to see whether it is <code>True</code> or <code>False</code>. A straightforward example of such expression are comparisons expressed in human language as: <em>Is today Thursday?</em> <em>Is the answer (equal to) 42?</em> <em>Is it raining and I have an umbrella?</em> We will concentrate on comparisons like that for a moment but later you will see that in Python <em>any</em> expression is either <code>True</code> or <code>False</code>, even when it does not look like a comparison<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;This is because you can convert any value to a logical one via &lt;a href="https://docs.python.org/3/library/functions.html#bool"&gt;bool()&lt;/a&gt; function that you learned about the last time and so any value is (converted to) either &lt;code&gt;True&lt;/code&gt; or &lt;code&gt;False&lt;/code&gt;.&lt;/p&gt;'><sup>16</sup></a>.</p>
 <p>For the comparison, you can use the following operators:</p>
 <ul>
 <li>
@@ -244,20 +243,22 @@
 <div class="rmdnote practice">
 <p>Go to exercise #2 to explore this inversion yourself.</p>
 </div>
-<p>You can also combine several comparisons using <code>and</code> and/or<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;pun intended&lt;/p&gt;"><sup>16</sup></a> <code>or</code> operators. As in human language, <code>and</code> means that both parts must be true: <code>True and True</code> → <code>True</code> but <code>True and False</code> → <code>False</code>, <code>False and True</code> → <code>False</code>, and <code>False and False</code> → <code>False</code>. Same holds if you have more have than two conditions/comparisons linked via <code>and</code>: <strong>All</strong> of them must be true. In case of <code>or</code> only one of the statements must be true, e.g. <code>True or True</code> → <code>True</code>, <code>True or False</code> → <code>True</code>, <code>False or True</code> → <code>True</code>, but <code>False or False</code> → <code>False</code>. Again, for more than two comparisons/conditions at least one of them should be true for the entire expression to be true.</p>
+<p>You can also combine several comparisons using <code>and</code> and/or<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;pun intended&lt;/p&gt;"><sup>17</sup></a> <code>or</code> operators. As in human language, <code>and</code> means that both parts must be true: <code>True and True</code> → <code>True</code> but <code>True and False</code> → <code>False</code>, <code>False and True</code> → <code>False</code>, and <code>False and False</code> → <code>False</code>. Same holds if you have more than two conditions/comparisons linked via <code>and</code>: <strong>All</strong> of them must be true. In case of <code>or</code> only one of the statements must be true, e.g. <code>True or True</code> → <code>True</code>, <code>True or False</code> → <code>True</code>, <code>False or True</code> → <code>True</code>, but <code>False or False</code> → <code>False</code>. Again, for more than two comparisons/conditions at least one of them should be true for the entire expression to be true.</p>
 <div class="rmdnote practice">
 <p>Do exercises #3 and #4.</p>
 </div>
-<p>Subtle but important point: conditions are evaluated from left to right until the whole expression is resolved one way or another. This means that if the first expression in a <code>and</code> pair is <code>False</code>, the second one is <strong>never evaluated</strong>. I.e., if <code>first and second</code> expressions both need to be <code>True</code> and you know that <code>first</code> expression already is false, the whole expression will be <code>False</code> in any case. This means that in the code below there will be no error, even though evaluating <code>int("e123")</code> alone would raise a <code>ValueError</code>.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="guess-the-number-single-round.html#cb30-1" tabindex="-1"></a><span class="dv">2</span> <span class="op">*</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">5</span> <span class="kw">and</span> <span class="bu">int</span>(<span class="st">"e123"</span>) <span class="op">==</span> <span class="dv">123</span></span></code></pre></div>
+<p>Subtle but important point: conditions are evaluated from left to right until the whole expression is resolved one way or another. This means that if the first expression in a <code>and</code> is <code>False</code>, the second one (the rest of them) is <strong>never evaluated</strong>. I.e., if <code>first and second</code> expressions both need to be <code>True</code> and you know that <code>first</code> expression already is false, the whole expression will be <code>False</code> in any case. This means that in the code below there will be no error, even though evaluating <code>int("e123")</code> alone would raise a <code>ValueError</code>.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="guess-the-number-single-round.html#cb30-1" tabindex="-1"></a><span class="dv">2</span> <span class="op">*</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">5</span> <span class="kw">and</span> <span class="bu">int</span>(<span class="st">"e123"</span>) <span class="op">==</span> <span class="dv">123</span></span>
+<span id="cb30-2"><a href="guess-the-number-single-round.html#cb30-2" tabindex="-1"></a><span class="co">#&gt; False</span></span></code></pre></div>
 <p>However, reverse the order, so that <code>int("e123") == 123</code> needs to be evaluated first and you get the error message</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="guess-the-number-single-round.html#cb31-1" tabindex="-1"></a><span class="bu">int</span>(<span class="st">"e123"</span>) <span class="op">==</span> <span class="dv">123</span> <span class="kw">and</span> <span class="dv">2</span> <span class="op">*</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">4</span></span>
-<span id="cb31-2"><a href="guess-the-number-single-round.html#cb31-2" tabindex="-1"></a><span class="co"># Generates ValueError: invalid literal for int() with base 10: 'e123'</span></span></code></pre></div>
+<span id="cb31-2"><a href="guess-the-number-single-round.html#cb31-2" tabindex="-1"></a><span class="co">#&gt; invalid literal for int() with base 10: 'e123'</span></span></code></pre></div>
 <p>Similarly, if <em>any</em> expression in <code>or</code> is <code>True</code>, you do not need to check the rest.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a href="guess-the-number-single-round.html#cb32-1" tabindex="-1"></a><span class="dv">2</span> <span class="op">*</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">4</span> <span class="kw">or</span> <span class="bu">int</span>(<span class="st">"e123"</span>) <span class="op">==</span> <span class="dv">123</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a href="guess-the-number-single-round.html#cb32-1" tabindex="-1"></a><span class="dv">2</span> <span class="op">*</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">4</span> <span class="kw">or</span> <span class="bu">int</span>(<span class="st">"e123"</span>) <span class="op">==</span> <span class="dv">123</span></span>
+<span id="cb32-2"><a href="guess-the-number-single-round.html#cb32-2" tabindex="-1"></a><span class="co">#&gt; True</span></span></code></pre></div>
 <p>However, if the first condition is <code>False</code>, we do need to continue (and stumble into an error):</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="guess-the-number-single-round.html#cb33-1" tabindex="-1"></a><span class="dv">2</span> <span class="op">*</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">5</span> <span class="kw">or</span> <span class="bu">int</span>(<span class="st">"e123"</span>) <span class="op">==</span> <span class="dv">123</span></span>
-<span id="cb33-2"><a href="guess-the-number-single-round.html#cb33-2" tabindex="-1"></a><span class="co"># Generates ValueError: invalid literal for int() with base 10: 'e123'</span></span></code></pre></div>
+<span id="cb33-2"><a href="guess-the-number-single-round.html#cb33-2" tabindex="-1"></a><span class="co">#&gt; invalid literal for int() with base 10: 'e123'</span></span></code></pre></div>
 <div class="rmdnote practice">
 <p>Do exercise #5.</p>
 </div>
@@ -275,7 +276,7 @@
 <div class="sourceCode" id="cb34"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb34-1"><a href="guess-the-number-single-round.html#cb34-1" tabindex="-1"></a><span class="cf">if</span> some_condition_is_true:</span>
 <span id="cb34-2"><a href="guess-the-number-single-round.html#cb34-2" tabindex="-1"></a>    statement <span class="co">#1</span></span>
 <span id="cb34-3"><a href="guess-the-number-single-round.html#cb34-3" tabindex="-1"></a>statement <span class="co">#2 </span></span></code></pre></div>
-<p>Both statements #1 and #2 appear after the if-statement, so how does Python now that the first one is executed only if condition is true but the other one always runs? The answer is indentation: The <strong>4 (four!) spaces</strong> that are automatically added whenever you press <strong>Tab</strong> in VS Code and removed whenever you press <strong>Shift+Tab</strong>. The indentation puts statement #1 <em>inside</em> the if-statement. Thus, indentation shows whether statements belong to the same group and must be executed one after another (same indentation level for <code>if</code> and <code>statement #2</code>) or are inside conditional statement, loop, function, class, etc. (<code>statement #1</code>). For more complex code that will have, for example, an if-statement inside an if-statement inside a loop, you will express this by adding more levels of indentation. E.g.</p>
+<p>Both statements #1 and #2 appear after the if-statement, so how does Python know that the first one is executed only if condition is true but the other one always runs? The answer is indentation: The <strong>4 (four!) spaces</strong> that are automatically added whenever you press <strong>Tab</strong> in VS Code and removed whenever you press <strong>Shift+Tab</strong>. The indentation puts statement #1 <em>inside</em> the if-statement. Thus, indentation shows whether statements belong to the same group and must be executed one after another (same indentation level for <code>if</code> and <code>statement #2</code>) or are inside conditional statement, loop, function, class, etc. (<code>statement #1</code>). For more complex code that will have, for example, an if-statement inside an if-statement inside a loop, you will express this by adding more levels of indentation. E.g.</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="guess-the-number-single-round.html#cb35-1" tabindex="-1"></a><span class="co"># some statements outside of the loop (0 indentation)</span></span>
 <span id="cb35-2"><a href="guess-the-number-single-round.html#cb35-2" tabindex="-1"></a><span class="cf">while</span> game_is_not_over: <span class="co"># (0 indentation)</span></span>
 <span id="cb35-3"><a href="guess-the-number-single-round.html#cb35-3" tabindex="-1"></a>    <span class="co"># statements inside of the loop </span></span>
@@ -314,16 +315,17 @@
 <li>if two numbers are identical, it will print <code>"Spot on!"</code>
 </li>
 </ul>
-<div class="rmdnote program">
-<p>Update <code>code01.py</code></p>
-</div>
+<p>First, save a copy of your original code into <code>code02.py</code> and then add the comparison and printing.
+::: {.rmdnote .program}
+Extend your program with the comparison in<code>code02.py</code>
+:::</p>
 <p>Test that your code works. Again, use breakpoints if you need to better understand the control flow and check whether comparisons work the way you expect.</p>
 </div>
 <div id="using-libraries" class="section level2" number="5.11">
 <h2>
 <span class="header-section-number">5.11</span> Using libraries<a class="anchor" aria-label="anchor" href="#using-libraries"><i class="fas fa-link"></i></a>
 </h2>
-<p>Our game is “feature-complete”: computer picks a number, player makes a guess, computer responds appropriately. However, currently we are playing for both sides. Lets make computer pick a random number itself. For this we need to use <a href="https://docs.python.org/3/library/random.html#random.randint">randint(a, b)</a>. It is a part of any Python distribution, so you would have it even if you would install a vanilla Python distribution instead of using one from PsychoPy. However, you cannot use it straightaway like you did with <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> or <code>input()</code>. Type <code>randint(1, 3)</code> in your Jupyter Notebook and observe <em>NameError: name ‘randint’ is not defined</em>.</p>
+<p>Our game is “feature-complete”: computer picks a number, player makes a guess, computer responds appropriately. However, currently we are playing for both sides. Lets make computer pick a random number itself. For this we need to use <a href="https://docs.python.org/3/library/random.html#random.randint">randint(a, b)</a> function. It is a part of any Python distribution, so you would have it even if you install a vanilla Python distribution instead of using one from PsychoPy. However, you cannot use it straightaway like you did with <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> or <code>input()</code>. Type <code>randint(1, 3)</code> in your Jupyter Notebook and observe <em>NameError: name ‘randint’ is not defined</em>.</p>
 <p>The reason for this is that Python has an awful lot of functions and loading them all at the same time would clog the memory with things you never intended to use. Instead, they are packaged into <em>libraries</em>, so that you can import only functions (or libraries) that you actually need for your program. You <a href="https://docs.python.org/3/reference/import.html">import</a> them via an <code>import</code> statement that should go to the top of your file (but below the comment about the file content). There are several ways you can import libraries. First, you can import an <em>entire</em> library (such as <em>random</em> library that has function <code>randint()</code> that we need) and then use its functions as <code>&lt;library&gt;.&lt;function&gt;</code>. For <code>randint</code> this would be</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb36-1"><a href="guess-the-number-single-round.html#cb36-1" tabindex="-1"></a><span class="im">import</span> random</span>
 <span id="cb36-2"><a href="guess-the-number-single-round.html#cb36-2" tabindex="-1"></a></span>
@@ -344,18 +346,18 @@
 <span id="cb38-8"><a href="guess-the-number-single-round.html#cb38-8" tabindex="-1"></a><span class="im">from</span> random <span class="im">import</span> randint <span class="im">as</span> random_integer</span>
 <span id="cb38-9"><a href="guess-the-number-single-round.html#cb38-9" tabindex="-1"></a></span>
 <span id="cb38-10"><a href="guess-the-number-single-round.html#cb38-10" tabindex="-1"></a>computer_pick <span class="op">=</span> random_integer(<span class="dv">1</span>, <span class="dv">5</span>)</span></code></pre></div>
-<p>Finally, there is a <strong>very bad way</strong> to import functions from a library: <code>from random import *</code>. The asterisk means that you want to import <em>all</em> functions from the library and you want to call them by their names without <code>random.</code> prefix. Never, never, never<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Did I already say never? Never!&lt;/p&gt;"><sup>17</sup></a> do this! This fills your environment with functions that you may not be aware of, potentially overwriting some other functions, creating conflicts, etc. Never ever! I am showing you this only because you will, at some point, see a code that uses this approach and you might think that this is a good idea. It is a terrible idea! Import the library, not the functions, so you can explicitly show which library you are relying on when calling a function. Always remember the <a href="https://www.python.org/dev/peps/pep-0020/">Zen of Python</a>: “Explicit is better than implicit.”</p>
+<p>Finally, there is a <strong>very bad way</strong> to import functions from a library: <code>from random import *</code>. The asterisk means that you want to import <em>all</em> functions from the library and you want to call them by their names without <code>random.</code> prefix. Never, never, never<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Did I already say never? Never!&lt;/p&gt;"><sup>18</sup></a> do this! This fills your environment with functions that you may not be aware of, potentially overwriting some other functions, creating conflicts, etc. Never ever! I am showing you this only because you will, at some point, see a code that uses this approach and you might think that this is a good idea. It is a terrible idea! Import the library, not the functions, so you can explicitly show which library you are relying on when calling a function. Always remember the <a href="https://www.python.org/dev/peps/pep-0020/">Zen of Python</a>: “Explicit is better than implicit.”</p>
 </div>
 <div id="picking-a-number-randomly" class="section level2" number="5.12">
 <h2>
 <span class="header-section-number">5.12</span> Picking a number randomly<a class="anchor" aria-label="anchor" href="#picking-a-number-randomly"><i class="fas fa-link"></i></a>
 </h2>
-<p>Now that you know how to import a library, we can use <a href="https://docs.python.org/3/library/random.html#random.randint">randint()</a> function. For this, save a copy of your original code into <code>code02.py</code>. Import the library and use <a href="https://docs.python.org/3/library/random.html#random.randint">randint()</a> to generate a random number between 1 and 10. Read the documentation on <a href="https://docs.python.org/3/library/random.html#random.randint">randint()</a> to understand how to use it. Reading manuals is a necessary part of programming, so this is a good point to start practicing.</p>
+<p>Now that you know how to import a library, we can use <a href="https://docs.python.org/3/library/random.html#random.randint">randint()</a> function. For this, save a copy of your previous code into <code>code03.py</code>. Import the library and use <a href="https://docs.python.org/3/library/random.html#random.randint">randint()</a> to generate a random number between 1 and 10. Read the documentation on <a href="https://docs.python.org/3/library/random.html#random.randint">randint()</a> to understand how to use it. Reading manuals is a necessary part of programming, so this is a good point to start practicing.</p>
 <p>Once you implemented this in <code>code02.py</code>, run it several times to check that computer does pick different random values. Again, use breakpoints if you want to double-check what is going on.</p>
 <div class="rmdnote program">
-<p>Put your code into <code>code02.py</code>.</p>
+<p>Put your code into <code>code03.py</code>.</p>
 </div>
-<p>Congratulations, you just programmed your first computer game! Yes, it is very simple but it has key ingredients: a random decision by computer, a user input, and feedback. Next time, you will learn about loops to allow for multiple attempts and will start writing functions to make your code modular and reliable. In the meantime, let us solidify your knowledge by programming yet another game!</p>
+<p>Congratulations, you just programmed your first computer game! Yes, it is very simple but it has key ingredients: a random decision by computer, user input, and feedback. Next time, you will learn about loops to allow for multiple attempts and will start writing functions to make your code modular and reliable. In the meantime, let us solidify your knowledge by programming yet another game!</p>
 </div>
 <div id="one-armed-bandit-a-single-round-edition" class="section level2" number="5.13">
 <h2>
@@ -376,14 +378,14 @@
 </ol>
 <p>Do not forget to document the new <code>code03.py</code> file and feel free to use breakpoints to debug it.</p>
 <div class="rmdnote program">
-<p>Put your code into <code>code03.py</code>.</p>
+<p>Put your code into <code>code04.py</code>.</p>
 </div>
 </div>
 <div id="submitting-for-the-seminar" class="section level2" number="5.14">
 <h2>
 <span class="header-section-number">5.14</span> Submitting for the seminar<a class="anchor" aria-label="anchor" href="#submitting-for-the-seminar"><i class="fas fa-link"></i></a>
 </h2>
-<p>For the seminar, submit a zipped folder with exercise notebook and all three programs.</p>
+<p>For the seminar, submit a zipped folder with exercise notebook and all four programs.</p>
 
 </div>
 </div>
@@ -426,7 +428,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-06-19.</p>
+    <p>"<strong>Learning Python and PsychoPy by writing games</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-10-04.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

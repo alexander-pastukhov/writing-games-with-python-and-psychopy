@@ -1,7 +1,7 @@
 --- 
-title: "Writing games with Python and PsychoPy"
+title: "Learning Python and PsychoPy by writing games"
 author: "Alexander (Sasha) Pastukhov"
-date: "2023-06-19"
+date: "2023-10-04"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib]
@@ -18,6 +18,30 @@ twitter-handle: PastukhovSasha
 
 This book will teach you programming. Hopefully, it will do so in a fun way because if there is something more satisfying than playing a video game then it is creating one. Although it is written for the course called *"Python for social and experimental psychology"*, my main aim is not to teach you Python per se. Python is a fantastic tool (more on this later) but it is just one of many programming languages that exist. My ultimate goal is to help you to develop general programming skills, which do not depend on a specific programming language, and make sure that you form good habits that will make your code clear, easy to read, and easy to maintain. That last part is crucial. Programming is not about writing code that works. That, obviously, must be true but it is only the minimal requirement. Programming is about writing a clear and easy-to-read code that others and, even more importantly, you-two-weeks later can understand.
 
+## Goal of the book
+The goal is for you to be able to program a sophisticated experiment that can have multiple blocks and trials, various conditions, complicated visual presentation, automatic logging of data and exception handling. If this sound ambitious, it is but we will proceed in small steps in the process you will learn
+
+* Core Python concepts including
+  * variables and constants
+  * immutable data types such as integers, floats, strings, logical values, and tuples
+  * mutable types such as lists and dictionaries
+  * functions
+  * control structures such as if-else conditional statements and loops
+  * object-oriented programming including concepts of inheritance, duck-typing, and mixing
+  * exceptions
+  * file operations
+* PsychoPy: this is not core Python but it is a prime library for psychophysical experiments and you will learn key tools that are required for programming an experiment.
+* Good programming style including 
+  * Writing clear code in iterative manner
+  * Reading (your own) code
+  * Documenting your code
+  * Debugging your program in VS Code
+
+I have tried to present concepts within the context that requires them and, therefore, best explain and presents their typical usage scenarios. This means that material is spread around and is presented in the need-to-now basis. For example, the concept of lists is presented first but operations on them are presented in the later chapter both because we only need this later and to keep your feeling of being overwhelmed to within reason. This makes this book harder to use as a reference (there are excellent references out where, starting with [official Python documentation](https://docs.python.org/3/)) but the hope is that by giving you bite-sized chunks of new information, it will make it easier to understand the material and integrate it with whatever you already know.
+
+Same "distributed" logic applies to exercises. Rather than being listed at the end of each chapter, they are embedded in the text and you should do them at that time point. A lot of them are designed to clarify concepts that were presented before them by using illustrative examples, so doing them immediately would be most helpful. Same goes for coding practice, although in that case, you can read the entire material to get a "bird's eye view" of the entire program and then read the text again, doing the coding practice.
+
+
 ## Prerequisites
 The material assumes no foreknowledge of Python or programming from the reader. Its purpose is to gradually build up your knowledge and allow you to create more and more complex games.
 
@@ -27,7 +51,7 @@ The actual purpose of this course is to teach psychology and social studies stud
 ## Why should a psychologist learn programming?
 Why should a psychologist, who is interested in people, learn how to program computers? The most obvious answer is that this is a useful skill. Being able to program gives you freedom to create an experiment that answers your research question, not an experiment that can be implemented given constraints of your software.
 
-More importantly, at least from my point of view, learning how to program changes the way you think in general. People are smart but computers are dumb. When you explain your experiment or travel plans to somebody, you can be fairly vague, make a minor mistake, even skip certain parts. People are smart so they will fill in the missing information with their knowledge, spot and correct a mistake, ask you for more information, and can improvise on their own once they encounter something that you have not covered. Computers are dumb, so you must be precise, you cannot have gray areas, you cannot leave anything to "it will figure it out once it happens" (it won't). My personal experience, corroborated by psychologists who learned programming, is that it makes you realize just how vague and imprecise people can be without realizing it (and without you realizing this as well). Programming forces you to be precise and thorough, to plan ahead for any eventuality there might be. And this is a very useful skill by itself as it can be applied to any activity that requires planning be that an experimental design or travel arrangements.
+More importantly, at least from my point of view, learning how to program changes the way you think in general. People are smart but computers are dumb^[This was written before large language models arrived but is still true when it comes to programming.]. When you explain your experiment or travel plans to somebody, you can be fairly vague, make a minor mistake, even skip certain parts. People are smart so they will fill in the missing information with their knowledge, spot and correct a mistake, ask you for more information, and can improvise on their own once they encounter something that you have not covered. Computers are dumb, so you must be precise, you cannot have gray areas, you cannot leave anything to "it will figure it out once it happens" (it won't). My personal experience, corroborated by psychologists who learned programming, is that it makes you realize just how vague and imprecise people can be without realizing it (and without you realizing this as well). Programming forces you to be precise and thorough, to plan ahead for any eventuality there might be. And this is a very useful skill by itself as it can be applied to any activity that requires planning be that an experimental design or travel arrangements.
 
 ## Why Python?
 There are many ways to create an experiment for psychological research. You can use drag-and-drop systems either commercial like [Presentation](https://www.neurobs.com/), [Experiment Builder](https://www.sr-research.com/experiment-builder/) or free like [PsychoPy Bulder interface](https://psychopy.org/builder). They have a much shallower learning curve, so you can start creating and running your experiments faster. However, the simplicity of their use has a price: They are fairly limited in which stimuli you can use and how you can control the presentation schedule, conditions, feedback, etc. Typically, they allow you to extend them by programming the desired behavior but you do need to know how to program to do this (knowing Python supercharges your PsychoPy experiments). Thus, I think that while these systems, in particular [PsychoPy](https://psychopy.org/), are great tools to quickly bang a simple experiment together, they are most useful if you understand _how_ they create the underlying code and how you would program it yourself. Then, you will not be limited by the software, as you know you can program something the default drag-and-drop won't allow. At the same time, you can always opt in, if drag-and-drop is sufficient but faster or use a mix of the two approaches. At the end, it is about having options and creative freedom to program an experiment that will answer your research question, not an experiment that your software allows you to program.
@@ -37,7 +61,7 @@ We will learn programming in Python, which is a great language that combines sim
 ## Seminar-specific information
 This is a material for _Python for social and experimental psychology_ seminar as taught by me at the University of Bamberg. Each chapter covers a single game, introducing necessary ideas and is accompanied by exercises that you need to complete and submit. To pass the seminar, you will need to complete all assignments, i.e., write all the games. You do not need to complete or provide correct solutions for _all_ the exercises to pass the course and information on how the points for exercises will be converted to an actual grade (if you need one) or "pass" will be available during the seminar.
 
-The material is structured, so that each chapter or chapter section correspond to a single meeting. However, we are all different, so work at your own pace, read the material and submit assignments independently. I will provide detailed feedback for each assignment and you will have an opportunity to address issues and resubmit again with no loss of points. Note that my feedback will cover not only the actual problems with the code but the way you implemented the solution and how clean and well-documented your code is. Remember, our task is not just to learn how to program a working game but how to write a nice clear easy-to-read-and-maintain code^[Good habits! Form good habits! Thank you for reading this subliminal message.]. 
+The material is structured, so that each chapter or chapter section typically correspond to a single meeting. However, we are all different, so work at your own pace, read the material and submit assignments independently. I will provide detailed feedback for each assignment and you will have an opportunity to address issues and resubmit again with no loss of points. Note that my feedback will cover not only the actual problems with the code but the way you implemented the solution and how clean and well-documented your code is. Remember, our task is not just to learn how to program a working game but how to write a nice clear easy-to-read-and-maintain code^[Good habits! Form good habits! Thank you for reading this subliminal message.]. 
 
 Very important: Do not hesitate to ask questions. If I feel that you missed the information in the material, I will point you to the exact location. If you are confused, I'll gently prod you with questions so that you will solve your own problem. If you need more information, I'll supply it. If you simply want to know more, ask and I'll explain why things are the way they are or suggest what to read. If I feel that you should be able to solve the issue without my help, I'll tell you so (although, I would still probably ask a few hinting questions).
 

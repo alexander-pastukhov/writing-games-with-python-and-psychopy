@@ -4,21 +4,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 11 Christmas special | Writing games with Python and PsychoPy</title>
+<title>Chapter 11 Christmas special | Learning Python and PsychoPy by writing games</title>
 <meta name="author" content="Alexander (Sasha) Pastukhov">
 <meta name="description" content="Today we are going to program a Christmas-special. However, this is still an opportunity to learn something new. You will learn about zipping lists and we will start offloading settings into a...">
-<meta name="generator" content="bookdown 0.34 with bs4_book()">
-<meta property="og:title" content="Chapter 11 Christmas special | Writing games with Python and PsychoPy">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="Chapter 11 Christmas special | Learning Python and PsychoPy by writing games">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://alexander-pastukhov.github.io/writing-games-with-python-and-psychopy/christmas-special.html">
 <meta property="og:description" content="Today we are going to program a Christmas-special. However, this is still an opportunity to learn something new. You will learn about zipping lists and we will start offloading settings into a...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 11 Christmas special | Writing games with Python and PsychoPy">
+<meta name="twitter:title" content="Chapter 11 Christmas special | Learning Python and PsychoPy by writing games">
 <meta name="twitter:site" content="@PastukhovSasha">
 <meta name="twitter:description" content="Today we are going to program a Christmas-special. However, this is still an opportunity to learn something new. You will learn about zipping lists and we will start offloading settings into a...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-NBXRG6YB3R"></script><script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -40,7 +40,7 @@
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
-        <a href="index.html" title="">Writing games with Python and PsychoPy</a>
+        <a href="index.html" title="">Learning Python and PsychoPy by writing games</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
@@ -98,7 +98,7 @@
 <h2>
 <span class="header-section-number">11.2</span> Christmas tree<a class="anchor" aria-label="anchor" href="#christmas-tree"><i class="fas fa-link"></i></a>
 </h2>
-<p>Let us start our Christmas decoration with a Christmas tree. You can download <a href="material/pine-tree.png">the one I’ve found</a><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Created by &lt;a href="https://openclipart.org/artist/isaiah658"&gt;isaiah658&lt;/a&gt;.&lt;/p&gt;'><sup>62</sup></a> or find an image that you like. Create your basic PsychoPy code to create a window (we will be using <a href="https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle">Circle</a> later, so think about suitable units), an <a href="https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim">ImageStim</a> with a tree, draw it and wait for any key press.</p>
+<p>Let us start our Christmas decoration with a Christmas tree. You can download <a href="material/pine-tree.png">the one I’ve found</a><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Created by &lt;a href="https://openclipart.org/artist/isaiah658"&gt;isaiah658&lt;/a&gt;.&lt;/p&gt;'><sup>65</sup></a> or find an image that you like. Create your basic PsychoPy code to create a window (we will be using <a href="https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle">Circle</a> later, so think about suitable units), an <a href="https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim">ImageStim</a> with a tree, draw it and wait for any key press.</p>
 <div class="rmdnote program">
 <p>Put your code into <code>code01.py</code>.</p>
 </div>
@@ -108,15 +108,15 @@
 <span class="header-section-number">11.3</span> Christmas tree decoration<a class="anchor" aria-label="anchor" href="#christmas-tree-decoration"><i class="fas fa-link"></i></a>
 </h2>
 <p>For the decoration, let us use <a href="https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle">Circle</a> objects of various sizes and color. We could create each one separately with its own custom hard-coded values, but let us instead create three constants that are lists of equal length that describe, respectively position of each ball (<code>BALL_POS</code> would be a good name, each entry should be a tuple of <code>(x, y)</code>), size (<code>BALL_SIZE</code>), and color (<code>BALL_COLOR</code>, stick to <code>"red"</code>, <code>"blue"</code>, and <code>"yellow"</code>, this limited selection of specific colors will be important later when we animate them).</p>
-<p>Create a list of balls by iterating over these three lists. You have two choices, you can either use an index variable, building an index via <a href="https://docs.python.org/3/library/functions.html#func-range">range()</a> using <a href="https://docs.python.org/3/library/functions.html#len">len()</a> of one of the lists (they should all be of the same length). But let use a cool trick of iterating over a <a href="https://docs.python.org/3/library/functions.html#zip">zip()</a> of lists. <a href="https://docs.python.org/3/library/functions.html#zip">zip()</a> gives you a tuple combining one element from each list that you can unpack on the fly as in the example below (note that loop variables will receive values in the order that you used for lists).</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb97-1"><a href="christmas-special.html#cb97-1" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
-<span id="cb97-2"><a href="christmas-special.html#cb97-2" tabindex="-1"></a>letters <span class="op">=</span> [<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>]</span>
-<span id="cb97-3"><a href="christmas-special.html#cb97-3" tabindex="-1"></a><span class="cf">for</span>  a_number, a_letter <span class="kw">in</span>  <span class="bu">zip</span>(numbers, letters):</span>
-<span id="cb97-4"><a href="christmas-special.html#cb97-4" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"</span><span class="sc">%d</span><span class="st">: </span><span class="sc">%s</span><span class="st">"</span><span class="op">%</span>(a_number, a_letter))</span>
-<span id="cb97-5"><a href="christmas-special.html#cb97-5" tabindex="-1"></a><span class="co">#&gt; 1: A</span></span>
-<span id="cb97-6"><a href="christmas-special.html#cb97-6" tabindex="-1"></a><span class="co">#&gt; 2: B</span></span>
-<span id="cb97-7"><a href="christmas-special.html#cb97-7" tabindex="-1"></a><span class="co">#&gt; 3: C</span></span></code></pre></div>
-<p>You can zip as many lists as you want. We, obviously, want three. Decide on whether you want to create <code>balls</code> as an empty list and then append each newly created <a href="https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle">Circle</a> to it in the loop or use list comprehension. Do not forget to draw the balls and think about what you should draw first: the tree or the balls. Experiment with position and sizes to makes it look just perfect.</p>
+<p>Create a list of balls by iterating over these three lists. You have two choices, you can either use an index variable, building an index via <a href="https://docs.python.org/3/library/functions.html#func-range">range()</a> using <a href="https://docs.python.org/3/library/functions.html#len">len()</a> of one of the lists (they should all be of the same length). But let’s use a cool trick of iterating over a <a href="https://docs.python.org/3/library/functions.html#zip">zip()</a> of lists. <a href="https://docs.python.org/3/library/functions.html#zip">zip()</a> gives you a tuple combining one element from each list that you can unpack on the fly as in the example below (note that loop variables will receive values in the order that you used for lists).</p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb102-1"><a href="christmas-special.html#cb102-1" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb102-2"><a href="christmas-special.html#cb102-2" tabindex="-1"></a>letters <span class="op">=</span> [<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>]</span>
+<span id="cb102-3"><a href="christmas-special.html#cb102-3" tabindex="-1"></a><span class="cf">for</span>  a_number, a_letter <span class="kw">in</span>  <span class="bu">zip</span>(numbers, letters):</span>
+<span id="cb102-4"><a href="christmas-special.html#cb102-4" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"</span><span class="sc">%d</span><span class="st">: </span><span class="sc">%s</span><span class="st">"</span><span class="op">%</span>(a_number, a_letter))</span>
+<span id="cb102-5"><a href="christmas-special.html#cb102-5" tabindex="-1"></a><span class="co">#&gt; 1: A</span></span>
+<span id="cb102-6"><a href="christmas-special.html#cb102-6" tabindex="-1"></a><span class="co">#&gt; 2: B</span></span>
+<span id="cb102-7"><a href="christmas-special.html#cb102-7" tabindex="-1"></a><span class="co">#&gt; 3: C</span></span></code></pre></div>
+<p>You can zip as many lists as you want. We, obviously, want three. Decide on whether you want to create <code>balls</code> as an empty list and then append each newly created <a href="https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle">Circle</a> to it in the loop or use <a href="memory-game.html#list-comprehension">list comprehension</a>. Do not forget to draw the balls and think about what you should draw first: the tree or the balls. Experiment with position and sizes to makes it look just perfect.</p>
 <div class="rmdnote program">
 <p>Put your code into <code>code02.py</code>.</p>
 </div>
@@ -140,10 +140,10 @@
 <p>Let add some Christmas music! Download <a href="material/Deck%20the%20Halls%20B.ogg">Deck the Halls version by Kevin MacLeod</a><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Deck the Halls B by Kevin MacLeod &lt;a href="http://incompetech.com" class="uri"&gt;http://incompetech.com&lt;/a&gt;
 Creative Commons — Attribution 4.0 International — CC BY 4.0
 Free Download / Stream: &lt;a href="https://bit.ly/deck-the-halls-b" class="uri"&gt;https://bit.ly/deck-the-halls-b&lt;/a&gt;
-Music promoted by Audio Library &lt;a href="https://youtu.be/RzjZ-WdVeyk" class="uri"&gt;https://youtu.be/RzjZ-WdVeyk&lt;/a&gt;&lt;/p&gt;'><sup>63</sup></a>. For this, we will use <a href="https://psychopy.org/api/sound.html">sound</a> module of PsychoPy library that generate sounds on the fly and also play audio files in various format such as wav or ogg (but not mp3!). Unfortunately, sound it surprisingly tricky, there are many libraries that might be used by PsychoPy (as of end of 2021 PsychoPy lists four backends that it might use), and things sometimes break. Thus, if the music does not play for you, ask me and we will try to set your sound libraries up.</p>
+Music promoted by Audio Library &lt;a href="https://youtu.be/RzjZ-WdVeyk" class="uri"&gt;https://youtu.be/RzjZ-WdVeyk&lt;/a&gt;&lt;/p&gt;'><sup>66</sup></a>. For this, we will use <a href="https://psychopy.org/api/sound.html">sound</a> module of PsychoPy library that generates sounds on the fly and also play audio files in various format such as wav or ogg (but not mp3!). Unfortunately, sound it surprisingly tricky, there are many libraries that might be used by PsychoPy (as of 2023 PsychoPy lists four backends that it might use), and things sometimes break. Thus, if the music does not play for you, ask me and we will try to set your sound libraries up.</p>
 <p>Using sound is very simple. First, you need to import the <code>Sound</code> class as suggested in the manual:</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb98-1"><a href="christmas-special.html#cb98-1" tabindex="-1"></a><span class="im">from</span> psychopy.sound <span class="im">import</span> Sound</span></code></pre></div>
-<p>Then, you need a new object of <code>Sound</code> class supplying the file name as the first parameter (I called the variable <code>song</code>). Right before start the loop, you <code>.play()</code> the sound. Note, if you want to play the same sound again, you need to “rewind” it by explicitly calling its <code>.stop()</code> method. For some reason, the sound stops at the end but does not gets “rewind”, so when you try to play it again and notices that it is already at the end and stops without playing anything.</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb103-1"><a href="christmas-special.html#cb103-1" tabindex="-1"></a><span class="im">from</span> psychopy.sound <span class="im">import</span> Sound</span></code></pre></div>
+<p>Then, you need a new object of <code>Sound</code> class supplying the file name as the first parameter (I called the variable <code>song</code>). Right before start the loop, you <code>.play()</code> the sound. Note, if you want to play the same sound again, you need to “rewind” it by explicitly calling its <code>.stop()</code> method. For some reason, the sound stops at the end but does not gets “rewind” back, so when you try to play it again and notices that it is already at the end and stops without playing anything.</p>
 <div class="rmdnote program">
 <p>Put your code into <code>code04.py</code>.</p>
 </div>
@@ -159,93 +159,93 @@ Music promoted by Audio Library &lt;a href="https://youtu.be/RzjZ-WdVeyk" class=
 <span class="header-section-number">11.6.1</span> XML<a class="anchor" aria-label="anchor" href="#xml"><i class="fas fa-link"></i></a>
 </h3>
 <p><a href="https://en.wikipedia.org/wiki/XML">XML</a> — an Extensible Markup Language — looks similar to HTML (HyperText Markup Language). Experiments designed using PsychoPy Builder interface are stored using XML files but with <a href="https://www.psychopy.org/psyexp.html">.psyexp extension</a>. A settings file for our Christmas programin XML could look like this</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb99-1"><a href="christmas-special.html#cb99-1" tabindex="-1"></a>&lt;<span class="kw">Balls</span>&gt;</span>
-<span id="cb99-2"><a href="christmas-special.html#cb99-2" tabindex="-1"></a>  &lt;<span class="kw">Ball</span>&gt;</span>
-<span id="cb99-3"><a href="christmas-special.html#cb99-3" tabindex="-1"></a>    &lt;<span class="kw">Position</span>&gt;</span>
-<span id="cb99-4"><a href="christmas-special.html#cb99-4" tabindex="-1"></a>      &lt;<span class="kw">x</span>&gt;0.1&lt;/<span class="kw">x</span>&gt;</span>
-<span id="cb99-5"><a href="christmas-special.html#cb99-5" tabindex="-1"></a>      &lt;<span class="kw">y</span>&gt;0.2&lt;/<span class="kw">y</span>&gt;</span>
-<span id="cb99-6"><a href="christmas-special.html#cb99-6" tabindex="-1"></a>    &lt;/<span class="kw">Position</span>&gt;</span>
-<span id="cb99-7"><a href="christmas-special.html#cb99-7" tabindex="-1"></a>    &lt;<span class="kw">Size</span>&gt;0.01&lt;/<span class="kw">Size</span>&gt;</span>
-<span id="cb99-8"><a href="christmas-special.html#cb99-8" tabindex="-1"></a>    &lt;<span class="kw">Color</span>&gt;red&lt;/<span class="kw">Color</span>&gt;</span>
-<span id="cb99-9"><a href="christmas-special.html#cb99-9" tabindex="-1"></a>  &lt;/<span class="kw">Ball</span>&gt;</span>
-<span id="cb99-10"><a href="christmas-special.html#cb99-10" tabindex="-1"></a>  &lt;<span class="kw">Ball</span>&gt;</span>
-<span id="cb99-11"><a href="christmas-special.html#cb99-11" tabindex="-1"></a>    &lt;<span class="kw">Position</span>&gt;</span>
-<span id="cb99-12"><a href="christmas-special.html#cb99-12" tabindex="-1"></a>      &lt;<span class="kw">x</span>&gt;0.2&lt;/<span class="kw">x</span>&gt;</span>
-<span id="cb99-13"><a href="christmas-special.html#cb99-13" tabindex="-1"></a>      &lt;<span class="kw">y</span>&gt;0.1&lt;/<span class="kw">y</span>&gt;</span>
-<span id="cb99-14"><a href="christmas-special.html#cb99-14" tabindex="-1"></a>    &lt;/<span class="kw">Position</span>&gt;</span>
-<span id="cb99-15"><a href="christmas-special.html#cb99-15" tabindex="-1"></a>    &lt;<span class="kw">Size</span>&gt;0.02&lt;/<span class="kw">Size</span>&gt;</span>
-<span id="cb99-16"><a href="christmas-special.html#cb99-16" tabindex="-1"></a>    &lt;<span class="kw">Color</span>&gt;yellow&lt;/<span class="kw">Color</span>&gt;</span>
-<span id="cb99-17"><a href="christmas-special.html#cb99-17" tabindex="-1"></a>  &lt;/<span class="kw">Ball</span>&gt;</span>
-<span id="cb99-18"><a href="christmas-special.html#cb99-18" tabindex="-1"></a>  ...</span>
-<span id="cb99-19"><a href="christmas-special.html#cb99-19" tabindex="-1"></a>&lt;/<span class="kw">Balls</span>&gt;</span>
-<span id="cb99-20"><a href="christmas-special.html#cb99-20" tabindex="-1"></a>&lt;<span class="kw">Timing</span>&gt;</span>
-<span id="cb99-21"><a href="christmas-special.html#cb99-21" tabindex="-1"></a>  &lt;<span class="kw">Twinkle</span><span class="ot"> duration</span><span class="er">&gt;0.5&lt;/Twinkle</span> <span class="er">duration&gt;</span></span>
-<span id="cb99-22"><a href="christmas-special.html#cb99-22" tabindex="-1"></a><span class="er">&lt;/Timing&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb104-1"><a href="christmas-special.html#cb104-1" tabindex="-1"></a>&lt;<span class="kw">Balls</span>&gt;</span>
+<span id="cb104-2"><a href="christmas-special.html#cb104-2" tabindex="-1"></a>  &lt;<span class="kw">Ball</span>&gt;</span>
+<span id="cb104-3"><a href="christmas-special.html#cb104-3" tabindex="-1"></a>    &lt;<span class="kw">Position</span>&gt;</span>
+<span id="cb104-4"><a href="christmas-special.html#cb104-4" tabindex="-1"></a>      &lt;<span class="kw">x</span>&gt;0.1&lt;/<span class="kw">x</span>&gt;</span>
+<span id="cb104-5"><a href="christmas-special.html#cb104-5" tabindex="-1"></a>      &lt;<span class="kw">y</span>&gt;0.2&lt;/<span class="kw">y</span>&gt;</span>
+<span id="cb104-6"><a href="christmas-special.html#cb104-6" tabindex="-1"></a>    &lt;/<span class="kw">Position</span>&gt;</span>
+<span id="cb104-7"><a href="christmas-special.html#cb104-7" tabindex="-1"></a>    &lt;<span class="kw">Size</span>&gt;0.01&lt;/<span class="kw">Size</span>&gt;</span>
+<span id="cb104-8"><a href="christmas-special.html#cb104-8" tabindex="-1"></a>    &lt;<span class="kw">Color</span>&gt;red&lt;/<span class="kw">Color</span>&gt;</span>
+<span id="cb104-9"><a href="christmas-special.html#cb104-9" tabindex="-1"></a>  &lt;/<span class="kw">Ball</span>&gt;</span>
+<span id="cb104-10"><a href="christmas-special.html#cb104-10" tabindex="-1"></a>  &lt;<span class="kw">Ball</span>&gt;</span>
+<span id="cb104-11"><a href="christmas-special.html#cb104-11" tabindex="-1"></a>    &lt;<span class="kw">Position</span>&gt;</span>
+<span id="cb104-12"><a href="christmas-special.html#cb104-12" tabindex="-1"></a>      &lt;<span class="kw">x</span>&gt;0.2&lt;/<span class="kw">x</span>&gt;</span>
+<span id="cb104-13"><a href="christmas-special.html#cb104-13" tabindex="-1"></a>      &lt;<span class="kw">y</span>&gt;0.1&lt;/<span class="kw">y</span>&gt;</span>
+<span id="cb104-14"><a href="christmas-special.html#cb104-14" tabindex="-1"></a>    &lt;/<span class="kw">Position</span>&gt;</span>
+<span id="cb104-15"><a href="christmas-special.html#cb104-15" tabindex="-1"></a>    &lt;<span class="kw">Size</span>&gt;0.02&lt;/<span class="kw">Size</span>&gt;</span>
+<span id="cb104-16"><a href="christmas-special.html#cb104-16" tabindex="-1"></a>    &lt;<span class="kw">Color</span>&gt;yellow&lt;/<span class="kw">Color</span>&gt;</span>
+<span id="cb104-17"><a href="christmas-special.html#cb104-17" tabindex="-1"></a>  &lt;/<span class="kw">Ball</span>&gt;</span>
+<span id="cb104-18"><a href="christmas-special.html#cb104-18" tabindex="-1"></a>  ...</span>
+<span id="cb104-19"><a href="christmas-special.html#cb104-19" tabindex="-1"></a>&lt;/<span class="kw">Balls</span>&gt;</span>
+<span id="cb104-20"><a href="christmas-special.html#cb104-20" tabindex="-1"></a>&lt;<span class="kw">Timing</span>&gt;</span>
+<span id="cb104-21"><a href="christmas-special.html#cb104-21" tabindex="-1"></a>  &lt;<span class="kw">Twinkle</span><span class="ot"> duration</span><span class="er">&gt;0.5&lt;/Twinkle</span> <span class="er">duration&gt;</span></span>
+<span id="cb104-22"><a href="christmas-special.html#cb104-22" tabindex="-1"></a><span class="er">&lt;/Timing&gt;</span></span></code></pre></div>
 <p>The advantage of XML is that it is very flexible yet structured and you can use <a href="https://docs.python.org/3/library/xml.html">native Python interface</a> to work with it. However, XML is not easy for humans to read, it is overpowered for our purposes of having a simple set of unique constants and its power means that using it is fairly cumbersome (I use <code>\</code> to split a single line into many lines).</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb100-1"><a href="christmas-special.html#cb100-1" tabindex="-1"></a><span class="im">from</span> xml.dom <span class="im">import</span> minidom</span>
-<span id="cb100-2"><a href="christmas-special.html#cb100-2" tabindex="-1"></a>settings <span class="op">=</span> minidom.parse(<span class="st">'settings.xml'</span>)</span>
-<span id="cb100-3"><a href="christmas-special.html#cb100-3" tabindex="-1"></a><span class="co"># this will give you string "0.4"</span></span>
-<span id="cb100-4"><a href="christmas-special.html#cb100-4" tabindex="-1"></a>size <span class="op">=</span> settings.getElementsByTagName(<span class="st">"Balls"</span>)[<span class="dv">0</span>]. <span class="op">\</span></span>
-<span id="cb100-5"><a href="christmas-special.html#cb100-5" tabindex="-1"></a>                getElementsByTagName(<span class="st">"Ball"</span>)[<span class="dv">0</span>]. <span class="op">\</span></span>
-<span id="cb100-6"><a href="christmas-special.html#cb100-6" tabindex="-1"></a>                getElementsByTagName(<span class="st">"Size"</span>)[<span class="dv">0</span>].firstChild.data</span></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb105-1"><a href="christmas-special.html#cb105-1" tabindex="-1"></a><span class="im">from</span> xml.dom <span class="im">import</span> minidom</span>
+<span id="cb105-2"><a href="christmas-special.html#cb105-2" tabindex="-1"></a>settings <span class="op">=</span> minidom.parse(<span class="st">'settings.xml'</span>)</span>
+<span id="cb105-3"><a href="christmas-special.html#cb105-3" tabindex="-1"></a><span class="co"># this will give you string "0.4"</span></span>
+<span id="cb105-4"><a href="christmas-special.html#cb105-4" tabindex="-1"></a>size <span class="op">=</span> settings.getElementsByTagName(<span class="st">"Balls"</span>)[<span class="dv">0</span>]. <span class="op">\</span></span>
+<span id="cb105-5"><a href="christmas-special.html#cb105-5" tabindex="-1"></a>                getElementsByTagName(<span class="st">"Ball"</span>)[<span class="dv">0</span>]. <span class="op">\</span></span>
+<span id="cb105-6"><a href="christmas-special.html#cb105-6" tabindex="-1"></a>                getElementsByTagName(<span class="st">"Size"</span>)[<span class="dv">0</span>].firstChild.data</span></code></pre></div>
 </div>
 <div id="ini" class="section level3" number="11.6.2">
 <h3>
 <span class="header-section-number">11.6.2</span> INI<a class="anchor" aria-label="anchor" href="#ini"><i class="fas fa-link"></i></a>
 </h3>
 <p>This is a format with a structure similar to that found in MS Windows INI files.</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb101-1"><a href="christmas-special.html#cb101-1" tabindex="-1"></a><span class="kw">[Balls]</span></span>
-<span id="cb101-2"><a href="christmas-special.html#cb101-2" tabindex="-1"></a><span class="dt">    x </span><span class="ot">=</span><span class="st"> 0.1, 0.2</span></span>
-<span id="cb101-3"><a href="christmas-special.html#cb101-3" tabindex="-1"></a><span class="dt">    y </span><span class="ot">=</span><span class="st"> 0.2, 0.1</span></span>
-<span id="cb101-4"><a href="christmas-special.html#cb101-4" tabindex="-1"></a><span class="dt">    size </span><span class="ot">=</span><span class="st"> 0.01, 0.02</span></span>
-<span id="cb101-5"><a href="christmas-special.html#cb101-5" tabindex="-1"></a><span class="dt">    color </span><span class="ot">=</span><span class="st"> red, yellow</span></span>
-<span id="cb101-6"><a href="christmas-special.html#cb101-6" tabindex="-1"></a><span class="kw">[Timing]</span></span>
-<span id="cb101-7"><a href="christmas-special.html#cb101-7" tabindex="-1"></a><span class="dt">    TwinkleDuration </span><span class="ot">=</span><span class="st"> </span><span class="fl">0.5</span></span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb106-1"><a href="christmas-special.html#cb106-1" tabindex="-1"></a><span class="kw">[Balls]</span></span>
+<span id="cb106-2"><a href="christmas-special.html#cb106-2" tabindex="-1"></a><span class="dt">    x </span><span class="ot">=</span><span class="st"> 0.1, 0.2</span></span>
+<span id="cb106-3"><a href="christmas-special.html#cb106-3" tabindex="-1"></a><span class="dt">    y </span><span class="ot">=</span><span class="st"> 0.2, 0.1</span></span>
+<span id="cb106-4"><a href="christmas-special.html#cb106-4" tabindex="-1"></a><span class="dt">    size </span><span class="ot">=</span><span class="st"> 0.01, 0.02</span></span>
+<span id="cb106-5"><a href="christmas-special.html#cb106-5" tabindex="-1"></a><span class="dt">    color </span><span class="ot">=</span><span class="st"> red, yellow</span></span>
+<span id="cb106-6"><a href="christmas-special.html#cb106-6" tabindex="-1"></a><span class="kw">[Timing]</span></span>
+<span id="cb106-7"><a href="christmas-special.html#cb106-7" tabindex="-1"></a><span class="dt">    TwinkleDuration </span><span class="ot">=</span><span class="st"> </span><span class="fl">0.5</span></span></code></pre></div>
 <p>As you can see it is easier to read and Python has a special <a href="https://docs.python.org/3/library/configparser.html">configparser</a> library to work with them. The object you get is, effectively, a dictionary with additional methods and attributes. However <code>ConfigParser</code> does not try to guess the type of data, so all values are stored as <em>strings</em> and it is your job to convert them to whatever type you need, e.g., integer, list, etc.</p>
-<div class="sourceCode" id="cb102"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb102-1"><a href="christmas-special.html#cb102-1" tabindex="-1"></a><span class="im">import</span> configparser</span>
-<span id="cb102-2"><a href="christmas-special.html#cb102-2" tabindex="-1"></a>settings <span class="op">=</span> configparser.ConfigParser()</span>
-<span id="cb102-3"><a href="christmas-special.html#cb102-3" tabindex="-1"></a>settings.read(<span class="st">'settings.ini'</span>)</span>
-<span id="cb102-4"><a href="christmas-special.html#cb102-4" tabindex="-1"></a>settings[<span class="st">'Balls'</span>][<span class="st">'size'</span>] <span class="co"># this will give you a string '0.01, 0.02'</span></span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb107-1"><a href="christmas-special.html#cb107-1" tabindex="-1"></a><span class="im">import</span> configparser</span>
+<span id="cb107-2"><a href="christmas-special.html#cb107-2" tabindex="-1"></a>settings <span class="op">=</span> configparser.ConfigParser()</span>
+<span id="cb107-3"><a href="christmas-special.html#cb107-3" tabindex="-1"></a>settings.read(<span class="st">'settings.ini'</span>)</span>
+<span id="cb107-4"><a href="christmas-special.html#cb107-4" tabindex="-1"></a>settings[<span class="st">'Balls'</span>][<span class="st">'size'</span>] <span class="co"># this will give you a string '0.01, 0.02'</span></span></code></pre></div>
 </div>
 <div id="json" class="section level3" number="11.6.3">
 <h3>
 <span class="header-section-number">11.6.3</span> JSON<a class="anchor" aria-label="anchor" href="#json"><i class="fas fa-link"></i></a>
 </h3>
 <p><a href="https://en.wikipedia.org/wiki/JSON">JSON</a> (JavaScript Object Notation) is a popular format to serialize data for web applications that use it to exchange data between a server and a client.</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb103-1"><a href="christmas-special.html#cb103-1" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb103-2"><a href="christmas-special.html#cb103-2" tabindex="-1"></a>  <span class="dt">"Balls"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb103-3"><a href="christmas-special.html#cb103-3" tabindex="-1"></a>    <span class="dt">"position"</span><span class="fu">:</span> <span class="ot">[[</span><span class="fl">0.1</span><span class="ot">,</span> <span class="fl">0.2</span><span class="ot">],</span> <span class="ot">[</span><span class="fl">0.2</span><span class="ot">,</span> <span class="fl">0.1</span><span class="ot">]]</span><span class="fu">,</span></span>
-<span id="cb103-4"><a href="christmas-special.html#cb103-4" tabindex="-1"></a>    <span class="dt">"size"</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">0.01</span><span class="ot">,</span> <span class="fl">0.02</span><span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb103-5"><a href="christmas-special.html#cb103-5" tabindex="-1"></a>    <span class="dt">"color"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"red"</span><span class="ot">,</span> <span class="st">"yellow"</span><span class="ot">]</span></span>
-<span id="cb103-6"><a href="christmas-special.html#cb103-6" tabindex="-1"></a>  <span class="fu">},</span></span>
-<span id="cb103-7"><a href="christmas-special.html#cb103-7" tabindex="-1"></a>  <span class="dt">"Timing"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb103-8"><a href="christmas-special.html#cb103-8" tabindex="-1"></a>    <span class="dt">"Twinkle duration"</span> <span class="fu">:</span> <span class="fl">0.5</span></span>
-<span id="cb103-9"><a href="christmas-special.html#cb103-9" tabindex="-1"></a>  <span class="fu">}</span></span>
-<span id="cb103-10"><a href="christmas-special.html#cb103-10" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb108-1"><a href="christmas-special.html#cb108-1" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb108-2"><a href="christmas-special.html#cb108-2" tabindex="-1"></a>  <span class="dt">"Balls"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb108-3"><a href="christmas-special.html#cb108-3" tabindex="-1"></a>    <span class="dt">"position"</span><span class="fu">:</span> <span class="ot">[[</span><span class="fl">0.1</span><span class="ot">,</span> <span class="fl">0.2</span><span class="ot">],</span> <span class="ot">[</span><span class="fl">0.2</span><span class="ot">,</span> <span class="fl">0.1</span><span class="ot">]]</span><span class="fu">,</span></span>
+<span id="cb108-4"><a href="christmas-special.html#cb108-4" tabindex="-1"></a>    <span class="dt">"size"</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">0.01</span><span class="ot">,</span> <span class="fl">0.02</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb108-5"><a href="christmas-special.html#cb108-5" tabindex="-1"></a>    <span class="dt">"color"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"red"</span><span class="ot">,</span> <span class="st">"yellow"</span><span class="ot">]</span></span>
+<span id="cb108-6"><a href="christmas-special.html#cb108-6" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb108-7"><a href="christmas-special.html#cb108-7" tabindex="-1"></a>  <span class="dt">"Timing"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb108-8"><a href="christmas-special.html#cb108-8" tabindex="-1"></a>    <span class="dt">"Twinkle duration"</span> <span class="fu">:</span> <span class="fl">0.5</span></span>
+<span id="cb108-9"><a href="christmas-special.html#cb108-9" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb108-10"><a href="christmas-special.html#cb108-10" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 <p>You can parse any <em>string</em> in JSON format into a dictionary in Python using <a href="https://docs.python.org/3/library/json.html">json</a> module. Its advantage over INI files is that JSON explicitly specifies data type (i.e., strings are in quotation marks), so it converts it automatically. Note that unlike configparse, json module does not work with files directly, so you need to open it manually (ignore the <code>with</code> magic for a moment, you will learn about it in detail when we will talk about context managers).</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb104-1"><a href="christmas-special.html#cb104-1" tabindex="-1"></a><span class="im">import</span> json</span>
-<span id="cb104-2"><a href="christmas-special.html#cb104-2" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'settings.json'</span>) <span class="im">as</span> json_file:</span>
-<span id="cb104-3"><a href="christmas-special.html#cb104-3" tabindex="-1"></a>    settings <span class="op">=</span> json.load(json_file)</span>
-<span id="cb104-4"><a href="christmas-special.html#cb104-4" tabindex="-1"></a>    </span>
-<span id="cb104-5"><a href="christmas-special.html#cb104-5" tabindex="-1"></a>settings[<span class="st">"Balls"</span>][<span class="st">"size"</span>] <span class="co"># this will give a list [0.01, 0.02]</span></span></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb109-1"><a href="christmas-special.html#cb109-1" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb109-2"><a href="christmas-special.html#cb109-2" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'settings.json'</span>) <span class="im">as</span> json_file:</span>
+<span id="cb109-3"><a href="christmas-special.html#cb109-3" tabindex="-1"></a>    settings <span class="op">=</span> json.load(json_file)</span>
+<span id="cb109-4"><a href="christmas-special.html#cb109-4" tabindex="-1"></a>    </span>
+<span id="cb109-5"><a href="christmas-special.html#cb109-5" tabindex="-1"></a>settings[<span class="st">"Balls"</span>][<span class="st">"size"</span>] <span class="co"># this will give a list [0.01, 0.02]</span></span></code></pre></div>
 </div>
 <div id="yaml" class="section level3" number="11.6.4">
 <h3>
 <span class="header-section-number">11.6.4</span> YAML<a class="anchor" aria-label="anchor" href="#yaml"><i class="fas fa-link"></i></a>
 </h3>
 <p><a href="https://en.wikipedia.org/wiki/YAML">YAML</a> (YAML Ain’t Markup Language, rhymes with camel) is very similar to JSON but its config files are more human-readable. It has fewer special symbols and curly brackets but, as in Python, you must watch the indentations as they determine the hierarchy.</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb105-1"><a href="christmas-special.html#cb105-1" tabindex="-1"></a><span class="fu">Balls</span><span class="kw">:</span></span>
-<span id="cb105-2"><a href="christmas-special.html#cb105-2" tabindex="-1"></a><span class="at">  </span><span class="fu">position</span><span class="kw">:</span><span class="at"> </span><span class="kw">[[</span><span class="fl">0.1</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.2</span><span class="kw">],</span><span class="at"> </span><span class="kw">[</span><span class="fl">0.2</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.1</span><span class="kw">]]</span></span>
-<span id="cb105-3"><a href="christmas-special.html#cb105-3" tabindex="-1"></a><span class="at">  </span><span class="fu">size</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="fl">0.01</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.02</span><span class="kw">]</span></span>
-<span id="cb105-4"><a href="christmas-special.html#cb105-4" tabindex="-1"></a><span class="at">  </span><span class="fu">color</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"red"</span><span class="kw">,</span><span class="at"> </span><span class="st">"yellow"</span><span class="kw">]</span></span>
-<span id="cb105-5"><a href="christmas-special.html#cb105-5" tabindex="-1"></a><span class="fu">Timing</span><span class="kw">:</span></span>
-<span id="cb105-6"><a href="christmas-special.html#cb105-6" tabindex="-1"></a><span class="at">  </span><span class="fu">Twinkle duration </span><span class="kw">:</span><span class="at"> </span><span class="fl">0.5</span></span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb110-1"><a href="christmas-special.html#cb110-1" tabindex="-1"></a><span class="fu">Balls</span><span class="kw">:</span></span>
+<span id="cb110-2"><a href="christmas-special.html#cb110-2" tabindex="-1"></a><span class="at">  </span><span class="fu">position</span><span class="kw">:</span><span class="at"> </span><span class="kw">[[</span><span class="fl">0.1</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.2</span><span class="kw">],</span><span class="at"> </span><span class="kw">[</span><span class="fl">0.2</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.1</span><span class="kw">]]</span></span>
+<span id="cb110-3"><a href="christmas-special.html#cb110-3" tabindex="-1"></a><span class="at">  </span><span class="fu">size</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="fl">0.01</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.02</span><span class="kw">]</span></span>
+<span id="cb110-4"><a href="christmas-special.html#cb110-4" tabindex="-1"></a><span class="at">  </span><span class="fu">color</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"red"</span><span class="kw">,</span><span class="at"> </span><span class="st">"yellow"</span><span class="kw">]</span></span>
+<span id="cb110-5"><a href="christmas-special.html#cb110-5" tabindex="-1"></a><span class="fu">Timing</span><span class="kw">:</span></span>
+<span id="cb110-6"><a href="christmas-special.html#cb110-6" tabindex="-1"></a><span class="at">  </span><span class="fu">Twinkle duration </span><span class="kw">:</span><span class="at"> </span><span class="fl">0.5</span></span></code></pre></div>
 <p>You will need to install a third-party library <a href="https://pyyaml.org/">pyyaml</a> to work with YAML files. You get the same dictionary as for the JSON</p>
-<div class="sourceCode" id="cb106"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb106-1"><a href="christmas-special.html#cb106-1" tabindex="-1"></a><span class="im">import</span> yaml</span>
-<span id="cb106-2"><a href="christmas-special.html#cb106-2" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"settings.yaml"</span>) <span class="im">as</span> yaml_stream:</span>
-<span id="cb106-3"><a href="christmas-special.html#cb106-3" tabindex="-1"></a>    settings <span class="op">=</span> yaml.load(yaml_stream)</span>
-<span id="cb106-4"><a href="christmas-special.html#cb106-4" tabindex="-1"></a>    </span>
-<span id="cb106-5"><a href="christmas-special.html#cb106-5" tabindex="-1"></a>settings[<span class="st">"Balls"</span>][<span class="st">"size"</span>] <span class="co"># this will give a list [0.01, 0.02]</span></span></code></pre></div>
+<div class="sourceCode" id="cb111"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb111-1"><a href="christmas-special.html#cb111-1" tabindex="-1"></a><span class="im">import</span> yaml</span>
+<span id="cb111-2"><a href="christmas-special.html#cb111-2" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"settings.yaml"</span>) <span class="im">as</span> yaml_stream:</span>
+<span id="cb111-3"><a href="christmas-special.html#cb111-3" tabindex="-1"></a>    settings <span class="op">=</span> yaml.safe_load(yaml_stream)</span>
+<span id="cb111-4"><a href="christmas-special.html#cb111-4" tabindex="-1"></a>    </span>
+<span id="cb111-5"><a href="christmas-special.html#cb111-5" tabindex="-1"></a>settings[<span class="st">"Balls"</span>][<span class="st">"size"</span>] <span class="co"># this will give a list [0.01, 0.02]</span></span></code></pre></div>
 </div>
 </div>
 <div id="using-settings" class="section level2" number="11.7">
@@ -305,7 +305,7 @@ Music promoted by Audio Library &lt;a href="https://youtu.be/RzjZ-WdVeyk" class=
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Writing games with Python and PsychoPy</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-06-19.</p>
+    <p>"<strong>Learning Python and PsychoPy by writing games</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-10-04.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
