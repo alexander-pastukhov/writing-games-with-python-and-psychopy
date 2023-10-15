@@ -79,7 +79,7 @@ def iterator_fun():
   
 # function returns an iterator, not a value!
 print(iterator_fun())
-#> <generator object iterator_fun at 0x0000018DDFE67680>
+#> <generator object iterator_fun at 0x000001FAB3E87680>
 
 # iterating via for loop
 for elem in iterator_fun():

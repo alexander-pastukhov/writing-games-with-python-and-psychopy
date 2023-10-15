@@ -6,7 +6,7 @@ bookdown::bs4_book:
   theme:
     primary: "#096B72"
   includes:
-    in_header: ga4tag.html
+    in_header: header.html
   repo: https://github.com/alexander-pastukhov/writing-games-with-python-and-psychopy
   footnotes_inline : yes
 bookdown::pdf_book:
