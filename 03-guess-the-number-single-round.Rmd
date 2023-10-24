@@ -36,7 +36,7 @@ Let us start by implementing just the first two steps of the program. First, cre
 
 Try out this two-liner in a Jupyter Notebook (create an empty notebook just for that). Once you are happy with it, copy-paste the code into `code01.py` and read on to learn how to document and run it.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code01.py`.
 :::
 
@@ -57,7 +57,7 @@ Use multiline comments to write documentation for individual files, functions, c
 
 Use single line comments to explain what happens in a particular code block. You do not need to comment every line and you should not replicate the code in human language. A comment should be about _what_ is going on not _how_. You already have a single chunk of code, so document it with a single sentence. 
 
-::: {.rmdnote .program}
+::: {.program}
 Document `code01.py` file.
 :::
 
@@ -110,7 +110,7 @@ A function is an isolated code that accepts (optional) _inputs_, performs an _ac
 
 Similar _input_ → _action_ → _output_ scheme holds for the [input(prompt)](https://docs.python.org/3/library/functions.html#input). It takes an optional `prompt` string as input. Then it prints the `prompt` message and waits for a user to enter a _string_ until they press **Enter**. It then returns this _string_ value. The latter bit about _string_ is important, because in our game we need a player to enter an _integer_ not a string. For a moment, let us assume that the input is always a valid integer number, so type only valid integers when testing the program! This way we can convert it to an integer without extra checks (will add them in the future) and assign this value to a new variable called `guess`. Thus, you need to add a single line assignment statement with `guess` variable on the left side and call to [input()](https://docs.python.org/3/library/functions.html#input) function on the right side (think of a nice prompt message) wrapped by (inside of) the type-conversion to integer via [int()](https://docs.python.org/3/library/functions.html#int). Test this code but, again, only enter valid integers, so that the conversion works without an error.
 
-::: {.rmdnote .program}
+::: {.program}
 Update your `code01.py`.
 :::
 
@@ -149,7 +149,7 @@ For the comparison, you can use the following operators:
 * _"A is greater than B"_ and _"A is smaller than B"_ are, respectively, `A > B` and `A < B`.
 * _"A is greater than or equal to B"_ and _"A is smaller than or equal to B"_ are, respectively, `A >= B` and `A <= B` (please note the order of symbols as `=>` and `=<` will produce an error).
 
-::: {.rmdnote .practice}
+::: {.practice}
 Go to exercise #1 to solve some comparisons.
 :::
 
@@ -160,13 +160,13 @@ You can _invert_ the logical value using `not` operator, as `not True` is `False
 * If A is equal B then `A == B` evaluates to `True`. The `A != B` is then `False`, so `not A != B` → `not False` → `True`.
 * If A is not equal B then `A == B` evaluates to `False`. The `A != B` is then `True`, so `not A != B` → `not True` → `False`.
 
-::: {.rmdnote .practice}
+::: {.practice}
 Go to exercise #2 to explore this inversion yourself.
 :::
 
 You can also combine several comparisons using `and` and/or^[pun intended] `or` operators. As in human language, `and` means that both parts must be true: `True and True` → `True` but `True and False` → `False`, `False and True` → `False`, and `False and False` → `False`. Same holds if you have more than two conditions/comparisons linked via `and`: **All** of them must be true. In case of `or` only one of the statements must be true, e.g. `True or True` → `True`, `True or False` → `True`, `False or True` → `True`, but `False or False` → `False`. Again, for more than two comparisons/conditions at least one of them should be true for the entire expression to be true.
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercises #3 and #4.
 :::
 
@@ -190,13 +190,13 @@ However, if the first condition is `False`, we do need to continue (and stumble 
 2 * 2 == 5 or int("e123") == 123
 ```
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #5.
 :::
 
 Finally, like in simple arithmetic, you can use brackets `()` to group conditions together. Thus a statement "I always eat chocolate but I eat spinach only when I am hungry" can be written as `food == "chocolate" or (food == "spinach" and hungry)`. Here, `the food == "chocolate"` and `food == "spinach" and hungry` are evaluated independently, their values are substituted in their place and then the `and` condition is evaluated. 
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #6.
 :::
 
@@ -231,13 +231,13 @@ while game_is_not_over: # (0 indentation)
 ```
 Pay very close attention to the indentation as it determines which statements are executed together! A wrong indentation level is unfortunately a very common mistake.
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #7.
 :::
 
 The `if` and `ifelse` statements are evaluated until one of them turns out to be `True`. After that any following `ifelse` and `else` statements are simply ignored. 
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #8.
 :::
 
@@ -249,7 +249,8 @@ Now you have all necessary tools to finish the first version of our game. Add a 
 * if two numbers are identical, it will print `"Spot on!"`
 
 First, save a copy of your original code into `code02.py` and then add the comparison and printing.
-::: {.rmdnote .program}
+
+::: {.program}
 Extend your program with the comparison in`code02.py`
 :::
 
@@ -296,7 +297,7 @@ Now that you know how to import a library, we can use [randint()](https://docs.p
 
 Once you implemented this in `code02.py`, run it several times to check that computer does pick different random values. Again, use breakpoints if you want to double-check what is going on.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code03.py`.
 :::
 
@@ -315,7 +316,7 @@ You know everything you need to program a simple version of an "one-armed bandit
 
 Do not forget to document the new `code03.py` file and feel free to use breakpoints to debug it.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code04.py`.
 :::
 

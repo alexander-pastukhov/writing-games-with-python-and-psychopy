@@ -54,7 +54,7 @@ Before we start, grab images that we will use for the game [space-invaders.zip](
 Create our usual boilerplate with an external settings file via a context manager with `GameAbort` exception handling. You can reuse the code from our last game but I strongly suggest checking that you understand every step. My suggestion for the window size is 640×480 because the sprites are 32×32 but chose whatever looks good on your screen.
 
 
-::: {.rmdnote .program}
+::: {.program}
 Create `GameContext` and `GameAbort` classes.<br/>
 Put your boilerplate code into _code01.py_.
 :::
@@ -64,7 +64,7 @@ Create a new file for `Spaceship` class. It is remarkably boring as it just an i
 
 In the main code, create an object and draw it in the main loop.
 
-::: {.rmdnote .program}
+::: {.program}
 Create `Spaceship` class in a separate file.<br/>
 Use it in _code02.py_.
 :::
@@ -73,7 +73,7 @@ Use it in _code02.py_.
 ## The spaceship moves
 Now, let us use the [mouse](https://psychopy.org/api/event.html#psychopy.event.Mouse) to control the horizontal position of the ship and, later on, left button to shoot. First, initialize the mouse in the context manager, so that it is one its attributes (then you can use it as `ctx.mouse`). Then, in the main loop, use [getPos()](https://psychopy.org/api/event.html#psychopy.event.Mouse.getPos) method to get the position of the mouse and use the _horizontal_ component to alter the position of the ship. Note that you _cannot_ assign just a horizontal or vertical components to the position via `.pos[0] = ...`. In my PsychoPy 2021.1.4 it does not generate an error but does not change the actual position either. Thus, you need to assign a tuple of `(new horizontal component, original vertical component)` (the ship should stay at the same vertical position throughout the game). Test moving your spaceship around. You can make mouse invisible (see [documentation](https://psychopy.org/api/event.html#psychopy.event.Mouse)) to make it more immersive.
 
-::: {.rmdnote .program}
+::: {.program}
 Add mouse to `GameContext`<br/>
 Use mouse to move ship in _code03.py_.
 :::
@@ -81,7 +81,7 @@ Use mouse to move ship in _code03.py_.
 ## An alien appears
 Before we create an alien armada, let us create a single alien. The class will be very basic, which is why, we will put both `Alien` and `AlienArmada` into the same file (so, think about its filename). The class itself is similar to the `Spaceship`. The only differences are that it should take (and pass) `pos` parameter (unlike the spaceship that always appears at the same location) and that  the image should be [randomly picked](https://docs.python.org/3/library/random.html#random.choice) from a tuple of filenames (_alien-1.png_ and _alien-2.png_, the names should be defined in the settings in an "aliens" group of settings). For testing, place a few aliens at arbitrary locations on the screen to check that an alien image is randomly picked. Do not forget to draw them in the main loop.
 
-::: {.rmdnote .program}
+::: {.program}
 Create an `Alien` class<br/>
 Use them in _code04.py_.
 :::
@@ -138,7 +138,7 @@ In the `spawn()` create aliens on a grid based on your `"Grid size"` and `"Grid 
 knitr::include_graphics("images/alien-armada.png")
 ```
 
-::: {.rmdnote .program}
+::: {.program}
 Create the `AlienArmada` class.<br/>
 Use it in _code05.py_.
 :::
@@ -150,7 +150,7 @@ Let us take care of the first step: creating a laser shot just above the sheep. 
 
 For testing, create a laser object right after you create the ship itself and draw it in the main loop. It won't move but you will be able to see whether you've got the height right.
 
-::: {.rmdnote .program}
+::: {.program}
 Create the `Laser` class.<br/>
 Use in _code06.py_.
 :::
@@ -160,7 +160,7 @@ Let us add `fly()` method to the laser. It will be very simple, every time it is
 
 Remember to call `fly()` method in the main loop and see how the laser flies up and off the screen.
 
-::: {.rmdnote .program}
+::: {.program}
 Add `fly()` method to `Laser` class.<br/>
 Use it in _code07.py_.
 :::
@@ -174,7 +174,7 @@ The `fire()` method should take position of the ship as a single parameter. If e
 
 For testing, use `LaserGun` in place of the `Laser`. Both have same `draw()` and `fly()` methods that you should be calling already.  In the main loop, check if left mouse button is [pressed](https://psychopy.org/api/event.html#psychopy.event.Mouse.getPressed). If it is, `fire()` the laser gun, passing current position of the ship to it.
 
-::: {.rmdnote .program}
+::: {.program}
 Create `LaserGun` class.<br/>
 Test it in _code08.py_.
 :::
@@ -215,7 +215,7 @@ for ishot in backwards-index-built-via-the-range-function:
 
 Add `cleanup()` call to the main loop right after the `fly()` to automatically delete expired shots. Once you fired a few shots and they are all off the screen, put a breakpoint and check that the `.lasershots` is empty (your `cleanup()` works as it should).
 
-::: {.rmdnote .program}
+::: {.program}
 Add `expired` property to `Laser`.<br/>
 Add `cleanup()` method to `LaserShot`.<br/>
 Use `cleanup()` in  _code09.py_.
@@ -230,7 +230,7 @@ Now for the actual check. You should loop over all aliens and laser shots attrib
 
 Test it!
 
-::: {.rmdnote .program}
+::: {.program}
 Update `Alien` and `AlienArmada` classes
 Check for laser shots hitting aliens
 in _code10.py_, .
@@ -245,7 +245,7 @@ Do this for both classes and use them in for loops directly, i.e. looping over `
 
 Test it! It should work as before, of course, but with cooler duck typing inside!
 
-::: {.rmdnote .program}
+::: {.program}
 Turn  `LaserGun` and `AlienArmada` into iterators.
 Use them as iterators in _code11.py_.
 :::
@@ -253,7 +253,7 @@ Use them as iterators in _code11.py_.
 ## Got'em all!
 Now, implement `__len__()` method for `AlienArmada` class that returns the number of remaining aliens. In the main loop, use it via `len()` function to check whether you won: no aliens left, the game is over. Use `len()` with the object, not with its `aliens` list attribute!
 
-::: {.rmdnote .program}
+::: {.program}
 Add `__len__()` special method to `AlienArmada` class.
 Use it to check whether all aliens are hit
 in _code12.py_.
@@ -262,7 +262,7 @@ in _code12.py_.
 ## Ping!
 Now let us use a `HitSoundMixin` class that defines a single `hit()` method (no constructor!) that plays the _teleport.wav_ sound^[Created by Sergenious and obtained from [freesound.org](https://freesound.org/people/Sergenious/sounds/55853/)] from [materials](material/space-invaders.zip). It can be a single line method when you both create and play the sound in one go, no temporary variable or an attribute are required. When you use it as an ancestor for the `Alien` class, it has that `hit()` method. Call it when you set _hit_ to `True`.
 
-::: {.rmdnote .program}
+::: {.program}
 Create `HitSoundMixin` class.
 Mix it into the `Alien` class.
 Use it in _code11.py_.
@@ -324,7 +324,7 @@ Now to more complicated and, hence, fun bit! Remember, we need to move _all_ ind
 
 Test it by making armada jump to a random location every time you press _space_ button. The armada should keep its formation!
 
-::: {.rmdnote .program}
+::: {.program}
 Implement getter/setter methods for `__pos` in `AlienArmada`.
 Test it in _code12.py_.
 :::
@@ -362,7 +362,7 @@ For the armada to fly, we need to add a timer (in the constructor) and define a 
 
 In the main loop, call `fly()` when you call it for laser gun.
 
-::: {.rmdnote .program}
+::: {.program}
 Add `fly()` method to `AlienArmada` class.<br/>
 Use it in _code13.py_.
 :::
@@ -370,14 +370,14 @@ Use it in _code13.py_.
 ## The alien armada wins: crash!
 So far, the player always wins. Let us make it more dangerous! They will lose if either an alien crashes into the spaceship or if the armada goes past the ship. Implement the former the same way as you checked whether laser shot hit an alien: loop over aliens and see if they overlap with the spaceship (game over if they do). Implement and test.
 
-::: {.rmdnote .program}
+::: {.program}
 Implement crash-into-ship in _code14.py_.
 :::
 
 ## The alien armada wins: missed them!
 The second way to lose the game, is if at least one alien got past the ship. For this, we need to check the position of the _lowest_ alien and if it is lower than that of the spaceship, the game is over. You can do it in the same loop you are checking for the hit but, for didactic reasons, let us practice `@proprety` a bit more. Implement a new computed (read-only) property `lowest_y` of the `AlienArmada` class that will return the y-coordinate of the lowest alien in the armada. You need to loop over individual aliens to find the lowest y and return it. There are different ways to do it, come up with one yourself! In the main code, add the check and make sure the game is over, if aliens got past the player.
 
-::: {.rmdnote .program}
+::: {.program}
 Add `lowest_y` computed property to `AlienArmada` class.<br/>
 Use it in _code15.py_. 
 :::
@@ -385,7 +385,7 @@ Use it in _code15.py_.
 ## Mixin teleport
 Mix in the teleport sound method to the `Spaceship` and play it if alien crashed into it.
 
-::: {.rmdnote .program}
+::: {.program}
 Mix in teleport to `Spaceship` class.<br/>
 Use it in _code16.py_.
 :::
@@ -399,7 +399,7 @@ Create a blinking game over message that will reflect the outcome. Something lik
 
 One way to simplify you life is to rename `gameover` variable into the `gamestate` variable. Initially, it could be `"playing"`, so your loop repeats `while gamestate == "playing"`. Then, you can set it based on the type of the event (`"victory"` when player wins, `"hit"` when they were hit by the armada, `"missed"` if aliens got away) and use it after the main loop to determine which message to show. Better still, use dictionary for this instead of if-else. Or "cheat" and store the message in the variable itself.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your updated code into _code17.py_.
 :::
 

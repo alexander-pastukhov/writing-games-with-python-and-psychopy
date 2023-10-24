@@ -113,7 +113,7 @@
 <span class="header-section-number">17.3</span> Boilerplate<a class="anchor" aria-label="anchor" href="#boilerplate-3"><i class="fas fa-link"></i></a>
 </h2>
 <p>Implement usual PsychoPy boilerplate with a external settings and context manager. The context manager should initialize PsychoPy window and a mouse, whic we will use it later to draw or erase individual cells. The size of the window that we need depends on the grid size that cells live at and the size of the individual cells. Define all three parameters - <code>grid width [cells]</code>, <code>grid height [cells]</code>, and <code>cell size [pix]</code> - in the settings file and compute window size on the fly. I’ve picked a 30 by 30 grid with each cell measuring 10 pixels (both widht and height, as cells are square).</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Create <code>GameContext</code> and <code>GameAbort</code> classes.<br>
 Put your boilerplate code into <em>code01.py</em>.</p>
 </div>
@@ -184,7 +184,7 @@ Put your boilerplate code into <em>code01.py</em>.</p>
 <span class="header-section-number">17.8</span> Showing an image<a class="anchor" aria-label="anchor" href="#showing-an-image"><i class="fas fa-link"></i></a>
 </h2>
 <p>Finally, we are ready to create and show the image! Use the code from a Jupiter notebook to generate a random grid of size <code>[grid width, grid height]</code> (from the settings), stack it, and rescale it. Then, simply create an <a href="https://psychopy.org/api/visual/imagestim.html">ImageStim</a> passing the array as <code>image</code> and make sure that the image spans the entire window (what should it size be, given <code>"normal"</code> units?) and draw it in the main loop. Put a break point and use a debug console or watch tab to check whether image on the screen correspond to the original 2D grid.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Create a random grid and show it in <em>code02.py</em>.</p>
 </div>
 </div>
@@ -235,7 +235,7 @@ Put your boilerplate code into <em>code01.py</em>.</p>
 <li>Stack and rescale only the inner part for a 3D RGB array we need to an PsychoPy image.</li>
 <li>Create and display the image.</li>
 </ol>
-<div class="rmdnote program">
+<div class="program">
 <p>Generate a zero-padded random grid and show it in <em>code03.py</em>.</p>
 </div>
 </div>
@@ -245,7 +245,7 @@ Put your boilerplate code into <em>code01.py</em>.</p>
 </h2>
 <p>Now that you have all the required pieces, wrap it up nicely in a <code>CellCulture</code> class. As we are displaying cells as an image, it makes sense to make it a descendant of the <a href="https://psychopy.org/api/visual/imagestim.html">ImageStim</a>. In the constructor, you only need the PsychoPy window and a dictionary with settings (so you know the grid size). You could more or less copy-paste code from the <em>code03.py</em> into the constructor and use a parent constructor to initialize it once you generated a random grid. However, we need to perform <em>1) extract inner part, 2) stack to 3D, 3) assign to image</em> on every iteration (after we updated the cell culture), so it makes sense to spin it off as a separate method (e.g., <code>set_image_from_array()</code>). Thus, you can generate the zero-padded grid, initialize parent <em>without</em> an image argument (PsychoPy allows for that) but only with window and size, and then call <code>set_image_from_array()</code>).</p>
 <p>Replace your code in the main script with a new class. It should work as before.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Create <code>CellCulture</code> class<br>
 Use it in <em>code04.py</em>.</p>
 </div>
@@ -371,7 +371,7 @@ and then compute <em>absolute</em> index using <code>icell_row</code> and <code>
 <li>Transfer the grid to the image (you have a method for this).</li>
 </ol>
 <p>In the main code, call update method on every frame and see the cells evolve!</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Add <code>update</code> method to <code>CellCulture</code> class<br>
 Use it in <em>code05.py</em>.</p>
 </div>
@@ -381,7 +381,7 @@ Use it in <em>code05.py</em>.</p>
 <span class="header-section-number">17.16</span> Pause<a class="anchor" aria-label="anchor" href="#pause"><i class="fas fa-link"></i></a>
 </h2>
 <p>In the main loop, you hopefully check for an <em>escape</em> key press to end the game (if not, you should!) Let’s also add a check for a press of <em>space</em> button that will “pause” or “continue” the simulation. I.e., space should toggle (invert) a state of a logical variable (you name it) that determines whether the <code><a href="https://rdrr.io/r/stats/update.html">update()</a></code> method is called.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Implement pause/continue via <em>space</em> in <em>code06.py</em>.</p>
 </div>
 </div>
@@ -391,7 +391,7 @@ Use it in <em>code05.py</em>.</p>
 </h2>
 <p>Random cultures are fun but, perhaps, you have an idea to try out (e.g., see a <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Wikipedia article</a> on example patterns such as blinkers and gliders). Let us draw with the <a href="https://psychopy.org/api/event.html#psychopy.event.Mouse">mouse</a> (this is why I insisted on having it as an attribute of the context), with the left button <a href="https://psychopy.org/api/event.html#psychopy.event.Mouse">click</a> (index <span class="math inline">\(0\)</span>) adding a living cell and the right button click (index <span class="math inline">\(2\)</span>) erasing it.</p>
 <p>For this, create a new <code>CellCulture</code> method (I called it <code>change()</code>) that takes a new value (<span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>, depending on the button) and <a href="https://psychopy.org/api/event.html#psychopy.event.Mouse.getPos">mouse position</a> within the window. In the method, compute the row and column index of the cell keeping in mind that 1) the image spans the entire image, 2) only the inner cells are shown and can be clicked on. Once you have both indexes, assign new value to the grid. For testing, pause the game, draw a few patterns, restart and see them go!</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Add <code>change()</code> method to <code>CellCulture</code><br>
 Use mouse inputs and <code>change()</code> in <em>code07.py</em>.</p>
 </div>
@@ -567,7 +567,7 @@ Use mouse inputs and <code>change()</code> in <em>code07.py</em>.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Python and PsychoPy by writing games</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-10-20.</p>
+    <p>"<strong>Learning Python and PsychoPy by writing games</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-10-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

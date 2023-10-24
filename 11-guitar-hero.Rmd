@@ -44,7 +44,7 @@ Create our usual boilerplate code in _code01.py_:
 * Create a window. 
 * Create our usual main game loop with `gamover` variable, flipping the window, and checking for _escape_ button press.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your boilerplate code into _code01.py_.
 :::
 
@@ -58,7 +58,7 @@ The second parameter --- position index --- determines the horizontal position o
 
 Test it by creating a target at one of the position (or three targets at all three positions) and drawing them in the main loop. You should get nice looking but static rectangle(s).
 
-::: {.rmdnote .program}
+::: {.program}
 Put updated code in `code02.py`  and create the class `Target` in a separate file.
 :::
 
@@ -69,7 +69,7 @@ For the actual falling down, implement a new method, call it `fall()`, that will
 
 Include `fall()` method call in the main loop and see how the target falls. Experiment with falling speed!
 
-::: {.rmdnote .program}
+::: {.program}
 Put updated code in `code03.py`  and update the class `Target`.
 :::
 
@@ -123,7 +123,7 @@ The `next_target_generator()` will be a bit more interesting. It can just return
 
 I would suggest creating and testing both function in a Jupyter notebook first and then putting them in a separate file (e.g., _generators.py_). Be careful if you decide to use a for loop instead of `next()` for testing. Remember, both a generators and will never run out of items to yield for a for loop!
 
-::: {.rmdnote .program}
+::: {.program}
 Put both generators into _generators.py_.
 :::
 
@@ -136,7 +136,7 @@ Now we need to add three methods `draw`, `update`, and `add_next_target`. The fi
 
 In the main file, create `TimedResponsTask` object (use a name you like) and call its `draw` and `update` methods in the main loop. You should see targets appearing at random and falling down consistently.
 
-::: {.rmdnote .program}
+::: {.program}
 Put updated code in _code04.py_  and create the class `TimedResponseTask`.
 :::
 
@@ -147,14 +147,14 @@ Next, in the `update` method of `TimedResponseTask`, add a second loop (or modif
 
 For debugging, run the main code, wait until at least one target falls below the screen, put a break point and check `targets` attribute. Its length should match the number of visible targets, not of the total generated targets.
 
-::: {.rmdnote .program}
+::: {.program}
 Update classes `Target` and `TimedResponseTask`.
 :::
 
 ## Finishing line
 Add a new visual attribute to the `TimedResponseTask` that is a horizontal [line](https://psychopy.org/api/visual/line.html#psychopy.visual.Line). The task of the player will be to press a corresponding key whenever a target crosses (overlaps with) the line. For now, create it as an attribute in the constructor (pick the vertical location you like) and draw it inside the `draw()` method.
 
-::: {.rmdnote .program}
+::: {.program}
 Update class `TimedResponseTask`.
 :::
 
@@ -167,7 +167,7 @@ In the `TimerResponseTask` class, we need a new method `check()` that will take 
 
 In the main loop, add `"left"`, `"down"`, and `"right"` to the key list of [getKeys()](https://psychopy.org/api/event.html#psychopy.event.getKeys) call. Then, if any of these three keys are pressed, translate that into a position, respectively, 0, 1, and 2 (think how you can do it without if-else via a dictionary), and call the new `check` method of the `TimedResponseClass`. Test the code, targets' edges should turn white, if you time your key press correctly!
 
-::: {.rmdnote .program}
+::: {.program}
 Put updated code in _code05.py_, update `Target` and `TimedResponseTask` classes.
 :::
 
@@ -196,7 +196,7 @@ print(adder.number)
 
 Implement that special method for your class, so we can do `score_stim +=  timed_task.check(...)`. Remember, you have to update both numeric _and_ visual representations of the score in that method! Add the score to the main code.
 
-::: {.rmdnote .program}
+::: {.program}
 Put updated code in `code06.py`, create `ScoreText` class.
 :::
 
@@ -207,14 +207,14 @@ Next, create a new method `staircase()` that will take a single parameter (beyon
 
 You need to call this method inside the `check` method, think then and how.
 
-::: {.rmdnote .program}
+::: {.program}
 Update `TimedTaskResponse` class.
 :::
 
 ## Limiting time
 Let us add a competitive edge by limiting the run time to 20 seconds (you can pick your own duration, of course, and you definitely want to be a setting). Create an additional outer loop, so that the game can be played many times over. Once the round is over, show the latest state (redrawing all game objects) plus the "Round over" sign and wait for the player to press either _escape_ (then you exit the game) or _space_ (to start the next round). Remember to recreate all game objects anew for the next round (or create a `reset` method for all of them).
 
-::: {.rmdnote .program}
+::: {.program}
 Put updated code in `code07.py`.
 :::
 
@@ -229,13 +229,13 @@ Once you created `stairhandler` attribute, it is ready for use via `next(self.st
 
 Next, we need to modify our `staicase()` method making it much simpler. First, remove the `if correct: ... else: ...` code but leave targets' speed adjustment code intact (we still need it!). Then, let `stairhandler` adjust itself via [addResponse()](https://psychopy.org/api/data.html#psychopy.data.StairHandler.addResponse) method using an information on whether the response was correct (you already have a parameter with exactly that information). Finally, get the next `speed_factor` exactly the same way as in the constructor. Done!
 
-::: {.rmdnote .program}
+::: {.program}
 Put updated code in `code08.py` using `TimedResponseTask2`.
 :::
 
 Your program should run very much like before but now you have many more opportunities to make it more flexible at little cost for yourself (look at [StairHandler](https://psychopy.org/api/data.html#stairhandler) settings) and to log it via one of `saveAs` methods.Let us do the latter, save staircase logs via [saveAsText()](https://psychopy.org/api/data.html#psychopy.data.StairHandler.saveAsText) after a run is over. Figure out a way to generate a unique filename for each run, so that the logs will not be overwritten.
 
-::: {.rmdnote .program}
+::: {.program}
 Save staircase logs in `code09.py`.
 :::
 

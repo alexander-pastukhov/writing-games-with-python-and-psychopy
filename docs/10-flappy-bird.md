@@ -85,7 +85,7 @@ It has first special argument `self` that is the object itself and we simply add
 
 Create a Jupyter notebook (you will need to submit it as part of the assignment) and copy-paste the code for `Accumulator` class, including the `.add()` method. Create **two** objects, call them `counter1` and `counter2`. Call `.add()` method twice for `counter2` and thrice for `counter1` (bonus: do it using `for` loop). What is the value of the `.total` property of each object? Check it by printing it out.
 
-::: {.rmdnote .practice}
+::: {.practice}
 Copy-paste and test `Accumulator` class code in a Jupiter notebook.
 :::
 
@@ -99,7 +99,7 @@ class FlexibleAccumulator(Accumulator):
 
 Now you have a new class that is a descendant of `Accumulator` but, so far, is a perfect copy of it. Add `subtract` method to the class. It should subtract `1` from the `.total` property (don't forget to _document_ it!). Check that it works. Create one instance of `Accumulator` and another one of `FlexibleAccumulator` class and check that you can call `add()` on both of them but `subtract()` only for the latter.
 
-::: {.rmdnote .practice}
+::: {.practice}
 Add `subtract` method to the `FlexibleAccumulator`<br/>
 class in a Jupiter notebook. Add testing.
 :::
@@ -107,7 +107,7 @@ class in a Jupiter notebook. Add testing.
 ## Method arguments
 Now, create a new class `SuperFlexibleAccumulator` that will be able to both `add()` and `subtract()` an _arbitrary_ value. Think about which class it should inherit from. Redefine both  `.add()` and `.subtract()` method in that new class by adding `value` argument to both method and add/subtract this value rather than `1`. Note that now you have _two_ arguments in each method `(self, value)` but when you call you only need to pass the latter (again, `self` is passed automatically). Don't forget to document `value` argument (but you do not need to document `self` as its meaning is fixed).
 
-::: {.rmdnote .practice}
+::: {.practice}
 Create `SuperFlexibleAccumulator` class and define<br/>super flexible  `add` and `subtract` methods<br/>that have `value` parameter ( in a Jupiter notebook).<br/>Test them!
 :::
 
@@ -116,14 +116,14 @@ Although constructor `__init(...)__` is special, it is still a method. Thus, you
 
 Modify the code so that you pass the initial value that total is set to, instead of zero.
 
-::: {.rmdnote .practice}
+::: {.practice}
 Add `initial_value` parameter to the constructor of the `SuperFlexibleAccumulator` class in a Jupiter notebook. Test it!
 :::
 
 ### Calling methods from other methods
 You can call a function or object's method at any point of time, so, logically, you can use methods inside methods. Let's modify our code, realizing that _subtracting_ a value is like _adding a negative_ value. Modify your code, so that `.subtract()` only negates the value before passing it to `.add()` for actual processing. Thus, `total` is modified _only_ inside the `add()` method.
 
-::: {.rmdnote .practice}
+::: {.practice}
 Modify `subtract()` method of `SuperFlexibleAccumulator`<br/>to utilize `add()` in a Jupiter notebook.<br/>Test it!
 :::
 
@@ -163,7 +163,7 @@ We will start with a basic scaffolding for our program. Download the [bird image
 
 Create a [window](https://psychopy.org/api/visual/window.html#psychopy.visual.Window) using this specified size and an [ImageStim](https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim) using the filename from the settings file. Add a basic game loop in which you repeatedly draw the bird (should appear right at the center of the screen) and check for a key press (_escape_ should exit the game).
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code01.py`.
 :::
 
@@ -192,7 +192,7 @@ In the code above, I defined `FlappyBird` as a descendant of the [ImageStim](htt
 
 Copy paste that code (plus add appropriate imports and comments) and use `FlappyBird` class instead of [ImageStim](https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim). Note that `FlappyBird` inherits _all_ its functionality from [ImageStim](https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim), so, apart from how you create it, you can use it in exactly the same way. Meaning, you do not need to modify anything else in your code (told you, it would save us time and effort!).
 
-::: {.rmdnote .program}
+::: {.program}
 Put `FlappyBird` class code into a separate file.<br/>
 Use it instead of `ImageStim` in `code02.py`.
 :::
@@ -200,7 +200,7 @@ Use it instead of `ImageStim` in `code02.py`.
 ## A properly-sized bird
 Our bird is very cute but is way too large. Add a new setting for it (I suggest calling is `Size` and setting it to 0.1) and then use it inside the constructor adding `size=...` to `super().__init__` call. Do you need to change anything in the main code?
 
-::: {.rmdnote .program}
+::: {.program}
 Add bird size setting.<br/>
 Use it in `FlappyBird` class constructor.
 :::
@@ -212,7 +212,7 @@ Now we also need a method that would update bird's position based on its (curren
 
 Now you need to call the `update()` on _each_ frame before drawing the bird. This should make your bird fall of the screen! (Experiment with `"Initial vertical speed"` setting to make it fall faster or slower or even upwards!)
 
-::: {.rmdnote .program}
+::: {.program}
 Update `FlappyBird` class.<br/>
 Use `update` method in `code03.py`.
 :::
@@ -224,14 +224,14 @@ Create a new [Clock](https://psychopy.org/api/clock.html#psychopy.clock.Clock) a
 
 Now set your `"Initial vertical speed"` to some reasonable value (e.g., 0.5) and check that the time it takes for the bird to fall of the screen looks reasonable (for 0.5 norm units / second it should be off the screen in two seconds).
 
-::: {.rmdnote .program}
+::: {.program}
 Update `FlappyBird` class with a timer.
 :::
 
 ## It is all Newton's fault
 Now let us add gravity, so that the speed of falling would be constantly changing. Create a new setting and call it `"Gravity"`. Set it to `-0.5` (units are `norm units per second squared`) but experiment with different values later on. Acceleration due to gravity changes vertical speed just like speed itself changes the vertical position^[I.e., speed is a derivative of position, and acceleration is a derivative of the speed]. Update your `update` method to change the speed based on acceleration given the elapsed time. What do you need to update first, the speed or the location? Also, think about how you will store the acceleration: It is in settings parameter that exists only in the constructor. You can either store it in a new attribute or store all settings in an attribute for later use.
 
-::: {.rmdnote .program}
+::: {.program}
 Update `FlappyBird` class with acceleration due to gravity.
 :::
 
@@ -240,7 +240,7 @@ Let us add ability of the bird to "flap" in order to stay in the air. First, cre
 
 In the main code, check for `"escape"` and `"space"` keys. If the latter is pressed, call `.flap()` method of the bird. Check that you can keep the on the screen by timing the space button presses or can make it fly upwards off the screen.
 
-::: {.rmdnote .program}
+::: {.program}
 Add `flap` method to `FlappyBird` class.<br/>
 Use it in `code04.py` whenever player presses _space_.
 :::
@@ -250,7 +250,7 @@ In our game, the player can lose either if they hit an obstacle (we do not have 
 
 In the main loop add the check for `bird.is_airborne()` condition so that it continues until player presses `"escape"` or the bird hits the ground.
 
-::: {.rmdnote .program}
+::: {.program}
 Add `is_airborne` method to `FlappyBird` class.<br/>
 Use it in `code05.py` as an additional condition<br/>for the game loop.
 :::
@@ -262,7 +262,7 @@ As was explained the in "Object-oriented programming" section above, properties 
 
 Note that difference is not so much of practical implementation (changes we made to the code were minimal) but of a conceptual nature: Object's states should be properties not methods. In our small example this may look like an overkill but in a moderately complex project even small conceptual blurring of lines could make it harder to understand the code.
 
-::: {.rmdnote .program}
+::: {.program}
 Turn `is_airborne` into a property.<br/>
 Use it as property in `code06.py`.
 :::
@@ -277,7 +277,7 @@ We aim of the game is for the bird to fly avoiding obstacles. An obstacle consis
 
 Write a code that assume certain values for each parameter (e.g., `lower_margin = 0.2`, `upper_margin = 0.2`, `min_size = 0.2`, `max_size = 0.4`) and generates a random pair `(y_bottom, y_top)` that satisfies the conditions.
 
-::: {.rmdnote .practice}
+::: {.practice}
 Write a random opening code in a Jupiter notebook.
 :::
 
@@ -288,7 +288,7 @@ In the constructor, generate a random opening (you have the code for this alread
 
 You also will need a `draw()` method that simply draws both rectangles. Implement the class in a separate file, then create and draw a single obstacle in the main code to check that it looks right.
 
-::: {.rmdnote .program}
+::: {.program}
 Create `Obstacle` class in a separate file.<br/>
 Use it in `code07.py`.
 :::
@@ -298,7 +298,7 @@ Conceptually, our bird fly towards an obstacle but instead we will induce percep
 
 Call `update()` at the same place that you update bird's location in the main loop and check that the obstacle is moving from right to left.
 
-::: {.rmdnote .program}
+::: {.program}
 Add `update` method to `Obstacle` class.<br/>
 Use it in `code08.py`.
 :::
@@ -310,7 +310,7 @@ Thus, to check whether the bird hit the wall, we just need to create a method (l
 
 In the main game loop, add the check for the bird _not_ hitting the obstacle to the main condition (so now you should have three things to check for). Test your code by flying the bird into the wall. Also, by flying your bird through the opening. Note that if our settings make it too tricky, modify them to make the opening larger.
 
-::: {.rmdnote .program}
+::: {.program}
 Add `check_if_hit` method to `Obstacle` class.<br/>
 Use it in `code09.py`.
 :::
@@ -320,7 +320,7 @@ A game with a single obstacle is no fun but before we add more, we need a class 
 
 There should be no actual changes of how the game plays, just the code refactoring. However, it helps us to hide the management part from the main script (making it easier to understand) and, if you did everything correctly, the code should "just work" once you replace `Obstacle` with `ObstaclesManager` object.
 
-::: {.rmdnote .program}
+::: {.program}
 Create `ObstaclesManager` class.<br/>
 Use it in `code10.py`.
 :::
@@ -330,7 +330,7 @@ Now we are ready to add more obstacles. You need to update the `update` method o
 
 Do you need to change anything in the main script? Check that more obstacles appear over time!
 
-::: {.rmdnote .program}
+::: {.program}
 Update `update` of the `ObstaclesManager` class.<br/>
 :::
 
@@ -343,7 +343,7 @@ Update the `update` method of the `ObstaclesManager` to check the position the _
 
 Note that for safety reasons, you must first check that the `obstacles` attribute is not empty! Hint, when used in a conditional statement directly, empty list evaluates to `False`. Debug the code to make sure that obstacles are indeed removed. You can either use a different cut-off point (e.g., -0.25) to see that easier or put a break point at the line that pops the redundant obstacle (better still, do both!)
 
-::: {.rmdnote .program}
+::: {.program}
 Update `update` of the `ObstaclesManager` class.
 :::
 
@@ -354,7 +354,7 @@ To keep the score, we need to count the number of obstacles that the bird clears
 
 My way of doing this is to introduce a new attribute `scored = False` and a method `score()` to the `Obstacle` class. In the `score()` method, if the object crossed the `0` line _and_ has not been scored, it marked as `scored` and the method returns `1`. Otherwise, the object was either already scored or did not cross the mid-line yet, so it returns `0`. Next, I added a `score()` method to the `ObstaclesManager` that simply computes the total score (sum of) scores of all obstacles in the list. In the main script this score is added to a `score` variable that, in turn, is used to update `score_text`.
 
-::: {.rmdnote .program}
+::: {.program}
 Update your code and<br/>use it in `code11.py`.
 :::
 

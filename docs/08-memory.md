@@ -39,7 +39,7 @@ y.append(4)
 print(x)
 ```
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #1.
 :::
 
@@ -55,13 +55,13 @@ x = [1, 2, 3]
 change_it(x)
 print(x)
 ```
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #2.
 :::
 
 How did we manage to modify a _global_ variable from inside the function? Didn't we change the _local_ parameter of the function? Yep, that is exactly the problem with passing by reference. Your function parameter is yet another sticker on the _same_ object, so even though it _looks_ like you do not need to worry about global variables (that's why you wrote the function and learned about scopes!), you still do. If you are perplexed by this, you are in a good company. This is one of the most unexpected and confusing bits in Python that routinely catches people^[Well, at least me!] by surprise. Let us do a few more exercises, before I show you how to solve the scope problem for mutable objects.
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #3.
 :::
 
@@ -108,7 +108,7 @@ y = tuple(x)
 x.append(4)
 print(y)
 ```
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #4.
 :::
 
@@ -116,13 +116,13 @@ As you probably figured out, when `y = tuple(x)`, Python creates **a copy** of t
 
 Conversely, you "unfreeze" a tuple by turning it into a list via `list()`. Please note that it creates **a new list**, which has no relation to any other existing list, even if values are the same or were originally taken from any of them!
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #5.
 :::
 
 Remember I just said that `list()` creates a new list? This means that you can use it to create a copy of a list directly, without an intermediate tuple step. This way you can two _different_ lists with _identical_ values. You can also achieve the same results by slicing an entire list, e.g. `list(x)`, is the same as `x[:]`.
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #6.
 :::
 
@@ -165,7 +165,7 @@ closing the window
 
 The first thing you need to decide on is the window size _in pixels_ and which units would sizing and placing cards easier. Each chicken image is 240×400 pixels and, for the game, we need place for _exactly_ 4×2 images, i.e. our window must be 4 cards wide and 2 cards high. Do not forget to document the file!
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code01.py`.
 :::
 
@@ -178,7 +178,7 @@ We used (abstract and boring) circles to represent moles but today we will use a
 
 Draw the chicken image (it should appear at the center of the screen).
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code02.py`.
 :::
 
@@ -195,7 +195,7 @@ But, I hear you say, you do not have row and column indexes, only the overall in
 
 My suggestion would be first to play with individual formulas in Jupyter Notebook, which makes it easier to try out (dividing) things and seeing the result, putting various values into formulas, etc. Once you are confident that the code is working, turn it into a function, document it, and put into a separate file (_utilities.py_, do not forget to put a comment at the top of the file as well!). You can then import it in the main script and use it to place the card. Try out different indexes and make sure that the card appears where it should. Remember, put a breakpoint and step through the program while watching variables, if things do not work as you expected.
 
-::: {.rmdnote .program}
+::: {.program}
 Put `position_from_index` into `utilities.py`.<br/>
 Put update code into `code03.py`
 :::
@@ -203,7 +203,7 @@ Put update code into `code03.py`
 ## Backside of the card
 A chicken image is a card's _face_ but the game starts with the cards face down, so the player should see their backs. We will use a plain [rectangle](https://psychopy.org/api/visual/rect.html) as a backside. Pick a nice looking combination of `fillColor` (inside) and `lineColor` (contour) colors, the only requirement is that they are different, as otherwise it will be impossible to see individual cards. Modify your code, to draw image (face of the card) and rectangle (back of the card) side-by-side (_e.g._, if face is at position with index 0, rectangle should be at position 1 or 4). This way you can check that sizes match and that they are positioned correctly.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code04.py`.
 :::
 
@@ -233,7 +233,7 @@ Our card has the following properties, so these will be key-value entries in a d
 
 Create a dictionary variable (name it `card`) and fill it with relevant values (use either `"front"` and "`back"` for `"side"` key) and stimuli (you can put PsychoPy stimuli into a dictionary just like we put them into a list earlier). Modify your code so that it draws the correct image based on the value of the `"side"` entry. Note that you **do not need an if-statement for this**! Think about a key you need to access these two sides and the value that you have in for the `"side"` key.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code05.py`.
 :::
 
@@ -246,7 +246,7 @@ You have the code to create one card but we need eight of them. This definitely 
 
 and returns a dictionary, just like the one you created. You very much have the code, you only need to wrap it into a function and document it. Call function `create_card` and use it in the main script to create `card` dictionary. Think about libraries you will now need to import in _utilities.py_.
 
-::: {.rmdnote .program}
+::: {.program}
 Put `create_card` into `utilities.py`. <br/>
 Put code into `code06.py`.
 :::
@@ -283,7 +283,7 @@ numbers_as_strings = [str(item) for item in numbers]
 ```
 What would be an equivalent form using a normal for loop? Write both versions of code in Jupiter cells and check that the results are the same.
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #7 in Jupyter notebook.
 :::
 
@@ -295,7 +295,7 @@ for astring in strings:
     numbers.append(int(astring) + 10)
 ```
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #8 in Jupyter notebook.
 :::
 
@@ -315,7 +315,7 @@ numbers_greater_than_1 = [item
 
 You can of course combine the transformation and filtering in a single statement. Create code that filters out all items below 2 and adds 4 to them.
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #9 in Jupyter notebook.
 :::
 
@@ -374,7 +374,7 @@ Originally, we specified image file name as `"Images/r01.png"`. This did the job
 
 Modify the `create_card` function so that it assumes that the `filename` parameter is just the filename with the folder name and, therefore, build the path by [join](https://docs.python.org/3/library/os.path.html#os.path.join) it with the folder name (defined as a constant in the this module!). You now need to drop the `"Images/"` in the value that you pass to it. Test that the code works as before!
 
-::: {.rmdnote .program}
+::: {.program}
 Update `create_card` in `utilities.py`<br/>
 Put updated code into `code07.py`.
 :::
@@ -384,14 +384,14 @@ Let us put together all the code we need for figuring out cards' filenames, dupl
 
 Copy the code for building a duplicated list of filenames that you tested in Jupyter notebook to your main script (`code08.py`). Then, use enumerate and list comprehension over enumerated duplicate filenames to create `cards` (plural, replacing your singular `card` variable) via `create_card` function you wrote earlier. Update your drawing code to loop over and draw all cards. If your default is `"side"` is `"back"`, things will look pretty boring. Change that to '"front"` to see their faces.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code08.py`.
 :::
 
 ## Shuffling cards {#shuffle}
 When you draw cards faces, you will notice that duplicating filenames list produces a very orderly sequence that makes playing the game easy (and boring). We need to [shuffle()](https://docs.python.org/3/library/random.html#random.shuffle) the filename list _before_ we create `cards`. Note that [shuffle()](https://docs.python.org/3/library/random.html#random.shuffle) shuffles list item _in place_ using the fact that the list is [mutable](#mutable-objects). That means you simply call the function and pass the list as an argument. The list gets modified, nothing is returned and nothing need to be assigned back of `filenames` variable.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code09.py`.
 :::
 
@@ -403,7 +403,7 @@ We covered a lot of ground, so it might be a good point to take a break and subm
 ## Adding main game loop
 At this point, we have a shuffled deck of cards that we show until a player presses a key. Modify the code to have the main presentation loop, similar to one we had when we experimented with [PsychoPy](#psychopy-basics) stimuli. Previously, we used a logical `gameover` variable to control the [while](##while-loop) loop. Here, we will have two reasons to exit the loop: the player pressed an **escape** key or they won the game. Therefore, let us use a _string_ `game_state` variable that is initialized to `"running"`. Repeat the loop while the `game_state` is equal to `"running"` but change it `"abort"` if a player pressed **escape**. You also need to replace [waitKeys()](https://psychopy.org/api/event.html#psychopy.event.waitKeys) with  [getKeys()](https://psychopy.org/api/event.html#psychopy.event.getKeys).
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code10.py`.
 :::
 
@@ -414,7 +414,7 @@ Now, you can check whether the left button was pressed using [mouse.getPressed()
 
 Put the mouse-click-processing code _before_ drawing cards. At the moment, it makes no difference but will be useful later on, as it will allow us to draw the latest state of the card (i.e., right after it was flipped by a player).
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code11.py`.
 :::
 
@@ -423,14 +423,14 @@ Currently, the first card is flipped if you click _anywhere_. But the card you f
 
 Going backwards --- from position to index --- is (IMHO) easier. First, you need to think how you can convert an _x_ coordinate (goes from -1 to 1) to a column index (goes from 0 to 3) given that you have 4 columns (draw a sketch on paper as it will make figuring out math simpler). Similarly, you translate _y_ (from -1 to 1) into row index given that there are only two rows. Once you know row and column index, you can compute the index itself, keeping in mind that there are four card in a row. As with `position_from_index`, I think it is easier to first play with formulas in a Jupyter Notebook, before turning the code into a function, documenting it, and putting it into `utilities.py`.
 
-::: {.rmdnote .program}
+::: {.program}
 Put `index_from_position` into `utilities.py`.
 :::
 
 ## Flip a selected card on click
 Now that you have function that returns an index from position (don't forget to import it), you can flip the card that the player clicked on. For this, you need to extend the card-flipping code inside the _if left-mouse button was pressed_ code. Get the position of the mouse within the window by calling [mouse.getPos()](https://psychopy.org/api/event.html#psychopy.event.Mouse.getPos). This will return a pair of `(x, y)` values, which you can pass to your `index_from_position()` function. This, in turn will return the index of the card the player click on. Change the `"side"` of a card with that index to `"front"`. Test the code by turning different cards over, make sure that it is the card that you clicked on that gets turned. And a usual reminder, do not hesitate to put a breakpoint inside the if-statement to check the actual mouse position values and how they are translated into index, if things do not work.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code12.py`.
 :::
 
@@ -441,7 +441,7 @@ However, you need to be careful not do add a card more than once (this will mess
 
 Implement this code, open a few cards. Then, use a breakpoint to pause the program and check that `face_up` list (or set) contains exactly these (this many) cards. If it has _more_ then your face-up checks do not work. Put a breakpoint on them and step through the code to see what happens.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code13.py`.
 :::
 
@@ -452,7 +452,7 @@ Now we need to check whether a player opened exactly two cards. In your code, mo
 * flip both cards back (i.e., set their `"side"` to `"back"`).
 * remove them from `face_up` list (see [.clear()](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists) method).
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code14.py`.
 :::
 
@@ -461,14 +461,14 @@ Our code turns cards back even you found a matching pair but we need to take the
 
 We also need to modify our code to handle `"show"` field correctly. First, modify your drawing code to draw only the cards that should be shown. Second, when handling mouse click, you need to check both that the card is not face up and that it is shown (otherwise you can "open" invisible cards).
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code15.py`.
 :::
 
 ## Game over once all the cards are off the table
 When your code works correctly, you can take all the card off the table, so that only the gray screen remains. However, that should be the point when the game finishes and congratulates you on your success. Write a function `remaining_cards` that will take the list with cards (i.e., our `cards` list) and will return how many cards are still shown (their `"show"` field is `True`). You definitely need a [for](#for-loop) for this but implementation can be very different. You could use an extra counter variable that you initialize to 0 and then increment by one (see [+=](https://docs.python.org/3/reference/simple_stmts.html#augmented-assignment-statements) for a shortcut). Alternatively, you can use [list comprehensions](l#list-comprehension) to filter out all cards that are not shown and return the length of that list (a single line solution). Implement this function in _utilities.py_ and exit the loop by setting `game_state` to `"victory"`. After the loop, you can check the `game_state` variable and if the player was victorious, show a congratulatory message ([TextStim](https://psychopy.org/api/visual/textstim.html#psychopy.visual.TextStim), note that you don't even need to create a variable for it, you can create an object and call `.draw()` on it, i.e., `visual.TextStim(...).draw()`) and wait for a key press before you close the window.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code16.py`.
 :::
 
@@ -479,7 +479,7 @@ The two classes you will be primarily interested in are [Clock](https://psychopy
 
 Here, we are interested in the _elapsed_ time, so [Clock](https://psychopy.org/api/clock.html#psychopy.clock.Clock) is the obvious choice. Create a clock before the game loop and use the elapsed time in the congratulatory message.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code17.py`.
 :::
 

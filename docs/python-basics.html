@@ -131,7 +131,7 @@
 <span id="cb5-2"><a href="python-basics.html#cb5-2" tabindex="-1"></a>number_of_legs <span class="op">=</span> <span class="dv">5</span></span>
 <span id="cb5-3"><a href="python-basics.html#cb5-3" tabindex="-1"></a>number_of_legs <span class="op">=</span> <span class="dv">1</span></span>
 <span id="cb5-4"><a href="python-basics.html#cb5-4" tabindex="-1"></a>number_of_legs</span></code></pre></div>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #1.</p>
 </div>
 <p>Note that a variable (“a box with a name tag”) exists only after you assign something to it. So, the following code will generate a <code>NameError</code>, a Python’s way to tell that you it never heard of variable <code>number_of_hands</code>.</p>
@@ -143,7 +143,7 @@
 <div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="python-basics.html#cb8-1" tabindex="-1"></a>number_of_legs <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> <span class="dv">2</span></span>
 <span id="cb8-2"><a href="python-basics.html#cb8-2" tabindex="-1"></a>number_of_legs <span class="op">=</span> <span class="dv">7</span> <span class="op">-</span> <span class="dv">2</span></span>
 <span id="cb8-3"><a href="python-basics.html#cb8-3" tabindex="-1"></a>number_of_legs</span></code></pre></div>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #2.</p>
 </div>
 </div>
@@ -159,7 +159,7 @@
 <div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="python-basics.html#cb10-1" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">5</span> <span class="op">-</span> <span class="dv">4</span></span></code></pre></div>
 <p>Then, it computes the expression on the right side and, <strong>once the computation is completed</strong>, stores that new value in <code>x</code></p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="python-basics.html#cb11-1" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">3</span></span></code></pre></div>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #3 to make sure you understand this.</p>
 </div>
 </div>
@@ -171,7 +171,7 @@
 <p>Taking all this into account, if number of legs stays constant throughout the game, you should highlight that constancy and write</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="python-basics.html#cb12-1" tabindex="-1"></a>NUMBER_OF_LEGS <span class="op">=</span> <span class="dv">2</span></span></code></pre></div>
 <p>I strongly recommend using constants and avoid hardcoding values. First, if you have several identical values that mean different things (2 legs, 2 eyes, 2 ears, 2 vehicles per character, etc.), seeing a <code>2</code> in the code will not tell you what does this <code>2</code> mean (the legs? the ears? the score multiplier?). You can, of course, figure it out based on the code that uses this number but you could spare yourself that extra effort and use a properly named constant instead. Then, you just read its name and the meaning of the value becomes apparent and it is the meaning not the actual value that you are mostly interested in. Second, if you decide to permanently <em>change</em> that value (say, our main character is now a tripod), when using a constant means you have only one place to worry about, the rest of the code stays as is. If you hard-coded that number, you are in for an exciting<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;not really&lt;/p&gt;"><sup>11</sup></a> and definitely long search-and-replace throughout the entire code.</p>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #4.</p>
 </div>
 </div>
@@ -192,7 +192,7 @@
 <span id="cb13-3"><a href="python-basics.html#cb13-3" tabindex="-1"></a><span class="co">'5'</span> <span class="op">+</span> <span class="st">'2'</span></span>
 <span id="cb13-4"><a href="python-basics.html#cb13-4" tabindex="-1"></a><span class="co">'5'</span> <span class="op">+</span> <span class="va">True</span></span>
 <span id="cb13-5"><a href="python-basics.html#cb13-5" tabindex="-1"></a><span class="dv">5</span> <span class="op">+</span> <span class="va">True</span></span></code></pre></div>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #5.</p>
 </div>
 <p>Surprised by the last one? This is because internally, <code>True</code> is also <code>1</code> and <code>False</code> is <code>0</code>!</p>
@@ -200,7 +200,7 @@
 <div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="python-basics.html#cb14-1" tabindex="-1"></a><span class="bu">str</span>(<span class="dv">10</span> <span class="op">/</span> <span class="dv">2</span>)</span>
 <span id="cb14-2"><a href="python-basics.html#cb14-2" tabindex="-1"></a><span class="bu">str</span>(<span class="fl">2.5</span> <span class="op">+</span> <span class="va">True</span>)</span>
 <span id="cb14-3"><a href="python-basics.html#cb14-3" tabindex="-1"></a><span class="bu">str</span>(<span class="va">True</span>)</span></code></pre></div>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #6.</p>
 </div>
 <p>Similarly, you can convert to a logical/Boolean variable using <a href="https://docs.python.org/3/library/functions.html#bool">bool(&lt;value&gt;)</a> function. The rules are simple, for numeric values <code>0</code> is <code>False</code>, any other non-zero value is converted to <code>True</code>. For string, an empty string <code>''</code> is evaluated to <code>False</code> and non-empty string is converted to <code>True</code>. What would be the output in the examples below?</p>
@@ -211,7 +211,7 @@
 <span id="cb15-5"><a href="python-basics.html#cb15-5" tabindex="-1"></a><span class="bu">bool</span>(secret_message)</span>
 <span id="cb15-6"><a href="python-basics.html#cb15-6" tabindex="-1"></a></span>
 <span id="cb15-7"><a href="python-basics.html#cb15-7" tabindex="-1"></a><span class="bu">bool</span>(<span class="st">'False'</span>)</span></code></pre></div>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #7.</p>
 </div>
 <p>Converting to integer or float numbers using, respectively, <a href="https://docs.python.org/3/library/functions.html#int">int(&lt;value&gt;)</a> and <a href="https://docs.python.org/3/library/functions.html#float">float(&lt;value&gt;)</a> is trickier. The simplest case is from logical to integer/float, as <code>True</code> gives you <code>int(True)</code> is <code>1</code> and <code>float(True)</code> is <code>1.0</code> and <code>False</code> gives you <code>0</code>/<code>0.0</code>. When converting from float to integer, Python simply drops the fractional part (it does not do proper rounding!). When converting a string, it must be a valid number of the corresponding type or the error is generated. E.g., you can convert a string like <code>"123"</code> to an integer or a float but this won’t work for <code>"a123"</code>. Moreover, you can convert <code>"123.4"</code> to floating-point number but not to an integer, as it has fractional part in it. Given all this, which cells would work and what output would they produce?</p>
@@ -219,7 +219,7 @@
 <span id="cb16-2"><a href="python-basics.html#cb16-2" tabindex="-1"></a><span class="bu">int</span>(<span class="op">-</span><span class="fl">3.3</span>)</span>
 <span id="cb16-3"><a href="python-basics.html#cb16-3" tabindex="-1"></a><span class="bu">float</span>(<span class="st">"67.8"</span>)</span>
 <span id="cb16-4"><a href="python-basics.html#cb16-4" tabindex="-1"></a><span class="bu">int</span>(<span class="st">"123+3"</span>)</span></code></pre></div>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #8.</p>
 </div>
 </div>
@@ -252,7 +252,7 @@
 <span id="cb22-3"><a href="python-basics.html#cb22-3" tabindex="-1"></a>desert <span class="op">=</span> <span class="st">"cupcakes"</span></span>
 <span id="cb22-4"><a href="python-basics.html#cb22-4" tabindex="-1"></a></span>
 <span id="cb22-5"><a href="python-basics.html#cb22-5" tabindex="-1"></a><span class="bu">print</span>(count, dinner, count, desert)</span></code></pre></div>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #9.</p>
 </div>
 <p>However, you probably would want to be more explicit, when you print out the information. For example, imagine you have these three variables:</p>
@@ -285,11 +285,11 @@
 <div class="sourceCode" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="python-basics.html#cb25-1" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'I had </span><span class="sc">%d</span><span class="st"> pancakes and either </span><span class="sc">%d</span><span class="st">  or </span><span class="sc">%d</span><span class="st"> steaks for dinner'</span><span class="op">%</span>(<span class="dv">2</span>))</span>
 <span id="cb25-2"><a href="python-basics.html#cb25-2" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'I had </span><span class="sc">%d</span><span class="st"> pancakes and </span><span class="sc">%d</span><span class="st"> steaks for dinner'</span><span class="op">%</span>(<span class="dv">7</span>, <span class="dv">10</span>))</span>
 <span id="cb25-3"><a href="python-basics.html#cb25-3" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'I had </span><span class="sc">%d</span><span class="st"> pancakes and </span><span class="sc">%d</span><span class="st"> steaks for dinner'</span><span class="op">%</span>(<span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">10</span>))</span></code></pre></div>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #10.</p>
 </div>
 <p>As noted above, in case of real values you have two options: <code>%f</code> and <code>%g</code>. The latter uses scientific notation (e.g. <code>1e10</code> for <code>10000000000</code>) to make a representation more compact.</p>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #11 to get a better feeling for the difference.</p>
 </div>
 <p>These is much more to formatting and you can read about it at <a href="https://pyformat.info/">pyformat.info</a>. However, these basics are sufficient for us to start programming our first game in the next chapter.</p>
@@ -328,7 +328,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Python and PsychoPy by writing games</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-10-20.</p>
+    <p>"<strong>Learning Python and PsychoPy by writing games</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-10-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

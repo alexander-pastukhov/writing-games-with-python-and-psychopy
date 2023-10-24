@@ -23,7 +23,7 @@ But first you will learn about context management and exceptions.
 ## Boilerplate
 As per usual, we will start with our usual boilerplate code. Create settings file that, for now, defines only the size of the window. Create `code01.py` with the usual boilerplate for loading settings, opening the window (its size determined by the settings), a main game loop (you can add a text message to make it look less plain) with a check for an _"escape"_ button to exit the loop, and closing the window at the end. I am being so specific because next you will learn how to hide this boilerplate in a context manager.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into _code01.py_.
 :::
 
@@ -110,7 +110,7 @@ with GameContext("settings.yaml") as context:
   context.win.flip()
 ```
 
-::: {.rmdnote .program}
+::: {.program}
 Create `GameContext` class and use it in  _code02.py_.
 :::
 
@@ -143,7 +143,7 @@ finally:
 
 In the simplest case, you need just the first two operators: `try` and `except`. Create a Jupyter notebook (that you will submit as part of the assignment) and write the code that generates a division-by-zero error but is handled via `try...except...`. In the `except` simply print out a message, so that you know that it was executed. Create another cell, copy the code and now check that the exception handling code is _not_ executed, if the error is not generated (i.e., divide by some non-zero number).
 
-::: {.rmdnote .program}
+::: {.program}
 Put exception handling code is cell of a Jupyter notebook.
 :::
 
@@ -163,13 +163,13 @@ except:
 
 Implement handling for `KeyError` and `ZeroDivisionError`, they should print out different messages to check that it works. Test it by generating these runtime errors with your code. 
 
-::: {.rmdnote .program}
+::: {.program}
 Put specific exception handling code is cell of a Jupyter notebook.
 :::
 
 So far, you generated exception by causing runtime errors code but you can raise these exceptions yourself via [raise](https://docs.python.org/3/reference/simple_stmts.html#the-raise-statement) operator. For example, instead of dividing by zero, you can `raise ZeroDivisionError()`^[Confusingly, if you do not pass any additional parameters, you can also create the object _without_ round brackets: `raise ZeroDivisionError`. I find this mightily confusing but this is fairly common, so drop brackets if it feels more natural.]. Use it with you previous code, instead of an actual division by zero. Try raising other exceptions and see how your code handles them. Also check what happens if you have the first two specific exception handlers but no general `except:` and raise an [NameError](https://docs.python.org/3/library/exceptions.html#NameError)?
 
-::: {.rmdnote .program}
+::: {.program}
 Use `raise` to test exception handling in a Jupyter notebook.
 :::
 
@@ -195,7 +195,7 @@ def GameContext:
 That last bit `return True` informs Python that you handled the exception and all is good (not need to propagate it further). However, note that your _return_ `True` meaning that any other code that handles the exit from a context must be _before_ that statement. Now, you can safely abort your experiment from any code location, inside nested loops, functions, etc. In all cases, the exception will be propagated until the `__exit__` method, doing away with awkward extra checks.
 
 
-::: {.rmdnote .program}
+::: {.program}
 Create `GameAbort` exception class,<br/>update `GameContext` class to handle it,<br/>use this in an updated main script in _code03.py_.
 :::
 
@@ -206,7 +206,7 @@ Note that we do not want to inherit from the [ImageStim](https://psychopy.org/ap
 
 Create an instance of `MoonLander` class in the main script and draw it in the main game loop. You should see a static picture of the ship at the center of the screen.
 
-::: {.rmdnote .program}
+::: {.program}
 Create `MoonLander` class and use it in the main game loop.<br/>
 Put updated code into _code04.py_. 
 :::
@@ -214,7 +214,7 @@ Put updated code into _code04.py_.
 ## Randomize lander's position
 Implement a new method `reset()` that resets the lander for the next round. At the moment, the only thing it should do is to randomize position of the image. Use a range of -0.5..0.5 horizontally and 0.8..0.9 vertically (I assume that we are using `"norm"` units). Call it in the constructor and test it in the main loop by calling it every time you press _space_ button (that should make the ship jump).
 
-::: {.rmdnote .program}
+::: {.program}
 Add `reset()` method to `MoonLander` class and use it in the main game loop.<br/>
 Put updated code into _code05.py_. 
 :::
@@ -228,7 +228,7 @@ For the lander to fly, we must adjust its position or, more specifically, the po
 
 Now, implement a method that will update lander position (call it, unimaginatively, `update()`). Inside, figure out the time elapsed since the last call (or since the last `reset()`) and do not forget to restart the clock. Once you know how much time has elapsed, you can adjust, first, speed based on acceleration (only vertical speed based on gravity for now, we will worry about the horizontal component once we implement thrusters) and, then, position based on speed. Call it in the main loop and watch your lander fall out of the sky. Once it is off the screen, press space and see it go again. Play with the `gravity` setting to adjust the speed of falling to your liking.
 
-::: {.rmdnote .program}
+::: {.program}
 Update `MoonLander` class for the effect of gravity.<br/>
 Use it in the main loop of _code06.py_.
 :::
@@ -249,14 +249,14 @@ Define a `vertical accelartion [norm/sec^2]` to be twice the gravity (but you ca
 
 Test that the vertical thruster works (do you need to update the main code?)!
 
-::: {.rmdnote .program}
+::: {.program}
 Update `MoonLander` class with a vertical thruster.
 :::
 
 ## Horizontal thursters
 Now implement the same logic, computing acceleration, speed, and position but for horizontal thrusters (define `horizontal acceleration [norm/sec^2]` setting and decide on its value yourself). Remember, the _right_ thruster pushes the lander to the _left_ and vice versa! Think about what you should do if both _left_ and _right_ keys are pressed at the same time. Test it by flying around!
 
-::: {.rmdnote .program}
+::: {.program}
 Add horizontal thrusters to `MoonLander`.
 :::
 
@@ -267,7 +267,7 @@ Create a new file _landing_pad.py_ and a new class `LandingPad`. In the construc
 
 In the main code, create an object of class `LandingPad` and draw it in the main loop, along with the lander itself.
 
-::: {.rmdnote .program}
+::: {.program}
 Create `LandingPad` class.<br/> 
 Use it in _code07.py_.
 :::
@@ -278,7 +278,7 @@ The aim of the game is a soft touchdown on a landing pad. For this, we need to k
 
 We do not have information about it _directly_. We have the vertical position of the lander in `self.image.pos[1]` (I assume here that the visuals attribute is called `image`) and its height in `self.image.size[1]`. From this, it is easy to compute the bottom edge (but remember that position is about the _center_ of the rectangle). Accordingly, you could create a [computed property](#computed-attribute-property)  `bottom`. Create computed attributes for `bottom`, `left`, and `right` of the lander class and for `top`, `left`, and `right` of the landing pad.
 
-::: {.rmdnote .program}
+::: {.program}
 Implement computed properties for `MoonLander` and `LandingPad` classes.
 :::
 
@@ -301,14 +301,14 @@ else:
   ...
 ```
 
-::: {.rmdnote .program}
+::: {.program}
 Implement landing checks in _code08.py_.
 :::
 
 ## More rounds
 Extend the game to have more than one round after the player either landed or crashed. Remember to reset the position of the lander before each new round. You can also add a `reset()` method to the landing pad as well, randomizing it horizontal position.
 
-::: {.rmdnote .program}
+::: {.program}
 Add `reset()` method to the `LandingPad` class.</br>
 Add more rounds in _code09.py_.
 :::
@@ -320,7 +320,7 @@ Every use of a thruster should reduce this by 1 and thrusters should work _only_
 
 We also need to tell the player how much the fuel is left. I've implemented it as a bar gauge but you can implement it as text stimulus as well. Create the appropriate visual attribute in the constructor of the `Lander` class. Remember to update it every time the level of the fuel changes and to draw it whenever you draw the lander itself. As a nice touch, you can change the color to indicate how much of the fuel is left. I've used _green_ for more than 2/3, _yellow_ for more than 1/3, and _red_ if less than that.
 
-::: {.rmdnote .program}
+::: {.program}
 Add fuel and fuel gauge to `Lander` class.<br/>
 :::
 

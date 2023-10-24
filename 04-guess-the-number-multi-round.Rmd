@@ -24,7 +24,7 @@ while <condition>:
 
 The `<condition>` here is any expression that is evaluated to be either `True` or `False`, just like in an `if...elif...else` [conditional statement](#comparisons). Also, the same [indentations rules](#indentation) determine which code is inside the loop and which outside.
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #1.
 :::
 
@@ -43,7 +43,7 @@ Let us use _while_ loop to allow the player to keep guessing until they finally 
 # (because if we got here that means guess is equal to the computer's pick)
 ```
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code01.py`.
 :::
 
@@ -52,7 +52,7 @@ Do not forget to document the file and use breakpoints and step overs to explore
 ## Counting attempts
 Now let us add a variable that will count a total number of attempts by the player. For this, create a new variable (call it `attempts` or something similar) _before the loop_ and initialize it `1` (because the first attempt is before the player enter the loop). Add `1` to it every time the player enters a guess. After the loop, expand the `"Spot on!"` message by adding information about the number of attempts. Use [string formatting](##string-formatting) to make things look nice, e.g., `"Spot on, and you needed just 5 attempts!"`. Check that the number of attempts your required _matches_ the number of attempts reported by the program!
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code02.py`.
 :::
 
@@ -74,14 +74,14 @@ while <some_condition>:
 ```
 
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #2 to build your intuition.
 :::
 
 ## Limiting number of attempts via break
 Let's put the player under some pressure! Decide on maximal number of attempts you allow and stores it as a [CONSTANT](#constants). Pick an appropriate name (e.g. `MAX_ATTEMPTS`) and REMEMBER, ALL CAPITAL LETTERS for a constant name! Now, use `break` to quit the `while` loop, if the current attempt number is greater than `MAX_ATTEMPTS`. Think about when (within the code inside the loop) you should check this.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code03.py`.
 :::
 
@@ -93,7 +93,7 @@ Let us update the final message. Currently it says "Spot on..." because we assum
 
 Use `if-else` conditional statement to print out an appropriate message. E.g., print `"Better luck next time!"`, if the player lost (ran out of attempts).
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code04.py`.
 :::
 
@@ -102,14 +102,14 @@ Although it was my idea to add the `break` statement, you should use it sparingl
 
 Let us try exactly that. Modify your code to work _without_ the `break` statement. You need a more complicated condition for your while loop. so that it repeats while player's guess is incorrect and the number of attempts is still less than the maximally allowed. Test that your code works both when you win and when you lose. 
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code05.py`.
 :::
 
 ## Show remaining attempts
 It is all about the user interface! Modify the `input` prompt message to include a number of _remaining_ attempts. E.g. `"Please enter the guess, you have X attempts remaining"`.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code06.py`.
 :::
 
@@ -133,7 +133,7 @@ Let us give an option for the player to play again. This means putting _all_ the
 
 **Pay extra attention to indentations to group the code properly!**
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code07.py`.
 :::
 
@@ -143,14 +143,14 @@ In your updated code, you have `want_to_play` variable that is either `True` or 
 ## Best score
 A "proper" game typically keeps the track of players' performance. Let us record a fewest number of attempts that the player needed to guess the number. For this, create a new variable `fewest_attempts` and set it to `MAX_ATTEMPTS` (this is as bad as the player can be). Think, where do you need to create it. You should update it after each game round. Add the information about "Best so far" into the round-over message.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code08.py`.
 :::
 
 ## Counting game rounds
 Let us count how many times the player played the game. The idea and implementation is the same as with counting the attempts. Create a new variable, initialize it to 0, increment by 1 whenever a new round starts. Include the total number of games played into the very final message, e.g. "Thank you for playing the game _X_ times!"
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code09.py`.
 :::
 
@@ -168,7 +168,7 @@ Let player start with an initial pot of money, say 10 coins. Playing each round 
  
 Special case, once the player runs out of coins, the game is definitely over.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code10.py`.
 :::
 

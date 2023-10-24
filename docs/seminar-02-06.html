@@ -128,7 +128,7 @@
 <li>Create a window.</li>
 <li>Create our usual main game loop with <code>gamover</code> variable, flipping the window, and checking for <em>escape</em> button press.</li>
 </ul>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your boilerplate code into <em>code01.py</em>.</p>
 </div>
 </div>
@@ -145,7 +145,7 @@
 <p>First, create a <code>Target</code> class: a colored rectangle in one of the three positions that starts at the top of the window and moves down at a specific speed. Its constructor should take PsychoPy window as a parameter (you will need it to create the rectangle as an attribute), position index (<code>ipos</code>, from 0 to 2), speed (<code>speed</code>, in <code>"norm"</code> units <em>per second</em>), and common settings (<code>settings</code>, a dictionary with target-specific settings from our settings file) . The only thing we need to do right now in the constructor is use the constructor of the ancestor <code>Rect()</code> class via <code>super().__init__(...)</code> call, similar to how you initialized an the <code>FlappyBird</code> class. Think of which parameters you need to pass, as you need to think about rectangle’s position, size, and color. Store both <code>ipos</code> and <code>speed</code> as attributes for later use. In addition, define a <code>score</code> attribute and set it to <code>None</code>. This will hold the score the participant got for this target and <code>None</code> means that it has not been responded upon yet.</p>
 <p>The second parameter — position index — determines the horizontal position of the target and its color (to make targets more fun and distinct). For my code, I have decided to make rectangle 0.4 norm units wide and 0.1 norm units high. The leftmost <em>red</em> rectangle (for <code>ipos</code> 0), is centered at -0.5, the middle <em>green</em> one is dead center, and the rightmost <em>blue</em> rectangle is centered at 0.5. I’ve defined all these in my <code>settings.json</code> file under <code>Target</code> group. Think about how you can compute both color and position for a target from <code>ipos</code> and <code>settings</code> without using if-else statements. Also, think about the y-position of the rectangle, so it appears right at the top of the window.</p>
 <p>Test it by creating a target at one of the position (or three targets at all three positions) and drawing them in the main loop. You should get nice looking but static rectangle(s).</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put updated code in <code>code02.py</code> and create the class <code>Target</code> in a separate file.</p>
 </div>
 </div>
@@ -156,7 +156,7 @@
 <p>Our targets fall down at speed defined by their <code>speed</code> attribute. Later on, we will change that attribute dynamically to speed up or slow down their fall.</p>
 <p>For the actual falling down, implement a new method, call it <code>fall()</code>, that will update target’s position on every frame. The speed is in <code>norm units per second</code>, thus, to compute the change in vertical position you also need to know the how much time <em>in seconds</em> has elapsed since last position update. The simplest way to do this is by using a <a href="https://psychopy.org/api/clock.html#psychopy.clock.Clock">Clock</a> class. You create it as an attribute in the constructor and then, in the <code>fall()</code> method you use its current time to compute and apply a change in vertical position of the rectangle. Don’t forget to reset the clock after that! (Same logic as for the Flappy Bird you already programmed.)</p>
 <p>Include <code>fall()</code> method call in the main loop and see how the target falls. Experiment with falling speed!</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put updated code in <code>code03.py</code> and update the class <code>Target</code>.</p>
 </div>
 </div>
@@ -172,7 +172,7 @@
 <span id="cb119-5"><a href="seminar-02-06.html#cb119-5" tabindex="-1"></a>  </span>
 <span id="cb119-6"><a href="seminar-02-06.html#cb119-6" tabindex="-1"></a><span class="co"># function returns an iterator, not a value!</span></span>
 <span id="cb119-7"><a href="seminar-02-06.html#cb119-7" tabindex="-1"></a><span class="bu">print</span>(iterator_fun())</span>
-<span id="cb119-8"><a href="seminar-02-06.html#cb119-8" tabindex="-1"></a><span class="co">#&gt; &lt;generator object iterator_fun at 0x000001AB4FF876F0&gt;</span></span>
+<span id="cb119-8"><a href="seminar-02-06.html#cb119-8" tabindex="-1"></a><span class="co">#&gt; &lt;generator object iterator_fun at 0x000001DCC2777680&gt;</span></span>
 <span id="cb119-9"><a href="seminar-02-06.html#cb119-9" tabindex="-1"></a></span>
 <span id="cb119-10"><a href="seminar-02-06.html#cb119-10" tabindex="-1"></a><span class="co"># iterating via for loop</span></span>
 <span id="cb119-11"><a href="seminar-02-06.html#cb119-11" tabindex="-1"></a><span class="cf">for</span> elem <span class="kw">in</span> iterator_fun():</span>
@@ -207,7 +207,7 @@
 <p>The <code>time_to_next_target_generator()</code> function should take a tuple of two float values, which define shortest and longest allowed delays, as a parameter and <em>yield</em> a <a href="https://docs.python.org/3/library/random.html#random.uniform">random number</a> within this range in an <em>endless</em> loop. We need the endless loop (<code>while True:</code> will do) because we do not know how many values we will need, so we just generate as many as needed on demand.</p>
 <p>The <code>next_target_generator()</code> will be a bit more interesting. It can just return a <a href="https://docs.python.org/3/library/random.html#random.choice">random.choice</a> from 0, 1, and 2 but where is fun in that? Instead, we will make it a bit more complicated to ensure that all three targets appear equal number of times within <em>3N</em> trials, where <em>N</em> will be a parameter of the generator function. This would ensure random, reasonably unpredictable but balanced targets in the short run. Remember, in the long run random choice will always give us a balanced uniform distribution but there is not such guarantee for the shorter runs of a few trials. First, you should create a list where each target appears N times (think how you can do it using <a href="https://docs.python.org/3/library/functions.html#func-range">range()</a>, <a href="https://docs.python.org/3/library/functions.html#func-list">list()</a> and <a href="https://docs.python.org/3/library/stdtypes.html#common-sequence-operations">*</a>). Then, create an endless loop (again, we don’t know how many values we will need) in which you 1) shuffle elements of the list, 2) yield one element at a time via for loop. Once you run out of elements, you shuffle them again and yield one by one again. Then repeat. And again, and again. Endless loop!</p>
 <p>I would suggest creating and testing both function in a Jupyter notebook first and then putting them in a separate file (e.g., <em>generators.py</em>). Be careful if you decide to use a for loop instead of <code>next()</code> for testing. Remember, both a generators and will never run out of items to yield for a for loop!</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put both generators into <em>generators.py</em>.</p>
 </div>
 </div>
@@ -219,7 +219,7 @@
 <p><strong>For the constructor</strong>, we definitely need PsychoPy window as a parameter, because we need it every time we create a new target. In addition, we need to pass a dictionary with settings for the task (initial speed, a tuple with range for time intervals between targets for <code>time_to_next_target_generator()</code>, and number of target repetitions for the <code>next_target_generator()</code>) and a dictionary with settings for the <code>Target</code> class (we need it every time we create a new target). We will use these parameters beyond the constructor, so save them as attributes. Plus, create an attribute <code>targets</code> and initialize it to an empty list (we will store <code>Target</code> objects in it), and create attributes for both generator objects using the appropriate parameters. Also create a <code>speed_factor</code> attribute and set it to 1. We will use it later to control both the speed of motion and how frequently the targets are generated. The higher is the factor, the faster targets move and the shorter is the interval to the target and vice versa. Finally, we need a <a href="https://psychopy.org/api/clock.html#psychopy.clock.Clock">Clock</a> that will count the time to the moment when we need to generate a new target (<code>new_target_timer</code>) and an attribute that will hold that time (<code>time_till_next_target</code>). Initialize the latter to the <code>next()</code> item from time-to-next-target generator (remember, you need to use the attribute, which is a generator object that function returned, not the function itself).</p>
 <p>Now we need to add three methods <code>draw</code>, <code>update</code>, and <code>add_next_target</code>. The first one is easy, it simply draws all <code>targets</code> in a for loop. The second is also easy, it makes all targets <code>fall</code> plus, after the loop, it should call <code>add_next_target</code> method. The <code>add_next_target</code> method should check whether the elapsed time for <code>new_target_timer</code> <strong>times the <code>speed_factor</code></strong> (as the speed increases, the time to the next target goes faster) has exceeded the <code>time_till_next_target</code> (this modulation of elapsed time due to speed is why we can’t easily use a <a href="https://psychopy.org/api/clock.html#psychopy.clock.CountdownTimer">CountdownTimer</a> instead). If that is indeed the case, create a new random target (get the <code>next()</code> position from the position generator and remember to pass <code>speed</code> <em>times</em> <code>speed_factor</code>!), add it to the list of targets, reset the timer and get new <code>time_till_next_target</code> using <code>next()</code> item from the time generator.</p>
 <p>In the main file, create <code>TimedResponsTask</code> object (use a name you like) and call its <code>draw</code> and <code>update</code> methods in the main loop. You should see targets appearing at random and falling down consistently.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put updated code in <em>code04.py</em> and create the class <code>TimedResponseTask</code>.</p>
 </div>
 </div>
@@ -230,7 +230,7 @@
 <p>Currently, our targets keep falling down even when they are below the screen. This will not affect the performance <em>immediately</em> but it will be taxing both memory and CPU, so we should dispose of them. In the <code>Target</code> class, create a new read-only (computed) <code>@property</code> called <code>is_below_the_screen</code> that returns <code>True</code> if the upper edge of the target is below the lower edge of the screen, <code>False</code> otherwise, of course, and you definitely do not need if-else!</p>
 <p>Next, in the <code>update</code> method of <code>TimedResponseTask</code>, add a second loop (or modify the existing loop) where you delete any object that <code>is_below_the_screen</code>.</p>
 <p>For debugging, run the main code, wait until at least one target falls below the screen, put a break point and check <code>targets</code> attribute. Its length should match the number of visible targets, not of the total generated targets.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Update classes <code>Target</code> and <code>TimedResponseTask</code>.</p>
 </div>
 </div>
@@ -239,7 +239,7 @@
 <span class="header-section-number">13.11</span> Finishing line<a class="anchor" aria-label="anchor" href="#finishing-line"><i class="fas fa-link"></i></a>
 </h2>
 <p>Add a new visual attribute to the <code>TimedResponseTask</code> that is a horizontal <a href="https://psychopy.org/api/visual/line.html#psychopy.visual.Line">line</a>. The task of the player will be to press a corresponding key whenever a target crosses (overlaps with) the line. For now, create it as an attribute in the constructor (pick the vertical location you like) and draw it inside the <code>draw()</code> method.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Update class <code>TimedResponseTask</code>.</p>
 </div>
 </div>
@@ -252,7 +252,7 @@
 where <span class="math inline">\(y_{target}\)</span> is the vertical center of the target, <span class="math inline">\(y_{line}\)</span> is the vertical position of the line (you get it as a function parameter), <span class="math inline">\(h_{target}\)</span> is height of the target, <span class="math inline">\(|x|\)</span> means absolute value of <span class="math inline">\(x\)</span> (use <a href="https://docs.python.org/3/library/math.html#math.fabs">fabs</a> function from <em>math</em> library for that), and <code>10</code> is an arbitrary scaling factor (you can use any integer and put it into settings). Study the formula and you will see that score is 10 if the target’s center is right on the line but decreases linearly with any displacement for both early (target’s center is above the line) or late (target’s center is already below the line) responses. Once the target is off the line, the score becomes negative. We convert it to <code>int</code>, because we want simple scores (floats look messy for this). Compute the score and store in a <em>temporary local variable</em>. If the value is <em>positive</em>, that means success, so you should store this value permanently in the <code>score</code> attribute, change line color of the rectangle to white (to show the player that they got it right), and return <code>True</code> (yes, target does overlap with the line!). For all other outcomes, you return <code>False</code>. This means that either the response was already made or the target does not overlap with the line at the time of the key press.</p>
 <p>In the <code>TimerResponseTask</code> class, we need a new method <code>check()</code> that will take position of the target based on the key press (so if a player pressed <em>left</em> key, the position will be <span class="math inline">\(0\)</span>, <em>down</em> is <span class="math inline">\(1\)</span>, and <em>right</em> is <span class="math inline">\(2\)</span>). Loop over targets and if target’s position (<code>ipos</code> attribute) matches the position of the key press (parameter of the function) <em>and</em> target overlaps with the line (the <code>overlaps()</code> method returns <code>True</code>), return the <code>score</code> attribute of that target. Note that the condition order is important here! You need to check for the overlap <em>only</em> if target position matches the key. If you ran out of targets to check that means that the player pressed a wrong key or at the wrong time, so you should return <code>0</code> (means “mistake”).</p>
 <p>In the main loop, add <code>"left"</code>, <code>"down"</code>, and <code>"right"</code> to the key list of <a href="https://psychopy.org/api/event.html#psychopy.event.getKeys">getKeys()</a> call. Then, if any of these three keys are pressed, translate that into a position, respectively, 0, 1, and 2 (think how you can do it without if-else via a dictionary), and call the new <code>check</code> method of the <code>TimedResponseClass</code>. Test the code, targets’ edges should turn white, if you time your key press correctly!</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put updated code in <em>code05.py</em>, update <code>Target</code> and <code>TimedResponseTask</code> classes.</p>
 </div>
 </div>
@@ -279,7 +279,7 @@ where <span class="math inline">\(y_{target}\)</span> is the vertical center of 
 <span id="cb122-14"><a href="seminar-02-06.html#cb122-14" tabindex="-1"></a><span class="bu">print</span>(adder.number)</span>
 <span id="cb122-15"><a href="seminar-02-06.html#cb122-15" tabindex="-1"></a><span class="co">#&gt; 10</span></span></code></pre></div>
 <p>Implement that special method for your class, so we can do <code>score_stim +=  timed_task.check(...)</code>. Remember, you have to update both numeric <em>and</em> visual representations of the score in that method! Add the score to the main code.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put updated code in <code>code06.py</code>, create <code>ScoreText</code> class.</p>
 </div>
 </div>
@@ -290,7 +290,7 @@ where <span class="math inline">\(y_{target}\)</span> is the vertical center of 
 <p>We will implement the staircase as part of the <code>TimerResponseTask</code> class, so it can speed up and slow down itself. For this, we will need an attribute that counts number of <em>consecutive</em> correct responses (I, typically, call it <code>correct_in_a_row</code> or something like that). Create and initialize it to zero in the constructor.</p>
 <p>Next, create a new method <code>staircase()</code> that will take a single parameter (beyond <code>self</code>) on whether the response was <code>correct</code> or not. If it was, increment <code>correct_in_a_row</code> by one and check whether it reached 3. If it did, increase the <code>speed_factor</code> by <em>multiplying</em> it by some chosen factor (I’ve picked 1.3) and resetting <code>correct_in_a_row</code> to 0. This is equivalent to using a logarithmic step as our <code>speed_factor</code> is adjusted as a fraction of its magnitude. Alternatively, if the response was not correct, <em>divide</em> <code>speed_factor</code> by the same number (e.g., 1.3, so slowing things down) and again, reset <code>correct_in_a_row</code> to 0. After that, loop over all targets and update their speed based on <code>speed</code> and <code>speed_factor</code> attributes.</p>
 <p>You need to call this method inside the <code>check</code> method, think then and how.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Update <code>TimedTaskResponse</code> class.</p>
 </div>
 </div>
@@ -299,7 +299,7 @@ where <span class="math inline">\(y_{target}\)</span> is the vertical center of 
 <span class="header-section-number">13.15</span> Limiting time<a class="anchor" aria-label="anchor" href="#limiting-time"><i class="fas fa-link"></i></a>
 </h2>
 <p>Let us add a competitive edge by limiting the run time to 20 seconds (you can pick your own duration, of course, and you definitely want to be a setting). Create an additional outer loop, so that the game can be played many times over. Once the round is over, show the latest state (redrawing all game objects) plus the “Round over” sign and wait for the player to press either <em>escape</em> (then you exit the game) or <em>space</em> (to start the next round). Remember to recreate all game objects anew for the next round (or create a <code>reset</code> method for all of them).</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put updated code in <code>code07.py</code>.</p>
 </div>
 </div>
@@ -312,11 +312,11 @@ where <span class="math inline">\(y_{target}\)</span> is the vertical center of 
 <p>Now let us make use of the <a href="https://psychopy.org/api/data.html#stairhandler">StairHandler</a> in <code>TimedResponseTask2</code>. Drop <code>correct_on_a_row</code> attribute and create a <a href="https://psychopy.org/api/data.html#stairhandler">StairHandler</a> as <code>stairhandler</code> attribute instead. You need to specify <code>startVal</code> which is the initial value for the <code>speed_factor</code>, thus use whatever value you had previously. <a href="https://psychopy.org/api/data.html#stairhandler">StairHandler</a> uses <code>nUp=1</code> and <code>nDown=3</code> by default. This matches our custom staircase, so theoretically you can use defaults by omitting these parameters. However, for the sake of code’s readability, do specify these explicitly. Our steps were logarithmic, so use <code>stepType="log"</code> and a single fixed <code>stepSizes=-0.1</code>. The magnitude of <code>-0.1</code> correspond roughly to the step that we used in the custom staircase and we need the negative sign because <a href="https://psychopy.org/api/data.html#stairhandler">StairHandler</a> <em>increases</em> the staircase level following an incorrect response. In our case, we want an exact opposite, <em>decreasing</em> <code>speed_factor</code> to slow targets down. Hence, the negative sign that turns increase into a decrease. Finally, <a href="https://psychopy.org/api/data.html#stairhandler">StairHandler</a> will terminate after it reaches either desired number of trials (<code>nTrial</code>) or reversals (<code>nReversals</code>, changes from correct to incorrect responses or vice versa). These are the settings that would typically determine length of a single block/run in the real experiment. However, we limited our rounds by <em>time</em>, so we only need to make sure that the <a href="https://psychopy.org/api/data.html#stairhandler">StairHandler</a> does not run out of trials before the game round is over. Thus, specify some very large number (e.g., 1000) for both these parameters.</p>
 <p>Once you created <code>stairhandler</code> attribute, it is ready for use via <code>next(self.stairhandler)</code>. Call it the first time in the constructor and assign the value it returns to <code>speed_factor</code> attribute (should be whatever <code>startVal</code> you assigned to it but do put a breakpoint and double-check!)</p>
 <p>Next, we need to modify our <code>staicase()</code> method making it much simpler. First, remove the <code>if correct: ... else: ...</code> code but leave targets’ speed adjustment code intact (we still need it!). Then, let <code>stairhandler</code> adjust itself via <a href="https://psychopy.org/api/data.html#psychopy.data.StairHandler.addResponse">addResponse()</a> method using an information on whether the response was correct (you already have a parameter with exactly that information). Finally, get the next <code>speed_factor</code> exactly the same way as in the constructor. Done!</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put updated code in <code>code08.py</code> using <code>TimedResponseTask2</code>.</p>
 </div>
 <p>Your program should run very much like before but now you have many more opportunities to make it more flexible at little cost for yourself (look at <a href="https://psychopy.org/api/data.html#stairhandler">StairHandler</a> settings) and to log it via one of <code>saveAs</code> methods.Let us do the latter, save staircase logs via <a href="https://psychopy.org/api/data.html#psychopy.data.StairHandler.saveAsText">saveAsText()</a> after a run is over. Figure out a way to generate a unique filename for each run, so that the logs will not be overwritten.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Save staircase logs in <code>code09.py</code>.</p>
 </div>
 </div>
@@ -370,7 +370,7 @@ where <span class="math inline">\(y_{target}\)</span> is the vertical center of 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Python and PsychoPy by writing games</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-10-20.</p>
+    <p>"<strong>Learning Python and PsychoPy by writing games</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-10-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

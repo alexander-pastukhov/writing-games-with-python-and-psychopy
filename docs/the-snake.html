@@ -115,7 +115,7 @@
 <li>Wait for any key press.</li>
 <li>Close the window.</li>
 </ul>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <em>code01.py</em>.</p>
 </div>
 <p>Do not forget to put the multiline comment at the top of the file, describing what we will be doing.</p>
@@ -132,7 +132,7 @@
 <p>What is your decision? My suggestion would be <code>"norm"</code> units as they make sizing squares easy, as long as we use a suitable aspect ratio for the window itself. Good news is that the formula above automatically ensures the correct aspect ratio (think why this is the case).</p>
 <p>Before we start coding the window size computation, create a <a href="christmas-special.html#settings-files">settings file</a> using the format of your choice that contains <code>grid size [in squares]</code> (with a list of two values or you could define it as <code>grid width [in squares]</code> plus <code>grid height [in squares]</code>) and <code>square size [in pixels]</code><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;I always add units in square brackets as a reminder to my(future)self. One can deduce units from code itself but documenting them explicitly makes your life much easier.&lt;/p&gt;"><sup>80</sup></a>. I would suggest to start with a 30 × 20 grid as it should give us enough space to try things out but you can always increase the resolution of the game later. As for the square size, 20 pixels should be enough (but decide based on your screen resolution).</p>
 <p>Add the code for loading the file into <code>settings</code> variable and then use the settings to compute the window’s size. Test that it works correctly by doubling (or halving) the size of the grid or of the square size.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <em>code02.py</em>.</p>
 </div>
 </div>
@@ -141,7 +141,7 @@
 <span class="header-section-number">14.4</span> Fancier boilerplate<a class="anchor" aria-label="anchor" href="#fancier-boilerplate"><i class="fas fa-link"></i></a>
 </h2>
 <p>The code for computing window size belongs to the business logic of setting up a window and, therefore, should be part of a window class code. Therefore, let us define a new <code>GridWindow</code> class that will inherit from PsychoPy <a href="https://psychopy.org/api/visual/window.html#psychopy.visual.Window">Window</a> class but modify the constructor to perform a window size computation. The new <code>__init__()</code> method should take grid size and square size as parameters, compute an actual size of the window in pixels, and call the <code>__init__()</code> method of the <em>parent</em> <a href="https://psychopy.org/api/visual/window.html#psychopy.visual.Window">Window</a> class to finish the setup (if you forgot how to call parent’s methods, take a look at how we implemented <a href="flappy-bird.html#flappy-bird-class">Flappy Bird class</a> by inheriting from <a href="https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim">ImageStim</a>). You already have all the code you need but in the main script, so the only thing you are doing is tidying things up by moving it into the constructor where it belongs and adjusting it for use of parameter and parent methods.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your <code>GridWindow</code> class into a separate file (<code>gridwindow.py</code>?).</p>
 <p>Modify the code and save main script into <em>code03.py</em>.</p>
 </div>
@@ -162,7 +162,7 @@ Figure 14.1: Grid versus window coordinates
 </div>
 <p>Remember to document the method following <a href="https://numpydoc.readthedocs.io/en/latest/format.html">NumPy docstring format</a>.</p>
 <p>Now, test this method by creating a <a href="https://psychopy.org/api/visual/rect.html#psychopy.visual.rect.Rect">square</a> (you now get its size from the <code>GridWindow</code> attribute(s) that you created) in the main script and placing it at different locations on the grid. Run the code several times, using different grid indexes or adding several squares to check that it works as intended. I.e., for a 30×20 grid, a grid coordinate <code>0×0</code> should place a square at the bottom-left corner, whereas <code>14×9</code> should put it almost at the center.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <em>code04.py</em>.</p>
 </div>
 </div>
@@ -174,7 +174,7 @@ Figure 14.1: Grid versus window coordinates
 <p>Consider an individual segment. We need to 1) keep track of its location in <em>grid</em> coordinate system and 2) have its visual representation — a square, just like the one you create during the previous exercise — positioned in <em>window</em> coordinate system. Good news is, you already have a method of the <code>GridWindow</code> class that maps the former on the latter, so as long as you know where the segment is on the grid, placing its square within the window is easy. Thus, each segment has two pieces of information associated with it and we could represent it as a <a href="https://docs.python.org/3/tutorial/datastructures.html#dictionaries">dictionary</a> with two keys (<code>"pos"</code> (tuple of x and y in grid coordinates) and <code>"visuals"</code> (the square)) or, better still, as a class of it own.</p>
 <p>Let us create a <code>SnakeSegment</code> class. Its constructor <code>__init__()</code> methods should take three parameters: 1) a PsychoPy [Window] object, 2) segment coordinates on the grid, 3) segment color. Save the grid coordinates into the <code>ipos</code> attribute (we need to keep track of it when the snake will start moving around) and reuse the code from the previous exercise when created a square. Store that square in <code>visuals</code> attribute and add a <code>draw()</code> method that simply calls the <code>draw()</code> method of the square<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;It would be much simpler to inherit from &lt;a href="https://psychopy.org/api/visual/rect.html#psychopy.visual.rect.Rect"&gt;Rect&lt;/a&gt; class directly but it does not work (raises an error), at least for the version 2021.1.4 that I use.&lt;/p&gt;'><sup>83</sup></a>.</p>
 <p>Test the class by creating and drawing a snake segment in the main script. Define snake segment color in settings, create it inside a separate section <code>"snake"</code> as it will add more parameters later on.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your <code>SnakeSegment</code> class into a separate file (<em>snaking.py</em>).</p>
 <p>Modify the code and save main script into <em>code05.py</em>.</p>
 </div>
@@ -185,7 +185,7 @@ Figure 14.1: Grid versus window coordinates
 </h2>
 <p>As already noted, a snake is just a list with snake segments. Create a new class <code>Snake</code>. Its constructor should take just two parameters: a PsychoPy window object and a dictionary with settings (a <code>"snake"</code> section of our <code>settings</code> variable in the main script). In the constructor, create a single segment and put it into a <em>list</em> attribute <code>segments</code>. We will have just one attribute for now but using a list already helps us in the future. Place that only segment roughly at the center of the grid. Use <code>grid_size</code> attribute of the <code>GridWindow</code> to compute it (you will need to use a floor division <a href="https://docs.python.org/3/library/operator.html#mapping-operators-to-functions"><code>\\</code></a> for that). You should also store the window in an attribute for a later use, as we need it every time we create a new segment.</p>
 <p>In addition, implement a <code>draw()</code> method that draws all <code>segments</code> in a loop. Test your code by creating and drawing a snake in the main script.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your <code>Snake</code> class into a separate file (<em>snaking.py</em>).</p>
 <p>Modify the code and save main script into <em>code06.py</em>.</p>
 </div>
@@ -203,7 +203,7 @@ Figure 14.1: Grid versus window coordinates
 <p>The <code>grow()</code> method should take just a single tuple parameter <code>dxy</code> with a direction of snake’s movement. I.e., it will be <code>(-1, 0)</code> for leftward moving snake, <code>(1, 0)</code> for right moving, <code>(0, -1)</code> for up, and <code>(0, 1)</code> for down. Inside the method, you compute the coordinates for the new head segment based on the position of the current head (the very first element of the snake) and the direction of motion (<code>dxy</code>), create a new snake segment at that location, and insert it before all other elements.</p>
 <p>The <code>trim()</code> method is even simpler as its just pops the last segment (trims the tail).</p>
 <p>To test these functions, create a snake and call its <code>grow()</code> method a few times using the same or different directions. Check visually that it works, i.e., that there are correct number of segment (initial head + as many segments as <code>grow()</code> method calls) and that the snake was growing in a correct direction. Combine <code>grow()</code> and <code>trim()</code> calls to visually check the snake as well.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Update <code>Snake</code> class adding <code>grow()</code> and <code>trim()</code> methods.</p>
 <p>Test it in <em>code07.py</em>.</p>
 </div>
@@ -213,7 +213,7 @@ Figure 14.1: Grid versus window coordinates
 <span class="header-section-number">14.9</span> The game loop<a class="anchor" aria-label="anchor" href="#the-game-loop"><i class="fas fa-link"></i></a>
 </h2>
 <p>Add a main game loop using a <code>user_abort</code> variable, so that it runs for as long as the <code>user_abort</code> is <code>False</code>. Inside the loop, draw the snake and check for keys without pausing the game. If a player pressed <code>"escape"</code>, change <code>user_abort</code> to <code>True</code> (the player decided to quit the game). If a player pressed <code>"space"</code> key, grow the snake in the direction of your liking and trim it. Thus, every time you press a <em>space</em> key, the snake should move one square in the direction of your choice. Test the code!</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Add main loop in <em>code08.py</em>.</p>
 </div>
 </div>
@@ -225,7 +225,7 @@ Figure 14.1: Grid versus window coordinates
 <p>Instead, we should decide on snake’s speed, e.g., 4 squares per second<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Note that speed does not need to be an integer number of squares per second. It can move at 1.5 squares per second, so 3 squares every two seconds.&lt;/p&gt;"><sup>86</sup></a>, and define it as a new parameter in settings. In the <code>Snake</code> class constructor, use this parameter to compute a new attribute <code>step_duration</code> that expresses the time needed to elapse before moving to a new square (i.e., interval between calls of grow/trim methods in seconds)<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Do it in the constructor, always define all attributes in the constructor, even if they are set to &lt;code&gt;None&lt;/code&gt;.&lt;/p&gt;"><sup>87</sup></a>. Why two variables that express the same information (interval is just an inverse of speed)? We could define <code>step_duration</code> directly in the settings but for a human it makes it harder to understand just how fast the movement will be. At least for me, a speed of <code>4 squares per second</code> is easier to comprehend than <code>0.25 second per square</code>. Thus, in cases like these, I prefer to have two variables, one human-oriented (in settings) and one computer-oriented (in the actual implementation, computed via a unit conversion). Remember, it is not just about writing a working code, it is about writing a code that is easy for a human to understand.</p>
 <p>Also in the constructor, add a new <code>movement_clock</code> attribute creating either a <a href="https://www.psychopy.org/api/clock.html#psychopy.clock.Clock">clock</a> or a <a href="https://www.psychopy.org/api/clock.html#psychopy.clock.CountdownTimer">countdown timer</a> object<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Remember, they work the same they, it is just a question of whether you start from zero and check whether time is over &lt;code&gt;step_duration&lt;/code&gt; (&lt;a href="https://www.psychopy.org/api/clock.html#psychopy.clock.Clock"&gt;clock&lt;/a&gt;) or you start at &lt;code&gt;step_duration&lt;/code&gt; and check whether the time ran out/is already negative (&lt;a href="https://www.psychopy.org/api/clock.html#psychopy.clock.CountdownTimer"&gt;timer&lt;/a&gt;).&lt;/p&gt;'><sup>88</sup></a> Then add a <code>reset_clock()</code> method and a <code>can_move</code> computed <a href="flappy-bird.html#computed-attribute-property">property</a>. The former should reset the clock or the countdown timer (whatever you have picked). The latter should return <code>True</code>, if the timer ran out and the snake can move to the next square (in this case you need to reset the timer!), or <code>False</code> if that is not the case. In the main script, call <code>reset_clock()</code> method before the main loop and inside of the main loop call <code>grow()</code> and <code>trim()</code> methods <em>only</em> if the snake <code>can_move</code>.</p>
 <p>Test your code by setting different snake speed.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Update <code>Snake</code> class adding timer attributes and methods.</p>
 <p>Test it in <em>code09.py</em>.</p>
 </div>
@@ -243,7 +243,7 @@ Figure 14.1: Grid versus window coordinates
 <span id="cb123-4"><a href="the-snake.html#cb123-4" tabindex="-1"></a>  dxy <span class="op">=</span> (<span class="dv">1</span>, <span class="dv">0</span>)</span>
 <span id="cb123-5"><a href="the-snake.html#cb123-5" tabindex="-1"></a>  ...</span></code></pre></div>
 <p>However, this approach introduces a lot of repetitive code and does not scale particularly well. Instead, we can use a <a href="memory-game.html#dictionaries">dictionary</a> (let us call it <code>DIRECTION_TO_DXY</code> as it is another constant) with <code>"up"</code>, <code>"right"</code>, etc. string as keys and tuples <code>(0, -1)</code>, <code>(1, 0)</code>, etc. as values. This way, we can use current value of the <code>direction</code> variable as a key to get the <code>(dx, dy)</code> pair from <code>DIRECTION_TO_DXY</code> dictionary. Do this translation directly in the <code>grow()</code> method call rather than creating a temporary variable as in the if-elif examples above. Test the translation by changing <code>direction</code> and checking that the snake moves accordingly.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Use <code>direction</code> and <code>DIRECTION_TO_DXY</code> in <em>code10.py</em>.</p>
 </div>
 </div>
@@ -254,7 +254,7 @@ Figure 14.1: Grid versus window coordinates
 <p>Playing the game would be more fun, if we could steer the snake! If the player presses <em>right arrow</em> key, the snake should turn <em>clockwise</em>. Conversely, the <em>left arrow</em> key, should turn the snake <em>counterclockwise</em>. We need to figure out two things. First, how to determine a new direction of motion given the current one and the key that was pressed. Second, we must decide when and how to change the value of <code>direction</code> variable. Let us tackle these problems one at a time.</p>
 <p>Determining the new direction of motion is fairly straightforward. If current is <code>"up"</code> and key was <em>right</em> (<em>clockwise</em> rotation), the new direction should be <code>"right"</code>. If current is <code>"down"</code> and key was <em>left</em>, the new direction is again <code>"right"</code> (<em>counterclockwise</em> rotation), etc. You could implement it as a bunch of <code>if-elif</code> statements or, better still, use the dictionary look up approach we implemented in the previous exercise. Here, you need a nested dictionary (dictionary inside a dictionary) <code>NEW_DIRECTION[key][direction]</code>. The first level has two keys <code>"left"</code> and <code>"right"</code> (so, effectively, counterclockwise and clockwise rotation) that selects which translation should be used and the second level is the dictionary that translates current direction into the new direction of motion. E.g., if current direction is <code>"down"</code> and key was <code>"right"</code>, <code>NEW_DIRECTION["right"]["down"]</code> should be <code>"left"</code> (rotating clockwise from <code>"down"</code> gets us to <code>"left"</code>). You know how define a simple dictionary. Good news, defining nested dictionaries follows the same rules, so should be straightforward.</p>
 <p>Now let us think about when and how should we change a value of <code>direction</code> variable. The simplest approach would be to change it as soon as the player presses the key. However, because our snake does not move on every frame this could lead to some odd behavior. Imagine that our game is on “easy” mode, so that the snake moves very slowly (one square per second). In this case, the player could easily press <em>left</em> twice during that second, which would make a snake move <em>backwards</em>, because its direction was changed by 180°. Snakes, at least our snake, cannot do this. Thus, we need a temporary variable, let us call it <code>new_direction</code>, which we will set every time the player presses the key but whose value will be transferred to <code>direction</code> only when it is time to move the snake (when the snake can move). We will compute it from the current <code>direction</code> and the key pressed. This way, even when the player presses <em>left</em> key several times, the snake would still turn only once because we compute the each turn using the same original <code>direction</code> value and not the changed <code>new_direction</code> variable. This also means that players can “change their mind”, as the last key press before the snake moves will determine the direction of motion.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Add <code>NEW_DIRECTION</code> and implement steering in <em>code11.py</em>.</p>
 </div>
 </div>
@@ -265,7 +265,7 @@ Figure 14.1: Grid versus window coordinates
 <p>Let us implement the same “figure out new direction” code in a more complicated way. The purpose of the exercise is to challenge you, show you new methods of the list, and to demonstrate how you can think about a change of the direction as moving through the list. Implement it as a function called <code>compute_new_direction()</code>, which will take two parameters (current direction and pressed key) and will return the new direction of rotation. You can put it above the main script or, better still, put it into a separate <em>utilities.py</em> file. However, in cases like these, I find it useful to play with the code in a Jupyter notebook before turning it into a function, so you could try this approach instead of debugging.</p>
 <p>Here is the idea. Imagine that you have a list <code>["left", "up", "right", "down"]</code>. For this list, rotation clockwise would correspond to moving through the list to the right (assuming that you jump to the beginning once you move past the last item). Conversely, rotation counterclockwise corresponds to moving to the left (again, assuming that you jump to the end of the list, once you went past the first item). As you see, rotation is expressed as a very intuitive “motion through the list”.</p>
 <p>For the actual implementation, first, define a local variable as a list in the order I’ve described. Next, you need to identify the location of the current direction within the list using <a href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists">index()</a> method. Then, you need to figure out whether you increase or decrease that index (to move to the right or to the left), based on <code>pressed_key</code> parameter (you can use dictionary approach or a conditional assignment here). Finally, you need to control for range, so that index of <code>-1</code> becomes <code>3</code> (you went too far to the left) and index of <code>4</code> should become <code>0</code>. The most elegant way to do this, is using <code>%</code> <a href="https://python-reference.readthedocs.io/en/latest/docs/operators/modulus.html">modulus</a> operation. Hint, <code>4 % 4</code> is <code>0</code>. What about <code>1 % 4</code>, <code>0 % 4</code>, or even <code>-1 % 4</code>? Check it in a Jupyter notebook to get an idea of what I am hinting at. And, of course, do not use <code>4</code> for division, use the <a href="https://docs.python.org/3/library/functions.html#len">length</a> of the list, as it determines the range of values.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Create `compute_new_direction() in <em>utilities.py</em>.</p>
 <p>Use it instead of a dictionary look-up in <em>code12.py</em>.</p>
 </div>
@@ -278,7 +278,7 @@ Figure 14.1: Grid versus window coordinates
 <p>Add a new computed <a href="flappy-bird.html#computed-attribute-property">property</a> <code>hit_the_wall</code> to the <code>Snake</code> class. The method should check whether the head of the snake (which segment is it?) is still within the grid that we defined (how do you check for that?). It should return <code>True</code>, if the head of the snake is outside of the grid limits (so, it is true that the snake hit the wall) or <code>False</code>, if it is still inside.</p>
 <p>Test it by adding a new condition inside the main game loop. Check whether the snake <code>hit_the_wall</code> and, if that is the case, the game should be over. Think about the optimal place where to check for this. You could do it on every iteration but there is a more logical place for it in main loop. Where is it?</p>
 <p>Test that the game quits after you successfully steered the snake into the wall.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Add <code>hit_the_wall</code> property to the <code>Snake</code> class.</p>
 <p>Use it in <em>code13.py</em>.</p>
 </div>
@@ -289,7 +289,7 @@ Figure 14.1: Grid versus window coordinates
 </h2>
 <p>In the next section, we will be adding apples to the game. The catch is that these apples should appear at a location that is <em>not</em> occupied by the snake. Otherwise, we would generate apples directly into snake’s stomach. Practical for the snake but defeats the purpose of the game. To rephrase this problem, we need a method that checks whether a particular grid location is occupied by the snake.</p>
 <p>Add a new method <code>is_inside()</code> that takes a tuple with a grid location as a parameter and returns a logical value whether that grid location is occupied by the snake (i.e., by one of its segments). Document the function! Test the method via debugging. Calling it immediately after creating the snake with a location of the head (the only segment) or with a different location. Store a return value into a temporary variable and put a breakpoint at an appropriate place to check its value (or use a debug console).</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Add <code>is_inside()</code> method to the <code>Snake</code> class.</p>
 <p>Test it in <em>code14.py</em>.</p>
 </div>
@@ -301,7 +301,7 @@ Figure 14.1: Grid versus window coordinates
 <p>Let us add that highly desirable fruit: the apple! We will use <a href="material/apple.png">an apple bitmap</a><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Created by &lt;a href="https://openclipart.org/artist/cyanidecupcake"&gt;Jess Wiechler&lt;/a&gt;.&lt;/p&gt;'><sup>89</sup></a>, so we will create a new class as a descendant of <a href="https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim">ImageStim</a> class. Its constructor should take <code>GridWindow</code> and <code>Snake</code> as parameters. In the constructor, you need to find a <a href="https://docs.python.org/3/library/random.html#random.randrange">random</a> grid location that is not occupied by snake, store it in an <code>ipos</code> attribute and call the parent’s constructor to initialize the image with an appropriate size and location (again, check <a href="flappy-bird.html#flappy-bird-class">Flappy Bird class</a> or <code>GridWindow</code> class, if you forgot how to do this).</p>
 <p>The only tricky part is finding the unoccupied location. There are many different strategies for doing this. The simplest one is to generate a potential location <a href="https://docs.python.org/3/library/random.html#random.randrange">at random</a>, check whether it is occupied by a snake (<code>is_inside()</code>?) and keep doing it until you find an unoccupied one.</p>
 <p>In the main script, create an apple and draw it in the main loop. For a moment, the snake cannot eat it and will pass through it but we will fix this shortly.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Create <code>Apple</code> class in <em>apples.py</em>.</p>
 <p>Use the apple in <em>code15.py</em>.</p>
 </div>
@@ -312,7 +312,7 @@ Figure 14.1: Grid versus window coordinates
 </h2>
 <p>Apples exist for snakes to eat them! Let us add this functionality. The general idea is very simple. If the <em>head</em> of the snake moves on to the grid location with an apple, you should not trim its tail. See how useful it was to split growing and trimming into two separate functions? Told you, strategic thinking!</p>
 <p>You need to add a conditional statement that if the snake’s head <em>is</em> on the apple, you should not trim the tail but create a new apple. What should you do, if there is no apple at that location?</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Make snake eat apples in <em>code16.py</em>.</p>
 </div>
 </div>
@@ -322,7 +322,7 @@ Figure 14.1: Grid versus window coordinates
 </h2>
 <p>Once our snake grows beyond four segments, it has an opportunity to bite itself<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Why at least five? Draw it on the grid and figure out whether it can eat itself with just four segments.&lt;/p&gt;"><sup>90</sup></a>. For this, we need to check that, <em>after</em> the snake moved, its head is <em>not</em> at the same location as one of the segments of its body. Create a new property <code>bit_itself</code> that returns <code>True</code> or <code>False</code> based on whether that is the case. The property is very similar but not identical to <code>is_inside()</code> method you implemented earlier. What is the critical difference and why cannot you simply reuse that function?</p>
 <p>Once you implemented <code>bit_itself</code>, you should check for that it does lead to the end of the game.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Implement <code>bit_itself</code> property.</p>
 <p>Use it in <em>code17.py</em>.</p>
 </div>
@@ -333,7 +333,7 @@ Figure 14.1: Grid versus window coordinates
 </h2>
 <p>Now that we have a fully functional game, we can start adding non-essential but nice-to-have features to it. The first one will be the score. Create a new class <code>Score</code> that inherits from <a href="https://psychopy.org/api/visual/textstim.html#psychopy.visual.TextStim">TextStim</a> and has an extra attribute <code>score</code> (initialized to <span class="math inline">\(0\)</span> in the constructor) and a method <code>plus_one()</code> that should increase the score by one and update the <code>text</code> attribute. As with an apple, initialize the <a href="https://psychopy.org/api/visual/textstim.html#psychopy.visual.TextStim">TextStim</a> part by calling parent’s <code>__init__()</code> method using appropriate parameters. I decided to put it at the top of the window and it reads <strong>Score: XXX</strong> but you are free to do it as you feel fit.</p>
 <p>In the main script, create a <code>Score</code> object, draw it when appropriate and increase the score every time the snake eats an apple.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Create <code>Score</code> class in <em>scoring.py</em>.</p>
 <p>Use it in <em>code18.py</em>.</p>
 </div>
@@ -344,7 +344,7 @@ Figure 14.1: Grid versus window coordinates
 </h2>
 <p>Let us give the player three attempts to achieve the top score. They have three lives, every time the snake dies, the game <em>but not the score</em> resets: A single segment snake appears at the center and a new random apple appears elsewhere (where should you put the code to create them?). Once the snake dies three times, the game is over. Think how you can implement this three repetitions.</p>
 <p>The score should be cumulative, so at the beginning of round two it should be equal to the final score of round one. Think how you can achieve this. <em>Another important point</em>: now you have two nested loop, one is for the game, one is for the round. When the snake dies, the round is over and, if you run out of lives, the game as well. When the player presses <em>escape</em> both round <strong>and</strong> the game are over. Think about how you can implement it.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your updated code into <em>code19.py</em>.</p>
 </div>
 </div>
@@ -353,7 +353,7 @@ Figure 14.1: Grid versus window coordinates
 <span class="header-section-number">14.21</span> Bells and whistles: press space to start the round<a class="anchor" aria-label="anchor" href="#bells-and-whistles-press-space-to-start-the-round"><i class="fas fa-link"></i></a>
 </h2>
 <p>At the moment, our round starts immediately. It would be friendlier, if the player would start it themselves. Before each round, draw <em>all</em> visuals (snake, apple, score) plus a text “Press SPACE to start” and wait until either a <em>space</em> or <em>escape</em> key is pressed. In the former case, the trial should start. In the latter case, the player should exit the game.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your updated code into <em>code20.py</em>.</p>
 </div>
 </div>
@@ -362,7 +362,7 @@ Figure 14.1: Grid versus window coordinates
 <span class="header-section-number">14.22</span> Bells and whistles: showing remaining lives<a class="anchor" aria-label="anchor" href="#bells-and-whistles-showing-remaining-lives"><i class="fas fa-link"></i></a>
 </h2>
 <p>Let us not just repeat the game three times but show the player how many lives they still have. Download the <a href="material/heart.png">heart.png</a><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;This image was downloaded from &lt;a href="https://openclipart.org/"&gt;openclipart.org&lt;/a&gt; and was created by &lt;a href="https://openclipart.org/artist/cliparteles"&gt;cliparteles&lt;/a&gt;&lt;/p&gt;'><sup>91</sup></a> and use it show remaining lives at the top-left corner of the screen: three hearts in round one, two hearts in round two, and just a single heart in round three. You will need to use (ImageStim)[<a href="https://www.psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim" class="uri">https://www.psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim</a>] for this. Think about the size of images and their location. Hint: I created a list of heart images using list comprehension and drawing hearts definitely requires a for loop.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your updated code into <em>code21.py</em>.</p>
 </div>
 </div>
@@ -373,7 +373,7 @@ Figure 14.1: Grid versus window coordinates
 <p>At the moment, the difficulty of the game, the speed with which the snake moves, is fixed and the player has no way of choosing it. Let us create dialog that appears <em>before</em> we create the window and start the game that will allow the player to choose between <em>easy</em>, <em>normal</em>, and <em>difficult</em><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Or, if you played Doom, between &lt;em&gt;I’m Too Young To Die&lt;/em&gt;, &lt;em&gt;Hey, Not Too Rough&lt;/em&gt;, &lt;em&gt;Hurt Me Plenty&lt;/em&gt;, &lt;em&gt;Ultra-Violence&lt;/em&gt;, and &lt;em&gt;Nightmare&lt;/em&gt;.&lt;/p&gt;"><sup>92</sup></a>. I leave it up to you to decide which snake speeds correspond to each difficulty. You can have more than three options, if you want. However, they definitely should be define in settings file.</p>
 <p>To create and run the dialog, use <a href="https://www.psychopy.org/api/gui.html#dlg">Dlg</a> class from
 <a href="https://www.psychopy.org/api/gui.html">giu</a> module of PsychoPy. Your challenge for today is to figure out how to use it based on the manual alone. Take a look at the example and experiment with in a separate file or a Jupyter notebook.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your updated code into <em>code22.py</em>.</p>
 </div>
 </div>
@@ -382,7 +382,7 @@ Figure 14.1: Grid versus window coordinates
 <span class="header-section-number">14.24</span> Bells and whistles: blinking “game over” message<a class="anchor" aria-label="anchor" href="#bells-and-whistles-blinking-game-over-message"><i class="fas fa-link"></i></a>
 </h2>
 <p>Once the game is over (but not when a player pressed <em>escape</em> key), show a blinking “Game Over” message <em>superimposed</em> over the final static game screen. Thus, you need to draw all the game objects and messages (but without moving the snake) plus you show a text message that is on for 0.5 second and off for 0.5 seconds until the player presses <em>Space</em> button. Hint: it should be a separate loop after the main game loop over rounds, logical variables and clocks/timers have definitely something to do with it.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your updated code into <em>code23.py</em>.</p>
 </div>
 </div>
@@ -392,7 +392,7 @@ Figure 14.1: Grid versus window coordinates
 </h2>
 <p>Download <a href="material/game-over-arcade.wav">game-over-arcade.wav</a><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Downloaded from &lt;a href="https://freesound.org/"&gt;freesound.org&lt;/a&gt; and created by &lt;a href="https://freesound.org/people/myfox14/"&gt;myfox14&lt;/a&gt;&lt;/p&gt;'><sup>93</sup></a> and <a href="material/8-bit-game-over-sound.wav">8-bit-game-over-sound.wav</a><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Also downloaded from &lt;a href="https://freesound.org/"&gt;freesound.org&lt;/a&gt; and created by &lt;a href="https://freesound.org/people/EVRetro/"&gt;EVRetro&lt;/a&gt;&lt;/p&gt;'><sup>94</sup></a>. Use the former whenever the snake dies and use the latter when the player runs out of lives. Note, no sound should be played if the player pressed <em>escape</em>.</p>
 <p>You will need to use <code>Sound</code> class from <a href="https://psychopy.org/api/sound/playback.html">sound</a> module of PsychoPy. Important: use <code>Sound</code> class not a library-specific implementation such as <code>PTBSound</code> or <code>SoundDevice</code> classes. The PsychoPy will figure out which backend is the best (available at all) for you.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your updated code into <em>code24.py</em>.</p>
 </div>
 </div>
@@ -455,7 +455,7 @@ Figure 14.1: Grid versus window coordinates
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Python and PsychoPy by writing games</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-10-20.</p>
+    <p>"<strong>Learning Python and PsychoPy by writing games</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-10-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

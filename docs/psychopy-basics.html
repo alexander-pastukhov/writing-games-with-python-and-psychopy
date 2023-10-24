@@ -117,7 +117,7 @@
 <span id="cb59-17"><a href="psychopy-basics.html#cb59-17" tabindex="-1"></a><span class="co"># closing the window</span></span>
 <span id="cb59-18"><a href="psychopy-basics.html#cb59-18" tabindex="-1"></a>win.close()</span></code></pre></div>
 <p>Run it to check that PsychoPy work. If you get an error saying that <code>psychopy</code> library is not found, check the <a href="software.html#install-vs-code">active Python interpreter</a>. You should get a gray window with <em>PsychoPy</em> title. Press any key (click on the window, if you switched to another one, so that it registers a key press) and it should close. Not very exciting but does show that everything works as it should.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <em>code01.py</em>.</p>
 </div>
 <p>The code is simple but packs quite a few novel bits. First line is easy, we simply import <a href="https://psychopy.org/api/visual/index.html">visual</a> and <a href="https://psychopy.org/api/event.html">event</a> modules from <em>psychopy</em> library (a library can be itself organized into sublibraries to make things even more modular). Then, we create an <em>object</em> <code>win</code> using a <em>class</em> <a href="https://psychopy.org/api/visual/window.html#psychopy.visual.Window">Window</a> with custom size. Third line uses function <a href="https://psychopy.org/api/event.html#psychopy.event.waitKeys">waitKeys()</a> from <em>event</em> module to wait for a key press. The last one closes the window by calling its <code>close</code> <em>method</em>. You should have little trouble with lines #1 and #3 but you need to learn about object-oriented programming to understand #2 and #4.</p>
@@ -184,7 +184,7 @@
 <span id="cb65-5"><a href="psychopy-basics.html#cb65-5" tabindex="-1"></a></span>
 <span id="cb65-6"><a href="psychopy-basics.html#cb65-6" tabindex="-1"></a>closing the window</span></code></pre></div>
 <p>The loop should be repeated until the user presses an <em>escape</em> key and, therefore, you will need a variable that signals this. My approach is to create a variable <code>gameover</code> initializing it to <code>False</code> and repeat the loop as long as the game not over. Then, in the loop, use function <a href="https://psychopy.org/api/event.html#psychopy.event.getKeys">event.getKeys()</a> to check whether <em>escape</em> button was pressed (for this, you need to pass <code>keyList=['escape']</code>). The function returns a <em>list</em> of keys, if any of them were pressed in the meantime or an empty list, if no keys from the <code>keyList</code> were pressed. Store that returned value in a temporary variable (I tend to call it <code>keys</code>). You will learn about lists only in the <em>next</em> chapter, so for now use a ready-made: <code>len(keys) &gt; 0</code> is a comparison that is <code>True</code> if list is not empty. If the list is indeed not empty, that means that the user pressed <em>escape</em> (as that is the only key that we specified in the function call) and the game should be over. Think how can you do it <em>without</em> an <code>if</code> statement, computing the logical value directly?</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <em>code02.py</em>.</p>
 </div>
 </div>
@@ -197,7 +197,7 @@
 <div class="sourceCode" id="cb66"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb66-1"><a href="psychopy-basics.html#cb66-1" tabindex="-1"></a>press_escape_text <span class="op">=</span> visual.TextStim(win, <span class="st">"Press escape to exit"</span>)</span></code></pre></div>
 <p>To show the visuals in PsychoPy, you first <em>draw</em> each element by calling its <a href="https://psychopy.org/api/visual/textstim.html#psychopy.visual.TextStim.draw">draw()</a> method and then update the window by <em>flipping</em><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;This is called flipping because a window has two buffers: one that is currently displayed on the screen and the other one in which you can draw your stimuli. Once you are done with drawing, you “flip” the buffers so that they exchange their places. Now the one you drew in gets displayed and you have the other buffer to draw in.&lt;/p&gt;"><sup>31</sup></a> it. Note that you call <a href="https://psychopy.org/api/visual/window.html#psychopy.visual.Window.flip">flip()</a> only <em>once</em> after <em>all</em> stimuli are drawn. I typically organize this code into a separate chunk and prepend it with a comment line <code># drawing stimuli</code>.</p>
 <p>The <code># drawing stimuli</code> chunk goes inside the main loop either before or after the keyboard check<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;My personal preference is to draw first but in most cases it makes no difference.&lt;/p&gt;"><sup>32</sup></a>. Organize the latter also as a separate code chunk with its own brief comment.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <em>code03.py</em>.</p>
 </div>
 <p>Now, you should have a nice, although static, message positioned at the window’s center that tells you how you can exit the game. Check out the manual page for <a href="https://psychopy.org/api/visual/textstim.html">visual.TextStim</a> and try changing it by passing additional parameters to the class call. For example you can change its <code>color</code>, whether text is <code>bold</code> and/or <code>italic</code>, how it is aligned, etc. However, if you want to change <em>where</em> the text is displayed, read on below.</p>
@@ -209,7 +209,7 @@
 <p>Now, let us figure out how create and move visuals to an arbitrary location on the screen. In principle, this is very straightforward as every visual stimulus (including <a href="https://psychopy.org/api/visual/textstim.html#psychopy.visual.TextStim">TextStim</a> we just used) has <a href="https://psychopy.org/api/visual/textstim.html#psychopy.visual.TextStim.pos">pos</a> property that specifies (you guessed it!) its position within a window. However, to make your life easier, PsychoPy first complicates it by having <a href="https://psychopy.org/general/units.html"><strong>five</strong> (5!) different position units systems</a>.</p>
 <p>Before we start exploring the units, let us create a simple white square. The visual class we need is <a href="https://psychopy.org/api/visual/rect.html">visual.Rect</a>. Just like the <a href="https://psychopy.org/api/visual/textstim.html#psychopy.visual.TextStim">TextStim</a> above, it requires <code>win</code> variable (so it knows which window it belongs to), <code>width</code> (defaults to 0.5 of those mysterious units), <code>height</code> (also defaults to 0.5), <code>pos</code> (defaults to (0,0)), <code>lineColor</code> (defaults to <code>white</code>) and <code>fillColor</code> (defaults to <code>None</code>). Thus, to get a “standard” white outline square with size of <code>(0.5, 0.5)</code> units at <code>(0, 0)</code> location you only need pass the <code>win</code> variable: <code>white_square = visual.Rect(win)</code>. However, on <em>some</em> computers a curious bug prevents PsychoPy from drawing the outline correctly. If you end up staring at an empty screen<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;This sometimes was an issue with Intel graphic cards.&lt;/p&gt;"><sup>33</sup></a>, add <code>fillColor="white"</code> to the call and you should see a filled white square.</p>
 <p>You draw the square just like you drew the text stimulus, via its <a href="https://psychopy.org/api/visual/rect.html#psychopy.visual.rect.Rect.draw">draw()</a> method (and, again, you first draw all the stimuli and then flip the window <em>once</em>). Create the code (either keep the text and draw both, or drop the text), run it to see a very white square.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <em>code04.py</em>.</p>
 </div>
 <p>What? Your square is not really a square? Well, I’ve warned you: <a href="https://psychopy.org/general/units.html#units">Five unit systems</a>!</p>
@@ -224,12 +224,12 @@
 </h3>
 <p>With <a href="https://psychopy.org/general/units.html#height-units">height units</a> everything is specified in the units of window height. The center of the window is at <code>(0,0)</code> and the window goes vertically from <code>-0.5</code> to <code>0.5</code>. However, horizontal limits depend on the aspect ratio. For our 800×600 window (4:3 aspect ratio), it will go from -0.666 to 0.666 (the window is 1.3333 window heights wide). For a 600×800 window (3:4 aspect ratio) from -0.375 to 0.375 (the window is 0.75 window heights wide), for a square window 600×600 (aspect ratio 1:1) from -0.5 to 0.5 (again, in all these cases it goes from -0.5 to 0.5 vertically). This means that the actual on-screen distance for the units is the same for both axes. So that a square of <code>size=(0.5, 0.5)</code> is actually a square (it spans the same distance vertically and horizontally). Thus, height units make <em>sizing</em> objects easier but <em>placing them on horizontal axis correctly</em> harder (as you need to know the aspect ratio).</p>
 <p>Modify your code by specifying the unit system when you create the window: <code>win = visual.Window(..., units="height")</code>. Play with your code by specifying position of the square when you create it. You just need to pass an extra parameter <code>pos=(&lt;x&gt;, &lt;y&gt;)</code>.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <em>code05.py</em>.</p>
 </div>
 <p>By the way, which way is up when y is below or above zero? Unfortunately, unlike x-axis, the y-axis can go both ways. For PsychoPy y-axis points up (so negative values move the square down and positive up). However, if you would use an Eyelink eye tracker to record where participants looked <em>on the screen</em>, it assumes that y-axis starts at the top of the screen and points down<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;This could be very confusing, if you forget about this when overlaying gaze data on an image you used in the study and wondering what on Earth the participants were doing.&lt;/p&gt;"><sup>34</sup></a>.</p>
 <p>Now, modify the size of the square (and turn it into a non-square rectangle) by passing <code>width=&lt;some-width-value&gt;</code> and <code>height=&lt;some-height-value&gt;</code>.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <em>code06.py</em>.</p>
 </div>
 </div>
@@ -239,7 +239,7 @@
 </h3>
 <p><a href="https://psychopy.org/general/units.html#normalised-units">Normalized units</a> are default units and assume that the window goes from -1 to 1 both along x- and x-axis. Again, (0,0) is the center of the screen but the bottom-left corner is (-1, -1) whereas the top-right is (1, 1). This makes <em>placing</em> your objects easier but <em>sizing</em> them harder (you need to know the aspect ratio to ensure that a square is a square).</p>
 <p>Modify your code, so that it uses <code>"norm"</code> units when you create the window and size your white square stimulus, so it does look like a square.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <em>code07.py</em>.</p>
 </div>
 </div>
@@ -249,7 +249,7 @@
 </h3>
 <p>For <a href="https://psychopy.org/general/units.html#pixels-on-screen">pixels on screen</a> units, the window center is still at <code>(0,0)</code> but it goes from <code>-&lt;width-in-pixels&gt;/2</code> to <code>&lt;width-in-pixels&gt;/2</code> horizontally (from -400 to 400 in our case) and <code>-&lt;height-in-pixels&gt;/2</code> to <code>&lt;height-in-pixels&gt;/2</code> vertically (from -300 to 300). These units could be more intuitive when you are working with a fixed sized window, as the span is the same along the both axes (like for the height units). However, they spell trouble if your window size has changed or you are using a full screen window on a monitor with an unknown resolution. In short, you should use them only if they dramatically simplify your code.</p>
 <p>Modify your code to use <code>"pix"</code> units and briefly test sizing and placing your square within the window.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <em>code08.py</em>.</p>
 </div>
 </div>
@@ -271,7 +271,7 @@
 <span class="header-section-number">8.9</span> Make your square jump<a class="anchor" aria-label="anchor" href="#make-your-square-jump"><i class="fas fa-link"></i></a>
 </h2>
 <p>So far, we fixed the location of the square when we created it. However, you can move it at any time by assigning a new <code>(&lt;x&gt;, &lt;y&gt;)</code> coordinates to its <code>pos</code> property. <em>E.g.</em>, <code>white_square.pos = (-0.1, 0.2)</code>. Let us experiment by moving the square to a random location on every iteration of the loop (this could cause a lot of flashing, so if you have a photosensitive epilepsy that can be triggered by flashing lights, you probably should do it just once before the loop). Use the units of your choice and generate a new position using <a href="https://docs.python.org/3/library/random.html#random.uniform">random.uniform(a, b)</a> function, that generates a random value within <em>a..b</em> range<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;You need to import the random library for this, of course.&lt;/p&gt;"><sup>36</sup></a>. Generate two values (one for x, one for y). If you use <code>"norm"</code> units, your range is the same (from -1 to 1) for the two dimensions. However, if you used <code>"height"</code> units, you need to take into account the aspect ratio of your window (4:3 if you are using 800×600 pix window).</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <em>code09.py</em>.</p>
 </div>
 </div>
@@ -282,7 +282,7 @@
 <p>This was very flashy, so let us make the square jump only when you press <strong>space</strong> button. For this, we need to expand the code that processes keyboard input. So far, we restricted it to just <strong>escape</strong> button and checked whether any (hence, <strong>escape</strong>) button was pressed.</p>
 <p>You will learn about lists and indexes in the next chapter, so here is another ready-made. First, add <code>"space"</code> to the <code>keyList</code> parameter. Next, use conditional <a href="#id_%7B#if-statement">if statement</a> to check whether <a href="https://psychopy.org/api/event.html#psychopy.event.getKeys">event.getKeys()</a> returned a key press. If it did (<code>len(keys) &gt; 0</code>), you can now check whether <code>keys[0]</code> is equal to <code>"space"</code> or <code>"escape"</code><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;You can use &lt;code&gt;if..else&lt;/code&gt;, because we only have two options but I would recommend to go for a more general solution &lt;code&gt;if..elif&lt;/code&gt; &lt;/p&gt;"><sup>37</sup></a>. If it was the latter, the game is over as before. If it was <code>"space"</code> then move the square to a new random position (and do not move it on every frame!)</p>
 <p>Hint, if you are debugging, put you breakpoint inside the <code>if</code> statement, so that the program pauses only once you pressed a key (what happens if you put it on the <code>win.flip()</code> line?)</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <em>code10.py</em>.</p>
 </div>
 </div>
@@ -338,7 +338,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Python and PsychoPy by writing games</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-10-20.</p>
+    <p>"<strong>Learning Python and PsychoPy by writing games</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-10-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

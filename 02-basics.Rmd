@@ -59,7 +59,7 @@ number_of_legs = 1
 number_of_legs
 ```
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #1.
 :::
 
@@ -81,7 +81,7 @@ number_of_legs = 7 - 2
 number_of_legs
 ```
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #2.
 :::
 
@@ -104,7 +104,7 @@ Then, it computes the expression on the right side and, **once the computation i
 x = 3
 ```
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #3 to make sure you understand this.
 :::
 
@@ -118,7 +118,7 @@ NUMBER_OF_LEGS = 2
 
 I strongly recommend using constants and avoid hardcoding values. First, if you have several identical values that mean different things (2 legs, 2 eyes, 2 ears, 2 vehicles per character, etc.), seeing a `2` in the code will not tell you what does this `2` mean (the legs? the ears? the score multiplier?). You can, of course, figure it out based on the code that uses this number but you could spare yourself that extra effort and use a properly named constant instead. Then, you just read its name and the meaning of the value becomes apparent and it is the meaning not the actual value that you are mostly interested in. Second, if you decide to permanently _change_ that value (say, our main character is now a tripod), when using a constant means you have only one place to worry about, the rest of the code stays as is. If you hard-coded that number, you are in for an exciting^[not really] and definitely long search-and-replace throughout the entire code.
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #4.
 :::
 
@@ -139,7 +139,7 @@ When using a variable it is important that you know what type of value it stores
 5 + True
 ```
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #5.
 :::
 
@@ -152,7 +152,7 @@ str(2.5 + True)
 str(True)
 ```
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #6.
 :::
 
@@ -168,7 +168,7 @@ bool(secret_message)
 bool('False')
 ```
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #7.
 :::
 
@@ -181,7 +181,7 @@ float("67.8")
 int("123+3")
 ```
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #8.
 :::
 
@@ -224,7 +224,7 @@ desert = "cupcakes"
 print(count, dinner, count, desert)
 ```
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #9.
 :::
 
@@ -261,13 +261,13 @@ print('I had %d pancakes and %d steaks for dinner'%(7, 10))
 print('I had %d pancakes and %d steaks for dinner'%(1, 7, 10))
 ```
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #10.
 :::
 
 As noted above, in case of real values you have two options: `%f` and `%g`. The latter uses scientific notation (e.g. `1e10` for `10000000000`) to make a representation more compact.
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #11 to get a better feeling for the difference.
 :::
 

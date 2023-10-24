@@ -100,7 +100,7 @@
 <span class="header-section-number">7.2</span> Player’s response<a class="anchor" aria-label="anchor" href="#guess-the-number-players-response"><i class="fas fa-link"></i></a>
 </h2>
 <p>Let us warm up by writing a code that will allow a player to respond to computer’s guess. Recall that there are just three options: your number is greater, smaller, or equal to a computer’s guess. I would suggest using <code>&gt;</code>, <code>&lt;</code>, and <code>=</code> symbols to communicate this. You need to write the code that will prompt a player for their response until they enter one of these symbols. I.e., the prompt for input should be repeated if they enter anything else. Thus, you definitely need to use the <a href="https://docs.python.org/3/library/functions.html#input">input([prompt])</a> and a <a href="guess-the-number-multi-round.html#while-loop">while</a> loop. Think of a useful and informative prompt message for this. Test that it works. Using breakpoints might be very useful here.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code01.py</code>.</p>
 </div>
 </div>
@@ -230,11 +230,11 @@
 <span id="cb49-19"><a href="guess-the-number-ai.html#cb49-19" tabindex="-1"></a></span>
 <span id="cb49-20"><a href="guess-the-number-ai.html#cb49-20" tabindex="-1"></a><span class="co"># And again but via another_function call</span></span>
 <span id="cb49-21"><a href="guess-the-number-ai.html#cb49-21" tabindex="-1"></a>another_function()</span></code></pre></div>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #1.</p>
 </div>
 <p>You must also keep in mind that redefining a function (or defining a technically different function that has the same name) <em>overwrites</em> the original definition, so that only the <em>latest</em> version of it is retained and can be used.</p>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #2.</p>
 </div>
 <p>Although example in the exercise makes the problem easy to spot, in a large code that spans multiple files and uses various libraries, solving the same problem may not be so straightforward!</p>
@@ -264,7 +264,7 @@
 <div class="sourceCode" id="cb52"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb52-1"><a href="guess-the-number-ai.html#cb52-1" tabindex="-1"></a><span class="kw">def</span> x(a, b):</span>
 <span id="cb52-2"><a href="guess-the-number-ai.html#cb52-2" tabindex="-1"></a>    <span class="bu">print</span>(b <span class="op">-</span> a)</span></code></pre></div>
 <p>When calling a function, you must pass the correct number of parameters and pass them in a <em>correct order</em>, another reason for a function arguments to have meaningful names<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;This is also not strictly true but you will have to wait until you learn about named parameters and default values&lt;/p&gt;"><sup>26</sup></a>.</p>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #3.</p>
 </div>
 <p>When you call a function, values you <em>pass</em> to the function are assigned to the parameters and they are used as <em>local</em> variables (more on <em>local</em> bit later). However, it does not matter <em>how</em> you came up with this values, whether they were in a variable, hard-coded, or returned by another function. If you are using numeric, logical, or string values (<em>immutable</em> types), you can assume that any link to the original variable or function that produced it is gone (we’ll deal with <em>mutable</em> types, like lists, later). Thus, when writing a function or reading its code, you just assume that it has been set to some value during the call and you can ignore the context in which this call was made</p>
@@ -302,7 +302,7 @@
 <span id="cb54-13"><a href="guess-the-number-ai.html#cb54-13" tabindex="-1"></a><span class="co">    """</span></span>
 <span id="cb54-14"><a href="guess-the-number-ai.html#cb54-14" tabindex="-1"></a>    <span class="cf">return</span> current_year <span class="op">-</span> birth_year</span></code></pre></div>
 <p>Note that even if a function returns the value, it is retained only if it is actually used (stored in a variable, used as a value, etc.). Thus, just calling it will not by itself store the returned value anywhere!</p>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #4.</p>
 </div>
 </div>
@@ -330,7 +330,7 @@
 <span id="cb55-16"><a href="guess-the-number-ai.html#cb55-16" tabindex="-1"></a>  <span class="co"># It is a completely separate object, it just happens to </span></span>
 <span id="cb55-17"><a href="guess-the-number-ai.html#cb55-17" tabindex="-1"></a>  <span class="co"># have the same name (again, just namesakes)</span></span>
 <span id="cb55-18"><a href="guess-the-number-ai.html#cb55-18" tabindex="-1"></a>  <span class="bu">print</span>(x)</span></code></pre></div>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #5.</p>
 </div>
 </div>
@@ -340,7 +340,7 @@
 <span class="header-section-number">7.5</span> Player’s response as a function<a class="anchor" aria-label="anchor" href="#players-response-as-a-function"><i class="fas fa-link"></i></a>
 </h2>
 <p>Let us put all that theory about functions into practice. Use the code that you created to acquire <a href="guess-the-number-ai.html#guess-the-number-players-response">player’s response</a> and turn it into function. It should have no parameters (for now) and should return player’s response. I suggest that you call it <code>input_response</code> (or something along these lines). Test that the code works by calling this function for the main script.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code02.py</code>.</p>
 </div>
 </div>
@@ -398,7 +398,7 @@
 <span id="cb57-11"><a href="guess-the-number-ai.html#cb57-11" tabindex="-1"></a><span class="co">    """</span></span>
 <span id="cb57-12"><a href="guess-the-number-ai.html#cb57-12" tabindex="-1"></a>    <span class="cf">return</span> full_string[<span class="dv">0</span>]</span></code></pre></div>
 <p>Take the look at the <a href="https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard">manual</a> and document the <code>input_response</code> function. You will not need the <code>Parameters</code> section as it currently accepts no inputs.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Update your code in <code>code02.py</code>.</p>
 </div>
 </div>
@@ -407,7 +407,7 @@
 <span class="header-section-number">7.8</span> Using prompt<a class="anchor" aria-label="anchor" href="#using-prompt"><i class="fas fa-link"></i></a>
 </h2>
 <p>In the future, we will be asking about a specific number that is a current guess by the computer, thus we cannot use a fixed prompt message. Modify the <code>input_response</code> function by adding a <code>guess</code> parameter. Then, modify the prompt that you used for the <a href="https://docs.python.org/3/library/functions.html#input">input()</a> to include the value in that parameter. Update functions’ documentation. Test it by calling with different values for the <code>guess</code> parameter and seeing a different prompt for response.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code03.py</code>.</p>
 </div>
 </div>
@@ -417,7 +417,7 @@
 </h2>
 <p>Let us practice writing functions a bit more. Recall that the computer should use the middle of the interval as a guess. Create a function (let us call it <code>split_interval()</code> or something like that) that takes two parameters — <code>lower_limit</code> and <code>upper_limit</code> — and returns <em>an integer</em> that is closest to the middle of the interval. The only tricky part is how you convert a potentially float number (e.g, when you are trying to find it for the interval 1..10) to an integer. You can use function <a href="https://docs.python.org/3/library/functions.html#int">int()</a> for that. However, read the documentation carefully, as it <em>does not</em> perform a proper rounding (what does it do? read the docs!). Thus, you should <a href="https://docs.python.org/3/library/functions.html#round">round()</a> the number to the closest integer before converting it.</p>
 <p>Write a function, document it, and test it by checking that numbers are correct.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put you <code>split_interval()</code> function and the testing code into <code>code04.py</code>.</p>
 </div>
 </div>
@@ -426,7 +426,7 @@
 <span class="header-section-number">7.10</span> Single round<a class="anchor" aria-label="anchor" href="#single-round"><i class="fas fa-link"></i></a>
 </h2>
 <p>You have both functions that you need, so let us write the code to initialize the game and play a single round. The initialization boils down to creating two variables that correspond to the lower and upper limits of the game range (we used 1 to 10 so far, but you can always change that). Next, the computer should generate a guess (you have your <code>split_interval()</code> function for that) and ask the player about the guess (that is the <code>input_response()</code> function). Once you have the response (stored in a separate variable, think of the name yourself), update either upper or lower limit using an <a href="guess-the-number-single-round.html#if-statement">if..elif..else</a> statement based on player’s response (if the player said that their number is higher, that means the new interval is from <code>guess</code> to <code>upper_limit</code>, and vice versa for when it is lower). Print out a joyous message, if computer’s guess was correct.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put both functions and the script code into <code>code05.py</code>.</p>
 </div>
 </div>
@@ -435,7 +435,7 @@
 <span class="header-section-number">7.11</span> Multiple rounds<a class="anchor" aria-label="anchor" href="#multiple-rounds"><i class="fas fa-link"></i></a>
 </h2>
 <p>Extend the game, so that the computer keeps guessing until it finally wins. You already know how to use the <a href="guess-the-number-multi-round.html#while-loop">while</a> loop, just think how you can use participant’s response as a loop condition variable. Also, think about the initial value of that variable and how to use it so you call <code>input_response()</code> only at one location.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put the updated code into <code>code06.py</code>.</p>
 </div>
 </div>
@@ -444,7 +444,7 @@
 <span class="header-section-number">7.12</span> Playing again<a class="anchor" aria-label="anchor" href="#playing-again"><i class="fas fa-link"></i></a>
 </h2>
 <p>Modify the code, so that you can play this game several times. You already know how to do this and the only thing you need to consider is where exactly should you perform initialization before each game. As you already implemented that for the last game, you might be tempted to look how you did it or, even, copy-paste the code. However, I would recommend writing it from scratch. Remember, your aim is not to write a program but to learn how to do this and, therefore, the journey is more important than a destination.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put the updated code into <code>code07.py</code>.</p>
 </div>
 </div>
@@ -453,7 +453,7 @@
 <span class="header-section-number">7.13</span> Best score<a class="anchor" aria-label="anchor" href="#best-score-1"><i class="fas fa-link"></i></a>
 </h2>
 <p>Add the code to count the number of attempts that the computer required in each round and report the best score (fewest number of attempts) after the game is over. You will need one variable to count the number of attempts and one to keep the best score. Again, try writing it without looking at your previous game.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put the updated code into <code>code08.py</code>.</p>
 </div>
 </div>
@@ -462,7 +462,7 @@
 <span class="header-section-number">7.14</span> Using you own libraries<a class="anchor" aria-label="anchor" href="#using-you-own-libraries"><i class="fas fa-link"></i></a>
 </h2>
 <p>You already know how to <a href="guess-the-number-single-round.html#using-libraries">use existing libraries</a> but you can also create and use your own. Take the two functions that you developed and put them into a new file called <code>utils.py</code> (do not forget to put a multiline comment at the top of the file to remind you what is inside!) . Copy the remaining code (the global script) into <code>code09.py</code>. It will not work in its current state as it won’t find the two functions (try it to see the error message), so you need to import from your own <code>utils</code> module. Importing works exactly the same way as for other libraries. Note that even though your file is <code>utils.py</code>, the module name is <code>utils</code> (without the extension).</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put function into <code>utils.py</code>, the remaining code into <code>code09.py</code>.</p>
 </div>
 </div>
@@ -538,7 +538,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Python and PsychoPy by writing games</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-10-20.</p>
+    <p>"<strong>Learning Python and PsychoPy by writing games</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-10-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

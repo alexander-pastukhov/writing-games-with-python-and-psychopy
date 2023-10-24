@@ -34,7 +34,7 @@ win.close()
 
 Run it to check that PsychoPy work. If you get an error saying that `psychopy` library is not found, check the [active Python interpreter](#install-vs-code). You should get a gray window with _PsychoPy_ title. Press any key (click on the window, if you switched to another one, so that it registers a key press) and it should close. Not very exciting but does show that everything works as it should.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into _code01.py_.
 :::
 
@@ -123,7 +123,7 @@ closing the window
 
 The loop should be repeated until the user presses an _escape_ key and, therefore, you will need a variable that signals this. My approach is to create a variable `gameover` initializing it to `False` and repeat the loop as long as the game not over. Then, in the loop, use function [event.getKeys()](https://psychopy.org/api/event.html#psychopy.event.getKeys) to check whether _escape_ button was pressed (for this, you need to pass `keyList=['escape']`). The function returns a _list_ of keys, if any of them were pressed in the meantime or an empty list, if no keys from the `keyList` were pressed. Store that returned value in a temporary variable (I tend to call it `keys`). You will learn about lists only in the _next_ chapter, so for now use a ready-made: `len(keys) > 0` is a comparison that is `True` if list is not empty. If the list is indeed not empty, that means that the user pressed _escape_ (as that is the only key that we specified in the function call) and the game should be over. Think how can you do it _without_ an `if` statement, computing the logical value directly?
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into _code02.py_.
 :::
 
@@ -139,7 +139,7 @@ To show the visuals in PsychoPy, you first _draw_ each element by calling its [d
 
 The `# drawing stimuli` chunk goes inside the main loop either before or after the keyboard check^[My personal preference is to draw first but in most cases it makes no difference.]. Organize the latter also as a separate code chunk with its own brief comment.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into _code03.py_.
 :::
 
@@ -152,7 +152,7 @@ Before we start exploring the units, let us create a simple white square. The vi
 
 You draw the square just like you drew the text stimulus, via its [draw()](https://psychopy.org/api/visual/rect.html#psychopy.visual.rect.Rect.draw) method (and, again, you first draw all the stimuli and then flip the window _once_). Create the code (either keep the text and draw both, or drop the text), run it to see a very white square.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into _code04.py_.
 :::
 
@@ -165,7 +165,7 @@ With [height units](https://psychopy.org/general/units.html#height-units) everyt
 
 Modify your code by specifying the unit system when you create the window: `win = visual.Window(..., units="height")`. Play with your code by specifying position of the square when you create it. You just need to pass an extra parameter `pos=(<x>, <y>)`.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into _code05.py_.
 :::
 
@@ -173,7 +173,7 @@ By the way, which way is up when y is below or above zero? Unfortunately, unlike
 
 Now, modify the size of the square (and turn it into a non-square rectangle) by passing `width=<some-width-value>` and `height=<some-height-value>`.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into _code06.py_.
 :::
 
@@ -182,7 +182,7 @@ Put your code into _code06.py_.
 
 Modify your code, so that it uses `"norm"` units when you create the window and size your white square stimulus, so it does look like a square.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into _code07.py_.
 :::
 
@@ -191,7 +191,7 @@ For [pixels on screen](https://psychopy.org/general/units.html#pixels-on-screen)
 
 Modify your code to use `"pix"` units and briefly test sizing and placing your square within the window.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into _code08.py_.
 :::
 
@@ -204,7 +204,7 @@ Here, you would need know the physical size of your screen and its resolution. T
 ## Make your square jump
 So far, we fixed the location of the square when we created it. However, you can move it at any time by assigning a new `(<x>, <y>)` coordinates to its `pos` property. _E.g._, `white_square.pos = (-0.1, 0.2)`. Let us experiment by moving the square to a random location on every iteration of the loop (this could cause a lot of flashing, so if you have a photosensitive epilepsy that can be triggered by flashing lights, you probably should do it just once before the loop). Use the units of your choice and generate a new position using [random.uniform(a, b)](https://docs.python.org/3/library/random.html#random.uniform) function, that generates a random value within _a..b_ range^[You need to import the random library for this, of course.]. Generate two values (one for x, one for y). If you use `"norm"` units, your range is the same (from -1 to 1) for the two dimensions. However, if you used `"height"` units, you need to take into account the aspect ratio of your window (4:3 if you are using 800×600 pix window).
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into _code09.py_.
 :::
 
@@ -215,7 +215,7 @@ You will learn about lists and indexes in the next chapter, so here is another r
 
 Hint, if you are debugging, put you breakpoint inside the `if` statement, so that the program pauses only once you pressed a key (what happens if you put it on the `win.flip()` line?)
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into _code10.py_.
 :::
 

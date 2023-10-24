@@ -14,12 +14,18 @@ pre code {
 }
 
 .practice {
+  margin: 1rem calc(-2px - 0.5em);
+  padding: 1rem;
+  border: 2px solid #eee;
   text-align: center;
   background: #9BD7DB 5px center/3em no-repeat;
   background-image: url("images/assignment.svg");
 }
 
 .program {
+  margin: 1rem calc(-2px - 0.5em);
+  padding: 1rem;
+  border: 2px solid #eee;
   text-align: center;
   background: #70CDD3 5px center/3em no-repeat;
   background-image: url("images/laptop.svg");

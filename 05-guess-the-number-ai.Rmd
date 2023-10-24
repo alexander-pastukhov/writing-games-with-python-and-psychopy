@@ -15,7 +15,7 @@ To implement this program, you will need to learn about functions, how to docume
 ## Player's response{#guess-the-number-players-response}
 Let us warm up by writing a code that will allow a player to respond to computer's guess. Recall that there are just three options: your number is greater, smaller, or equal to a computer's guess. I would suggest using `>`, `<`, and `=` symbols to communicate this. You need to write the code that will prompt a player for their response until they enter one of these symbols. I.e., the prompt for input should be repeated if they enter anything else. Thus, you definitely need to use the [input([prompt])](https://docs.python.org/3/library/functions.html#input) and a [while](#while-loop) loop. Think of a useful and informative prompt message for this. Test that it works. Using breakpoints might be very useful here.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code01.py`.
 :::
 
@@ -145,13 +145,13 @@ do_something()
 # And again but via another_function call
 another_function()
 ```
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #1.
 :::
 
 You must also keep in mind that redefining a function (or defining a technically different function that has the same name) _overwrites_ the original definition, so that only the _latest_ version of it is retained and can be used.
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #2.
 :::
 
@@ -189,7 +189,7 @@ def x(a, b):
 
 When calling a function, you must pass the correct number of parameters and pass them in a _correct order_, another reason for a function arguments to have meaningful names^[This is also not strictly true but you will have to wait until you learn about named parameters and default values].
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #3.
 :::
 
@@ -231,7 +231,7 @@ def compute_age(birth_year, current_year):
 
 Note that even if a function returns the value, it is retained only if it is actually used (stored in a variable, used as a value, etc.). Thus, just calling it will not by itself store the returned value anywhere!
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #4.
 :::
 
@@ -262,14 +262,14 @@ def f2(x):
   print(x)
 ```
 
-::: {.rmdnote .practice}
+::: {.practice}
 Do exercise #5.
 :::
 
 ## Player's response as a function
 Let us put all that theory about functions into practice. Use the code that you created to acquire [player's response](#guess-the-number-players-response) and turn it into function. It should have no parameters (for now) and should return player's response. I suggest that you call it `input_response` (or something along these lines). Test that the code works by calling this function for the main script. 
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code02.py`.
 :::
 
@@ -319,14 +319,14 @@ def generate_initial(full_string):
 ```
 Take the look at the [manual](https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard) and document the `input_response` function. You will not need the `Parameters` section as it currently accepts no inputs.
 
-:::{.rmdnote .program}
+:::{.program}
 Update your code in `code02.py`.
 :::
 
 ## Using prompt
 In the future, we will be asking about a specific number that is a current guess by the computer, thus we cannot use a fixed prompt message. Modify the `input_response` function by adding a `guess` parameter. Then, modify the prompt that you used for the [input()](https://docs.python.org/3/library/functions.html#input) to include the value in that parameter. Update functions' documentation. Test it by calling with different values for the `guess` parameter and seeing a different prompt for response.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code03.py`.
 :::
 
@@ -335,42 +335,42 @@ Let us practice writing functions a bit more. Recall that the computer should us
 
 Write a function, document it, and test it by checking that numbers are correct.
 
-:::{.rmdnote .program}
+:::{.program}
 Put you `split_interval()` function and the testing code into `code04.py`.
 :::
 
 ## Single round
 You have both functions that you need, so let us write the code to initialize the game and play a single round. The initialization boils down to creating two variables that correspond to the lower and upper limits of the game range (we used 1 to 10 so far, but you can always change that). Next, the computer should generate a guess (you have your `split_interval()` function for that) and ask the player about the guess (that is the `input_response()` function). Once you have the response (stored in a separate variable, think of the name yourself), update either upper or lower limit using an [if..elif..else](#if-statement) statement based on player's response (if the player said that their number is higher, that means the new interval is from `guess` to `upper_limit`, and vice versa for when it is lower). Print out a joyous message, if computer's guess was correct.
 
-:::{.rmdnote .program}
+:::{.program}
 Put both functions and the script code into `code05.py`.
 :::
 
 ##  Multiple rounds
 Extend the game, so that the computer keeps guessing until it finally wins. You already  know how to use the [while](#while-loop) loop, just think how you can use participant's response as a loop condition variable. Also, think about the initial value of that variable and how to use it so you call `input_response()` only at one location.
 
-:::{.rmdnote .program}
+:::{.program}
 Put the updated code into `code06.py`.
 :::
 
 ## Playing again
 Modify the code, so that you can play this game several times. You already know how to do this and the only thing you need to consider is where exactly should you perform initialization before each game. As you already implemented that for the last game, you might be tempted to look how you did it or, even, copy-paste the code. However, I would recommend writing it from scratch. Remember, your aim is not to write a program but to learn how to do this and, therefore, the journey is more important than a destination.
 
-:::{.rmdnote .program}
+:::{.program}
 Put the updated code into `code07.py`.
 :::
 
 ## Best score
 Add the code to count the number of attempts that the computer required in each round and report the best score (fewest number of attempts) after the game is over. You will need one variable to count the number of attempts and one to keep the best score. Again, try writing it without looking at your previous game.
 
-:::{.rmdnote .program}
+:::{.program}
 Put the updated code into `code08.py`.
 :::
 
 ## Using you own libraries
 You already know how to [use existing libraries](#using-libraries) but you can also create and use your own. Take the two functions that you developed and put them into a new file called `utils.py` (do not forget to put a multiline comment at the top of the file to remind you what is inside!) . Copy the remaining code (the global script) into `code09.py`. It will not work in its current state as it won't find the two functions (try it to see the error message), so you need to import from your own `utils` module. Importing works exactly the same way as for other libraries. Note that even though your file is `utils.py`, the module name is `utils` (without the extension).
 
-:::{.rmdnote .program}
+:::{.program}
 Put function into `utils.py`, the remaining code into `code09.py`.
 :::
 

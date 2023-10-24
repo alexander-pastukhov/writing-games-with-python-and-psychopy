@@ -32,7 +32,7 @@ We need the [usual boilerplate](#psychopy-basics) code to get us going:
 * Wait for any key press.
 * Close the window.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into _code01.py_.
 :::
 
@@ -55,14 +55,14 @@ Before we start coding the window size computation, create a [settings file](#se
 
 Add the code for loading the file into `settings` variable and then use the settings to compute the window's size. Test that it works correctly by doubling (or halving) the size of the grid or of the square size.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into _code02.py_.
 :::
 
 ## Fancier boilerplate
 The code for computing window size belongs to the business logic of setting up a window and, therefore, should be part of a window class code. Therefore, let us define a new `GridWindow` class that will inherit from PsychoPy [Window](https://psychopy.org/api/visual/window.html#psychopy.visual.Window) class but modify the constructor to perform a window size computation. The new `__init__()` method should take grid size and square size as parameters, compute an actual size of the window in pixels, and call the `__init__()` method of the _parent_ [Window](https://psychopy.org/api/visual/window.html#psychopy.visual.Window) class to finish the setup (if you forgot how to call parent's methods, take a look at how we implemented [Flappy Bird class](#flappy-bird-class) by inheriting from [ImageStim](https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim)). You already have all the code you need but in the main script, so the only thing you are doing is tidying things up by moving it into the constructor where it belongs and adjusting it for use of parameter and parent methods.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your `GridWindow` class into a separate file (`gridwindow.py`?).
 
 Modify the code and save main script into _code03.py_.
@@ -86,7 +86,7 @@ Remember to document the method following [NumPy docstring format](https://numpy
 
 Now, test this method by creating a [square](https://psychopy.org/api/visual/rect.html#psychopy.visual.rect.Rect) (you now get its size from the `GridWindow` attribute(s) that you created) in the main script and placing it at different locations on the grid. Run the code several times, using different grid indexes or adding several squares to check that it works as intended. I.e., for a 30×20 grid, a grid coordinate `0×0` should place a square at the bottom-left corner, whereas `14×9` should put it almost at the center.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into _code04.py_.
 :::
 
@@ -99,7 +99,7 @@ Let us create a `SnakeSegment` class. Its constructor `__init__()` methods shoul
 
 Test the class by creating and drawing a snake segment in the main script. Define snake segment color in settings, create it inside a separate section `"snake"` as it will add more parameters later on.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your `SnakeSegment` class into a separate file (_snaking.py_).
 
 Modify the code and save main script into _code05.py_.
@@ -110,7 +110,7 @@ As already noted, a snake is just a list with snake segments. Create a new class
 
 In addition, implement a `draw()` method that draws all `segments` in a loop. Test your code by creating and drawing a snake in the main script.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your `Snake` class into a separate file (_snaking.py_).
 
 Modify the code and save main script into _code06.py_.
@@ -136,7 +136,7 @@ The `trim()` method is even simpler as its just pops the last segment (trims the
 
 To test these functions, create a snake and call its `grow()` method a few times using the same or different directions. Check visually that it works, i.e., that there are correct number of segment (initial head + as many segments as `grow()` method calls) and that the snake was growing in a correct direction. Combine `grow()` and `trim()` calls to visually check the snake as well.
 
-::: {.rmdnote .program}
+::: {.program}
 Update `Snake` class adding `grow()` and `trim()` methods.
 
 Test it in _code07.py_.
@@ -145,7 +145,7 @@ Test it in _code07.py_.
 ## The game loop
 Add a main game loop using a `user_abort` variable, so that it runs for as long as the `user_abort` is `False`. Inside the loop, draw the snake and check for keys without pausing the game. If a player pressed `"escape"`, change `user_abort` to `True` (the player decided to quit the game). If a player pressed `"space"` key, grow the snake in the direction of your liking and trim it. Thus, every time you press a _space_ key, the snake should move one square in the direction of your choice. Test the code!
 
-::: {.rmdnote .program}
+::: {.program}
 Add main loop in _code08.py_.
 :::
 
@@ -158,7 +158,7 @@ Also in the constructor, add a new `movement_clock` attribute creating either a 
 
 Test your code by setting different snake speed.
 
-::: {.rmdnote .program}
+::: {.program}
 Update `Snake` class adding timer attributes and methods.
 
 Test it in _code09.py_.
@@ -181,7 +181,7 @@ elif direction == "right":
 
 However, this approach introduces a lot of repetitive code and does not scale particularly well. Instead, we can use a [dictionary](#dictionaries) (let us call it `DIRECTION_TO_DXY` as it is another constant) with `"up"`, `"right"`, etc. string as keys and tuples `(0, -1)`, `(1, 0)`, etc. as values. This way, we can use current value of the `direction` variable as a key to get the `(dx, dy)` pair from `DIRECTION_TO_DXY` dictionary. Do this translation directly in the `grow()` method call rather than creating a temporary variable as in the if-elif examples above. Test the translation by changing `direction` and checking that the snake moves accordingly.
 
-::: {.rmdnote .program}
+::: {.program}
 Use `direction` and `DIRECTION_TO_DXY` in _code10.py_.
 :::
 
@@ -192,7 +192,7 @@ Determining the new direction of motion is fairly straightforward. If current is
 
 Now let us think about when and how should we change a value of `direction` variable. The simplest approach would be to change it as soon as the player presses the key. However, because our snake does not move on every frame this could lead to some odd behavior. Imagine that our game is on "easy" mode, so that the snake moves very slowly (one square per second). In this case, the player could easily press _left_ twice during that second, which would make a snake move _backwards_, because its direction was changed by 180°. Snakes, at least our snake, cannot do this. Thus, we need a temporary variable, let us call it `new_direction`, which we will set every time the player presses the key but whose value will be transferred to `direction` only when it is time to move the snake (when the snake can move). We will compute it from the current `direction` and the key pressed. This way, even when the player presses _left_ key several times, the snake would still turn only once because we compute the each turn using the same original `direction` value and not the changed `new_direction` variable. This also means that players can "change their mind", as the last key press before the snake moves will determine the direction of motion.
 
-::: {.rmdnote .program}
+::: {.program}
 Add  `NEW_DIRECTION` and implement steering in _code11.py_.
 :::
 
@@ -203,7 +203,7 @@ Here is the idea. Imagine that you have a list `["left", "up", "right", "down"]`
 
 For the actual implementation, first, define a local variable as a list in the order I've described. Next, you need to identify the location of the current direction within the list using [index()](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists) method. Then, you need to figure out whether you increase or decrease that index (to move to the right or to the left), based on `pressed_key` parameter (you can use dictionary approach or a conditional assignment here). Finally, you need to control for range, so that index of `-1` becomes `3` (you went too far to the left) and index of `4` should become `0`. The most elegant way to do this, is using `%` [modulus](https://python-reference.readthedocs.io/en/latest/docs/operators/modulus.html) operation. Hint, `4 % 4` is `0`. What about `1 % 4`, `0 % 4`, or even `-1 % 4`? Check it in a Jupyter notebook to get an idea of what I am hinting at. And, of course, do not use `4` for division, use the [length](https://docs.python.org/3/library/functions.html#len) of the list, as it determines the range of values.
 
-::: {.rmdnote .program}
+::: {.program}
 Create `compute_new_direction() in _utilities.py_.
 
 Use it instead of a dictionary look-up in _code12.py_.
@@ -218,7 +218,7 @@ Test it by adding a new condition inside the main game loop. Check whether the s
 
 Test that the game quits after you successfully steered the snake into the wall. 
 
-::: {.rmdnote .program}
+::: {.program}
 Add `hit_the_wall` property to the `Snake` class.
 
 Use it in _code13.py_.
@@ -229,7 +229,7 @@ In the next section, we will be adding apples to the game. The catch is that the
 
 Add a new method `is_inside()` that takes a tuple with a grid location as a parameter and returns a logical value whether that grid location is occupied by the snake (i.e., by one of its segments). Document the function! Test the method via debugging. Calling it immediately after creating the snake with a location of the head (the only segment) or with a different location. Store a return value into a temporary variable and put a breakpoint at an appropriate place to check its value (or use a debug console).
 
-::: {.rmdnote .program}
+::: {.program}
 Add `is_inside()` method to the `Snake` class.
 
 Test it in _code14.py_.
@@ -242,7 +242,7 @@ The only tricky part is finding the unoccupied location. There are many differen
 
 In the main script, create an apple and draw it in the main loop. For a moment, the snake cannot eat it and will pass through it but we will fix this shortly.
 
-::: {.rmdnote .program}
+::: {.program}
 Create `Apple` class in _apples.py_.
 
 Use the apple in _code15.py_.
@@ -253,7 +253,7 @@ Apples exist for snakes to eat them! Let us add this functionality. The general 
 
 You need to add a conditional statement that if the snake's head _is_ on the apple, you should not trim the tail but create a new apple. What should you do, if there is no apple at that location?
 
-::: {.rmdnote .program}
+::: {.program}
 Make snake eat apples in  _code16.py_.
 :::
 
@@ -262,7 +262,7 @@ Once our snake grows beyond four segments, it has an opportunity to bite itself^
 
 Once you implemented `bit_itself`, you should check for that it does lead to the end of the game.
 
-::: {.rmdnote .program}
+::: {.program}
 Implement `bit_itself` property.
 
 Use it in _code17.py_.
@@ -273,7 +273,7 @@ Now that we have a fully functional game, we can start adding non-essential but 
 
 In the main script, create a `Score` object, draw it when appropriate and increase the score every time the snake eats an apple.
 
-::: {.rmdnote .program}
+::: {.program}
 Create `Score` class in _scoring.py_.
 
 Use it in _code18.py_.
@@ -284,21 +284,21 @@ Let us give the player three attempts to achieve the top score. They have three 
 
 The score should be cumulative, so at the beginning of round two it should be equal to the final score of round one. Think how you can achieve this. _Another important point_: now you have two nested loop, one is for the game, one is for the round. When the snake dies, the round is over and, if you run out of lives, the game as well. When the player presses _escape_ both round **and** the game are over. Think about how you can implement it.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your updated code into _code19.py_.
 :::
 
 ## Bells and whistles: press space to start the round
 At the moment, our round starts immediately. It would be friendlier, if the player would start it themselves. Before each round, draw _all_ visuals (snake, apple, score) plus a text "Press SPACE to start" and wait until either a _space_ or _escape_ key is pressed. In the former case, the trial should start. In the latter case, the player should exit the game.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your updated code into _code20.py_.
 :::
 
 ## Bells and whistles: showing remaining lives
 Let us not just repeat the game three times but show the player how many lives they still have. Download the [heart.png](material/heart.png)^[This image was downloaded from [openclipart.org](https://openclipart.org/) and was created by [cliparteles](https://openclipart.org/artist/cliparteles)] and use it show remaining lives at the top-left corner of the screen: three hearts in round one, two hearts in round two, and just a single heart in round three. You will need to use (ImageStim)[https://www.psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim] for this. Think about the size of images and their location. Hint: I created a list of heart images using list comprehension and drawing hearts definitely requires a for loop.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your updated code into _code21.py_.
 :::
 
@@ -308,14 +308,14 @@ At the moment, the difficulty of the game, the speed with which the snake moves,
 To create and run the dialog, use [Dlg](https://www.psychopy.org/api/gui.html#dlg) class from 
 [giu](https://www.psychopy.org/api/gui.html) module of PsychoPy. Your challenge for today is to figure out how to use it based on the manual alone. Take a look at the example and experiment with in a separate file or a Jupyter notebook.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your updated code into _code22.py_.
 :::
 
 ## Bells and whistles: blinking "game over" message
 Once the game is over (but not when a player pressed _escape_ key), show a blinking "Game Over" message _superimposed_ over the final static game screen. Thus, you need to draw all the game objects and messages (but without moving the snake) plus you show a text message that is on for 0.5 second and off for 0.5 seconds until the player presses _Space_ button. Hint: it should be a separate loop after the main game loop over rounds, logical variables and clocks/timers have definitely something to do with it.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your updated code into _code23.py_.
 :::
 
@@ -324,7 +324,7 @@ Download [game-over-arcade.wav](material/game-over-arcade.wav)^[Downloaded from 
 
 You will need to use `Sound` class from [sound](https://psychopy.org/api/sound/playback.html) module of PsychoPy. Important: use `Sound` class not a library-specific implementation such as `PTBSound` or `SoundDevice` classes. The PsychoPy will figure out which backend is the best (available at all) for you.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your updated code into _code24.py_.
 :::
 

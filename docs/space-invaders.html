@@ -133,7 +133,7 @@
 <span class="header-section-number">16.5</span> Boilerplate<a class="anchor" aria-label="anchor" href="#boilerplate-2"><i class="fas fa-link"></i></a>
 </h2>
 <p>Create our usual boilerplate with an external settings file via a context manager with <code>GameAbort</code> exception handling. You can reuse the code from our last game but I strongly suggest checking that you understand every step. My suggestion for the window size is 640×480 because the sprites are 32×32 but chose whatever looks good on your screen.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Create <code>GameContext</code> and <code>GameAbort</code> classes.<br>
 Put your boilerplate code into <em>code01.py</em>.</p>
 </div>
@@ -144,7 +144,7 @@ Put your boilerplate code into <em>code01.py</em>.</p>
 </h2>
 <p>Create a new file for <code>Spaceship</code> class. It is remarkably boring as it just an image that moves left-right on a horizontal line. Thus, we will create it as a descendant of <a href="https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim">ImageStim</a> class. The only method that you need to define right now is the constructor <code>__init__()</code>. It should take <a href="https://psychopy.org/api/visual/window.html#psychopy.visual.Window">Window</a> and image filename (should be stored in settings) as parameters (plus the compulsory <code>self</code>, of course) and call <code>super().__init__(...)</code> to initialize itself via the inherited constuctor. Apart from the two parameters you have, you also need to specify the initial position of the ship via <code>pos</code>. The ship should be somewhere just above the lower edge of the window. For me, vertical position of -0.9 worked quite nicely.</p>
 <p>In the main code, create an object and draw it in the main loop.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Create <code>Spaceship</code> class in a separate file.<br>
 Use it in <em>code02.py</em>.</p>
 </div>
@@ -154,7 +154,7 @@ Use it in <em>code02.py</em>.</p>
 <span class="header-section-number">16.7</span> The spaceship moves<a class="anchor" aria-label="anchor" href="#the-spaceship-moves"><i class="fas fa-link"></i></a>
 </h2>
 <p>Now, let us use the <a href="https://psychopy.org/api/event.html#psychopy.event.Mouse">mouse</a> to control the horizontal position of the ship and, later on, left button to shoot. First, initialize the mouse in the context manager, so that it is one its attributes (then you can use it as <code>ctx.mouse</code>). Then, in the main loop, use <a href="https://psychopy.org/api/event.html#psychopy.event.Mouse.getPos">getPos()</a> method to get the position of the mouse and use the <em>horizontal</em> component to alter the position of the ship. Note that you <em>cannot</em> assign just a horizontal or vertical components to the position via <code>.pos[0] = ...</code>. In my PsychoPy 2021.1.4 it does not generate an error but does not change the actual position either. Thus, you need to assign a tuple of <code>(new horizontal component, original vertical component)</code> (the ship should stay at the same vertical position throughout the game). Test moving your spaceship around. You can make mouse invisible (see <a href="https://psychopy.org/api/event.html#psychopy.event.Mouse">documentation</a>) to make it more immersive.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Add mouse to <code>GameContext</code><br>
 Use mouse to move ship in <em>code03.py</em>.</p>
 </div>
@@ -164,7 +164,7 @@ Use mouse to move ship in <em>code03.py</em>.</p>
 <span class="header-section-number">16.8</span> An alien appears<a class="anchor" aria-label="anchor" href="#an-alien-appears"><i class="fas fa-link"></i></a>
 </h2>
 <p>Before we create an alien armada, let us create a single alien. The class will be very basic, which is why, we will put both <code>Alien</code> and <code>AlienArmada</code> into the same file (so, think about its filename). The class itself is similar to the <code>Spaceship</code>. The only differences are that it should take (and pass) <code>pos</code> parameter (unlike the spaceship that always appears at the same location) and that the image should be <a href="https://docs.python.org/3/library/random.html#random.choice">randomly picked</a> from a tuple of filenames (<em>alien-1.png</em> and <em>alien-2.png</em>, the names should be defined in the settings in an “aliens” group of settings). For testing, place a few aliens at arbitrary locations on the screen to check that an alien image is randomly picked. Do not forget to draw them in the main loop.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Create an <code>Alien</code> class<br>
 Use them in <em>code04.py</em>.</p>
 </div>
@@ -223,7 +223,7 @@ Use them in <em>code04.py</em>.</p>
 <p><em>Constructor</em>: we will create and place aliens in a separate method <code>spawn()</code>, so our constructor will be very simple. As far as parameters are concerned, you need to pass a <a href="https://psychopy.org/api/visual/index.html">Window</a> for creating <code>Alien</code> objects and a dictionary with armada-specific settings. Store both of them as attributes for later use, initialize <code>__pos</code> to the <code>"Initial position"</code>, initialize <code>aliens</code> to an empty list and <code>spawn()</code> them (again, all attributes must be initialized in the constructor, even if to an empty list or <code>None</code>).</p>
 <p>In the <code>spawn()</code> create aliens on a grid based on your <code>"Grid size"</code> and <code>"Grid step [norm]"</code> settings, so they are centered at <code>AlienArmada</code>’s position (<code>__pos</code>). All aliens go to <code>aliens</code> attribute, of course. Remember that they need a list of file names for visuals but you have it covered as you have them in the settings. It should look like this:</p>
 <div class="inline-figure"><img src="images/alien-armada.png" width="320" style="display: block; margin: auto;"></div>
-<div class="rmdnote program">
+<div class="program">
 <p>Create the <code>AlienArmada</code> class.<br>
 Use it in <em>code05.py</em>.</p>
 </div>
@@ -235,7 +235,7 @@ Use it in <em>code05.py</em>.</p>
 <p>Now we need to create <code>Laser</code> class (in a separate file). Eventually, when a player presses left mouse button, the laser should appear at the location just above the ship and fly up with a certain speed. As per usual, all parameters for laser (and <code>LaserCannon</code>) should be stored in the settings file under a separate section (e.g., <code>laser</code>). For the moment, we only need to specify <code>speed [norm/sec]</code> (laser shot speed in norm units per second, I’ve picked 1 norm / second, so it takes 2 seconds for the shot to fly across the screen)) and, optionally, filename of the laser bitmap (but that could be also hardcoded, as we have only one image).</p>
 <p>Let us take care of the first step: creating a laser shot just above the sheep. Create <code>Laser</code> class as a descendant of <a href="https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim">ImageStim</a> (just like our <code>Spaceship</code> and <code>Alien</code> classes). It should take <code>win</code>, <code>pos</code>, and <code>speed</code> as arguments and call the ancestor constructor. The <code>pos</code> argument is the position of the ship (that fired it) but the laser must appear <em>above</em> it, so you need to adjust <code>pos[1]</code> for that (hint, you can get window height from <code>win.size[1]</code> and you know that sprites are 32 pixels high). The <code>speed</code> is in <em>norm units per second</em> from the settings. You need to save the <code>speed</code> value in an attribute for later use.</p>
 <p>For testing, create a laser object right after you create the ship itself and draw it in the main loop. It won’t move but you will be able to see whether you’ve got the height right.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Create the <code>Laser</code> class.<br>
 Use in <em>code06.py</em>.</p>
 </div>
@@ -246,7 +246,7 @@ Use in <em>code06.py</em>.</p>
 </h2>
 <p>Let us add <code>fly()</code> method to the laser. It will be very simple, every time it is called the laser should move upwards. As in a Moonlander game, we need a <a href="https://psychopy.org/api/clock.html#psychopy.clock.Clock">clock</a> to measure the time elapsed between the updates, so create it as an attribute in the constructor. In the <code>fly()</code> method, you need to figure out the time elapsed since the last call or since the shot was created (don’t forget to reset the timer after that) and move the shot based on its <code>speed</code> and elapsed time.</p>
 <p>Remember to call <code>fly()</code> method in the main loop and see how the laser flies up and off the screen.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Add <code>fly()</code> method to <code>Laser</code> class.<br>
 Use it in <em>code07.py</em>.</p>
 </div>
@@ -259,7 +259,7 @@ Use it in <em>code07.py</em>.</p>
 <p>In the constructor, pass PsychoPy window variable and a dictionary with laser gun specific settings (these should include the <code>speed</code> that you specified earlier and the cool down period in seconds) and store both in attributes for later use. Initialize <code>lasershots</code> attribute with empty list, and create a cool down <a href="https://psychopy.org/api/clock.html#psychopy.clock.CountdownTimer">timer</a>.</p>
 <p>The <code>fire()</code> method should take position of the ship as a single parameter. If enough time passed since the last shot (check the cool down timer for that), create a new <code>Laser</code> at the supplied position, add it to the <code>lasershots</code> list, and reset the cool down timer. In <code>draw()</code>/<code>fly()</code> simply draw/fly all <code>lasershots</code>.</p>
 <p>For testing, use <code>LaserGun</code> in place of the <code>Laser</code>. Both have same <code>draw()</code> and <code>fly()</code> methods that you should be calling already. In the main loop, check if left mouse button is <a href="https://psychopy.org/api/event.html#psychopy.event.Mouse.getPressed">pressed</a>. If it is, <code>fire()</code> the laser gun, passing current position of the ship to it.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Create <code>LaserGun</code> class.<br>
 Test it in <em>code08.py</em>.</p>
 </div>
@@ -292,7 +292,7 @@ Test it in <em>code08.py</em>.</p>
 <span id="cb139-3"><a href="space-invaders.html#cb139-3" tabindex="-1"></a>  <span class="cf">if</span> <span class="va">self</span>.lasershots[ishot] needs to be deleted:</span>
 <span id="cb139-4"><a href="space-invaders.html#cb139-4" tabindex="-1"></a>    delete that <span class="va">self</span>.lasershots[ishot]</span></code></pre></div>
 <p>Add <code>cleanup()</code> call to the main loop right after the <code>fly()</code> to automatically delete expired shots. Once you fired a few shots and they are all off the screen, put a breakpoint and check that the <code>.lasershots</code> is empty (your <code>cleanup()</code> works as it should).</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Add <code>expired</code> property to <code>Laser</code>.<br>
 Add <code>cleanup()</code> method to <code>LaserShot</code>.<br>
 Use <code>cleanup()</code> in <em>code09.py</em>.</p>
@@ -306,7 +306,7 @@ Use <code>cleanup()</code> in <em>code09.py</em>.</p>
 <p>Add <code>hit</code> attribute to the <code>Alien</code> class and initialize to <code>False</code> (an alien is not initially hit). In <code>AlienArmada</code> class, implement a <code>cleanup()</code> method, analogous to one in <code>LaserGun</code> that will delete any alien that is <code>hit</code>. Add the call to it in the main loop at the same location as for the <code>LaserGun</code>. You can test it by setting <code>hit</code> to <code>True</code> for one of the aliens and it should be missing.</p>
 <p>Now for the actual check. You should loop over all aliens and laser shots attributes of <code>AlienArmada</code> and <code>LaserGun</code> checking <em>every pair</em> on whether they <a href="https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim.overlaps">overlap</a>. If they do, set laser shot to <code>expired</code> and the alien as <code>hit</code>. Do this check <em>before</em> the clean up but <em>after</em> the laser shots fly.</p>
 <p>Test it!</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Update <code>Alien</code> and <code>AlienArmada</code> classes
 Check for laser shots hitting aliens
 in <em>code10.py</em>, .</p>
@@ -320,7 +320,7 @@ in <em>code10.py</em>, .</p>
 <p>In the <code>__iter__(self)</code>, initialize the counter to <code>0</code> and return <code>self</code>: a returning the reference to the iterator, which is the object itself<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;You can cheat and return the reference to the list attribute itself and it’ll do the rest but do not do it for didactic purposes.&lt;/p&gt;"><sup>105</sup></a>. In the <code>__next__(self)</code>, check if <code>iter</code> is within the (<code>aliens</code> or <code>lasershots</code>) list length. If it is not (i.e., you ran out aliens/shots to iterate over), <code>raise StopIteration</code>. If it is, increase the iteration counter and return the element it was indexing <em>before</em> that: Think about why you need to return <code>self.aliens[self.iter - 1]</code> rather than <code>self.aliens[self.iter]</code> or how you can use a different starting value and range check to avoid this.</p>
 <p>Do this for both classes and use them in for loops directly, i.e. looping over <code>aliens</code> and <code>laser</code> instead of <code>aliens.aliens</code> and <code>laser.lasershots</code>.</p>
 <p>Test it! It should work as before, of course, but with cooler duck typing inside!</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Turn <code>LaserGun</code> and <code>AlienArmada</code> into iterators.
 Use them as iterators in <em>code11.py</em>.</p>
 </div>
@@ -330,7 +330,7 @@ Use them as iterators in <em>code11.py</em>.</p>
 <span class="header-section-number">16.17</span> Got’em all!<a class="anchor" aria-label="anchor" href="#gotem-all"><i class="fas fa-link"></i></a>
 </h2>
 <p>Now, implement <code>__len__()</code> method for <code>AlienArmada</code> class that returns the number of remaining aliens. In the main loop, use it via <code>len()</code> function to check whether you won: no aliens left, the game is over. Use <code>len()</code> with the object, not with its <code>aliens</code> list attribute!</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Add <code>__len__()</code> special method to <code>AlienArmada</code> class.
 Use it to check whether all aliens are hit
 in <em>code12.py</em>.</p>
@@ -341,7 +341,7 @@ in <em>code12.py</em>.</p>
 <span class="header-section-number">16.18</span> Ping!<a class="anchor" aria-label="anchor" href="#ping"><i class="fas fa-link"></i></a>
 </h2>
 <p>Now let us use a <code>HitSoundMixin</code> class that defines a single <code>hit()</code> method (no constructor!) that plays the <em>teleport.wav</em> sound<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Created by Sergenious and obtained from &lt;a href="https://freesound.org/people/Sergenious/sounds/55853/"&gt;freesound.org&lt;/a&gt;&lt;/p&gt;'><sup>106</sup></a> from <a href="material/space-invaders.zip">materials</a>. It can be a single line method when you both create and play the sound in one go, no temporary variable or an attribute are required. When you use it as an ancestor for the <code>Alien</code> class, it has that <code>hit()</code> method. Call it when you set <em>hit</em> to <code>True</code>.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Create <code>HitSoundMixin</code> class.
 Mix it into the <code>Alien</code> class.
 Use it in <em>code11.py</em>.</p>
@@ -402,7 +402,7 @@ Use it in <em>code11.py</em>.</p>
 <li>store the new position in the private attribute.</li>
 </ol>
 <p>Test it by making armada jump to a random location every time you press <em>space</em> button. The armada should keep its formation!</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Implement getter/setter methods for <code>__pos</code> in <code>AlienArmada</code>.
 Test it in <em>code12.py</em>.</p>
 </div>
@@ -423,7 +423,7 @@ where <span class="math inline">\(x_{max}\)</span> is maximal deviation of the <
 <li>updates current position via a simple <code>self.pos = (new_x, new_y)</code> (the setter method will take care of the rest)</li>
 </ol>
 <p>In the main loop, call <code>fly()</code> when you call it for laser gun.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Add <code>fly()</code> method to <code>AlienArmada</code> class.<br>
 Use it in <em>code13.py</em>.</p>
 </div>
@@ -433,7 +433,7 @@ Use it in <em>code13.py</em>.</p>
 <span class="header-section-number">16.22</span> The alien armada wins: crash!<a class="anchor" aria-label="anchor" href="#the-alien-armada-wins-crash"><i class="fas fa-link"></i></a>
 </h2>
 <p>So far, the player always wins. Let us make it more dangerous! They will lose if either an alien crashes into the spaceship or if the armada goes past the ship. Implement the former the same way as you checked whether laser shot hit an alien: loop over aliens and see if they overlap with the spaceship (game over if they do). Implement and test.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Implement crash-into-ship in <em>code14.py</em>.</p>
 </div>
 </div>
@@ -442,7 +442,7 @@ Use it in <em>code13.py</em>.</p>
 <span class="header-section-number">16.23</span> The alien armada wins: missed them!<a class="anchor" aria-label="anchor" href="#the-alien-armada-wins-missed-them"><i class="fas fa-link"></i></a>
 </h2>
 <p>The second way to lose the game, is if at least one alien got past the ship. For this, we need to check the position of the <em>lowest</em> alien and if it is lower than that of the spaceship, the game is over. You can do it in the same loop you are checking for the hit but, for didactic reasons, let us practice <code>@proprety</code> a bit more. Implement a new computed (read-only) property <code>lowest_y</code> of the <code>AlienArmada</code> class that will return the y-coordinate of the lowest alien in the armada. You need to loop over individual aliens to find the lowest y and return it. There are different ways to do it, come up with one yourself! In the main code, add the check and make sure the game is over, if aliens got past the player.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Add <code>lowest_y</code> computed property to <code>AlienArmada</code> class.<br>
 Use it in <em>code15.py</em>.</p>
 </div>
@@ -452,7 +452,7 @@ Use it in <em>code15.py</em>.</p>
 <span class="header-section-number">16.24</span> Mixin teleport<a class="anchor" aria-label="anchor" href="#mixin-teleport"><i class="fas fa-link"></i></a>
 </h2>
 <p>Mix in the teleport sound method to the <code>Spaceship</code> and play it if alien crashed into it.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Mix in teleport to <code>Spaceship</code> class.<br>
 Use it in <em>code16.py</em>.</p>
 </div>
@@ -468,7 +468,7 @@ Use it in <em>code16.py</em>.</p>
 <li>“They got away!”, if the armada got past the player.</li>
 </ul>
 <p>One way to simplify you life is to rename <code>gameover</code> variable into the <code>gamestate</code> variable. Initially, it could be <code>"playing"</code>, so your loop repeats <code>while gamestate == "playing"</code>. Then, you can set it based on the type of the event (<code>"victory"</code> when player wins, <code>"hit"</code> when they were hit by the armada, <code>"missed"</code> if aliens got away) and use it after the main loop to determine which message to show. Better still, use dictionary for this instead of if-else. Or “cheat” and store the message in the variable itself.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your updated code into <em>code17.py</em>.</p>
 </div>
 </div>
@@ -531,7 +531,7 @@ Use it in <em>code16.py</em>.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Python and PsychoPy by writing games</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-10-20.</p>
+    <p>"<strong>Learning Python and PsychoPy by writing games</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-10-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

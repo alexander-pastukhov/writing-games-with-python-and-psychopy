@@ -31,7 +31,7 @@ I will not try to properly cover NumPy here, it is simply too vast. Rather, the 
 ## Boilerplate
 Implement usual PsychoPy boilerplate with a external settings and context manager. The context manager should initialize PsychoPy window and a mouse, whic we will use it later to draw or erase individual cells. The size of the window that we need depends on the grid size that cells live at and the size of the individual cells. Define all three parameters - `grid width [cells]`, `grid height [cells]`, and `cell size [pix]` - in the settings file and compute window size on the fly. I've picked a 30 by 30 grid with each cell measuring 10 pixels (both widht and height, as cells are square).
 
-::: {.rmdnote .program}
+::: {.program}
 Create `GameContext` and `GameAbort` classes.<br/>
 Put your boilerplate code into _code01.py_.
 :::
@@ -105,7 +105,7 @@ As per usual, experiment in a notebook and check that values turn out as expecte
 ## Showing an image
 Finally, we are ready to create and show the image! Use the code from a Jupiter notebook to generate a random grid of size `[grid width, grid height]` (from the settings), stack it, and rescale it. Then, simply create an [ImageStim](https://psychopy.org/api/visual/imagestim.html) passing the array as `image` and make sure that the image spans the entire window (what should it size be, given `"normal"` units?) and draw it in the main loop. Put a break point and use a debug console or watch tab to check whether image on the screen correspond to the original 2D grid.
 
-::: {.rmdnote .program}
+::: {.program}
 Create a random grid and show it in _code02.py_.
 :::
 
@@ -176,7 +176,7 @@ Now that you know how to slice a 2D array, let us redo the sequence:
 3. Stack and rescale only the inner part for a 3D RGB array we need to an PsychoPy image.
 4. Create and display the image.
 
-::: {.rmdnote .program}
+::: {.program}
 Generate a zero-padded random grid and show it in _code03.py_.
 :::
 
@@ -185,7 +185,7 @@ Now that you have all the required pieces, wrap it up nicely in a `CellCulture` 
 
 Replace your code in the main script with a new class. It should work as before.
 
-::: {.rmdnote .program}
+::: {.program}
 Create `CellCulture` class<br/>
 Use it in _code04.py_.
 :::
@@ -355,7 +355,7 @@ We have covered a lot of ground but now you have _everything_ to implement an `u
 
 In the main code, call update method on every frame and see the cells evolve!
 
-::: {.rmdnote .program}
+::: {.program}
 Add  `update` method to `CellCulture` class<br/>
 Use it in _code05.py_.
 :::
@@ -363,7 +363,7 @@ Use it in _code05.py_.
 ## Pause
 In the main loop, you hopefully check for an _escape_ key press to end the game (if not, you should!) Let's also add a check for a press of _space_ button that will "pause" or "continue" the simulation. I.e., space should toggle (invert) a state of a logical variable (you name it) that determines whether the `update()` method is called.
 
-::: {.rmdnote .program}
+::: {.program}
 Implement pause/continue via _space_ in _code06.py_.
 :::
 
@@ -372,7 +372,7 @@ Random cultures are fun but, perhaps, you have an idea to try out (e.g., see a [
 
 For this, create a new `CellCulture` method (I called it `change()`) that takes a new value ($0$ or $1$, depending on the button) and [mouse position](https://psychopy.org/api/event.html#psychopy.event.Mouse.getPos) within the window. In the method, compute the row and column index of the cell keeping in mind that 1) the image spans the entire image, 2) only the inner cells are shown and can be clicked on. Once you have both indexes, assign new value to the grid. For testing, pause the game, draw a few patterns, restart and see them go!
 
-::: {.rmdnote .program}
+::: {.program}
 Add `change()` method to `CellCulture`<br/>
 Use mouse inputs and `change()` in _code07.py_.
 :::

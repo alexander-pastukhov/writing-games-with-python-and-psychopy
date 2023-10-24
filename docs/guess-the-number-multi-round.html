@@ -106,7 +106,7 @@
 <span id="cb39-7"><a href="guess-the-number-multi-round.html#cb39-7" tabindex="-1"></a>    </span>
 <span id="cb39-8"><a href="guess-the-number-multi-round.html#cb39-8" tabindex="-1"></a><span class="co"># statements after the loop</span></span></code></pre></div>
 <p>The <code>&lt;condition&gt;</code> here is any expression that is evaluated to be either <code>True</code> or <code>False</code>, just like in an <code>if...elif...else</code> <a href="guess-the-number-single-round.html#comparisons">conditional statement</a>. Also, the same <a href="guess-the-number-single-round.html#indentation">indentations rules</a> determine which code is inside the loop and which outside.</p>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #1.</p>
 </div>
 <p>Let us use <em>while</em> loop to allow the player to keep guessing until they finally get it right. You can copy-paste the code you programmed during the last seminar or could redo it from scratch (I would strongly recommend you doing the latter!). The overall program structure should be the following</p>
@@ -121,7 +121,7 @@
 <span id="cb40-9"><a href="guess-the-number-multi-round.html#cb40-9" tabindex="-1"></a>    </span>
 <span id="cb40-10"><a href="guess-the-number-multi-round.html#cb40-10" tabindex="-1"></a><span class="co"># print "Spot on!" </span></span>
 <span id="cb40-11"><a href="guess-the-number-multi-round.html#cb40-11" tabindex="-1"></a><span class="co"># (because if we got here that means guess is equal to the computer's pick)</span></span></code></pre></div>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code01.py</code>.</p>
 </div>
 <p>Do not forget to document the file and use breakpoints and step overs to explore the program flow.</p>
@@ -131,7 +131,7 @@
 <span class="header-section-number">6.3</span> Counting attempts<a class="anchor" aria-label="anchor" href="#counting-attempts"><i class="fas fa-link"></i></a>
 </h2>
 <p>Now let us add a variable that will count a total number of attempts by the player. For this, create a new variable (call it <code>attempts</code> or something similar) <em>before the loop</em> and initialize it <code>1</code> (because the first attempt is before the player enter the loop). Add <code>1</code> to it every time the player enters a guess. After the loop, expand the <code>"Spot on!"</code> message by adding information about the number of attempts. Use <a href="#id_#string-formatting">string formatting</a> to make things look nice, e.g., <code>"Spot on, and you needed just 5 attempts!"</code>. Check that the number of attempts your required <em>matches</em> the number of attempts reported by the program!</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code02.py</code>.</p>
 </div>
 </div>
@@ -151,7 +151,7 @@
 <span id="cb41-9"><a href="guess-the-number-multi-round.html#cb41-9" tabindex="-1"></a>  <span class="co"># this code runs on every iteration but not when you break out of the loop</span></span>
 <span id="cb41-10"><a href="guess-the-number-multi-round.html#cb41-10" tabindex="-1"></a></span>
 <span id="cb41-11"><a href="guess-the-number-multi-round.html#cb41-11" tabindex="-1"></a><span class="co"># this code runs after the loop</span></span></code></pre></div>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #2 to build your intuition.</p>
 </div>
 </div>
@@ -160,7 +160,7 @@
 <span class="header-section-number">6.5</span> Limiting number of attempts via break<a class="anchor" aria-label="anchor" href="#limiting-number-of-attempts-via-break"><i class="fas fa-link"></i></a>
 </h2>
 <p>Let’s put the player under some pressure! Decide on maximal number of attempts you allow and stores it as a <a href="python-basics.html#constants">CONSTANT</a>. Pick an appropriate name (e.g. <code>MAX_ATTEMPTS</code>) and REMEMBER, ALL CAPITAL LETTERS for a constant name! Now, use <code><a href="https://rdrr.io/r/base/Control.html">break</a></code> to quit the <code>while</code> loop, if the current attempt number is greater than <code>MAX_ATTEMPTS</code>. Think about when (within the code inside the loop) you should check this.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code03.py</code>.</p>
 </div>
 </div>
@@ -174,7 +174,7 @@
 <li>The player ran out of attempts.</li>
 </ol>
 <p>Use <code>if-else</code> conditional statement to print out an appropriate message. E.g., print <code>"Better luck next time!"</code>, if the player lost (ran out of attempts).</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code04.py</code>.</p>
 </div>
 </div>
@@ -184,7 +184,7 @@
 </h2>
 <p>Although it was my idea to add the <code><a href="https://rdrr.io/r/base/Control.html">break</a></code> statement, you should use it sparingly. Without <code><a href="https://rdrr.io/r/base/Control.html">break</a></code> there is a <em>single</em> place in the code that you need to check to understand when the program will exit the loop: the condition. However, if you add a <code><a href="https://rdrr.io/r/base/Control.html">break</a></code>, you now have <em>two</em> places that need to be examined. And every additional <code><a href="https://rdrr.io/r/base/Control.html">break</a></code> keeps adding to that. This does not mean that you should avoid them at all costs! You <em>should</em> use them, if this makes the code easier to understand. But always check if a modified condition could also do the trick.</p>
 <p>Let us try exactly that. Modify your code to work <em>without</em> the <code><a href="https://rdrr.io/r/base/Control.html">break</a></code> statement. You need a more complicated condition for your while loop. so that it repeats while player’s guess is incorrect and the number of attempts is still less than the maximally allowed. Test that your code works both when you win and when you lose.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code05.py</code>.</p>
 </div>
 </div>
@@ -193,7 +193,7 @@
 <span class="header-section-number">6.8</span> Show remaining attempts<a class="anchor" aria-label="anchor" href="#show-remaining-attempts"><i class="fas fa-link"></i></a>
 </h2>
 <p>It is all about the user interface! Modify the <code>input</code> prompt message to include a number of <em>remaining</em> attempts. E.g. <code>"Please enter the guess, you have X attempts remaining"</code>.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code06.py</code>.</p>
 </div>
 </div>
@@ -216,7 +216,7 @@
 <span id="cb42-12"><a href="guess-the-number-multi-round.html#cb42-12" tabindex="-1"></a>  </span>
 <span id="cb42-13"><a href="guess-the-number-multi-round.html#cb42-13" tabindex="-1"></a><span class="co"># very final message, e.g. "Thank you for playing the game!"</span></span></code></pre></div>
 <p><strong>Pay extra attention to indentations to group the code properly!</strong></p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code07.py</code>.</p>
 </div>
 </div>
@@ -231,7 +231,7 @@
 <span class="header-section-number">6.11</span> Best score<a class="anchor" aria-label="anchor" href="#best-score"><i class="fas fa-link"></i></a>
 </h2>
 <p>A “proper” game typically keeps the track of players’ performance. Let us record a fewest number of attempts that the player needed to guess the number. For this, create a new variable <code>fewest_attempts</code> and set it to <code>MAX_ATTEMPTS</code> (this is as bad as the player can be). Think, where do you need to create it. You should update it after each game round. Add the information about “Best so far” into the round-over message.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code08.py</code>.</p>
 </div>
 </div>
@@ -240,7 +240,7 @@
 <span class="header-section-number">6.12</span> Counting game rounds<a class="anchor" aria-label="anchor" href="#counting-game-rounds"><i class="fas fa-link"></i></a>
 </h2>
 <p>Let us count how many times the player played the game. The idea and implementation is the same as with counting the attempts. Create a new variable, initialize it to 0, increment by 1 whenever a new round starts. Include the total number of games played into the very final message, e.g. “Thank you for playing the game <em>X</em> times!”</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code09.py</code>.</p>
 </div>
 </div>
@@ -259,7 +259,7 @@
 <li>Ask the player where they want to continue.</li>
 </ul>
 <p>Special case, once the player runs out of coins, the game is definitely over.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code10.py</code>.</p>
 </div>
 </div>
@@ -309,7 +309,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Python and PsychoPy by writing games</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-10-20.</p>
+    <p>"<strong>Learning Python and PsychoPy by writing games</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-10-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

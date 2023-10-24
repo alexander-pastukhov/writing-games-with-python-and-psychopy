@@ -121,7 +121,7 @@
 <div class="sourceCode" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="guess-the-number-single-round.html#cb26-1" tabindex="-1"></a><span class="co"># 1. create variable and set its value</span></span>
 <span id="cb26-2"><a href="guess-the-number-single-round.html#cb26-2" tabindex="-1"></a><span class="co"># 2. print out the value</span></span></code></pre></div>
 <p>Try out this two-liner in a Jupyter Notebook (create an empty notebook just for that). Once you are happy with it, copy-paste the code into <code>code01.py</code> and read on to learn how to document and run it.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code01.py</code>.</p>
 </div>
 </div>
@@ -139,7 +139,7 @@
 <span id="cb27-6"><a href="guess-the-number-single-round.html#cb27-6" tabindex="-1"></a><span class="co">#  A single line comment.</span></span></code></pre></div>
 <p>Use multiline comments to write documentation for individual files, functions, classes, methods, etc. You will learn how to format this documentation Numpy docstring style, once you learn about functions. In our case, you should start your <code>code01.py</code> file with a multiline comment that briefly describes what program it contains. Minimally, you should write that this is a <em>Guess a Number</em> game. It is probably a good idea to sketch out what the game is about.</p>
 <p>Use single line comments to explain what happens in a particular code block. You do not need to comment every line and you should not replicate the code in human language. A comment should be about <em>what</em> is going on not <em>how</em>. You already have a single chunk of code, so document it with a single sentence.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Document <code>code01.py</code> file.</p>
 </div>
 </div>
@@ -190,7 +190,7 @@
 <p>It takes two to play the <em>Guess the Number</em> game. The computer did its part by picking a number, now we need to ask a player to enter their guess. For this, we will use <a href="https://docs.python.org/3/library/functions.html#input">input()</a> <em>function</em>.</p>
 <p>A function is an isolated code that accepts (optional) <em>inputs</em>, performs an <em>action</em>, and, optionally, returns a value (<em>output</em>). This allows both to split the code into smaller chunks that are easier to maintain and to reuse the same code. You already used <a href="https://docs.python.org/3/library/functions.html#print">print()</a> function to print things out, and <a href="https://docs.python.org/3/library/functions.html#func-str">str()</a>, <a href="https://docs.python.org/3/library/functions.html#bool">bool()</a>, <a href="https://docs.python.org/3/library/functions.html#int">int()</a> and <a href="https://docs.python.org/3/library/functions.html#float">float()</a> functions to convert values. For <a href="https://docs.python.org/3/library/functions.html#print">print()</a> <em>input</em> is an arbitrary number of values (even none, try this in Jupiter Notebook!), its <em>action</em> is to print things out, but it returns nothing (no <em>output</em>). <a href="https://docs.python.org/3/library/functions.html#float">float()</a> function takes (somewhat surprisingly) zero or one value as <em>input</em> (try giving it none or more than one in Jupiter Notebook as see the difference), attempts to convert given value to float (throwing an error, if it cannot do it), and returns a float value as an <em>output</em>.</p>
 <p>Similar <em>input</em> → <em>action</em> → <em>output</em> scheme holds for the <a href="https://docs.python.org/3/library/functions.html#input">input(prompt)</a>. It takes an optional <code>prompt</code> string as input. Then it prints the <code>prompt</code> message and waits for a user to enter a <em>string</em> until they press <strong>Enter</strong>. It then returns this <em>string</em> value. The latter bit about <em>string</em> is important, because in our game we need a player to enter an <em>integer</em> not a string. For a moment, let us assume that the input is always a valid integer number, so type only valid integers when testing the program! This way we can convert it to an integer without extra checks (will add them in the future) and assign this value to a new variable called <code>guess</code>. Thus, you need to add a single line assignment statement with <code>guess</code> variable on the left side and call to <a href="https://docs.python.org/3/library/functions.html#input">input()</a> function on the right side (think of a nice prompt message) wrapped by (inside of) the type-conversion to integer via <a href="https://docs.python.org/3/library/functions.html#int">int()</a>. Test this code but, again, only enter valid integers, so that the conversion works without an error.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Update your <code>code01.py</code>.</p>
 </div>
 </div>
@@ -232,7 +232,7 @@
 <li>
 <em>“A is greater than or equal to B”</em> and <em>“A is smaller than or equal to B”</em> are, respectively, <code>A &gt;= B</code> and <code>A &lt;= B</code> (please note the order of symbols as <code>=&gt;</code> and <code>=&lt;</code> will produce an error).</li>
 </ul>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Go to exercise #1 to solve some comparisons.</p>
 </div>
 <p>Note that Python also has an <a href="https://docs.python.org/3/library/operator.html#operator.is_">is</a> operator that may <em>look</em> identical to <code>==</code> (e.g., <code>x == 2</code> looks equivalent to <code>x is 2</code>). Moreover, in <em>some</em> cases it also works the same way. However, there is a subtle difference: <code>==</code> checks whether <em>values</em> are identical, whereas <code>is</code> checks whether <em>objects</em> (that “hold” values) are identical. You need to understand classes and objects before you can appreciate this difference, so for now just keep in mind that you should only use <code>==</code> (I will explicitly mentioned when <code>is</code> is needed).</p>
@@ -241,11 +241,11 @@
 <li>If A is equal B then <code>A == B</code> evaluates to <code>True</code>. The <code>A != B</code> is then <code>False</code>, so <code>not A != B</code> → <code>not False</code> → <code>True</code>.</li>
 <li>If A is not equal B then <code>A == B</code> evaluates to <code>False</code>. The <code>A != B</code> is then <code>True</code>, so <code>not A != B</code> → <code>not True</code> → <code>False</code>.</li>
 </ul>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Go to exercise #2 to explore this inversion yourself.</p>
 </div>
 <p>You can also combine several comparisons using <code>and</code> and/or<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;pun intended&lt;/p&gt;"><sup>17</sup></a> <code>or</code> operators. As in human language, <code>and</code> means that both parts must be true: <code>True and True</code> → <code>True</code> but <code>True and False</code> → <code>False</code>, <code>False and True</code> → <code>False</code>, and <code>False and False</code> → <code>False</code>. Same holds if you have more than two conditions/comparisons linked via <code>and</code>: <strong>All</strong> of them must be true. In case of <code>or</code> only one of the statements must be true, e.g. <code>True or True</code> → <code>True</code>, <code>True or False</code> → <code>True</code>, <code>False or True</code> → <code>True</code>, but <code>False or False</code> → <code>False</code>. Again, for more than two comparisons/conditions at least one of them should be true for the entire expression to be true.</p>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercises #3 and #4.</p>
 </div>
 <p>Subtle but important point: conditions are evaluated from left to right until the whole expression is resolved one way or another. This means that if the first expression in a <code>and</code> is <code>False</code>, the second one (the rest of them) is <strong>never evaluated</strong>. I.e., if <code>first and second</code> expressions both need to be <code>True</code> and you know that <code>first</code> expression already is false, the whole expression will be <code>False</code> in any case. This means that in the code below there will be no error, even though evaluating <code>int("e123")</code> alone would raise a <code>ValueError</code>.</p>
@@ -260,11 +260,11 @@
 <p>However, if the first condition is <code>False</code>, we do need to continue (and stumble into an error):</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="guess-the-number-single-round.html#cb33-1" tabindex="-1"></a><span class="dv">2</span> <span class="op">*</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">5</span> <span class="kw">or</span> <span class="bu">int</span>(<span class="st">"e123"</span>) <span class="op">==</span> <span class="dv">123</span></span>
 <span id="cb33-2"><a href="guess-the-number-single-round.html#cb33-2" tabindex="-1"></a><span class="co">#&gt; invalid literal for int() with base 10: 'e123'</span></span></code></pre></div>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #5.</p>
 </div>
 <p>Finally, like in simple arithmetic, you can use brackets <code>()</code> to group conditions together. Thus a statement “I always eat chocolate but I eat spinach only when I am hungry” can be written as <code>food == "chocolate" or (food == "spinach" and hungry)</code>. Here, <code>the food == "chocolate"</code> and <code>food == "spinach" and hungry</code> are evaluated independently, their values are substituted in their place and then the <code>and</code> condition is evaluated.</p>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #6.</p>
 </div>
 <p>Final thought on comparisons: Do not hesitate to test them in Jupyter Notebook using various combinations of values or pause the program at the condition via a breakpoint and evaluate a comparison in <em>Watch</em> or <em>Debug Console</em>.</p>
@@ -295,11 +295,11 @@
 <span id="cb35-15"><a href="guess-the-number-single-round.html#cb35-15" tabindex="-1"></a>    </span>
 <span id="cb35-16"><a href="guess-the-number-single-round.html#cb35-16" tabindex="-1"></a><span class="co"># some statements outside of the loop (0 indentation)</span></span></code></pre></div>
 <p>Pay very close attention to the indentation as it determines which statements are executed together! A wrong indentation level is unfortunately a very common mistake.</p>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #7.</p>
 </div>
 <p>The <code>if</code> and <code>ifelse</code> statements are evaluated until one of them turns out to be <code>True</code>. After that any following <code>ifelse</code> and <code>else</code> statements are simply ignored.</p>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #8.</p>
 </div>
 </div>
@@ -316,10 +316,10 @@
 <li>if two numbers are identical, it will print <code>"Spot on!"</code>
 </li>
 </ul>
-<p>First, save a copy of your original code into <code>code02.py</code> and then add the comparison and printing.
-::: {.rmdnote .program}
-Extend your program with the comparison in<code>code02.py</code>
-:::</p>
+<p>First, save a copy of your original code into <code>code02.py</code> and then add the comparison and printing.</p>
+<div class="program">
+<p>Extend your program with the comparison in<code>code02.py</code></p>
+</div>
 <p>Test that your code works. Again, use breakpoints if you need to better understand the control flow and check whether comparisons work the way you expect.</p>
 </div>
 <div id="using-libraries" class="section level2" number="5.11">
@@ -355,7 +355,7 @@ Extend your program with the comparison in<code>code02.py</code>
 </h2>
 <p>Now that you know how to import a library, we can use <a href="https://docs.python.org/3/library/random.html#random.randint">randint()</a> function. For this, save a copy of your previous code into <code>code03.py</code>. Import the library and use <a href="https://docs.python.org/3/library/random.html#random.randint">randint()</a> to generate a random number between 1 and 10. Read the documentation on <a href="https://docs.python.org/3/library/random.html#random.randint">randint()</a> to understand how to use it. Reading manuals is a necessary part of programming, so this is a good point to start practicing.</p>
 <p>Once you implemented this in <code>code02.py</code>, run it several times to check that computer does pick different random values. Again, use breakpoints if you want to double-check what is going on.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code03.py</code>.</p>
 </div>
 <p>Congratulations, you just programmed your first computer game! Yes, it is very simple but it has key ingredients: a random decision by computer, user input, and feedback. Next time, you will learn about loops to allow for multiple attempts and will start writing functions to make your code modular and reliable. In the meantime, let us solidify your knowledge by programming yet another game!</p>
@@ -378,7 +378,7 @@ Extend your program with the comparison in<code>code02.py</code>
 </li>
 </ol>
 <p>Do not forget to document the new <code>code03.py</code> file and feel free to use breakpoints to debug it.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code04.py</code>.</p>
 </div>
 </div>
@@ -429,7 +429,7 @@ Extend your program with the comparison in<code>code02.py</code>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Python and PsychoPy by writing games</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-10-20.</p>
+    <p>"<strong>Learning Python and PsychoPy by writing games</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-10-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

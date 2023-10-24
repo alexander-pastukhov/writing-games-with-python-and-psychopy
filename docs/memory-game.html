@@ -121,7 +121,7 @@ from &lt;a href="https://openclipart.org/"&gt;OpenClipart&lt;/a&gt;. They are &l
 <span id="cb81-2"><a href="memory-game.html#cb81-2" tabindex="-1"></a>y <span class="op">=</span> x</span>
 <span id="cb81-3"><a href="memory-game.html#cb81-3" tabindex="-1"></a>y.append(<span class="dv">4</span>)</span>
 <span id="cb81-4"><a href="memory-game.html#cb81-4" tabindex="-1"></a><span class="bu">print</span>(x)</span></code></pre></div>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #1.</p>
 </div>
 <p>Huh? That is precisely what I meant with “stickers on the same object”. First, we create a list and put an <code>x</code> sticker on it. Then, we assign <em>the same list</em> to <code>y</code>, in other words, we put a <code>y</code> sticker <em>on the same list</em>. Since both <code>x</code> and <code>y</code> are stickers on the <em>same</em> object, they are, effectively, synonyms. In that specific situation, once you set <code>x = y</code>, it does not matter which variable name you use to change <em>the</em> object, they are just two stickers hanging side-by-side on the <em>same</em> list. Again, just a reminder, this is <em>not</em> what would happen for <em>immutable</em> values, like numbers, where things would behave the way you expect them to behave.</p>
@@ -132,11 +132,11 @@ from &lt;a href="https://openclipart.org/"&gt;OpenClipart&lt;/a&gt;. They are &l
 <span id="cb82-4"><a href="memory-game.html#cb82-4" tabindex="-1"></a>x <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
 <span id="cb82-5"><a href="memory-game.html#cb82-5" tabindex="-1"></a>change_it(x)</span>
 <span id="cb82-6"><a href="memory-game.html#cb82-6" tabindex="-1"></a><span class="bu">print</span>(x)</span></code></pre></div>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #2.</p>
 </div>
 <p>How did we manage to modify a <em>global</em> variable from inside the function? Didn’t we change the <em>local</em> parameter of the function? Yep, that is exactly the problem with passing by reference. Your function parameter is yet another sticker on the <em>same</em> object, so even though it <em>looks</em> like you do not need to worry about global variables (that’s why you wrote the function and learned about scopes!), you still do. If you are perplexed by this, you are in a good company. This is one of the most unexpected and confusing bits in Python that routinely catches people<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Well, at least me!&lt;/p&gt;"><sup>57</sup></a> by surprise. Let us do a few more exercises, before I show you how to solve the scope problem for mutable objects.</p>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #3.</p>
 </div>
 </div>
@@ -170,16 +170,16 @@ from &lt;a href="https://openclipart.org/"&gt;OpenClipart&lt;/a&gt;. They are &l
 <span id="cb87-2"><a href="memory-game.html#cb87-2" tabindex="-1"></a>y <span class="op">=</span> <span class="bu">tuple</span>(x)</span>
 <span id="cb87-3"><a href="memory-game.html#cb87-3" tabindex="-1"></a>x.append(<span class="dv">4</span>)</span>
 <span id="cb87-4"><a href="memory-game.html#cb87-4" tabindex="-1"></a><span class="bu">print</span>(y)</span></code></pre></div>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #4.</p>
 </div>
 <p>As you probably figured out, when <code>y = tuple(x)</code>, Python creates <strong>a copy</strong> of the list values, freezes them (they are immutable now), and puts them into the “y” box. Hence, whatever you do to the original list, has no effect on the immutable “y”.</p>
 <p>Conversely, you “unfreeze” a tuple by turning it into a list via <code><a href="https://rdrr.io/r/base/list.html">list()</a></code>. Please note that it creates <strong>a new list</strong>, which has no relation to any other existing list, even if values are the same or were originally taken from any of them!</p>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #5.</p>
 </div>
 <p>Remember I just said that <code><a href="https://rdrr.io/r/base/list.html">list()</a></code> creates a new list? This means that you can use it to create a copy of a list directly, without an intermediate tuple step. This way you can two <em>different</em> lists with <em>identical</em> values. You can also achieve the same results by slicing an entire list, e.g. <code>list(x)</code>, is the same as <code>x[:]</code>.</p>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #6.</p>
 </div>
 <p>Here, <code>y = list(x)</code> created a new list (which was a carbon copy of the one with the “x” sticker on it) and the “y” sticker was put on that new list, while the “x” remained hanging on the original.</p>
@@ -215,7 +215,7 @@ from &lt;a href="https://openclipart.org/"&gt;OpenClipart&lt;/a&gt;. They are &l
 <span id="cb89-6"><a href="memory-game.html#cb89-6" tabindex="-1"></a></span>
 <span id="cb89-7"><a href="memory-game.html#cb89-7" tabindex="-1"></a>closing the window</span></code></pre></div>
 <p>The first thing you need to decide on is the window size <em>in pixels</em> and which units would sizing and placing cards easier. Each chicken image is 240×400 pixels and, for the game, we need place for <em>exactly</em> 4×2 images, i.e. our window must be 4 cards wide and 2 cards high. Do not forget to document the file!</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code01.py</code>.</p>
 </div>
 </div>
@@ -230,7 +230,7 @@ from &lt;a href="https://openclipart.org/"&gt;OpenClipart&lt;/a&gt;. They are &l
 <li>size: <code>size=(???, ???)</code>. That is one for you to compute. If you picked <a href="psychopy-basics.html#psychopy-units-norm">norm</a> units, as I did, then window is 2 units wide and 2 units high but for <a href="psychopy-basics.html#psychopy-units-height">height</a> it is 1 units height and <em>aspect-ratio</em> units wide. We want to have a 4×2 images, what is the size (both width and height) of each image in the units of your choice?</li>
 </ul>
 <p>Draw the chicken image (it should appear at the center of the screen).</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code02.py</code>.</p>
 </div>
 </div>
@@ -246,7 +246,7 @@ from &lt;a href="https://openclipart.org/"&gt;OpenClipart&lt;/a&gt;. They are &l
 <p>The computation might look complicated, so let me get you started. How can you compute <em>x</em> coordinate for the <em>top</em> row? Concentrating on the top row alone makes things simpler because here the <em>column index</em> is the same as the overall index: The left-most column is 0, the next one is 1, etc. You need a simple algebra of <span class="math inline">\(x = a_x + b_x \cdot column\)</span>. You can easily deduce out both <span class="math inline">\(a_x\)</span> and <span class="math inline">\(b_x\)</span> if you figure out locations of the first and second cards by hand. Same goes for the <em>y</em> coordinate. Assuming that you know the <em>row</em>, which is either 0 (top row) or 1 (bottom row), you can compute <span class="math inline">\(y = a_y + b_y \cdot row\)</span> (note that rows go top-to-bottom but PsychoPy coordinates go bottom-to-top).</p>
 <p>But, I hear you say, you do not have row and column indexes, only the overall index? To compute those you only need to keep in mind that each row has <em>four</em> cards. Then, you can make use of two special division operators: <a href="https://python-reference.readthedocs.io/en/latest/docs/operators/floor_division.html">floor division operator <code>//</code></a> and <a href="https://python-reference.readthedocs.io/en/latest/docs/operators/modulus.html">modulos, divison remainder <code>%</code></a> operators. The former returns only the integer part of the division, so that <code>4 // 3</code> is <code>1</code> (because 4/3 is 1.33333) and <code>1 // 4</code> is <code>0</code> (because 1/4 is 0.25). The latter returns the remaining integers, so that <code>4 % 3</code> is <code>1</code> and <code>1 % 4</code> is <code>0</code>. These two operators are enough for you to compute row and column indexes.</p>
 <p>My suggestion would be first to play with individual formulas in Jupyter Notebook, which makes it easier to try out (dividing) things and seeing the result, putting various values into formulas, etc. Once you are confident that the code is working, turn it into a function, document it, and put into a separate file (<em>utilities.py</em>, do not forget to put a comment at the top of the file as well!). You can then import it in the main script and use it to place the card. Try out different indexes and make sure that the card appears where it should. Remember, put a breakpoint and step through the program while watching variables, if things do not work as you expected.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put <code>position_from_index</code> into <code>utilities.py</code>.<br>
 Put update code into <code>code03.py</code></p>
 </div>
@@ -256,7 +256,7 @@ Put update code into <code>code03.py</code></p>
 <span class="header-section-number">10.8</span> Backside of the card<a class="anchor" aria-label="anchor" href="#backside-of-the-card"><i class="fas fa-link"></i></a>
 </h2>
 <p>A chicken image is a card’s <em>face</em> but the game starts with the cards face down, so the player should see their backs. We will use a plain <a href="https://psychopy.org/api/visual/rect.html">rectangle</a> as a backside. Pick a nice looking combination of <code>fillColor</code> (inside) and <code>lineColor</code> (contour) colors, the only requirement is that they are different, as otherwise it will be impossible to see individual cards. Modify your code, to draw image (face of the card) and rectangle (back of the card) side-by-side (<em>e.g.</em>, if face is at position with index 0, rectangle should be at position 1 or 4). This way you can check that sizes match and that they are positioned correctly.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code04.py</code>.</p>
 </div>
 </div>
@@ -292,7 +292,7 @@ Put update code into <code>code03.py</code></p>
 <code>"show"</code>: a logical value, set it to <code>True</code>. We will use it later to mark out cards that are off the table and are, therefore, not shown. Initially, all cards are shown, so all cards should be created with <code>"show"</code> being equal to <code>True</code>.</li>
 </ol>
 <p>Create a dictionary variable (name it <code>card</code>) and fill it with relevant values (use either <code>"front"</code> and “<code>back"</code> for <code>"side"</code> key) and stimuli (you can put PsychoPy stimuli into a dictionary just like we put them into a list earlier). Modify your code so that it draws the correct image based on the value of the <code>"side"</code> entry. Note that you <strong>do not need an if-statement for this</strong>! Think about a key you need to access these two sides and the value that you have in for the <code>"side"</code> key.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code05.py</code>.</p>
 </div>
 </div>
@@ -307,7 +307,7 @@ Put update code into <code>code03.py</code></p>
 <li>card position index,</li>
 </ol>
 <p>and returns a dictionary, just like the one you created. You very much have the code, you only need to wrap it into a function and document it. Call function <code>create_card</code> and use it in the main script to create <code>card</code> dictionary. Think about libraries you will now need to import in <em>utilities.py</em>.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put <code>create_card</code> into <code>utilities.py</code>. <br>
 Put code into <code>code06.py</code>.</p>
 </div>
@@ -337,7 +337,7 @@ Put code into <code>code06.py</code>.</p>
 <div class="sourceCode" id="cb94"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb94-1"><a href="memory-game.html#cb94-1" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
 <span id="cb94-2"><a href="memory-game.html#cb94-2" tabindex="-1"></a>numbers_as_strings <span class="op">=</span> [<span class="bu">str</span>(item) <span class="cf">for</span> item <span class="kw">in</span> numbers]</span></code></pre></div>
 <p>What would be an equivalent form using a normal for loop? Write both versions of code in Jupiter cells and check that the results are the same.</p>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #7 in Jupyter notebook.</p>
 </div>
 <p>Now, implement the code below using list comprehension. Check that results match.</p>
@@ -345,7 +345,7 @@ Put code into <code>code06.py</code>.</p>
 <span id="cb95-2"><a href="memory-game.html#cb95-2" tabindex="-1"></a>numbers <span class="op">=</span> []</span>
 <span id="cb95-3"><a href="memory-game.html#cb95-3" tabindex="-1"></a><span class="cf">for</span> astring <span class="kw">in</span> strings:</span>
 <span id="cb95-4"><a href="memory-game.html#cb95-4" tabindex="-1"></a>    numbers.append(<span class="bu">int</span>(astring) <span class="op">+</span> <span class="dv">10</span>)</span></code></pre></div>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #8 in Jupyter notebook.</p>
 </div>
 <p>As noted above, you can also use a conditional statement to filter which items are passed to the new list. In our numbers example, we can retain numbers that are greater than 1</p>
@@ -357,7 +357,7 @@ Put code into <code>code06.py</code>.</p>
 <span id="cb97-3"><a href="memory-game.html#cb97-3" tabindex="-1"></a>                          <span class="cf">for</span> item <span class="kw">in</span> numbers</span>
 <span id="cb97-4"><a href="memory-game.html#cb97-4" tabindex="-1"></a>                          <span class="cf">if</span> item <span class="op">&gt;</span> <span class="dv">1</span>]</span></code></pre></div>
 <p>You can of course combine the transformation and filtering in a single statement. Create code that filters out all items below 2 and adds 4 to them.</p>
-<div class="rmdnote practice">
+<div class="practice">
 <p>Do exercise #9 in Jupyter notebook.</p>
 </div>
 </div>
@@ -412,7 +412,7 @@ Put code into <code>code06.py</code>.</p>
 <p>Originally, we specified image file name as <code>"Images/r01.png"</code>. This did the job but now we have many filenames that we need to join with the folder name to form a path string. On top of that, major operating systems disagree with Windows on where <code>/</code> (forward slash) or <code>\</code> (backslash) should be used for paths. To make your code platform-independent and, therefore, more robust, you need to construct a filename string using <a href="https://docs.python.org/3/library/os.path.html#os.path.join">join</a> function in <a href="https://docs.python.org/3/library/os.path.html">path</a> submodule. Thus, you can import <em>os</em> library and call it as <code>os.path.join(...)</code> (my personal preference). Or, you can use the same approach as for PsychoPy modules and import <code>path</code> from <em>os</em>, shortening the code. Or, of course, you can even import <em>join</em> directly but I find that lack of library information during use makes things harder to understand (even though the code is even shorter).</p>
 <p><a href="https://docs.python.org/3/library/os.path.html#os.path.join">join</a> takes path components as parameters and joins them to match the OS format. E.g., <code>os.path.join("Python seminar", "Memory game", "memory01.py")</code> on Windows will return <code>'Python seminar\\Memory game\\memory01.py'</code>. As we need to load multiple files, the <em>filename</em> part will vary. However, the <em>folder</em> where the images are located will be the same and, as per usual, it would a good idea to turn it into a formally declared <a href="python-basics.html#constants">CONSTANT</a>.</p>
 <p>Modify the <code>create_card</code> function so that it assumes that the <code>filename</code> parameter is just the filename with the folder name and, therefore, build the path by <a href="https://docs.python.org/3/library/os.path.html#os.path.join">join</a> it with the folder name (defined as a constant in the this module!). You now need to drop the <code>"Images/"</code> in the value that you pass to it. Test that the code works as before!</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Update <code>create_card</code> in <code>utilities.py</code><br>
 Put updated code into <code>code07.py</code>.</p>
 </div>
@@ -423,7 +423,7 @@ Put updated code into <code>code07.py</code>.</p>
 </h2>
 <p>Let us put together all the code we need for figuring out cards’ filenames, duplicating them, and creating the cards using filename and index.</p>
 <p>Copy the code for building a duplicated list of filenames that you tested in Jupyter notebook to your main script (<code>code08.py</code>). Then, use enumerate and list comprehension over enumerated duplicate filenames to create <code>cards</code> (plural, replacing your singular <code>card</code> variable) via <code>create_card</code> function you wrote earlier. Update your drawing code to loop over and draw all cards. If your default is <code>"side"</code> is <code>"back"</code>, things will look pretty boring. Change that to ’“front”` to see their faces.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code08.py</code>.</p>
 </div>
 </div>
@@ -432,7 +432,7 @@ Put updated code into <code>code07.py</code>.</p>
 <span class="header-section-number">10.19</span> Shuffling cards<a class="anchor" aria-label="anchor" href="#shuffle"><i class="fas fa-link"></i></a>
 </h2>
 <p>When you draw cards faces, you will notice that duplicating filenames list produces a very orderly sequence that makes playing the game easy (and boring). We need to <a href="https://docs.python.org/3/library/random.html#random.shuffle">shuffle()</a> the filename list <em>before</em> we create <code>cards</code>. Note that <a href="https://docs.python.org/3/library/random.html#random.shuffle">shuffle()</a> shuffles list item <em>in place</em> using the fact that the list is <a href="memory-game.html#mutable-objects">mutable</a>. That means you simply call the function and pass the list as an argument. The list gets modified, nothing is returned and nothing need to be assigned back of <code>filenames</code> variable.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code09.py</code>.</p>
 </div>
 </div>
@@ -448,7 +448,7 @@ Put updated code into <code>code07.py</code>.</p>
 <span class="header-section-number">10.21</span> Adding main game loop<a class="anchor" aria-label="anchor" href="#adding-main-game-loop"><i class="fas fa-link"></i></a>
 </h2>
 <p>At this point, we have a shuffled deck of cards that we show until a player presses a key. Modify the code to have the main presentation loop, similar to one we had when we experimented with <a href="psychopy-basics.html#psychopy-basics">PsychoPy</a> stimuli. Previously, we used a logical <code>gameover</code> variable to control the <a href="#id_#while-loop">while</a> loop. Here, we will have two reasons to exit the loop: the player pressed an <strong>escape</strong> key or they won the game. Therefore, let us use a <em>string</em> <code>game_state</code> variable that is initialized to <code>"running"</code>. Repeat the loop while the <code>game_state</code> is equal to <code>"running"</code> but change it <code>"abort"</code> if a player pressed <strong>escape</strong>. You also need to replace <a href="https://psychopy.org/api/event.html#psychopy.event.waitKeys">waitKeys()</a> with <a href="https://psychopy.org/api/event.html#psychopy.event.getKeys">getKeys()</a>.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code10.py</code>.</p>
 </div>
 </div>
@@ -459,7 +459,7 @@ Put updated code into <code>code07.py</code>.</p>
 <p>In the game, the player will click on individual cards to turn them over. Before you can use a <a href="https://psychopy.org/api/event.html#psychopy.event.Mouse">mouse</a> in PsychoPy, you must create it via <code>mouse = event.Mouse(visible=True, win=win)</code> call, where <code>win</code> is the PsychoPy window you already created. This code should appear immediately below the line where you create the window itself.</p>
 <p>Now, you can check whether the left button was pressed using <a href="https://psychopy.org/api/event.html#psychopy.event.Mouse.getPressed">mouse.getPressed()</a> method. It returns a three-item tuple with <code>True</code>/<code>False</code> values indicating whether each of the three buttons are <em>currently being pressed</em>. Use it the main loop, so that if the player presses <em>left</em> button (its index in the returned list is 0), you change <code>"side"</code> of the first card (so, the card with index 0 in the list) to <code>"front"</code>. This assumes that you initialized card with their <code>"back"</code> shown, of course. If you run the code and click <em>anywhere</em>, this should flip the first card.</p>
 <p>Put the mouse-click-processing code <em>before</em> drawing cards. At the moment, it makes no difference but will be useful later on, as it will allow us to draw the latest state of the card (i.e., right after it was flipped by a player).</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code11.py</code>.</p>
 </div>
 </div>
@@ -469,7 +469,7 @@ Put updated code into <code>code07.py</code>.</p>
 </h2>
 <p>Currently, the first card is flipped if you click <em>anywhere</em>. But the card you flip should be the card the player clicked on. For this we need to implement a function <code>index_from_position</code> that is an inverse of <code>position_from_index</code>. It should take an argument <code>pos</code>, which is a tuple of <code>(&lt;x&gt;, &lt;y&gt;)</code> values (a mouse position within the window), and return an <em>integer card index</em>. You have float values (with decimal points) in the <code>pos</code> argument (because it ranges from -1 to 1 for <a href="psychopy-basics.html#psychopy-units-norm">norm</a> units) and by default the values you compute from them will also be float. However, an index <em>must</em> be integer, so you will need to wrap it in <a href="https://docs.python.org/3/library/functions.html#int">int()</a> function call, before returning it.</p>
 <p>Going backwards — from position to index — is (IMHO) easier. First, you need to think how you can convert an <em>x</em> coordinate (goes from -1 to 1) to a column index (goes from 0 to 3) given that you have 4 columns (draw a sketch on paper as it will make figuring out math simpler). Similarly, you translate <em>y</em> (from -1 to 1) into row index given that there are only two rows. Once you know row and column index, you can compute the index itself, keeping in mind that there are four card in a row. As with <code>position_from_index</code>, I think it is easier to first play with formulas in a Jupyter Notebook, before turning the code into a function, documenting it, and putting it into <code>utilities.py</code>.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put <code>index_from_position</code> into <code>utilities.py</code>.</p>
 </div>
 </div>
@@ -478,7 +478,7 @@ Put updated code into <code>code07.py</code>.</p>
 <span class="header-section-number">10.24</span> Flip a selected card on click<a class="anchor" aria-label="anchor" href="#flip-a-selected-card-on-click"><i class="fas fa-link"></i></a>
 </h2>
 <p>Now that you have function that returns an index from position (don’t forget to import it), you can flip the card that the player clicked on. For this, you need to extend the card-flipping code inside the <em>if left-mouse button was pressed</em> code. Get the position of the mouse within the window by calling <a href="https://psychopy.org/api/event.html#psychopy.event.Mouse.getPos">mouse.getPos()</a>. This will return a pair of <code>(x, y)</code> values, which you can pass to your <code>index_from_position()</code> function. This, in turn will return the index of the card the player click on. Change the <code>"side"</code> of a card with that index to <code>"front"</code>. Test the code by turning different cards over, make sure that it is the card that you clicked on that gets turned. And a usual reminder, do not hesitate to put a breakpoint inside the if-statement to check the actual mouse position values and how they are translated into index, if things do not work.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code12.py</code>.</p>
 </div>
 </div>
@@ -489,7 +489,7 @@ Put updated code into <code>code07.py</code>.</p>
 <p>In the actual game, a player is allowed to flip only <em>two</em> cards at a time. If they match, they are removed. If not, they are flipped to their backs again. This means we need to keep track of which and how many cards are face up. We can always figure this out by doing a list comprehension scanning for cards that have their <code>"side"</code> as <code>"face"</code>. But, mutable nature of dictionaries presents us with a simpler solution. We create a new list (let us call it <code>face_up</code>) and add cards to it. Dictionaries are mutable, so a reference to the same dictionary object will be present in both lists (same card dictionary will have two stickers on it, one from the <code>cards</code> list, one from <code>face_up</code> list). This way we know <em>which</em> cards are face up (those that are in the list) and we know how many (length of the <code>face_up</code> list).</p>
 <p>However, you need to be careful not do add a card more than once (this will mess up our “how many cards are face up” number). There are several ways to do this. Assuming that <code>icard</code> is the index of the card, which you computed via <code>position_to_index()</code> from mouse position, you can simply check whether this card <code>"side"</code> is <code>"front"</code>. Alternatively, you can check whether this card is already <a href="https://docs.python.org/3/reference/expressions.html?highlight=list%20dictionary#in">in</a> the <code>face_up</code> list. Either way will tell you whether the card is face up. If it is not, you should set its <code>"side"</code> to <code>"front"</code> and add it to <code>face_up</code> list.</p>
 <p>Implement this code, open a few cards. Then, use a breakpoint to pause the program and check that <code>face_up</code> list (or set) contains exactly these (this many) cards. If it has <em>more</em> then your face-up checks do not work. Put a breakpoint on them and step through the code to see what happens.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code13.py</code>.</p>
 </div>
 </div>
@@ -503,7 +503,7 @@ Put updated code into <code>code07.py</code>.</p>
 <li>flip both cards back (i.e., set their <code>"side"</code> to <code>"back"</code>).</li>
 <li>remove them from <code>face_up</code> list (see <a href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists">.clear()</a> method).</li>
 </ul>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code14.py</code>.</p>
 </div>
 </div>
@@ -513,7 +513,7 @@ Put updated code into <code>code07.py</code>.</p>
 </h2>
 <p>Our code turns cards back even you found a matching pair but we need to take them off the table. Once you have two cards in the <code>face_up</code> list, you need to check whether they have the same chicken on them, i.e., their filenames are the same. If they are, you set <code>"show"</code> field to <code>False</code>. If not, you set their <code>"side"</code> to <code>"back"</code> (what your code is already doing). Either way, you still need to pause the program to allow the player to see them and to clear <code>face_up</code> list/set (they are either off the table or face down, definitely not face up).</p>
 <p>We also need to modify our code to handle <code>"show"</code> field correctly. First, modify your drawing code to draw only the cards that should be shown. Second, when handling mouse click, you need to check both that the card is not face up and that it is shown (otherwise you can “open” invisible cards).</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code15.py</code>.</p>
 </div>
 </div>
@@ -522,7 +522,7 @@ Put updated code into <code>code07.py</code>.</p>
 <span class="header-section-number">10.28</span> Game over once all the cards are off the table<a class="anchor" aria-label="anchor" href="#game-over-once-all-the-cards-are-off-the-table"><i class="fas fa-link"></i></a>
 </h2>
 <p>When your code works correctly, you can take all the card off the table, so that only the gray screen remains. However, that should be the point when the game finishes and congratulates you on your success. Write a function <code>remaining_cards</code> that will take the list with cards (i.e., our <code>cards</code> list) and will return how many cards are still shown (their <code>"show"</code> field is <code>True</code>). You definitely need a <a href="whack-a-mole.html#for-loop">for</a> for this but implementation can be very different. You could use an extra counter variable that you initialize to 0 and then increment by one (see <a href="https://docs.python.org/3/reference/simple_stmts.html#augmented-assignment-statements">+=</a> for a shortcut). Alternatively, you can use <a href="l#list-comprehension">list comprehensions</a> to filter out all cards that are not shown and return the length of that list (a single line solution). Implement this function in <em>utilities.py</em> and exit the loop by setting <code>game_state</code> to <code>"victory"</code>. After the loop, you can check the <code>game_state</code> variable and if the player was victorious, show a congratulatory message (<a href="https://psychopy.org/api/visual/textstim.html#psychopy.visual.TextStim">TextStim</a>, note that you don’t even need to create a variable for it, you can create an object and call <code>.draw()</code> on it, i.e., <code>visual.TextStim(...).draw()</code>) and wait for a key press before you close the window.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code16.py</code>.</p>
 </div>
 </div>
@@ -533,7 +533,7 @@ Put updated code into <code>code07.py</code>.</p>
 <p>There are different ways on how you can quantify speed in this game. You could look at the number of pairs the player had to open until clearing them up (the fewer, the better). Or, you could measure how fast the player did it in seconds. Or use a combination of these two measures. Let us use the second option — total time taken — as an opportunity to learn about using PsychoPy <a href="https://psychopy.org/api/clock.html">clocks</a>.</p>
 <p>The two classes you will be primarily interested in are <a href="https://psychopy.org/api/clock.html#psychopy.clock.Clock">Clock</a> and <a href="https://psychopy.org/api/clock.html#psychopy.clock.CountdownTimer">CountdownTimer</a>. The only difference between the two is that <a href="https://psychopy.org/api/clock.html#psychopy.clock.Clock">Clock</a> starts at (and <a href="https://psychopy.org/api/clock.html#psychopy.clock.Clock.reset">resets</a> to) 0 and start counting <em>elapsed</em> time, so its <a href="https://psychopy.org/api/clock.html#psychopy.clock.MonotonicClock.getTime">getTime()</a> method will return only <em>positive</em> values. In contrast, the <a href="https://psychopy.org/api/clock.html#psychopy.clock.CountdownTimer">CountdownTimer</a> start with (and resets to) a value you initialized it with and starts counting <em>remaining</em> time down. Importantly, it will not stop once it reaches 0, so you will eventually end up with <em>negative</em> remaining time. Thus, for <a href="https://psychopy.org/api/clock.html#psychopy.clock.Clock">Clock</a> you check whether the <em>elapsed</em> time is longer than some predefined value, whereas for <a href="https://psychopy.org/api/clock.html#psychopy.clock.CountdownTimer">CountdownTimer</a> you start at a predefined value and check that the <em>remaining</em> time is above zero. Note it is not guaranteed that the remaining time will be exactly zero. If anything, it is extremely unlikely that this will ever happen, so never test for an exact equality with zero<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;More generally, never compare float values to exact numbers. They are &lt;a href="http://www.lahey.com/float.htm"&gt;tricky&lt;/a&gt;, as the underlying representation &lt;a href="https://docs.python.org/3/tutorial/floatingpoint.html"&gt;does not guarantee&lt;/a&gt; that the computation will produce &lt;em&gt;exactly&lt;/em&gt; the number that it should: &lt;code&gt;.1 + .1 + .1 == .3&lt;/code&gt; is surprisingly &lt;code&gt;False&lt;/code&gt;, try it yourself&lt;/p&gt;'><sup>64</sup></a>!</p>
 <p>Here, we are interested in the <em>elapsed</em> time, so <a href="https://psychopy.org/api/clock.html#psychopy.clock.Clock">Clock</a> is the obvious choice. Create a clock before the game loop and use the elapsed time in the congratulatory message.</p>
-<div class="rmdnote program">
+<div class="program">
 <p>Put your code into <code>code17.py</code>.</p>
 </div>
 </div>
@@ -600,7 +600,7 @@ Put updated code into <code>code07.py</code>.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Learning Python and PsychoPy by writing games</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-10-20.</p>
+    <p>"<strong>Learning Python and PsychoPy by writing games</strong>" was written by Alexander (Sasha) Pastukhov. It was last built on 2023-10-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

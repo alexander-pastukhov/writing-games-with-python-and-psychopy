@@ -20,7 +20,7 @@ cat(
 ## Christmas tree
 Let us start our Christmas decoration with a Christmas tree. You can download [the one I've found](material/pine-tree.png)^[Created by [isaiah658](https://openclipart.org/artist/isaiah658).] or find an image that you like. Create your basic PsychoPy code to create a window (we will be using [Circle](https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle) later, so think about suitable units), an [ImageStim](https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim) with a tree, draw it and wait for any key press.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code01.py`.
 :::
 
@@ -37,7 +37,7 @@ for  a_number, a_letter in  zip(numbers, letters):
 
 You can zip as many lists as you want. We, obviously, want three. Decide on whether you want to create `balls` as an empty list and then append each newly created [Circle](https://psychopy.org/api/visual/circle.html#psychopy.visual.circle.Circle) to it in the loop or use [list comprehension](#list-comprehension). Do not forget to draw the balls and think about what you should draw first: the tree or the balls. Experiment with position and sizes to makes it look just perfect.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code02.py`.
 :::
 
@@ -52,7 +52,7 @@ Once you need to update whether balls are "on" or "off", you need to loop both t
 To keep track of time, you will need a timer variable, use either [Clock](https://psychopy.org/api/clock.html#psychopy.clock.Clock) or [CountdownTimer](https://psychopy.org/api/clock.html#psychopy.clock.CountdownTimer). Once the `TWINKLE_DURATION` elapsed, update the active color, all the balls, and do not forget to reset the timer.
 
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code03.py`.
 :::
 
@@ -69,7 +69,7 @@ from psychopy.sound import Sound
 
 Then, you need a new object of `Sound` class supplying the file  name as the first parameter (I called the variable `song`). Right before start the loop, you `.play()` the sound. Note, if you want to play the same sound again, you need to "rewind" it by explicitly calling its `.stop()` method. For some reason, the sound stops at the end but does not gets "rewind" back, so when you try to play it again and notices that it is already at the end and stops without playing anything.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code04.py`.
 :::
 
@@ -186,7 +186,7 @@ Look at your _code04.py_ and identify constants and hard-coded values that you s
 
 Once you transferred all your constants into the settings file (use either JSON or YAML), add the code that loads it at the very beginning and use settings dictionary in place of constants.
 
-::: {.rmdnote .program}
+::: {.program}
 Put your code into `code05.py`.
 :::
 
